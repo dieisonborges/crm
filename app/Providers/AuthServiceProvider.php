@@ -50,7 +50,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         //LOG ----------------------------------------------------------------------------------------
-        $this->log("GateContract");
+        /* --------------------- Comentar no Primeiro Migrate ----------------- */
+        //$this->log("GateContract");
         //--------------------------------------------------------------------------------------------
         
         $this->registerPolicies($gate);
@@ -61,6 +62,7 @@ class AuthServiceProvider extends ServiceProvider
 
         /* --------------------- Comentar no Primeiro Migrate ----------------- */
         /* --------------------- Carrega as permissões ------------------------ */
+        /*
     
         $permissions = Permission::with('roles')->get();
 
@@ -75,9 +77,9 @@ class AuthServiceProvider extends ServiceProvider
                 }
 
             );
-        
+        */
             /* Permissão total para o Grupo adm */
-        
+        /*
             Gate::before(function ($user) {
                 if ($user->hasRole('adm')) {
                     return true;
@@ -86,14 +88,15 @@ class AuthServiceProvider extends ServiceProvider
         
 
         }
-        
+        */
         /*------------------------- Comentar no Primeiro Migrate----------------*/
 
         /* ------------- Carega setores para MENUS ---------------------*/
+        /* --------------------- Comentar no Primeiro Migrate ----------------- */
 
         // Criar uma sessão
-        $setors = Setor::select('name', 'label')->get();
-        session(['setors' => $setors]);
+        //$setors = Setor::select('name', 'label')->get();
+        //session(['setors' => $setors]);
         /* ------------- Carega setores para MENUS ---------------------*/
 
 
