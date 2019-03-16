@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Laravel usa o conjunto de caracteres utf8mb4 
+        Schema::defaultStringLength(191);
     }
 
     /**

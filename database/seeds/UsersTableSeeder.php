@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
             'name'      => 'Administrador',
             'cargo'      => 'Adm',
             'email'     => 'administrador@sicario.com.br',
-            'password'  => bcrypt('sicario@123'),
+            'password'  => bcrypt('sicario@123'),sudo
         ]);
     }
 }
