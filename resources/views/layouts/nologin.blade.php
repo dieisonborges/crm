@@ -9,7 +9,7 @@
     <a href="/">
         <b style="display:none;">SICARIO</b>
         <br>
-        <img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="100%">
+        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%">
         
     </a>     
   </div>
