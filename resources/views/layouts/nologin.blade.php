@@ -7,10 +7,8 @@
 <div class="wrapper">
   <div class="col-md-2">
     <a href="/">
-        <b style="display:none;">SICARIO</b>
-        <br>
-        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%">
-        
+        <b style="display:none;">SICARIO</b>        
+        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="70%">        
     </a>     
   </div>
    
