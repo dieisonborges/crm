@@ -15,18 +15,24 @@ use App\Http\Controllers\LogController;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    
-    /* ----------------------- LOGS ----------------------*/
-    /*
-    private function log($info){
-        //path name
-        $filename="AuthServiceProvider";
+    $first_deploy = config('app.name');
 
-        $log = new LogController;
-        $log->store($filename, $info);
-        return null;     
+    dd($first_deploy);
+
+    /* ----------------------- LOGS ----------------------*/
+    if($first_deploy=='true'){
+        echo "First deploy";
+    }else{
+        private function log($info){
+            //path name
+            $filename="AuthServiceProvider";
+
+            $log = new LogController;
+            $log->store($filename, $info);
+            return null;     
+        }
+
     }
-    */
     /* ----------------------- END LOGS --------------------*/
 
 
@@ -49,10 +55,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        //LOG ----------------------------------------------------------------------------------------
-        /* --------------------- Comentar no Primeiro Migrate ----------------- */
-        //$this->log("GateContract");
-        //--------------------------------------------------------------------------------------------
+        //LOG --------------------------------------------------------------------------
+        if($first_deploy=='true'){
+        echo "First deploy";
+        }else{
+            $this->log("GateContract");
+        }
+        //------------------------------------------------------------------------------
         
         $this->registerPolicies($gate);
 
@@ -60,45 +69,45 @@ class AuthServiceProvider extends ServiceProvider
 
         //Comente esse bloco no primeiro migrate
 
-        /* --------------------- Comentar no Primeiro Migrate ----------------- */
         /* --------------------- Carrega as permissões ------------------------ */
-        /*
+        if($first_deploy=='true'){
+            echo "First deploy";
+        }else{
     
-        $permissions = Permission::with('roles')->get();
+            $permissions = Permission::with('roles')->get();
 
-        foreach ($permissions as $permission) {
-             
-            $gate->define(
+            foreach ($permissions as $permission) {
+                 
+                $gate->define(
 
-                $permission->name, function(User $user) use ($permission){                 
+                    $permission->name, function(User $user) use ($permission){                 
 
-                    return $user->hasPermission($permission);
+                        return $user->hasPermission($permission);
 
-                }
+                    }
 
-            );
-        
+                );
+            
 
-        
-            Gate::before(function ($user) {
-                if ($user->hasRole('adm')) {
-                    return true;
-                }
-            });        
-        
+            
+                Gate::before(function ($user) {
+                    if ($user->hasRole('adm')) {
+                        return true;
+                    }
+                });        
+            
 
+            }
         }
-        */
-        /*------------------------- Comentar no Primeiro Migrate----------------*/
-
         /* ------------- Carega setores para MENUS ---------------------*/
-        /* --------------------- Comentar no Primeiro Migrate ----------------- */
-
-        // Criar uma sessão
-        /*
-        $setors = Setor::select('name', 'label')->get();
-        session(['setors' => $setors]);
-        */
+        if($first_deploy=='true'){
+            echo "First deploy";
+        }else{
+            // Criar uma sessão
+            
+            $setors = Setor::select('name', 'label')->get();
+            session(['setors' => $setors]);
+        } 
         /* ------------- Carega setores para MENUS ---------------------*/
 
 
