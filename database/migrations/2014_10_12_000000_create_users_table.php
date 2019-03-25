@@ -17,7 +17,14 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password');            
+            $table->string('phone_number');
+            $table->string('cpf')->nullable()->unique();
+            $table->string('country');
+            //Quantidade de tentativas de login
+            $table->integer('status')->unsigned()->default(0);
+            //Status Ativo ou Desativado 0 ou 1
+            $table->boolean('login')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
