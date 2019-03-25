@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTipoToTicketsTable extends Migration
+class AddApelidoToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class AddTipoToTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tickets', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            //
-            // Tipos
-            // Técnico          -   0
-            // Administrativo   -   1
-
-            $table->integer('tipo')->unsigned()->default(0);
-        });
+            $table->string('apelido');
+        });        
     }
 
     /**
@@ -31,9 +26,9 @@ class AddTipoToTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tickets', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('tipo');
+            $table->dropColumn('apelido');
         });
     }
 }

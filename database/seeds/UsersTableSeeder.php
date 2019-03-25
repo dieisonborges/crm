@@ -14,10 +14,11 @@ class UsersTableSeeder extends Seeder
     {
         //
         User::create([
+            'id'=>'1',
             'name'      => 'Administrador',
-            'cargo'      => 'Adm',
-            'email'     => 'administrador@sicario.com.br',
-            'password'  => bcrypt('sicario@123'),
+            'apelido'      => 'Administrador',
+            'email'     => 'administrador@ecardume.com.br',
+            'password'  => bcrypt('ecardume@123'),
         ]);
     }
 }

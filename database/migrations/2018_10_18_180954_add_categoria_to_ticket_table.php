@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEquipamentoToTicketTable extends Migration
+class AddCategoriaToTicketTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,10 @@ class AddEquipamentoToTicketTable extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             //
-            $table->integer('equipamento_id')->unsigned()->nullable();
-            $table->foreign('equipamento_id')
+            $table->integer('categoria_id')->unsigned()->nullable();
+            $table->foreign('categoria_id')
                     ->references('id')
-                    ->on('equipamentos')
+                    ->on('categorias')
                     ->onDelete('cascade');
         });
     }
@@ -33,8 +33,8 @@ class AddEquipamentoToTicketTable extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             //
-            $table->dropForeign('tickets_equipamento_id_foreign');
-            $table->dropColumn('equipamento_id');
+            $table->dropForeign('tickets_categoria_id_foreign');
+            $table->dropColumn('categoria_id');
         });
     }
 }

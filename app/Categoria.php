@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Equipamento extends Model
+class Categoria extends Model
 {
     //
     public function tickets(){

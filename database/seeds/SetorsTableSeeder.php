@@ -14,6 +14,7 @@ class SetorsTableSeeder extends Seeder
     {
         //
         Setor::create([
+            'id'=>'1',
             'name'      => 'atendimento',
             'label'      => 'Atendimento ao Cliente',
         ]);

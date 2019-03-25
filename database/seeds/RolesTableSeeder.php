@@ -15,16 +15,12 @@ class RolesTableSeeder extends Seeder
         /*
 		
 		Administrador
-		Chefe de Nicho
-		Auxiliar de Nicho
-		Cardume VIP
-		Franqueado
-		Compras
 
         */
 
         //
         Role::create([
+            'id'=>'1',
             'name'=>'adm',
             'label'=>'Administrador',
         ]);

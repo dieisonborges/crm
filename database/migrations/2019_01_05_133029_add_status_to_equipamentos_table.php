@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusToEquipamentosTable extends Migration
+class AddStatusToCategoriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddStatusToEquipamentosTable extends Migration
      */
     public function up()
     {
-        Schema::table('equipamentos', function (Blueprint $table) {
+        Schema::table('categorias', function (Blueprint $table) {
             //
             // 0 = INOPERANTE
             // 1 = OPERACIONAL
@@ -28,7 +28,7 @@ class AddStatusToEquipamentosTable extends Migration
      */
     public function down()
     {
-        Schema::table('equipamentos', function (Blueprint $table) {
+        Schema::table('categorias', function (Blueprint $table) {
             //
             $table->dropColumn('status');
         });
