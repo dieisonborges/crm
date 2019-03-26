@@ -17,7 +17,7 @@ class PermissionRoleTableSeeder extends Seeder
 
 
         //TOTAL DE PERMISSIONs
-        $total_permissions = 20;
+        $total_permissions = 28;
         for ($i = 1; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('1');
     

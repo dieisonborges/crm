@@ -1,4 +1,4 @@
-@can('read_tecnico')      
+@can('read_atendimento')      
 	@extends('layouts.app')
 	@section('title', 'Visualizar Ticket')
 	@section('content')
@@ -212,19 +212,19 @@
 
     @if (($ticket->status)==1)
 
-      <a  class="btn btn-warning btn-md" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
+      <a  class="btn btn-warning btn-md" href="{{URL::to('atendimentos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
     
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+      <a href="{{URL::to('atendimentos')}}/{{$setor}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
+      <a href="{{URL::to('atendimentos')}}/{{$setor}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
 
     @else
 
-    <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/reabrir" class="btn btn-success btn-md"><i class="fa fa-arrow-up"></i> Reabrir Ticket</a>
+    <a href="{{URL::to('atendimentos')}}/{{$setor}}/{{$ticket->id}}/reabrir" class="btn btn-success btn-md"><i class="fa fa-arrow-up"></i> Reabrir Ticket</a>
         
     @endif    
 
-    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('atendimentos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
     
     </section>
 

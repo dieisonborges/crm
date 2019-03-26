@@ -28,21 +28,13 @@
 					</select>
 			 	</div>			 	
 
-			 	<div class="form-group col-md-2">
-				    <label for="tipo">Tipo</label>				    
-					<select class="form-control" name="tipo">
-						@foreach ($tipos as $Key => $tipo)
-						   <option value="{{$Key}}"> {{$tipo}}</option>
-						@endforeach 				
-					</select>
-			 	</div>
 
 			 	<div class="form-group col-md-4">
-				    <label for="equipamento_id">Equipamento</label>
-				    <select class="form-control" name="equipamento_id">
+				    <label for="categoria_id">Categoria</label>
+				    <select class="form-control" name="categoria_id">
 				    	<option selected="selected" value="">Nenhum</option>
-				    	@forelse ($equipamentos as $equipamento)
-				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
+				    	@forelse ($categorias as $categoria)
+				    		<option value="{{$categoria->id}}">{{$categoria->nome}} - {{$categoria->descricao}} </option>
 					    @empty                    
 	                	@endforelse 			
 					</select>

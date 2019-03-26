@@ -1,15 +1,34 @@
-@can('read_tecnico')    
+@can('read_atendimento')    
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
-    <h1>Tickets <small>não alocados</small></h1>
+    <h1>Tickets</h1>
+
+
+
+        <div class="col-md-12"> 
+
+            <form method="POST" enctype="multipart/form-data" action="{{url('atendimentos/'.$setor->name.'/busca')}}">
+                @csrf
+                <div class="input-group input-group-lg">            
+                    <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
+                        <span class="input-group-btn">
+                          <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                        </span>
+
+                </div>
+            </form>
+     
+        </div> 
+
+        <br><br><br>
 
         
         <div class="box-header">
             <h3 class="box-title">{{$setor->label}} <small>Gerência de Tickets</small></h3>
+
+            
         </div>
-
-
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
@@ -24,14 +43,14 @@
                     <th>Rótulo</th>
                     <th>Tipo</th>
                     <th>Setor de <br> Trabalho</th>
+                    <th>Editar</th>
                 </tr>
                 @forelse ($tickets as $ticket)
-                @if(($flagTicket[$ticket->id])==0)
                 <tr>
                     <td>{{$ticket->id}}</td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->protocolo}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->protocolo}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0  => "Fechado",
                             1  => "Aberto",  
@@ -45,13 +64,13 @@
                             @endswitch
                         </a>
                     </td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->users->name}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->titulo}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->users->name}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->titulo}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->equipamentos['nome']}}</a></td>
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->equipamentos['nome']}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0   =>  "Crítico - Emergência (resolver imediatamente)",
                             1   =>  "Alto - Urgência (resolver o mais rápido possível)",
@@ -77,7 +96,7 @@
                     </td>
 
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0  => "Técnico",
                             1  => "Administrativo",  
@@ -95,11 +114,20 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/alocarSetors')}}"><i class="fa fa-group"></i> Setor</a>
-                    </td>                    
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('atendimentos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
+                    </td>
+
+                    @if(($ticket->status)!=0)
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{{URL::to('atendimentos/'.$setor->name.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                    </td>
+                    @else
+                    <td>
+                        <span class="btn btn-success btn-xs"> Fechado </span>
+                    </td>
+                    @endif
                     
-                </tr>
-                @endif             
+                </tr>                
                 @empty
                     
                 @endforelse            

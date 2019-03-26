@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tecnico;
+use App\Atendimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,13 +14,13 @@ use App\Setor;
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 
-class TecnicoController extends Controller
+class AtendimentoController extends Controller
 {
     /* ----------------------- LOGS ----------------------*/
 
     private function log($info){
         //path name
-        $filename="TecnicoController";
+        $filename="AtendimentoController";
 
         $log = new LogController;
         $log->store($filename, $info);
@@ -149,10 +149,10 @@ class TecnicoController extends Controller
                                 ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.index");
+            $this->log("atendimento.index");
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
+            return view('atendimento.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -186,10 +186,10 @@ class TecnicoController extends Controller
                                 ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.busca=".$buscaInput);
+            $this->log("atendimento.busca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -216,10 +216,10 @@ class TecnicoController extends Controller
                                 ->paginate(40);
             
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.index.status=".$status);
+            $this->log("atendimento.index.status=".$status);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null, 'setor' => $setor));
+            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => null, 'setor' => $setor));
         }
 
 
@@ -254,10 +254,10 @@ class TecnicoController extends Controller
                                 ->orderBy('id', 'DESC')
                                 ->paginate(40);
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.status=".$status."busca=".$buscaInput);
+            $this->log("atendimento.status=".$status."busca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
 
         
@@ -290,10 +290,10 @@ class TecnicoController extends Controller
             $equipamento = Equipamento::find($equipamento_id);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.status.id=".$status."equipamento_id=".$equipamento_id);
+            $this->log("atendimento.status.id=".$status."equipamento_id=".$equipamento_id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $equipamento->nome, 'setor' => $setor ));
+            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $equipamento->nome, 'setor' => $setor ));
         }
 
         
@@ -332,11 +332,11 @@ class TecnicoController extends Controller
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.show.ticket=".$ticket->id);
+            $this->log("atendimento.show.ticket=".$ticket->id);
             //--------------------------------------------------------------------------------------------
 
 
-            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
+            return view('atendimento.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -372,13 +372,13 @@ class TecnicoController extends Controller
             $equipamentos = Equipamento::all(); 
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.edit.id:".$id);
+            $this->log("atendimento.edit.id:".$id);
             //--------------------------------------------------------------------------------------------
 
             if($ticket->status==0){
                 return redirect('erro')->with('permission_error', '403');
             }else{
-                return view('tecnico.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
+                return view('atendimento.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
             }
 
             
@@ -429,13 +429,13 @@ class TecnicoController extends Controller
             //$ticket->descricao = $request->get('descricao');
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.edit.update.ticket".$id."-".$ticket);
+            $this->log("atendimento.edit.update.ticket".$id."-".$ticket);
             //--------------------------------------------------------------------------------------------
 
             if($ticket->save()){
-                return redirect('tecnicos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
+                return redirect('atendimentos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
             }else{
-                return redirect('tecnicos/'.$setor.'/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$setor.'/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -470,11 +470,11 @@ class TecnicoController extends Controller
             $all_setors = Setor::all();
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.setor.ticket:".$id);
+            $this->log("atendimento.setor.ticket:".$id);
             //--------------------------------------------------------------------------------------------
 
 
-            return view('tecnico.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
+            return view('atendimento.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -504,13 +504,13 @@ class TecnicoController extends Controller
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.setorUpdate.setor_id:".$setor_id."ticket_id:".$ticket_id);
+            $this->log("atendimento.setorUpdate.setor_id:".$setor_id."ticket_id:".$ticket_id);
             //--------------------------------------------------------------------------------------------
           
             if(!$status){
-                return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                return redirect('atendimentos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
             }else{
-                return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$my_setor."/".$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -544,14 +544,14 @@ class TecnicoController extends Controller
             $status = $setor ->setorTicket()->detach($ticket->id);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.setorDestroy.setor:".$setor->name);
+            $this->log("atendimento.setorDestroy.setor:".$setor->name);
             //--------------------------------------------------------------------------------------------
 
             
             if($status){
-                return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                return redirect('atendimentos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
             }else{
-                return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$my_setor."/".$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -575,10 +575,10 @@ class TecnicoController extends Controller
             /* ------------------------------ END Security --------------------------------*/
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.acao.setor:".$ticket->id);
+            $this->log("atendimento.acao.setor:".$ticket->id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.acao', array('ticket' => $ticket, 'setor' => $setor));
+            return view('atendimento.acao', array('ticket' => $ticket, 'setor' => $setor));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -629,13 +629,13 @@ class TecnicoController extends Controller
             ]]); 
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.storeAcao:".$ticket_id);
+            $this->log("atendimento.storeAcao:".$ticket_id);
             //--------------------------------------------------------------------------------------------
 
             if(!$status){
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
             }else{
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -659,10 +659,10 @@ class TecnicoController extends Controller
             /* ------------------------------ END Security --------------------------------*/
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.encerrar:".$id);
+            $this->log("atendimento.encerrar:".$id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.encerrar', compact('ticket', 'setor'));
+            return view('atendimento.encerrar', compact('ticket', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -719,13 +719,13 @@ class TecnicoController extends Controller
             /* ---------------------- Encerra FIM ----------*/
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.storeEncerrar:".$ticket_id);
+            $this->log("atendimento.storeEncerrar:".$ticket_id);
             //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
             }else{
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -749,10 +749,10 @@ class TecnicoController extends Controller
             /* ------------------------------ END Security --------------------------------*/
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.encerrar:".$id);
+            $this->log("atendimento.encerrar:".$id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.reabrir', compact('ticket', 'setor'));
+            return view('atendimento.reabrir', compact('ticket', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -809,13 +809,13 @@ class TecnicoController extends Controller
             /* ---------------------- Encerra FIM ----------*/
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.storeReabrir:".$ticket_id);
+            $this->log("atendimento.storeReabrir:".$ticket_id);
             //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Reaberto com sucesso!');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Reaberto com sucesso!');
             }else{
-                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -858,14 +858,6 @@ class TecnicoController extends Controller
                                 ->get();
             /* .................... END QTD Tickets Abertos ................... */
 
-            /* .................... Últimos Livros ................... */
-
-            $livros = $setor->livros()
-                            ->orderBy('id','DESC')
-                            ->limit(4)
-                            ->get();
-
-            /* .................... END Últimos Livros ................... */
 
             /* WEEK */
             $week = $this->weekBr();
@@ -895,19 +887,18 @@ class TecnicoController extends Controller
             /* .................... END QTD não alocados ................... */
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.dashboard");
+            $this->log("atendimento.dashboard");
             //--------------------------------------------------------------------------------------------
 
 
 
-            return view('tecnico.dashboard', compact(
+            return view('atendimento.dashboard', compact(
                             'qtd_tick_fech', 
                             'qtd_tick_aber', 
                             'setor',
                             'equipe',
                             'equipe_qtd',
                             'tickets',
-                            'livros',
                             'week',
                             'cont_aloc'
                         ));
@@ -939,10 +930,10 @@ class TecnicoController extends Controller
             }
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocar");
+            $this->log("atendimento.alocar");
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.alocar', compact(
+            return view('atendimento.alocar', compact(
                             'tickets',
                             'setor',
                             'flagTicket'
@@ -970,11 +961,11 @@ class TecnicoController extends Controller
             $all_setors = Setor::all();
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocarSetors:".$id);
+            $this->log("atendimento.alocarSetors:".$id);
             //--------------------------------------------------------------------------------------------
 
 
-            return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
+            return view('atendimento.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -996,13 +987,13 @@ class TecnicoController extends Controller
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocarSetorsUpdate:".$setor_id."Ticket".$ticket_id);
+            $this->log("atendimento.alocarSetorsUpdate:".$setor_id."Ticket".$ticket_id);
             //--------------------------------------------------------------------------------------------
           
             if(!$status){
-                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                return redirect('atendimentos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
             }else{
-                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('atendimentos/'.$my_setor.'/dashboard')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -1038,10 +1029,10 @@ class TecnicoController extends Controller
                                 ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.busca=".$buscaInput);
+            $this->log("atendimento.busca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
 
-            return view('tecnico.data', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+            return view('atendimento.data', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

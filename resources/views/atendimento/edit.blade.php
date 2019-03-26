@@ -1,4 +1,4 @@
-@can('update_tecnico')   
+@can('update_atendimento')   
 	@extends('layouts.app')
 	@section('title', 'Editar Ticket')
 	@section('content')
@@ -19,7 +19,7 @@
 
 			
 
-			<form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/'.$setor.'/'.$id.'/update')}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{url('atendimentos/'.$setor.'/'.$id.'/update')}}" id="form-edit">
 				@csrf
 
 				<input type="hidden" name="my_setor" value="{{$setor}}">			

@@ -1,4 +1,4 @@
-@extends('layouts.nologin')
+@extends('layouts.nologin') 
 
 @section('content')
 <div class="container">
@@ -10,11 +10,26 @@
                 <div class="card-body">
                     <form method="POST" name="register" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf
+
+                        <div class="form-group row">
+                            <label for="convite" class="col-md-4 col-form-label text-md-right">{{ __('Código do Convite') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="convite" type="text" class="form-control{{ $errors->has('convite') ? ' is-invalid' : '' }}" name="convite" placeholder="ABCXY45YX" value="{{ old('convite') }}" required autofocus>
+
+                                @if ($errors->has('convite'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('convite') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nome Completo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" placeholder="João Pereira Silva" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" placeholder="Seu Nome Completo" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -25,14 +40,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="cargo" class="col-md-4 col-form-label text-md-right">{{ __('Cargo/Posto/Graduação/Formação') }}</label>
+                            <label for="apelido" class="col-md-4 col-form-label text-md-right">{{ __('Apelido') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cargo" type="text" class="form-control{{ $errors->has('cargo') ? ' is-invalid' : '' }}" name="cargo" placeholder="Eng" value="{{ old('cargo') }}" required autofocus>
+                                <input id="apelido" type="text" class="form-control{{ $errors->has('apelido') ? ' is-invalid' : '' }}" name="apelido" placeholder="Como você gostaria de ser chamado" value="{{ old('apelido') }}" required autofocus>
 
-                                @if ($errors->has('cargo'))
+                                @if ($errors->has('apelido'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('cargo') }}</strong>
+                                        <strong>{{ $errors->first('apelido') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -53,10 +68,32 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="cpf" class="col-md-4 col-form-label text-md-right">{{ __('CPF') }}</label>
+                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('País') }}</label>
+
+                            <div class="col-md-6">                                
+
+                                <select  style="width:150;font-size:11px" name="country"  class="form-control" required="">
+                                    <option value="BR" selected>Brasil</option>
+                                    <option value="EUA">EUA</option>
+                                    <option value="CN">China</option>
+                                    <option value="PY">Paraguai</option>
+                                    <option value="ZA">África do Sul</option>
+                                    <option value="DE">Alemanha</option>
+                                </select>
+
+                                @if ($errors->has('country'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('country') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cpf" class="col-md-4 col-form-label text-md-right">{{ __('CPF (Somente Brasileiros)') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cpf" type="text" class="form-control{{ $errors->has('cpf') ? ' is-invalid' : '' }}" name="cpf" placeholder="012.012.012-01" value="{{ old('cpf') }}" required>
+                                <input id="cpf" type="text" class="form-control{{ $errors->has('cpf') ? ' is-invalid' : '' }}" name="cpf" placeholder="012.012.012-01" value="{{ old('cpf') }}">
 
                                 @if ($errors->has('cpf'))
                                     <span class="invalid-feedback" role="alert">
@@ -68,14 +105,25 @@
 
                        
                         <div class="form-group row">
-                            <label for="telefone" class="col-md-4 col-form-label text-md-right">{{ __('Celular com DDD') }}</label>
+                            <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Telefone Móvel') }}</label>
+
+                            <div class="col-md-2">
+                                Código do País:
+                                <input id="phone_number_country" type="text" class="form-control{{ $errors->has('phone_number_country') ? ' is-invalid' : '' }}" name="phone_number_country" placeholder="+55" value="{{ old('phone_number_country') }}" required style="width: 65%;">
+
+                                @if ($errors->has('phone_number_country'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone_number_country') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
                             <div class="col-md-6">
-                                <input id="telefone" type="text" class="form-control{{ $errors->has('telefone') ? ' is-invalid' : '' }}" name="telefone" placeholder="21 99123-4560" value="{{ old('telefone') }}" required>
+                               Número com DDD: <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" placeholder="21 99123-4560" value="{{ old('phone_number') }}" required style="width: 65%;">
 
-                                @if ($errors->has('telefone'))
+                                @if ($errors->has('phone_number'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('telefone') }}</strong>
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -1,4 +1,4 @@
-@can('read_tecnico')    
+@can('read_atendimento')    
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
@@ -8,7 +8,7 @@
 
         <div class="col-md-12"> 
 
-            <form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/'.$setor->name.'/buscaData')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{url('atendimentos/'.$setor->name.'/buscaData')}}">
                 @csrf
                 <div class="input-group input-group-lg col-md-12">    
 
@@ -62,9 +62,9 @@
                 @forelse ($tickets as $ticket)
                 <tr>
                     <td>{{$ticket->id}}</td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->protocolo}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->protocolo}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0  => "Fechado",
                             1  => "Aberto",  
@@ -78,13 +78,13 @@
                             @endswitch
                         </a>
                     </td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->users->name}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->titulo}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->users->name}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->titulo}}</a></td>
+                    <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->equipamentos['nome']}}</a></td>
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->equipamentos['nome']}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0   =>  "Crítico - Emergência (resolver imediatamente)",
                             1   =>  "Alto - Urgência (resolver o mais rápido possível)",
@@ -110,7 +110,7 @@
                     </td>
 
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show">
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
                             0  => "Técnico",
                             1  => "Administrativo",  
@@ -128,12 +128,12 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('atendimentos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>
 
                     @if(($ticket->status)!=0)
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                        <a class="btn btn-warning btn-xs" href="{{URL::to('atendimentos/'.$setor->name.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
                     </td>
                     @else
                     <td>

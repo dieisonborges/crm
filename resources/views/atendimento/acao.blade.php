@@ -1,14 +1,14 @@
-@can('read_tecnico')   
+@can('update_atendimento')   
 	@extends('layouts.app')
-	@section('title', 'Adicionar Ação ao Ticket')
+	@section('title', 'Adicionar Ação ao Tecnico')
 	@section('content')
 			<h1>
-		        Encerrar Ticket
+		        Adicionar Ação ao Ticket
 		        <small>{{$ticket->protocolo}}</small>
 		    </h1>
 
 		    <div class="box-body">              
-              <div class="callout callout-danger">
+              <div class="callout callout-info">
                 <h5>Usuário: <b>{{$ticket->users->name}}</b></h5>
                 <h5>Número de Protocolo: <b>{{$ticket->protocolo}}</b></h5>
                 <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
@@ -16,14 +16,15 @@
               
             </div>
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('TecnicoController@storeEncerrar')}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{url('atendimentos/storeAcao')}}" id="form-edit">
 				@csrf
 
 				<input type="hidden" name="ticket_id" value="{{$ticket->id}}">
-				<input type="hidden" name="setor" value="{{$setor}}">	
+
+				<input type="hidden" name="setor" value="{{$setor}}">			
 			 	
 			 	<div class="form-group col-md-12">
-				    <label for="descricao">Deixe uma mensagem de encerramento</label>				    
+				    <label for="descricao">Descrição da Nova Ação</label>				    
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
@@ -38,9 +39,12 @@
 			 		<hr>
 			 	</div>
 
-			 	<input type="submit" form="form-edit" class="btn btn-danger" value="Encerrar">
+			 	<input type="submit" form="form-edit" class="btn btn-primary" value="Cadastrar">
 
 			</form>
+
+
+
 
 			
 	@endsection

@@ -38,9 +38,8 @@
                     <th>Usuário</th>
                     <th>Titulo</th>
                     <th>Criado em:</th>
-                    <th>Equipamento</th>
+                    <th>Categoria</th>
                     <th>Rótulo</th>
-                    <th>Tipo</th>
                     <th>Setor de <br> Trabalho</th>
                     <th>Editar</th>
                     <th>Excluir</th>
@@ -68,7 +67,7 @@
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->titulo}}</a></td>
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
-                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->equipamentos['nome']}}</a></td>
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->categorias['nome']}}</a></td>
                     <td>
                         <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
                             <!--
@@ -95,24 +94,7 @@
                         </a>
                     </td>
 
-                    <td>
-                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
-                            <!--
-                            0  => "Técnico",
-                            1  => "Administrativo",  
-                            -->
-                            @switch($ticket->tipo)
-                                @case(0)
-                                    <span>Técnico</span>
-                                    @break
-                                @case(1)
-                                    <span>Administrativo</span>
-                                    @break                                
-                                @default
-                                    <span>Nenhum</span>
-                            @endswitch
-                        </a>
-                    </td>
+
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('tickets/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>

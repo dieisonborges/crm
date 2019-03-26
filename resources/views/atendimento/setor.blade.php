@@ -1,4 +1,4 @@
-@can('read_tecnico')  
+@can('read_atendimento')  
     @extends('layouts.app')
     @section('title', 'Regras')
     @section('content')
@@ -15,7 +15,7 @@
 
 
         <div class="col-md-12">  
-            <form method="POST" action="{{action('TecnicoController@alocarSetorUpdate')}}">
+            <form method="POST" action="{{action('TecnicoController@setorUpdate')}}">
                 @csrf
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <input type="hidden" name="my_setor" value="{{$my_setor}}">
@@ -46,13 +46,45 @@
                     <th>ID</th>
                     <th>Nome (Name)</th>
                     <th>Rótulo (Label)</th>
+                    <th>Excluir</th>
                 </tr>
+
 
                 @forelse ($setors as $setor)
                 <tr>
                     <td>{{$setor->id}}</td>
                     <td>{{$setor->name}}</td>
-                    <td>{{$setor->label}}</td>                    
+                    <td>{{$setor->label}}</td>
+
+                    
+                    
+                    <td>
+
+                        <form method="POST" action="{{action('TecnicoController@setorDestroy')}}" id="formDelete{{$setor->id}}">
+                            @csrf
+                            <input type="hidden" name="setor_id" value="{{$setor->id}}">
+                            <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                            <input type="hidden" name="my_setor" value="{{$my_setor}}">
+                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
+                            <!--<input type="submit" name="Excluir">-->
+
+                            <a href="javascript:confirmDelete{{$setor->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                        </form> 
+
+                        <script>
+                           function confirmDelete{{$setor->id}}() {
+
+                            var result = confirm('Tem certeza que deseja excluir?');
+
+                            if (result) {
+                                    document.getElementById("formDelete{{$setor->id}}").submit();
+                                } else {
+                                    return false;
+                                }
+                            } 
+                        </script>
+
+                    </td>
                 </tr>                
                 @empty
                     

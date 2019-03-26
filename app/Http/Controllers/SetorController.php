@@ -104,7 +104,7 @@ class SetorController extends Controller
      * @param  \App\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function show(Setor $setor)
+    public function show($id)
     {
         //
         if(!(Gate::denies('read_setor'))){

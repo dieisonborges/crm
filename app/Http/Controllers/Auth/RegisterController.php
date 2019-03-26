@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -78,31 +79,41 @@ class RegisterController extends Controller
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
 
         //Remove a pontuzação do TELEFONE (99) 99999-9999        
-        $data['telefone']  = preg_replace('/\D/', '', $data['telefone']);
-        $ddd = substr($data['telefone'], 0, 2);
-        $ntelpre = substr($data['telefone'], 2, 5);
-        $ntel = substr($data['telefone'], 7, 4); 
-        $data['telefone'] = "(".$ddd.")".$ntelpre."-".$ntel;
+        $data['phone_number']  = preg_replace('/\D/', '', $data['phone_number']);
+        $ddd = substr($data['phone_number'], 0, 2);
+        $ntelpre = substr($data['phone_number'], 2, 5);
+        $ntel = substr($data['phone_number'], 7, 4); 
+        $data['phone_number'] = "(".$ddd.")".$ntelpre."-".$ntel;
 
 
         //Limpar acentos e espaços Telefone
-        //$data['telefone'] = sanitizeString($data['telefone']);
+        //$data['phone_number'] = sanitizeString($data['phone_number']);
 
         //LOG ----------------------------------------------------------------------------------------
-        $this->log("register.validator:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        $this->log("register.validator:".$data['name']." ".$data['apelido']." ".$data['email']." ".$data['cpf']." ".$data['phone_number']." ".(Hash::make($data['password'])));
         //--------------------------------------------------------------------------------------------
 
+        /*
+        if(($data['country']=='BR')and(!$data['cpf'])){
+            dd("erro");
+        }
+        */
 
         return Validator::make($data, [
+            'convite' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
+            'apelido' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',            
-            'cpf' => 'required|string|cpf|unique:users',
-            'telefone' => 'required|string|celular_com_ddd',
+            'country' => 'required|string|min:2|max:3',
+            'cpf' => 'string|cpf|unique:users',
+            'phone_number_country' => 'required|string|min:2|max:5',
+            'phone_number' => 'required|string|celular_com_ddd',
             'password' => ['required','string','min:6','max:20','confirmed','regex:(^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$)'],            
         ], [
             'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
         ]);
+        
+
     }
 
     /**
@@ -118,15 +129,18 @@ class RegisterController extends Controller
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
 
         //LOG ----------------------------------------------------------------------------------------
-        $this->log("register.create:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        $this->log("register.create:".$data['name']." ".$data['apelido']." ".$data['email']." ".$data['country']." ".$data['cpf']." ".$data['phone_number_country']." ".$data['phone_number']);
         //--------------------------------------------------------------------------------------------
         
         return User::create([
+            
             'name' => $data['name'],
-            'cargo' => $data['cargo'],
+            'apelido' => $data['apelido'],
+            
             'email' => $data['email'],
+            'country' => $data['country'],
             'cpf' => $data['cpf'],
-            'telefone' => $data['telefone'],
+            'phone_number' => $data['phone_number'],
             'password' => Hash::make($data['password']),
 
         ]);

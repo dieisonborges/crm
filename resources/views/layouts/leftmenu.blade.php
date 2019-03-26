@@ -97,7 +97,7 @@
           </li>
           @endcan
 
-          @can('read_categorias')
+          @can('read_categoria')
 
           <li class="treeview">
             <a href="#">
@@ -211,7 +211,7 @@
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-address-book"></i> <span>Algo errado</span>
+              <i class="fa fa-address-book"></i> <span>Algo errado?</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

@@ -1,4 +1,4 @@
-@can('read_tecnico')    
+@can('read_atendimento')    
     @extends('layouts.appdashboard')
     @section('title', 'Dashboard')
     @section('content')    
@@ -47,23 +47,6 @@
         </div>
         <!-- ./col -->  
 
-        <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h3>Livro</h3>
-
-              <p>Novo Livro de Serviço</p>
-            </div>
-            <a href="{{url('livros/'.$setor->name.'/create')}}">
-              <div class="icon">
-                <i class="fa fa-book"></i>
-              </div>
-            </a>
-            <a href="{{url('livros/'.$setor->name.'/create')}}" class="small-box-footer">Novo Livro <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
 
         <div class="col-lg-4 col-xs-4">
           <!-- small box -->
@@ -91,12 +74,12 @@
 
               <p>Tickets sem Setor (Não Alocados)</p>
             </div>
-            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}">
+            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}">
               <div class="icon">                
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -110,12 +93,12 @@
 
               <p>Tickets Aberto(s)</p>
             </div>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/1/status')}}">
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/1/status')}}">
               <div class="icon">                
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -129,12 +112,12 @@
 
               <p>Tickets Fechado(s)</p>
             </div>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status')}}">
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}">
               <div class="icon">
                 <i class="fa fa-ticket"></i>
               </div>
             </a>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -153,7 +136,7 @@
 
         @foreach($tickets as $ticket)
         <div class="col-md-4 col-sm-6 col-xs-12">
-          <a href="{{url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}">
+          <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}">
             <div class="info-box">
               <!--
               0   =>  "Crítico - Emergência (resolver imediatamente)",
@@ -234,56 +217,7 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
-                <table class="table no-margin">
-                  <thead>
-                    <th>ID</th>
-                    <th>Protocolo</th>
-                    <th>Início do Serviço</th>
-                    <th>Término do Serviço</th> 
-                    <th>Responsável</th>
-                    <th>Status</th>
-                    <th>Autenticação</th>
-                  </thead>
-                  <tbody>
-                  @foreach($livros as $livro)
-                  <tr>
-                    <td>{{$livro->id}}</td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{str_replace('/'.$setor->name,'', $livro->protocolo)}}</a></td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
-                    {{date('d/m/Y H:i:s', strtotime($livro->inicio))}}
-                    {{$week[date('l', strtotime($livro->inicio))]}}</a>
-                    </td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
-                    {{date('d/m/Y H:i:s', strtotime($livro->fim))}}
-                    {{$week[date('l', strtotime($livro->fim))]}}
-                    </a>
-                    </td>                  
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
-                    <td>
-                        <a href="{{URL::to('livros')}}/{{$livro->id}}">
-                            <!--
-                            0  => "Fechado",
-                            1  => "Aberto",  
-                            -->
-                            @switch($livro->status)
-                                @case(1)
-                                    <span class="btn btn-success btn-xs">Aprovado</span>
-                                    @break                                                               
-                                @default
-                                    <span class="btn btn-warning btn-xs">Aberto</span>
-                            @endswitch
-                        </a>
-                    </td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->autenticacao}}</a></td>
-                </tr>
-                  @endforeach
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>
+            
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <a href="{{URL::to('livros')}}/{{$setor->name}}/create" class="btn btn-sm btn-info btn-flat pull-left">Novo Livro</a>
