@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Convite;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -39,7 +41,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers; 
 
     /**
      * Where to redirect users after registration.
@@ -71,6 +73,24 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         
+        /* ---------------------------- */
+        //Valida convite
+
+        //Data mais 02 dias 48 horas
+
+        //$data_expira = date('d/m/Y', strtotime('-2 days'));        
+
+        $convite = Convite::where('email', $data['email'])
+                            ->where('codigo', $data['codigo'])
+                            /*->whereDate('created_at', '=', date('Y-m-d'))*/
+                            ->first();
+
+        if(!$convite){
+            $data['codigo'] = null;
+        }
+
+        /* ---------------------------- */ 
+        
 
         //Limpar acentos e espaços CPF
         //$data['cpf'] = ExtraFunc::sanitizeString($data['cpf']);
@@ -99,19 +119,52 @@ class RegisterController extends Controller
         }
         */
 
-        return Validator::make($data, [
-            'convite' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'apelido' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',            
-            'country' => 'required|string|min:2|max:3',
-            'cpf' => 'string|cpf|unique:users',
-            'phone_number_country' => 'required|string|min:2|max:5',
-            'phone_number' => 'required|string|celular_com_ddd',
-            'password' => ['required','string','min:6','max:20','confirmed','regex:(^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$)'],            
-        ], [
-            'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
-        ]);
+        return Validator::make
+        (   $data, 
+            [
+                
+                'codigo' =>  [
+                                'required',
+                                Rule::exists('convites'),
+
+                            ],
+
+                'name' => 'required|string|max:255',
+
+                'apelido' => 'required|string|max:255',
+
+                'email' =>  [
+                                'required',
+                                'string',
+                                'email',
+                                'max:255',
+                                'unique:users',
+                                Rule::exists('convites')
+                            ],  
+
+                'country' => 'required|string|min:2|max:3',
+
+                'cpf' => 'string|cpf|unique:users',
+
+                'phone_number_country' => 'required|string|min:2|max:5',
+
+                'phone_number' => 'required|string|celular_com_ddd',
+
+                'password' =>   [
+                                    'required',
+                                    'string',
+                                    'min:6',
+                                    'max:20',
+                                    'confirmed',
+                                    'regex:(^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$)'
+                                ],            
+            ],    
+            [
+                'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
+                'required' => 'O campo :attribute é obrigatório. Verifique se o valor inserido é válido.',
+            ]
+        
+        );
         
 
     }

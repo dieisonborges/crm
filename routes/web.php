@@ -41,6 +41,9 @@ Route::resource('permissions', 'PermissionController');
 Route::post('permissions/busca', 'PermissionController@busca');
 Route::get('permission/{id}/roles', 'PermissionController@roles');
 
+Route::get('permission/createAuto', 'PermissionController@createAuto');
+Route::post('permission/storeAuto', 'PermissionController@storeAuto');
+
 // UserController - Permissoes
 Route::resource('/users', 'UserController');
 Route::post('users/busca', 'UserController@busca');
@@ -122,11 +125,15 @@ Route::get('atendimentos/{setor}/alocar', 'AtendimentoController@alocar');
 Route::get('atendimentos/{setor}/{id}/alocarSetors', 'AtendimentoController@alocarSetors');
 Route::post('atendimentos/alocarSetorUpdate', 'AtendimentoController@alocarSetorUpdate');
 
-
 //LOGS
 //Route::resource('logs', 'LogController');
 Route::get('logs/acesso', 'LogController@acesso');
 Route::get('logs/', 'LogController@index');
 Route::get('logs/{id}', 'LogController@show');
 Route::post('logs/busca', 'LogController@busca');
+
+
+// Convites - Plataforma
+Route::resource('convites', 'ConviteController');
+Route::post('convites/busca', 'ConviteController@busca');
 

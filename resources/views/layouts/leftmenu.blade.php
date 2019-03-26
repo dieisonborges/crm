@@ -7,12 +7,30 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
 
+          @can('read_log')
+
+          <li class="header">Logs de Sistema</li> 
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-history"></i> <span>Logs (Registros) Sistema</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('logs/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+              <li><a href="{{ url('logs/acesso') }}"><i class="fa fa-circle-o"></i> Acesso</a></li>
+            </ul>
+          </li>
+          @endcan
+
                 
           @can('read_user') 
 
           <!-- ************************ Controle de Usuário e Grupos ********************* -->        
 
-          <li class="header">Usuário, Grupos, Logs e Setores</li> 
+          <li class="header">Usuário, Grupos e Setores</li> 
 
           @endcan
           @can('read_user')
@@ -61,6 +79,7 @@
             <ul class="treeview-menu">
               <li><a href="{{ url('permissions/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
               <li><a href="{{ url('permissions/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('permission/createAuto') }}"><i class="fa fa-circle-o"></i> Automatizado</a></li>
             </ul>
           </li>
           @endcan
@@ -81,21 +100,7 @@
           </li>
           @endcan
 
-          @can('read_log')
-
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-history"></i> <span>Logs (Registros) Sistema</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('logs/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
-              <li><a href="{{ url('logs/acesso') }}"><i class="fa fa-circle-o"></i> Acesso</a></li>
-            </ul>
-          </li>
-          @endcan
+ 
 
           @can('read_categoria')
 
@@ -112,14 +117,28 @@
               <li><a href="{{ url('categorias/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
-          @endcan    
+          @endcan
+
+          @can('read_convite')
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-paper-plane"></i> <span>Convites</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('convites/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('convites/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan  
 
   
-          @can('read_ticket')
+          @can('read_ticket')     
 
-          <!-- ************************ Administrador | Tickets ********************* -->        
-
-          <li class="header">Tickets - Root</li> 
+          <li class="header">Tickets - Administração</li> 
 
           <li class="treeview">
             <a href="#">  

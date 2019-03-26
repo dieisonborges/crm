@@ -12,14 +12,14 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="convite" class="col-md-4 col-form-label text-md-right">{{ __('Código do Convite') }}</label>
+                            <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Código do Convite') }}</label>
 
                             <div class="col-md-6">
-                                <input id="convite" type="text" class="form-control{{ $errors->has('convite') ? ' is-invalid' : '' }}" name="convite" placeholder="ABCXY45YX" value="{{ old('convite') }}" required autofocus>
+                                <input id="codigo" type="text" class="form-control{{ $errors->has('codigo') ? ' is-invalid' : '' }}" name="codigo" placeholder="ABCXY45YX" value="{{ old('codigo') }}" required autofocus>
 
-                                @if ($errors->has('convite'))
+                                @if ($errors->has('codigo'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('convite') }}</strong>
+                                        <strong>{{ $errors->first('codigo') }}</strong>
                                     </span>
                                 @endif
                             </div>

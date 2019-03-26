@@ -3,16 +3,25 @@
 	@section('title', 'Nova Role')
 	@section('content')
 			<h1>
-		        Nova Permission
-		        <small>Permissão</small>
+		        Nova Permission - Automatizado
+		        <small>Será criado 04 permissions e 01 role (grupo)</small>	        
 		    </h1>
+
+		    <p>
+		    	
+		    	create_nomepermission <br>
+		    	read_nomepermission <br>
+		    	update_nomepermission <br>
+		    	delete_nomepermission <br>
+
+		    </p>
 			
 
-			<form method="POST" action="{{url('permissions')}}">
+			<form method="POST" action="{{action('PermissionController@storeAuto')}}">
 				@csrf			
 				<div class="form-group mb-12">
 				    <label for="name">Nome</label>
-				    <input type="text" class="form-control" id="name" name="name" value="" placeholder="Digite o Nome..." required>
+				    crud_<input type="text" class="form-control" id="name" name="name" value="" placeholder="Digite o Nome..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
 				    <label for="label">Rótulo</label>
