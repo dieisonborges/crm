@@ -9,28 +9,53 @@ use App\User;
 use App\Role;
 use App\Permission;
 use App\Setor; 
+use App\Config;
 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    $first_deploy = config('app.name');
+    
+    private function first_deploy(){
+        //true or false
+        //.env
+        return config('app.first_deploy');
+    }
 
-    dd($first_deploy);
+    private function active_adm(){
+        //true or false
+        //.env
+        return config('app.active_adm');
+    }
+
+    private function html_alert($type, $msg){
+
+        $msg = '
+        <div class="box-body">
+            <div class="alert alert-'.$type.' alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i>'.$type.'</h4>
+                '.$msg.'
+            </div>
+        </div>
+            ';
+
+        return $msg;
+
+
+    }
+
 
     /* ----------------------- LOGS ----------------------*/
-    if($first_deploy=='true'){
-        echo "First deploy";
-    }else{
-        private function log($info){
-            //path name
-            $filename="AuthServiceProvider";
+    
+    private function log($info){
+        //path name
+        $filename="AuthServiceProvider";
 
-            $log = new LogController;
-            $log->store($filename, $info);
-            return null;     
-        }
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;  
 
     }
     /* ----------------------- END LOGS --------------------*/
@@ -56,8 +81,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         //LOG --------------------------------------------------------------------------
-        if($first_deploy=='true'){
-        echo "First deploy";
+        if($this->first_deploy()){
+            //Aviso
+            echo $this->html_alert("danger", "Set First deploy - Ignore Security");
         }else{
             $this->log("GateContract");
         }
@@ -70,8 +96,9 @@ class AuthServiceProvider extends ServiceProvider
         //Comente esse bloco no primeiro migrate
 
         /* --------------------- Carrega as permissões ------------------------ */
-        if($first_deploy=='true'){
-            echo "First deploy";
+        if($this->first_deploy()){
+            //Aviso
+            echo $this->html_alert("danger", "Set First deploy - Ignore Security");
         }else{
     
             $permissions = Permission::with('roles')->get();
@@ -87,21 +114,28 @@ class AuthServiceProvider extends ServiceProvider
                     }
 
                 );
-            
 
-            
-                Gate::before(function ($user) {
-                    if ($user->hasRole('adm')) {
-                        return true;
-                    }
-                });        
+                if($this->active_adm()){
+                    //Ativa bypass para grupo adm                    
+
+                    //aviso
+                    echo $this->html_alert("danger", "Set Active Administrator- Low Security");
+
+                    Gate::before(function ($user) {
+                        if ($user->hasRole('adm')) {
+                            return true;
+                        }
+                    });
+                }
+    
             
 
             }
         }
         /* ------------- Carega setores para MENUS ---------------------*/
-        if($first_deploy=='true'){
-            echo "First deploy";
+        if($this->first_deploy()){
+            //Aviso
+            echo $this->html_alert("danger", "Set First deploy - Ignore Security");
         }else{
             // Criar uma sessão
             

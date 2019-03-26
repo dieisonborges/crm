@@ -56,7 +56,7 @@ class CreateSetorsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('setor_equipamento', function (Blueprint $table) {
+        Schema::create('setor_categoria', function (Blueprint $table) {
             $table->increments('id');  
 
             $table->integer('setor_id')->unsigned();
@@ -65,10 +65,10 @@ class CreateSetorsTable extends Migration
                     ->on('setors')
                     ->onDelete('cascade');           
 
-            $table->integer('equipamento_id')->unsigned();
-            $table->foreign('equipamento_id')
+            $table->integer('categoria_id')->unsigned();
+            $table->foreign('categoria_id')
                     ->references('id')
-                    ->on('equipamentos')
+                    ->on('categorias')
                     ->onDelete('cascade'); 
 
             $table->timestamps();
@@ -82,7 +82,7 @@ class CreateSetorsTable extends Migration
      */
     public function down()
     {        
-        Schema::dropIfExists('setor_equipamento');
+        Schema::dropIfExists('setor_categoria');
         Schema::dropIfExists('setor_ticket');
         Schema::dropIfExists('setor_user');
         Schema::dropIfExists('setors');

@@ -57,11 +57,11 @@ Route::post('user/setorDestroy', 'UserController@setorDestroy');
 //TEST
 //Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
 
-Route::post('equipamentos/busca', 'EquipamentoController@busca');
-Route::get('equipamentos/dashboard', 'EquipamentoController@dashboard');
-Route::get('equipamentos/dashboard/{id}', 'EquipamentoController@dashboardSistema');
-Route::get('equipamentos/status/{id}/{status}/{sistema}', 'EquipamentoController@status');
-Route::resource('equipamentos', 'EquipamentoController');
+Route::post('categorias/busca', 'CategoriaController@busca');
+Route::get('categorias/dashboard', 'CategoriaController@dashboard');
+Route::get('categorias/dashboard/{id}', 'CategoriaController@dashboardSistema');
+Route::get('categorias/status/{id}/{status}/{sistema}', 'CategoriaController@status');
+Route::resource('categorias', 'CategoriaController');
 
 
 // TicketController
@@ -93,44 +93,35 @@ Route::post('clients/storeEncerrar', 'ClientController@storeEncerrar');
 Route::get('clients/{status}/status', 'ClientController@status');
 Route::get('clients/{id}/acao', 'ClientController@acao');
 
-// TecnicoController
-//Route::resource('tecnicos/', 'TecnicoController');
-Route::get('tecnicos/{setor}/{id}/edit', 'TecnicoController@edit');
-Route::get('tecnicos/{setor}/{id}/show', 'TecnicoController@show');
-Route::get('tecnicos/{setor}/{id}/acao', 'TecnicoController@acao');
-Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
+// AtendimentoController
+//Route::resource('atendimentos/', 'AtendimentoController');
+Route::get('atendimentos/{setor}/{id}/edit', 'AtendimentoController@edit');
+Route::get('atendimentos/{setor}/{id}/show', 'AtendimentoController@show');
+Route::get('atendimentos/{setor}/{id}/acao', 'AtendimentoController@acao');
+Route::post('atendimentos/{setor}/{id}/update', 'AtendimentoController@update');
 
-//Route::get('tecnicos/update/', 'TecnicoController@update');
+//Route::get('atendimentos/update/', 'AtendimentoController@update');
 
-Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
-Route::get('tecnicos/{setor}/buscaData', 'TecnicoController@buscaData');
-Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}/equipamento', 'TecnicoController@buscaStatusIdEquipamento');
-Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status');
-Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
-Route::post('tecnicos/storeAcao', 'TecnicoController@storeAcao');
-Route::get('tecnicos/{setor}/{id}/encerrar', 'TecnicoController@encerrar');
-Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');
-Route::get('tecnicos/{setor}/{id}/reabrir', 'TecnicoController@reabrir');
-Route::post('tecnicos/storeReabrir', 'TecnicoController@storeReabrir');
+Route::post('atendimentos/{setor}/busca', 'AtendimentoController@busca');
+Route::get('atendimentos/{setor}/buscaData', 'AtendimentoController@buscaData');
+Route::get('atendimentos/{setor}/tickets/{categoria_id}/{status}/categoria', 'AtendimentoController@buscaStatusIdCategoria');
+Route::get('atendimentos/{setor}/tickets/{status}/status', 'AtendimentoController@status');
+Route::get('atendimentos/{setor}/tickets', 'AtendimentoController@index');
+Route::post('atendimentos/storeAcao', 'AtendimentoController@storeAcao');
+Route::get('atendimentos/{setor}/{id}/encerrar', 'AtendimentoController@encerrar');
+Route::post('atendimentos/storeEncerrar', 'AtendimentoController@storeEncerrar');
+Route::get('atendimentos/{setor}/{id}/reabrir', 'AtendimentoController@reabrir');
+Route::post('atendimentos/storeReabrir', 'AtendimentoController@storeReabrir');
 
-//Setor Tecnico
-Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
-Route::post('tecnicos/setorUpdate', 'TecnicoController@setorUpdate');
-Route::post('tecnicos/setorDestroy', 'TecnicoController@setorDestroy');
-Route::get('tecnicos/{setor}/dashboard', 'TecnicoController@dashboard');
-Route::get('tecnicos/{setor}/alocar', 'TecnicoController@alocar');
-Route::get('tecnicos/{setor}/{id}/alocarSetors', 'TecnicoController@alocarSetors');
-Route::post('tecnicos/alocarSetorUpdate', 'TecnicoController@alocarSetorUpdate');
+//Setor Atendimento
+Route::get('atendimentos/{setor}/{id}/setors', 'AtendimentoController@setors');
+Route::post('atendimentos/setorUpdate', 'AtendimentoController@setorUpdate');
+Route::post('atendimentos/setorDestroy', 'AtendimentoController@setorDestroy');
+Route::get('atendimentos/{setor}/dashboard', 'AtendimentoController@dashboard');
+Route::get('atendimentos/{setor}/alocar', 'AtendimentoController@alocar');
+Route::get('atendimentos/{setor}/{id}/alocarSetors', 'AtendimentoController@alocarSetors');
+Route::post('atendimentos/alocarSetorUpdate', 'AtendimentoController@alocarSetorUpdate');
 
-//LIVROS Técnicos 
-
-Route::get('livros/{setor}/', 'LivroController@index');
-Route::post('livros/{setor}/busca', 'LivroController@busca');
-Route::get('livros/{setor}/{id}/show', 'LivroController@show');
-Route::get('livros/{setor}/create', 'LivroController@create');
-Route::post('livros/preview', 'LivroController@store');
-Route::get('livros/{setor}/{id}/excluir', 'LivroController@destroy');
-Route::get('livros/{setor}/{id}/aprovar', 'LivroController@aprovar');
 
 //LOGS
 //Route::resource('logs', 'LogController');

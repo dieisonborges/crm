@@ -10,9 +10,9 @@
                 
           @can('read_user') 
 
-          <!-- ************************ Administrador | Acesso ********************* -->        
+          <!-- ************************ Controle de Usuário e Grupos ********************* -->        
 
-          <li class="header">Administrador | Acesso</li> 
+          <li class="header">Usuário, Grupos, Logs e Setores</li> 
 
           @endcan
           @can('read_user')
@@ -97,49 +97,29 @@
           </li>
           @endcan
 
-          @can('read_equipamento')
-
-           <!-- ************************ Administrador | Configurações ********************* -->        
-
-          <li class="header">Administrador | Configurações</li> 
+          @can('read_categorias')
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-wrench"></i> <span>Equipamentos</span>
+              <i class="fa fa-wrench"></i> <span>Categorias</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('equipamentos/dashboard') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-              <li><a href="{{ url('equipamentos/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('equipamentos/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('categorias/dashboard') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+              <li><a href="{{ url('categorias/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('categorias/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan    
 
-          @can('read_escala')
-          <!--
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-male"></i> <span>Escalas Técnicas</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('escalas/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('escalas/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
-            </ul>
-          </li>
-          -->
-          @endcan    
-
+  
           @can('read_ticket')
 
           <!-- ************************ Administrador | Tickets ********************* -->        
 
-          <li class="header">Administrador | Tickets</li> 
+          <li class="header">Tickets - Root</li> 
 
           <li class="treeview">
             <a href="#">  
@@ -156,22 +136,6 @@
             </ul>
           </li>
           @endcan   
-
-          @can('read_livro')
-          <!--
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-book"></i> <span>Livros de Serviço <i class="fa fa-certificate text-red"></i> Adm</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-            </ul>
-          </li>
-          -->
-          @endcan        
 
            
           @if(session()->get('setors'))
@@ -214,20 +178,6 @@
                   </li>
 
 
-
-                  <li class="treeview">
-                    <a href="#">
-                      <i class="fa fa-book"></i> <span>Livro de Serviço</span>
-                      <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                    </a>
-                    <ul class="treeview-menu">
-                      <li><a href="{{ url('livros/'.$sess_setors->name.'/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-                      <li><a href="{{ url('livros/'.$sess_setors->name.'/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
-                    </ul>
-                  </li>
-
               @endcan 
 
             @endforeach 
@@ -257,17 +207,17 @@
 
           <!-- ************************ Atendimento ********************* -->
 
-          <li class="header">Atendimento</li>
+          <li class="header">Problemas (Bugs)</li>
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-address-book"></i> <span>Contato</span>
+              <i class="fa fa-address-book"></i> <span>Algo errado</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('contato/') }}"><i class="fa fa-circle-o"></i> Enviar Mensagem</a></li>
+              <li><a href="{{ url('contato/') }}"><i class="fa fa-circle-o"></i> Enviar Mensagem (Bugs)</a></li>
             </ul>
           </li>
                    

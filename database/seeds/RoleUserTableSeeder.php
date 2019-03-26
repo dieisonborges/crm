@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\User;
+use App\Role;
+
 class RoleUserTableSeeder extends Seeder
 {
     /**
@@ -10,15 +13,9 @@ class RoleUserTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        //
-        RoleUser::create([
-            'id'=>'1',
-            'role_id'      => '1',
-            'user_id'      => '1',
-        ]);
+    {        
 
-        
+        Role::find('1')->roleUser()->attach('1');  
         
     }
 }

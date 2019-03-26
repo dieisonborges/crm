@@ -15,10 +15,12 @@ class UsersTableSeeder extends Seeder
         //
         User::create([
             'id'=>'1',
-            'name'      => 'Administrador',
-            'apelido'      => 'Administrador',
-            'email'     => 'administrador@ecardume.com.br',
-            'password'  => bcrypt('ecardume@123'),
+            'name'          => 'Administrador',
+            'apelido'       => 'Administrador',
+            'phone_number'  => '+55 00 00000-0000',
+            'country'       => 'BR',
+            'email'         => 'administrador@ecardume.com.br',
+            'password'      => bcrypt('admcardume@123'),
         ]);
     }
 }

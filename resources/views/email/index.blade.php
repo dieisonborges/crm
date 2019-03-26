@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Contato')
 @section('content')
-		<h3 class="mb-3">Entre em Contato</h3>
+		<h3 class="mb-3">Entre em Contato para Informar Problemas no Sistema</h3>
+		<h4 class="mb-3">Somente Bugs</h4>
 		@if($message = Session::get('success'))
 			<div class="alert alert-success">
 				{{$message}}
@@ -36,8 +37,9 @@
 		 	</div>
 
 			<div class="form-group mb-3">
+			    <input type="hidden" id="assunto" name="assunto" value="Bugs - Problemas no CRM">
 			    <label for="assunto">Assunto</label>
-			    <input type="text" class="form-control" id="assunto" name="assunto" placeholder="Digite o Assunto..." required>
+			    <span class="form-control">Bugs - Problemas no CRM</span>
 		 	</div>
 		 	
 		 	<div class="form-group mb-3">

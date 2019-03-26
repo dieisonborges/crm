@@ -29,6 +29,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Active Administrator
+    |--------------------------------------------------------------------------
+    | true or false
+    | if true not security
+    | if false best security
+    | in prodution never set true
+    | permit bypass on security
+    */
+
+    'active_adm' => env('APP_ACTIVE_ADM', 'active_adm'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Version
     |--------------------------------------------------------------------------
     |
