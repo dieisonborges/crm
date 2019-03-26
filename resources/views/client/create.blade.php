@@ -21,49 +21,42 @@
 						@endforeach 
 											
 					</select>
-			 	</div>			 	
+			 	</div>		 	
 
-			 	<div class="form-group col-md-2">
-				    <label for="tipo">Tipo</label>				    
-					<select class="form-control" name="tipo">
-						@foreach ($tipos as $Key => $tipo)
-						   <option value="{{$Key}}"> {{$tipo}}</option>
-						@endforeach 				
-					</select>
-			 	</div>
 
-			 	<div class="form-group col-md-6">
-				    <label for="equipamento_id">Equipamento</label>
-	                <select class="form-control select2" name="equipamento_id">
-	                	<option value="0">Nenhum - Nenhum equipamento.</option>
-						@forelse ($equipamentos as $equipamento)
-							<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{str_limit($equipamento->descricao,30)}} </option>
+			 	<div class="form-group col-md-8">
+				    <label for="categoria_id">Categoria</label>
+	                <select class="form-control select2" name="categoria_id">
+	                	<option value="0">Nenhum - Nenhum categoria.</option>
+						@forelse ($categorias as $categoria)
+							<option value="{{$categoria->id}}">{{$categoria->nome}} - {{str_limit($categoria->descricao,30)}} </option>
 						@empty                    
 						@endforelse 
 	                </select>
 			 	</div>			 	
 
 			 	<div class="form-group col-md-12">
-				    <label for="titulo">Título (Descrição Resumida)</label>
-				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{ old('titulo') }}">
+				    <label for="titulo">Título (Descrição Resumida) <span style="color: red; font-size: 10px;">*80 caract.</span></label>
+				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{ old('titulo') }}" onkeyup="limite_textarea(this.value)" id="texto">
+				    <div style="font-size: 10px; color: #AA0000; float: right;">
+				    	*<span id="cont">80</span> Restantes <br>
+				    </div>
 			 	</div>
 
-			 	<!--
+			 	<script type="text/javascript">
+					
+				function limite_textarea(valor) {
+				    quant = 80;
+				    total = valor.length;
+				    if(total <= quant) {
+				        resto = quant - total;
+				        document.getElementById('cont').innerHTML = resto;
+				    } else {
+				        document.getElementById('texto').value = valor.substr(0,quant);
+				    }
+				}
+				</script>
 
-			 	<div class="form-group col-md-12">
-	                <label>Categoria</label>
-	                <select name="categoria[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais categorias"
-	                        style="width: 100%;">
-		                  <option value="Ocorrência">Ocorrência</option>
-		                  <option value="Atividade">Atividade</option>
-		                  <option value="Ferramentaria">Ferramentaria</option>
-		                  <option value="Canais">Canais</option>
-		                  <option value="Radares">Radares</option>
-		                  <option value="DBS">BDS</option>
-	                </select>
-	            </div>
-
-	        	-->
 	            <!-- /.form-group -->
 
 	            <div class="form-group col-md-12">

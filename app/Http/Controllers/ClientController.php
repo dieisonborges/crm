@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 //use Request;
 use Gate;
 use App\Ticket;
-use App\Equipamento;
+use App\Categoria;
 use App\Setor; 
 use DB;
 
@@ -39,16 +39,6 @@ class ClientController extends Controller
         $this->ticket = $ticket;        
     }
 
-    private function ticketTipo()
-    {
-        //
-        $tipo = array(
-                0  => "Técnico",
-                1  => "Administrativo",                
-            );
-
-        return $tipo;
-    }
 
     private function ticketRotulo()
     {
@@ -86,9 +76,10 @@ class ClientController extends Controller
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
 
 
-        return date("Y").$protocolo;
+        return date("Y").$protocolo.date("m");
     }
 
     private function calcDatas($data_ini, $data_fim){
@@ -155,7 +146,8 @@ class ClientController extends Controller
         }
     }
 
-        public function status($status)
+
+    public function status($status)
     {
         //
         if(auth()->user()->id){
@@ -182,9 +174,7 @@ class ClientController extends Controller
     {
         //
         if(auth()->user()->id){
-            $equipamentos = Equipamento::all(); 
-            //Tipos
-            $tipos = $this->ticketTipo();
+            $categorias = Categoria::all(); 
 
             //Rotulos
             $rotulos = $this->ticketRotulo();
@@ -199,7 +189,7 @@ class ClientController extends Controller
             //--------------------------------------------------------------------------------------------
 
 
-            return view('client.create', compact('equipamentos', 'tipos', 'rotulos', 'status', 'setores'));
+            return view('client.create', compact('categorias', 'rotulos', 'status', 'setores'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -216,8 +206,7 @@ class ClientController extends Controller
             $this->validate($request,[
                     'setor' => 'required',
                     'rotulo' => 'required',
-                    'tipo' => 'required',
-                    'titulo' => 'required|string|max:30',
+                    'titulo' => 'required|string|max:80',
                     'descricao' => 'required|string|min:15',
                     
             ]);
@@ -227,11 +216,9 @@ class ClientController extends Controller
 
             $ticket->rotulo = $request->input('rotulo');
 
-            if ($request->input('equipamento_id')) {
-                $ticket->equipamento_id = $request->input('equipamento_id');
+            if ($request->input('categoria_id')) {
+                $ticket->categoria_id = $request->input('categoria_id');
             }
-
-            $ticket->tipo = $request->input('tipo');
 
             $ticket->titulo = $request->input('titulo');
 
@@ -285,9 +272,6 @@ class ClientController extends Controller
             	return redirect('erro')->with('permission_error', '403');
             }
 
-            //Tipos
-            $tipos = $this->ticketTipo();
-
             //Rotulos
             $rotulos = $this->ticketRotulo();
 
@@ -304,7 +288,7 @@ class ClientController extends Controller
             //--------------------------------------------------------------------------------------------
 
 
-            return view('client.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
+            return view('client.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

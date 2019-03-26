@@ -56,15 +56,15 @@
 			 	</div>
 
 			 	<div class="form-group col-md-4">
-				    <label for="equipamento_id">Equipamento</label>
-				    <select class="form-control" name="equipamento_id">
-				    	@if($ticket->equipamento_id)
-				    		<option selected="selected" value="{{$ticket->equipamentos->id}}">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}} </option>
+				    <label for="categoria_id">Categoria</label>
+				    <select class="form-control" name="categoria_id">
+				    	@if($ticket->categoria_id)
+				    		<option selected="selected" value="{{$ticket->categorias->id}}">{{$ticket->categorias->nome}} - {{$ticket->categorias->descricao}} </option>
 				    	@else
 				    		<option selected="selected" value="">Nenhum</option>
             			@endif
-				    	@forelse ($equipamentos as $equipamento)
-				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
+				    	@forelse ($categorias as $categoria)
+				    		<option value="{{$categoria->id}}">{{$categoria->nome}} - {{$categoria->descricao}} </option>
 					    @empty                    
 	                	@endforelse 			
 					</select>
