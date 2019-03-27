@@ -88,7 +88,7 @@
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-black-tie"></i> <span>Setor de Trabalho</span>
+              <i class="fa fa-black-tie"></i> <span>Setores Internos</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
