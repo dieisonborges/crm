@@ -14,12 +14,12 @@
             <table class="table table-hover">
                 <tr>
                     <th>IP</th>
-                    <th>MAC</th>
+                    <th>Host</th>
                 </tr>
                 @forelse ($logs as $log)
                 <tr>
                     <td><a href="#">{{$log->ip}}</a></td>      
-                    <td><a href="#">{{$log->mac}}</a></td>                 
+                    <td><a href="#">{{$log->host}}</a></td>                 
                 </tr>                
                 @empty
                     

@@ -60,7 +60,7 @@
 
                     <p>
                       {{ Auth::user()->name }}
-                      <small>Sicário</small>
+                      <!--<small></small>-->                      
                     </p>
                   </li>
                   <!-- Menu Body -->

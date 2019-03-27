@@ -21,10 +21,10 @@
 
 					<label><strong>IP: </strong></label>
 					<span class="form-control">{{$log->ip}}</span>
-
+					<!--
 					<label><strong>Mac: </strong></label>
 					<span class="form-control">{{$log->mac}}</span>
-
+					-->
 					<label><strong>Host: </strong></label>
 					<span class="form-control">{{$log->host}}</span>
 
@@ -34,13 +34,13 @@
 				</div>
 			</div>
 
-			@if(isset($user))
+			@if($user)
 
 			<div class="col-md-6">
 				<div class="box box-danger">
 					<h3>Usuário</h3>
-					<label><strong>Cargo: </strong></label>
-					<span class="form-control"> {{$user->cargo}}</span>
+					<label><strong>Apelido: </strong></label>
+					<span class="form-control"> {{$user->apelido}}</span>
 
 					<label><strong>Nome: </strong> </label>
 					<span class="form-control">{{$user->name}}</span>

@@ -71,10 +71,11 @@ class LogController extends Controller
         $log = new Log();
         $log->ip = request()->ip();
 
+        /*
+
         $logmac = shell_exec("arp -an ".$log->ip."");
 
         if(isset($logmac)){
-            /* tratar MAC */
             $logmac = explode("at", $logmac);
             if(isset($logmac[1])){
                 $logmac = explode("on", $logmac[1]);
@@ -86,11 +87,15 @@ class LogController extends Controller
             }else{
                 $log->mac = "None";
             }            
-            /* END tratar MAC */
+            
 
         }else{
             $log->mac = "None";
         }
+
+        */
+
+        $log->mac = "None";
 
        if(isset($_SERVER["REMOTE_ADDR"])){
             $log->host = array_key_exists( 'REMOTE_HOST', $_SERVER) ? $_SERVER['REMOTE_HOST'] : gethostbyaddr($_SERVER["REMOTE_ADDR"]);
