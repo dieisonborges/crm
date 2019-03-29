@@ -429,9 +429,6 @@ class AtendimentoController extends Controller
                     /*'descricao' => 'required|string|min:15',*/
             ]);
 
-
-            $ticket->status = $request->get('status');
-
             $ticket->rotulo = $request->get('rotulo');
 
             if ($request->get('categoria_id')) {
@@ -440,7 +437,7 @@ class AtendimentoController extends Controller
 
             $ticket->titulo = $request->get('titulo');
 
-            //$ticket->descricao = $request->get('descricao');
+            $ticket->descricao = $request->get('descricao');
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("atendimento.edit.update.ticket".$id."-".$ticket);

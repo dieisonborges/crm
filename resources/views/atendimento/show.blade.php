@@ -64,8 +64,8 @@
 			 	</div>			 	
 
 
-			 	<div class="form-group col-md-4">
-				    <label for="categoria_id">Equipamento</label>
+			 	<div class="form-group col-md-8">
+				    <label for="categoria_id">Categoria</label>
             @if($ticket->categoria_id)
 				    <span class="col-md-12 form-control">{{$ticket->categorias->nome}}</span>
             @else

@@ -16,24 +16,32 @@
               
             </div>
 
+            <div class="form-group col-md-2">
+				    <label for="status">Status</label>
+				    <!--
+                    0  => "Fechado",
+                    1  => "Aberto",  
+                    -->
+                    
+                    @switch($ticket->status)
+                        @case(0)
+                            <span class="btn btn-flat btn-success btn-md col-md-12">Fechado</span>
+                            @break                                                               
+                        @default
+                            <span class="btn btn-flat btn-warning btn-md col-md-12">Aberto</span>
+                    @endswitch
+                	
+				    
+			 </div>
+
 
 			
 
 			<form method="POST" enctype="multipart/form-data" action="{{url('atendimentos/'.$setor.'/'.$id.'/update')}}" id="form-edit">
 				@csrf
 
-				<input type="hidden" name="my_setor" value="{{$setor}}">			
-
-			 	<div class="form-group col-md-2">
-				    <label for="status">Status</label>
-				    <select class="form-control" name="status">
-						<option value="{{$ticket->status}}">{{$status[$ticket->status]}}</option>
-						@foreach ($status as $Key => $statu)
-						   <option value="{{$Key}}"> {{$statu}}</option>
-						@endforeach 	
-					</select>
-			 	</div>
-
+				<input type="hidden" name="my_setor" value="{{$setor}}">
+				
 			 	<div class="form-group col-md-4">					
 				    <label for="rotulo">Rótulo (Criticidade)</label>				    
 					<select class="form-control" name="rotulo">						
@@ -46,7 +54,7 @@
 					</select>
 			 	</div>
 
-			 	<div class="form-group col-md-4">
+			 	<div class="form-group col-md-6">
 				    <label for="categoria_id">Categoria</label>
 				    <select class="form-control  select2" name="categoria_id" style="width: 100%;">
 				    	@if($ticket->categoria_id)

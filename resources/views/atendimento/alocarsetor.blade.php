@@ -15,7 +15,7 @@
 
 
         <div class="col-md-12">  
-            <form method="POST" action="{{action('TecnicoController@alocarSetorUpdate')}}">
+            <form method="POST" action="{{action('AtendimentoController@alocarSetorUpdate')}}">
                 @csrf
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <input type="hidden" name="my_setor" value="{{$my_setor}}">

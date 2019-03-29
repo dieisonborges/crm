@@ -15,7 +15,7 @@
 
 
         <div class="col-md-12">  
-            <form method="POST" action="{{action('TecnicoController@setorUpdate')}}">
+            <form method="POST" action="{{action('AtendimentoController@setorUpdate')}}">
                 @csrf
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <input type="hidden" name="my_setor" value="{{$my_setor}}">
@@ -60,7 +60,7 @@
                     
                     <td>
 
-                        <form method="POST" action="{{action('TecnicoController@setorDestroy')}}" id="formDelete{{$setor->id}}">
+                        <form method="POST" action="{{action('AtendimentoController@setorDestroy')}}" id="formDelete{{$setor->id}}">
                             @csrf
                             <input type="hidden" name="setor_id" value="{{$setor->id}}">
                             <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
