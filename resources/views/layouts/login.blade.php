@@ -4,9 +4,7 @@
 
   @include('layouts.head')
 
-<body class="hold-transition login-page">
-
-	@include('layouts.error')
+<body class="hold-transition login-page">	
 
 	{{Session::get('danger')}}
 

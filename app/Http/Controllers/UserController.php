@@ -92,6 +92,7 @@ class UserController extends Controller
     }
 
     // Criar 
+    /*
     public function create(){
         if(!(Gate::denies('create_user'))){
 
@@ -106,8 +107,10 @@ class UserController extends Controller
         }       
 
     }
+    */
 
     // Criar 
+    /*
     public function store(Request $request){
         if(!(Gate::denies('create_user'))){
             //Validação
@@ -161,6 +164,8 @@ class UserController extends Controller
         }
 
     }
+
+    */
 
     public function edit($id){  
         if(!(Gate::denies('update_user'))){

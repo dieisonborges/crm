@@ -8,8 +8,8 @@ class Ticket extends Model
 {
     //
 
-    public function equipamentos(){        
-        return $this->belongsTo('App\Equipamento', 'equipamento_id', 'id');
+    public function categorias(){        
+        return $this->belongsTo('App\Categoria', 'categoria_id', 'id');
     }
 
     public function users(){        

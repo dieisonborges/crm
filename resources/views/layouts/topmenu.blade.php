@@ -19,39 +19,38 @@
         <ul class="nav navbar-nav">
 
               
-              <!-- Messages: style can be found in dropdown.less-->
+              <!-- -------------------- MENU ICON TOP ------------------------- -->
+
               <li class="dropdown messages-menu">
-                <a href="{{ url('/home') }}" class="dropdown-toggle">
+                <a href="{{url('clients/create')}}" class="dropdown-toggle" alt="Novo Ticket">
+                  <i class="fa fa-ticket text-yellow"></i>
+                </a>
+                
+              </li>  
+
+              <li class="dropdown messages-menu">
+                <a href="{{ url('/home') }}" class="dropdown-toggle" alt="Home">
                   <i class="fa fa-home"></i>
                 </a>
                 
-              </li>
+              </li>                            
 
-              @can('read_equipamento')
-              <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <a href="{{ url('/equipamentos/dashboard') }}" class="dropdown-toggle">
-                  <i class="fa fa-wrench"></i>
-                </a>
-                
-              </li>
-              @endcan
-
-              <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
-                <a href="{{ url('/contato') }}" class="dropdown-toggle">
+                <a href="{{ url('/contato') }}" class="dropdown-toggle" alt="Bugs">
                   <i class="fa fa-envelope"></i>
                 </a>
                 
               </li>
-              <!-- Tasks: style can be found in dropdown.less --> 
+
+              <!-- -------------------- END MENU ICON TOP ------------------------- -->
+
               
               
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">{{ Auth::user()->cargo }} {{ Auth::user()->name }}</span>
+                  <span class="hidden-xs">{{ Auth::user()->apelido }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->

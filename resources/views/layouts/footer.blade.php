@@ -14,6 +14,7 @@
     	<small>País: <b class="geo-country"></b></small>
       	<small>Estado: <b class="geo-state"></b></small>
       	<small>Cidade: <b class="geo-city"></b></small>
+      	<small>IP: <b class="geo-ip"></b></small>
   	</div>
 
 

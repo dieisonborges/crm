@@ -165,16 +165,10 @@
                 <li class="header">{{$sess_setors->label}}</li>
 
                 
-                  <li class="treeview">
-                    <a href="#">  
-                      <i class="fa fa-tachometer"></i> <span>Dashboard</span>
-                      <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                    </a>
-                    <ul class="treeview-menu">
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/dashboard/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-                    </ul>
+                  <li>
+                    <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
+                      <i class="fa fa-tachometer"></i> <span>Dashboard</span>                      
+                    </a>                    
                   </li>
 
                   <li class="treeview">
@@ -185,13 +179,13 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
 
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/tickets/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
+                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
+                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
 
-                      <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/buscaData') }}"><i class="fa fa-circle-o"></i> Todos por Data</a></li>
+                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/buscaData') }}"><i class="fa fa-circle-o"></i> Todos por Data</a></li>
                       
                     </ul>
                   </li>

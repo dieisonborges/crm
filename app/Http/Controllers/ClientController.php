@@ -205,7 +205,6 @@ class ClientController extends Controller
             //Validação
             $this->validate($request,[
                     'setor' => 'required',
-                    'rotulo' => 'required',
                     'titulo' => 'required|string|max:80',
                     'descricao' => 'required|string|min:15',
                     
@@ -214,7 +213,13 @@ class ClientController extends Controller
             $ticket = new Ticket();
             $ticket->status = 1;
 
-            $ticket->rotulo = $request->input('rotulo');
+            // Rotulos de Criticidade
+            //    0   =>  "Crítico - Emergência (resolver imediatamente)",
+            //    1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+            //    2   =>  "Médio - Intermediária (avaliar situação)",
+            //    3   =>  "Baixo - Rotineiro ou Planejado",
+            //    4   =>  "Nenhum",
+            $ticket->rotulo = "2";
 
             if ($request->input('categoria_id')) {
                 $ticket->categoria_id = $request->input('categoria_id');

@@ -6,11 +6,13 @@
   <div class="login-box-body">
 
     <a href="/">
-        <b style="display:none;">SICARIO</b>
+        <b style="display:none;">e-Cardume</b>
         <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%">
     </a>
 
     <hr>
+
+    @include('layouts.error')
 
     <p class="login-box-msg">{{ __('Login') }}</p>
 

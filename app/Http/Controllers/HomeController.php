@@ -28,7 +28,18 @@ class HomeController extends Controller
      */
     public function index()
     {   
+        
+
         if(Auth::check()){
+
+
+        /* -------- Implementa ZERA Contagem de LOGIN --------*/
+            // Menor que 10 permite o login
+            $users = User::find(Auth::id());
+            $users->login = 0;
+            $users->save();
+        /* --------- FIM ZERA Contagem -----------------------*/
+
 
 
             /* ------------- Verifica perfil técnico ----------------- */

@@ -72,7 +72,6 @@ class LogController extends Controller
         $log->ip = request()->ip();
 
         /*
-
         $logmac = shell_exec("arp -an ".$log->ip."");
 
         if(isset($logmac)){

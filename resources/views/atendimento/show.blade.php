@@ -63,15 +63,11 @@
                             @endswitch
 			 	</div>			 	
 
-			 	<div class="form-group col-md-4">
-				    <label for="tipo">Tipo</label>	
-				    <span class="ol-md-12 form-control">{{$tipos[$ticket->tipo]}}</span>
-			 	</div>
 
 			 	<div class="form-group col-md-4">
-				    <label for="equipamento_id">Equipamento</label>
-            @if($ticket->equipamento_id)
-				    <span class="col-md-12 form-control">{{$ticket->equipamentos->nome}}</span>
+				    <label for="categoria_id">Equipamento</label>
+            @if($ticket->categoria_id)
+				    <span class="col-md-12 form-control">{{$ticket->categorias->nome}}</span>
             @else
             <span class="col-md-12 form-control">Nenhum</span>
             @endif

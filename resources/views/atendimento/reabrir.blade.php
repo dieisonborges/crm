@@ -16,7 +16,7 @@
               
             </div>
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('TecnicoController@storeReabrir')}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{action('AtendimentoController@storeReabrir')}}" id="form-edit">
 				@csrf
 
 				<input type="hidden" name="ticket_id" value="{{$ticket->id}}">

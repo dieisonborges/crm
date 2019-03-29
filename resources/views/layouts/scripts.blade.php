@@ -56,7 +56,7 @@
 
     $(function () {
     //Initialize Select2 Elements
-    $('.select2').select2()
+    $('.select2').select2();
 
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
@@ -200,15 +200,24 @@
     document.body.appendChild(script);
   });
 
-
-
   function preencherDados(dados) {
     $('.geo-country').text(dados.address.country);
     $('.geo-state').text(dados.address.state);
     $('.geo-city').text(dados.address.city);
   }
 
+</script>
 
+<script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
 
+<script type="text/javascript">
+
+  $(function() {
+   $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+    function(json) {
+      $('.geo-ip').text(json.ip);
+    }
+   );
+  });
 
 </script>

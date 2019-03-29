@@ -38,10 +38,6 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Role::class);
     }
 
-    public function livros(){
-        
-        return $this->belongsToMany(\App\Livro::class);
-    }
 
     public function setors(){
         
@@ -75,25 +71,5 @@ class User extends Authenticatable
 
     }
 
-    public function checkActive(){
-
-        if((auth()->user()->status)==1){
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-
-    public function checkQtdLogin(){
-
-        if((auth()->user()->login)<10){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-
-    
+   
 }

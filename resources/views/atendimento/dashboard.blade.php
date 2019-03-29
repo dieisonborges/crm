@@ -27,97 +27,59 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        
 
-        <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
-              <h3>Ticket</h3>
-
-              <p>Criar Novo Ticket</p>
-            </div>
-            <a href="{{url('clients/create')}}">
-              <div class="icon">
-                <i class="fa fa-ticket"></i>
-              </div>
-            </a>
-            <a href="{{url('clients/create')}}" class="small-box-footer">Novo Ticket <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->  
-
-
-        <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
-              <h3>Equipamentos</h3>
-
-              <p>Verificar situação dos equipamentos</p>
-            </div>
-            <a href="{{url('equipamentos/dashboard')}}">
-              <div class="icon">
-                <i class="fa fa-wrench"></i>
-              </div>
-            </a>
-            <a href="{{url('equipamentos/dashboard')}}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-
-        <div class="col-lg-4 col-xs-6">
+        <div class="col-lg-2 col-xs-2">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
               <h3>{{$cont_aloc}}</h3>
 
-              <p>Tickets sem Setor (Não Alocados)</p>
+              <p>Não Alocados</p>
             </div>
             <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}">
               <div class="icon">                
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar Tickets<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
 
 
-         <div class="col-lg-4 col-xs-6">
+         <div class="col-lg-2 col-xs-2">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
               <h3>{{$qtd_tick_aber}}</h3>
 
-              <p>Tickets Aberto(s)</p>
+              <p>Abertos</p>
             </div>
             <a href="{{url('atendimentos/'.$setor->name.'/tickets/1/status')}}">
               <div class="icon">                
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('atendimentos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
 
 
-        <div class="col-lg-4 col-xs-6">
+        <div class="col-lg-2 col-xs-2">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
               <h3>{{$qtd_tick_fech}}</h3>
 
-              <p>Tickets Fechado(s)</p>
+              <p>Fechados</p>
             </div>
             <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}">
               <div class="icon">
                 <i class="fa fa-ticket"></i>
               </div>
             </a>
-            <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -203,33 +165,9 @@
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
-        <div class="col-md-12">         
+        
 
-          <!-- TABLE: LATEST ORDERS -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Últimos Livros</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <a href="{{URL::to('livros')}}/{{$setor->name}}/create" class="btn btn-sm btn-info btn-flat pull-left">Novo Livro</a>
-              <a href="{{URL::to('livros')}}/{{$setor->name}}" class="btn btn-sm btn-default btn-flat pull-right">Visualizar todos os Livros</a>
-            </div>
-            <!-- /.box-footer -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-8">
+        <div class="col-md-12">
               <!-- USERS LIST -->
               <div class="box box-danger">
                 <div class="box-header with-border">
@@ -248,9 +186,8 @@
                   <ul class="users-list clearfix">
                     @foreach($equipe as $membro)
                     <li>
-                      <img src="{{asset('img/default-user-image.png')}}" width="90px" height="90px" alt="User Image">
-                        <a class="users-list-name" href="#">{{$membro->name}}</a>
-                      <span class="users-list-date">{{strtoupper($membro->cargo)}}</span>
+                      <img src="{{asset('img/default-user-image.png')}}" width="50px" height="50px" alt="User Image">
+                        <a class="users-list-name" href="#">{{$membro->apelido}}</a>
                     </li>
                     @endforeach
                     

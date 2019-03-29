@@ -39,9 +39,8 @@
                     <th>Usuário</th>
                     <th>Titulo</th>
                     <th>Criado em:</th>
-                    <th>Equipamento</th>
+                    <th>Categoria</th>
                     <th>Rótulo</th>
-                    <th>Tipo</th>
                     <th>Setor de <br> Trabalho</th>
                     <th>Editar</th>
                 </tr>
@@ -68,7 +67,7 @@
                     <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->titulo}}</a></td>
                     <td><a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
-                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->equipamentos['nome']}}</a></td>
+                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">{{$ticket->categorias['nome']}}</a></td>
                     <td>
                         <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
                             <!--
@@ -91,25 +90,6 @@
                                     <span class="btn btn-xs">Baixo</span>
                                     @break                            
 
-                            @endswitch
-                        </a>
-                    </td>
-
-                    <td>
-                        <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/show">
-                            <!--
-                            0  => "Técnico",
-                            1  => "Administrativo",  
-                            -->
-                            @switch($ticket->tipo)
-                                @case(0)
-                                    <span>Técnico</span>
-                                    @break
-                                @case(1)
-                                    <span>Administrativo</span>
-                                    @break                                
-                                @default
-                                    <span>Nenhum</span>
                             @endswitch
                         </a>
                     </td>

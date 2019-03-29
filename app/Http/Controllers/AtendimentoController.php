@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 //use Request;
 use Gate;
 use App\Ticket;
-use App\Equipamento;
+use App\Categoria;
 use App\Setor; 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -36,16 +36,7 @@ class AtendimentoController extends Controller
         $this->ticket = $ticket;        
     }
 
-    private function ticketTipo()
-    {
-        //
-        $tipo = array(
-                0  => "Técnico",
-                1  => "Administrativo",
-            );
 
-        return $tipo;
-    }
 
     private function ticketRotulo()
     {
@@ -124,6 +115,36 @@ class AtendimentoController extends Controller
         );
 
         return $week;
+    }
+
+    private function storeAcaoAuto($setor, $descricao, $ticket_id, $tipo_acao, $tipo_acao_cor)
+    {
+
+        //usuário
+        $user_id = auth()->user()->id;
+
+        $descricao .= '<br><span class="btn btn-'.$tipo_acao_cor.' btn-xs">'.$tipo_acao.'</span>';
+
+        $ticket = Ticket::find($ticket_id);
+
+        $status = $ticket->prontuarioTickets()->attach([[
+            'ticket_id' => $ticket_id, 
+            'user_id' => $user_id, 
+            'descricao' => $descricao,
+            'created_at' => date ("Y-m-d H:i:s"),
+            'updated_at' => date ("Y-m-d H:i:s")
+        ]]); 
+
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("tecnico.storeAcao:".$ticket_id);
+        //--------------------------------------------------------------------------------------------
+
+        if(!$status){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
 
     public function index($setor)
@@ -266,7 +287,7 @@ class AtendimentoController extends Controller
         }
     }
 
-    public function buscaStatusIdEquipamento($setor, $equipamento_id, $status)
+    public function buscaStatusIdCategoria($setor, $categoria_id, $status)
     {
         
         //
@@ -282,18 +303,18 @@ class AtendimentoController extends Controller
             $setor = $temp_setor;
 
             $tickets = $setor->tickets()
-                                ->where('equipamento_id', $equipamento_id)
+                                ->where('categoria_id', $categoria_id)
                                 ->where('status', $status)
                                 ->orderBy('id', 'DESC')
                                 ->paginate(40);
 
-            $equipamento = Equipamento::find($equipamento_id);
+            $categoria = Categoria::find($categoria_id);
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("atendimento.status.id=".$status."equipamento_id=".$equipamento_id);
+            $this->log("atendimento.status.id=".$status."categoria_id=".$categoria_id);
             //--------------------------------------------------------------------------------------------
 
-            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $equipamento->nome, 'setor' => $setor ));
+            return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $categoria->nome, 'setor' => $setor ));
         }
 
         
@@ -317,9 +338,6 @@ class AtendimentoController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
-            //Tipos
-            $tipos = $this->ticketTipo();
-
             //Rotulos
             $rotulos = $this->ticketRotulo();
 
@@ -336,7 +354,7 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
 
-            return view('atendimento.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
+            return view('atendimento.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -359,9 +377,6 @@ class AtendimentoController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
-            //Tipos
-            $tipos = $this->ticketTipo();
-
             //Rotulos
             $rotulos = $this->ticketRotulo();
 
@@ -369,7 +384,7 @@ class AtendimentoController extends Controller
             $status = $this->ticketStatus();
 
             //recuperar todos equipapmentos
-            $equipamentos = Equipamento::all(); 
+            $categorias = Categoria::all(); 
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("atendimento.edit.id:".$id);
@@ -378,7 +393,7 @@ class AtendimentoController extends Controller
             if($ticket->status==0){
                 return redirect('erro')->with('permission_error', '403');
             }else{
-                return view('atendimento.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
+                return view('atendimento.edit', compact('ticket','id', 'rotulos', 'categorias', 'status', 'setor'));
             }
 
             
@@ -395,6 +410,9 @@ class AtendimentoController extends Controller
 
             $ticket = Ticket::find($id);
 
+            //Dados para amrazenamento de alterções
+            $ticket_anterior = Ticket::find($id);
+
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
             $setors_security = $ticket->setors()->where('name', $setor)->first();
@@ -406,9 +424,7 @@ class AtendimentoController extends Controller
 
             //Validação
             $this->validate($request,[
-                    'status' => 'required',
                     'rotulo' => 'required',
-                    'tipo' => 'required',
                     'titulo' => 'required|string|max:30',
                     /*'descricao' => 'required|string|min:15',*/
             ]);
@@ -418,10 +434,8 @@ class AtendimentoController extends Controller
 
             $ticket->rotulo = $request->get('rotulo');
 
-            $ticket->tipo = $request->get('tipo');
-
-            if ($request->get('equipamento_id')) {
-                $ticket->equipamento_id = $request->get('equipamento_id');
+            if ($request->get('categoria_id')) {
+                $ticket->categoria_id = $request->get('categoria_id');
             }
 
             $ticket->titulo = $request->get('titulo');
@@ -433,6 +447,67 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if($ticket->save()){
+
+
+                /* -----------Salva mudanças na acao----------- */
+
+                $descricao_acao = "<b>Alterações:</b><br><br>";
+                
+
+                $ticketRotulo = $this->ticketRotulo();
+                if(($ticketRotulo[$ticket_anterior->rotulo])!=($ticketRotulo[$request->get('rotulo')])){
+                    $descricao_acao  = "Rótulo alterado de: <i style='color:red;'>";
+                    $descricao_acao .= $ticketRotulo[$ticket_anterior->rotulo];
+                    $descricao_acao .= "</i>";
+                    $descricao_acao .= " Para: <i style='color:blue;'>";
+                    $descricao_acao .= $ticketRotulo[$request->get('rotulo')];
+                    $descricao_acao .= "</i>";
+                    $descricao_acao .= "<br>";
+                }
+
+                if ($request->get('categoria_id')) {   
+
+                    $categoria_anterior = Categoria::find($ticket_anterior->categoria_id);
+                    $categoria_novo = Categoria::find($request->get('categoria_id'));
+
+                    if(($categoria_anterior)!=($categoria_novo)){
+                        $descricao_acao .= "Categoria alterado de: <i style='color:red;'>";
+                        $descricao_acao .= "Nome: ".$categoria_anterior->nome." ID: ".$categoria_anterior->id;
+                        $descricao_acao .= "</i>";
+                        $descricao_acao .= " Para: <i style='color:blue;'>";             
+                        $descricao_acao .= "Nome: ".$categoria_novo->nome." ID: ".$categoria_novo->id;
+                        $descricao_acao .= "</i>";
+                        $descricao_acao .= "<br>";
+                    }
+
+                }
+
+                if(($ticket_anterior->titulo)!=($request->get('titulo'))){
+                    $descricao_acao .= "Título alterado de: <i style='color:red;'>";
+                    $descricao_acao .= $ticket_anterior->titulo;
+                    $descricao_acao .= "</i>";
+                    $descricao_acao .= " Para: <i style='color:blue;'>";
+                    $descricao_acao .= $request->get('titulo');
+                    $descricao_acao .= "</i>";                
+                    $descricao_acao .= "<br>";
+                }
+
+                if(($ticket_anterior->descricao)!=($request->get('descricao'))){
+                    $descricao_acao .= "Descrição alterado de: <i style='color:red;'>";
+                    $descricao_acao .= $ticket_anterior->descricao;
+                    $descricao_acao .= "</i>";
+                    $descricao_acao .= " Para: <i style='color:blue;'>";
+                    $descricao_acao .= $request->get('descricao');
+                    $descricao_acao .= "</i>";
+                }
+
+                $tipo_acao="Alteração";
+                $tipo_acao_cor="warning";
+
+                $this->storeAcaoAuto($setor, $descricao_acao, $id, $tipo_acao, $tipo_acao_cor);
+                /* -----------End Salva mudanças na acao----------- */
+
+
                 return redirect('atendimentos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
             }else{
                 return redirect('atendimentos/'.$setor.'/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');

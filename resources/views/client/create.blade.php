@@ -11,29 +11,17 @@
 			<form method="POST" action="{{url('clients')}}" enctype="multipart/form-data" id="form-create">
 				@csrf
 				
+				<!--
 
 			 	<div class="form-group col-md-4">					
 				    <label for="rotulo">Rótulo (Criticidade)</label>				    
-					<select class="form-control" name="rotulo">						
-
-	                	@foreach ($rotulos as $Key => $rotulo)
-						   <option value="{{$Key}}"> {{$rotulo}}</option>
-						@endforeach 
-											
+					<select class="form-control" name="rotulo">
+						   <option value=""> </option>
 					</select>
-			 	</div>		 	
+			 	</div>
 
-
-			 	<div class="form-group col-md-8">
-				    <label for="categoria_id">Categoria</label>
-	                <select class="form-control select2" name="categoria_id">
-	                	<option value="0">Nenhum - Nenhum categoria.</option>
-						@forelse ($categorias as $categoria)
-							<option value="{{$categoria->id}}">{{$categoria->nome}} - {{str_limit($categoria->descricao,30)}} </option>
-						@empty                    
-						@endforelse 
-	                </select>
-			 	</div>			 	
+			 	--> 	
+	 			 	
 
 			 	<div class="form-group col-md-12">
 				    <label for="titulo">Título (Descrição Resumida) <span style="color: red; font-size: 10px;">*80 caract.</span></label>
@@ -59,7 +47,7 @@
 
 	            <!-- /.form-group -->
 
-	            <div class="form-group col-md-12">
+	            <div class="form-group col-md-6">
 	                <label>Setor</label>
 	                <select name="setor[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais setores para atendimento"
 	                        style="width: 100%;" required="required">
@@ -74,6 +62,17 @@
 	                </select>
 	            </div>
 	            <!-- /.form-group -->
+
+	            <div class="form-group col-md-6">
+				    <label for="categoria_id">Categoria</label>
+	                <select class="form-control select2" name="categoria_id">
+	                	<option value="0">Nenhum - Nenhum categoria.</option>
+						@forelse ($categorias as $categoria)
+							<option value="{{$categoria->id}}">{{$categoria->nome}} - {{str_limit($categoria->descricao,30)}} </option>
+						@empty                    
+						@endforelse 
+	                </select>
+			 	</div>	
 
 			 	<div class="form-group col-md-12">
 				    <label for="descricao">Descrição</label>				    
