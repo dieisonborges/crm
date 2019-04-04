@@ -57,15 +57,9 @@ Route::get('user/{id}/setors', 'UserController@setors');
 Route::post('user/setorUpdate', 'UserController@setorUpdate');
 Route::post('user/setorDestroy', 'UserController@setorDestroy');
 
-//TEST
-//Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
-
+//Categorias
+Route::resource('/categorias', 'CategoriaController');
 Route::post('categorias/busca', 'CategoriaController@busca');
-Route::get('categorias/dashboard', 'CategoriaController@dashboard');
-Route::get('categorias/dashboard/{id}', 'CategoriaController@dashboardSistema');
-Route::get('categorias/status/{id}/{status}/{sistema}', 'CategoriaController@status');
-Route::resource('categorias', 'CategoriaController');
-
 
 // TicketController
 Route::resource('tickets', 'TicketController');

@@ -2,6 +2,9 @@
 	@extends('layouts.app')
 	@section('title', 'Visualizar Ticket')
 	@section('content')
+
+        <a href="#footer" class="btn btn-primary" style="float: right;"><span class="fa fa-arrow-down"></span></a>
+
 			  <h1>
 		        Ticket 
 		        <small>{{$ticket->protocolo}}</small>
@@ -223,6 +226,9 @@
     <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('atendimentos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
     
     </section>
+
+    <a href="#main-header" class="btn btn-primary" style="float: right;"><span class="fa fa-arrow-up"></span></a>
+
 
   @endsection
 @endcan

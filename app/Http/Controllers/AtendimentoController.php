@@ -958,6 +958,20 @@ class AtendimentoController extends Controller
 
             /* .................... END QTD não alocados ................... */
 
+            /* ........................ Última Ação do Ticket Aberto .............*/
+
+            foreach ($tickets as $ticket) {
+
+                $ticket_prontuario = Ticket::find($ticket->id);
+                $prontuarios[$ticket->id] = $ticket_prontuario->prontuarioTicketsShow()->orderBy('id', 'desc')->first();                
+            }
+
+
+
+            //dd($prontuarios);
+
+            /* ........................ Última Ação do Ticket Aberto .............*/
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("atendimento.dashboard");
             //--------------------------------------------------------------------------------------------
@@ -972,7 +986,8 @@ class AtendimentoController extends Controller
                             'equipe_qtd',
                             'tickets',
                             'week',
-                            'cont_aloc'
+                            'cont_aloc',
+                            'prontuarios'
                         ));
         }
         else{

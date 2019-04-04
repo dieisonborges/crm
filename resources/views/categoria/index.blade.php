@@ -1,14 +1,14 @@
-@can('read_equipamento')    
+@can('read_categoria')    
     @extends('layouts.app')
-    @section('title', 'Equipamentos')
+    @section('title', 'Categorias')
     @section('content')    
-    <h1>Equipamentos <a href="{{url('equipamentos/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
+    <h1>Categorias <a href="{{url('categorias/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
 
 
 
         <div class="col-md-12">	
 
-            <form method="POST" enctype="multipart/form-data" action="{{url('equipamentos/busca')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{url('categorias/busca')}}">
                 @csrf
                 <div class="input-group input-group-lg">			
                     <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
@@ -23,57 +23,50 @@
 
         <br><br><br>
 
-        
-        <div class="box-header">
-            <h3 class="box-title">Gerência de Equipamentos</h3>
-            
-        </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Part Number</th>
-                    <th>Serial Number</th>
                     <th>Descrição</th>
-                    <th>Criado em:</th>
-                    <th>Modificado em:</th>
-                    <th>Sistema</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
-                @forelse ($equipamentos as $equipamento)
+                @forelse ($categorias as $categoria)
                 <tr>
-                    <td>{{$equipamento->id}}</td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->nome}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->part_number}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->serial_number}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->descricao}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->created_at}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->updated_at}}</a></td>
-                    <td><a href="{{URL::to('equipamentos')}}/{{$equipamento->id}}">{{$equipamento->sistema_id}}</a></td>                    
+                    <td>{{$categoria->id}}</td>
+
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{{URL::to('equipamentos/'.$equipamento->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}">{{$categoria->nome}}</a>
+                    </td>                 
+                    
+                    <td>
+                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}">{{$categoria->descricao}}</a>
                     </td>
+
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{{URL::to('categorias/'.$categoria->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                    </td>
+                    
                     <td>
 
-                        <form method="POST" action="{{action('EquipamentoController@destroy', $equipamento->id)}}" id="formDelete{{$equipamento->id}}">
+                        <form method="POST" action="{{action('CategoriaController@destroy', $categoria->id)}}" id="formDelete{{$categoria->id}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$equipamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete{{$categoria->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
                         </form> 
 
                         <script>
-                           function confirmDelete{{$equipamento->id}}() {
+                           function confirmDelete{{$categoria->id}}() {
 
                             var result = confirm('Tem certeza que deseja excluir?');
 
                             if (result) {
-                                    document.getElementById("formDelete{{$equipamento->id}}").submit();
+                                    document.getElementById("formDelete{{$categoria->id}}").submit();
                                 } else {
                                     return false;
                                 }
@@ -90,7 +83,7 @@
         </div>
         <!-- /.box-body -->
 
-        {{$equipamentos->links()}}
+        {{$categorias->links()}}
 
     @endsection
 @endcan

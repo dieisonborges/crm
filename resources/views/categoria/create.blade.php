@@ -1,39 +1,24 @@
-@can('create_equipamento')   
+@can('create_categoria')   
 	@extends('layouts.app')
-	@section('title', 'Novo Usuário')
+	@section('title', 'Nova Categoria')
 	@section('content')
 			<h1>
-		        Novo Equipamento
-		        <small>+</small>
+		        Nova
+		        <small>Categoria</small>
 		    </h1>
 			
 
-			<form method="POST" action="{{url('equipamentos')}}">
+			<form method="POST" action="{{url('categorias')}}">
 				@csrf			
 				<div class="form-group mb-12">
 				    <label for="nome">Nome</label>
-				    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome completo..." required>
+				    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome completo..." value="{{ old('nome') }}" required>
 			 	</div>
-			 	<div class="form-group mb-12">
-				    <label for="part_number">Part Number</label>
-				    <input type="text" class="form-control" id="part_number" name="part_number" value="" placeholder="Digite o PN..." >
-			 	</div>
-			 	<div class="form-group mb-12">
-				    <label for="serial_number">Serial Number</label>
-				    <input type="text" class="form-control" id="serial_number" name="serial_number" value="" placeholder="Digite o Serial..." >
-			 	</div>
+			 	
 			 	<div class="form-group mb-12">
 				    <label for="descricao">Descrição</label>
-				    <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite a Descrição.." required="required"></textarea>
-			 	</div>
-			 	<div class="form-group mb-12">
-				    <label for="sistema">Sistema</label>
-				    <input type="text" class="form-control" id="sistema" name="sistema" value="" placeholder="Digite o Sistema..." >
+				    <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite a Descrição.." required="required">{{ old('descricao') }}</textarea>
 			 	</div>			 	
-
-			 	<div>
-			 		<hr>
-			 	</div>
 
 			 	<button type="submit" class="btn btn-primary">Cadastrar</button>
 			</form>

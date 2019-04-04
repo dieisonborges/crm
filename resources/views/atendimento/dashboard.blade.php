@@ -9,11 +9,11 @@
     <section class="content-header">
       <h1>
         Dashboard
-        <small>Painel de Controle</small>
+        <small>Painel de Controle <small>{{$setor->label}}</small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">Dashboard </li>
       </ol>
     </section>
 
@@ -41,7 +41,7 @@
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar Tickets<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('atendimentos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -103,10 +103,10 @@
         @foreach($tickets as $ticket)
 
         <!-- Pessima pratica - melhorar -->
-        @//php
-            //unset($prontuario_tmp);
-            //$prontuario_tmp[] = $prontuarios[$ticket->id];
-        @//endphp
+        @php
+            unset($prontuario_tmp);
+            $prontuario_tmp[] = $prontuarios[$ticket->id];
+        @endphp
 
 
        <div class="col-md-4">
@@ -139,23 +139,23 @@
 
             <div class="box-header with-border">
               <h3 class="box-title">
-                <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="text-black" style="font-size: 25px;">
+                <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="text-black" style="font-size: 20px;">
                   {{ str_limit($ticket->titulo, $limit = 20, $end = '...') }}
                 </a></h3><br>
-              <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}">Ticket {{$ticket->id}} Nº <b>{{$ticket->protocolo}}</b></a><br>
+              <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}">Ticket: <b>{{$ticket->protocolo}}</b></a><br>
               <small>Aberto há <b>{{floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($ticket->created_at)))) / (60 * 60 * 24))}} dia(s)</b></small><br>
 
-              <!--
-              @//foreach($prontuario_tmp as $prontuario)
-                @//if($prontuario['descricao'])
+              
+              @foreach($prontuario_tmp as $prontuario)
+                @if($prontuario['descricao'])
 
-                  <small>Última ação há <b>{//{//floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($prontuario['created_at'])))) / (60 * 60 * 24))}} dia(s)</b></small><br>
+                  <small>Última ação há <b>{{floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($prontuario['created_at'])))) / (60 * 60 * 24))}} dia(s)</b></small><br>
 
-                @//else
+                @else
                   <small>Nenhuma ação.</small><br>
-                @//endif
-              @//endforeach
-              -->
+                @endif
+              @endforeach
+              
               <!--
               0   =>  "Crítico - Emergência (resolver imediatamente)",
               1   =>  "Alto - Urgência (resolver o mais rápido possível)",
@@ -163,29 +163,27 @@
               3   =>  "Baixo - Rotineiro ou Planejado",
               4   =>  "Nenhum",
               -->
-              <!--
               <div class="box-tools pull-right">
-                @//switch($ticket->rotulo)
-                    @//case(0)
+                @switch($ticket->rotulo)
+                    @case(0)
                         <span data-toggle="tooltip" title="Crítico" class="badge bg-red">Crítico</span>
-                    @//break
-                    @//case(1)
+                    @break
+                    @case(1)
                         <span data-toggle="tooltip" title="Alto" class="badge bg-yellow">Alto</span>
-                    @//break
-                    @//case(2)
+                    @break
+                    @case(2)
                         <span data-toggle="tooltip" title="Médio" class="badge bg-purple">Médio</span>
-                    @//break
-                    @//case(3)
+                    @break
+                    @case(3)
                         <span data-toggle="tooltip" title="Baixo" class="badge bg-navy">Baixo</span>
-                    @//break
-                    @//case(4)
+                    @break
+                    @case(4)
                         <span data-toggle="tooltip" title="Nenhum" class="badge bg-blue">Nenhum</span>
-                    @//break
-                @//endswitch
+                    @break
+                @endswitch
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>
               </div>
-            -->
 
 
             </div>
@@ -196,29 +194,27 @@
                 <!-- Message. Default to the left -->
 
                 
-                @//foreach($prontuario_tmp as $tickets->prontuario)
-                  @//if($prontuario['descricao'])
+                @foreach($prontuario_tmp as $tickets->prontuario)
+                  @if($prontuario['descricao'])
                     <div class="direct-chat-msg">
                     <div class="direct-chat-info clearfix">
                       <!--<span class="direct-chat-name pull-left">{//{//$prontuario['user_id']}}</span>-->
-                      <span class="direct-chat-timestamp pull-right">{//{//date('d/m/Y H:i:s', strtotime($prontuario['created_at']))}}</span>
+                      <span class="direct-chat-timestamp pull-right">{{date('d/m/Y H:i:s', strtotime($prontuario['created_at']))}}</span>
                     </div>
                     <!-- /.direct-chat-info -->
                     <img class="direct-chat-img" src="{{ asset('img/default-user-image.png') }}" alt="message user image">
                     <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
-                      {//!! html_entity_decode($prontuario['descricao']) !!}
+                      {!! html_entity_decode($prontuario['descricao']) !!}
                     </div>
                     <!-- /.direct-chat-text -->
                   </div>
                   <!-- /.direct-chat-msg -->
-                @//else
+                @else
 
+                @endif
 
-                @//endif
-
-
-                @//endforeach
+                @endforeach
 
 
               </div>
@@ -228,8 +224,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              <a href="{//{//url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="btn btn-success"><i class="fa fa-plus"></i> Mais Informações</a>
-              <a href="{//{//URL::to('tecnicos')}}/{//{//$setor->name}}/{//{//$ticket->id}}/encerrar"  style="float: right;" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>            
+              <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="btn btn-success"><i class="fa fa-plus"></i> Mais Informações</a>
+              <a href="{{URL::to('atendimentos')}}/{{$setor->name}}/{{$ticket->id}}/encerrar"  style="float: right;" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>            
             </div>
             <!-- /.box-footer-->
           </div>
@@ -239,81 +235,7 @@
 
         @endforeach 
 
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        @foreach($tickets as $ticket)
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <a href="{{url('atendimentos/'.$setor->name.'/'.$ticket->id.'/show')}}">
-            <div class="info-box">
-              <!--
-              0   =>  "Crítico - Emergência (resolver imediatamente)",
-              1   =>  "Alto - Urgência (resolver o mais rápido possível)",
-              2   =>  "Médio - Intermediária (avaliar situação)",
-              3   =>  "Baixo - Rotineiro ou Planejado",
-              4   =>  "Nenhum",
-              -->
-              @switch($ticket->rotulo)
-                  @case(0)
-                      <span class="info-box-icon bg-red">
-                        <i class="fa fa-ticket"></i>
-                      </span>                    
-                  @break
-                  @case(1)
-                      <span class="info-box-icon bg-yellow">
-                        <i class="fa fa-ticket"></i>
-                      </span>                    
-                  @break
-                  @case(2)
-                      <span class="info-box-icon bg-purple">
-                          <i class="fa fa-ticket"></i>
-                      </span>
-                  @break
-                  @case(3)
-                      <span class="info-box-icon bg-navy">
-                        <i class="fa fa-ticket"></i>
-                      </span>
-                  @break
-                  @case(4)
-                      <span class="info-box-icon bg-blue">
-                        <i class="fa fa-ticket"></i>
-                      </span>
-                  @break
-              @endswitch
-
-              <div class="info-box-content">
-                <span class="info-box-number" style="margin-bottom: 5px;">Ticket nº 
-                <b>{{$ticket->protocolo}}</a>
-                </b></span>
-
-                <span class="info-box-text"><b>{{$ticket->titulo}}</b></span>                
-                <span class="info-box-text">Dias Abertos: 
-
-                  {{
-                    floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($ticket->created_at)))) / (60 * 60 * 24))
-                  }}
-                  dia(s)
-                </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-
-            </a>
-        </div>
-        <!-- /.col -->
-
-        @endforeach        
+               
         
       </div>
       <!-- /.row -->
@@ -357,8 +279,8 @@
                 <!-- /.box-footer -->
               </div>
               <!--/.box -->
-            </div>
-            <!-- /.col -->
+        </div>
+        <!-- /.col -->
 
      
       </div>

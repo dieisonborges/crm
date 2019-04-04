@@ -112,7 +112,6 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('categorias/dashboard') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
               <li><a href="{{ url('categorias/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
               <li><a href="{{ url('categorias/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
