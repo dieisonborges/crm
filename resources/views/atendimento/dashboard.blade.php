@@ -196,7 +196,7 @@
                 <!-- Message. Default to the left -->
 
                 
-                @//foreach($prontuario_tmp as $prontuario)
+                @//foreach($prontuario_tmp as $tickets->prontuario)
                   @//if($prontuario['descricao'])
                     <div class="direct-chat-msg">
                     <div class="direct-chat-info clearfix">

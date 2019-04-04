@@ -137,3 +137,8 @@ Route::post('logs/busca', 'LogController@busca');
 Route::resource('convites', 'ConviteController');
 Route::post('convites/busca', 'ConviteController@busca');
 
+//Produtos
+Route::resource('produtos', 'ProdutoController');
+Route::post('produtos/busca', 'ProdutoController@busca');
+
+

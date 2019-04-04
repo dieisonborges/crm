@@ -10,13 +10,15 @@
 
 	<hr class="hr">
 
-	<div><small>Acesso   </small>
-    	<small>País: <b class="geo-country"></b></small>
-      	<small>Estado: <b class="geo-state"></b></small>
-      	<small>Cidade: <b class="geo-city"></b></small>
-      	<small>IP: <b class="geo-ip"></b></small>
-  	</div>
+	<div>
+    <small>Acesso   </small>
+    <small>País: <b class="geo-country"></b></small>
+  	<small>Estado: <b class="geo-state"></b></small>
+  	<small>Cidade: <b class="geo-city"></b></small>
+  	<small>IP: <b class="geo-ip"></b></small>
 
+    <small style="float: right;">Customer Relationship Management by <a href="http://montetecnologia.com.br" target="_blank">Monte Tecnologia</a></small>
+  </div>
 
   </footer>
 

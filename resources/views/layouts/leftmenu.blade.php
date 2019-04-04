@@ -156,6 +156,19 @@
           </li>
           @endcan   
 
+          @can('read_produto')     
+
+          <li class="header">Produtos e Estoque</li> 
+
+          <li>
+            <a href="{{ url('produtos') }}">  
+              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
+              
+            </a>
+            
+          </li>
+          @endcan  
+
            
           @if(session()->get('setors'))
               @foreach((session()->get('setors')) as $sess_setors)

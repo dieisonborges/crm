@@ -85,7 +85,7 @@ class AuthServiceProvider extends ServiceProvider
             //Aviso
             echo $this->html_alert("danger", "Set First deploy - Ignore Security");
         }else{
-            $this->log("GateContract");
+            //$this->log("GateContract");
         }
         //------------------------------------------------------------------------------
         

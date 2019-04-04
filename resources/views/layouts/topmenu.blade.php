@@ -23,7 +23,8 @@
 
               <li class="dropdown messages-menu">
                 <a href="{{url('clients/create')}}" class="dropdown-toggle" alt="Novo Ticket">
-                  <i class="fa fa-ticket text-yellow"></i>
+                  <i class="fa fa-ticket"></i>
+                  Novo Ticket
                 </a>
                 
               </li>  
@@ -31,6 +32,7 @@
               <li class="dropdown messages-menu">
                 <a href="{{ url('/home') }}" class="dropdown-toggle" alt="Home">
                   <i class="fa fa-home"></i>
+                  Home
                 </a>
                 
               </li>                            
@@ -38,6 +40,7 @@
               <li class="dropdown notifications-menu">
                 <a href="{{ url('/contato') }}" class="dropdown-toggle" alt="Bugs">
                   <i class="fa fa-envelope"></i>
+                  Bug
                 </a>
                 
               </li>
