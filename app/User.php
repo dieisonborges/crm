@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Setor::class);
     }
 
+    public function franquia(){        
+        return $this->belongsToMany(\App\Franquia::class);
+    }
+
+    /* --------------------- SEGURANCA ----------------------*/
 
     public function hasPermission(Permission $permission){
 
@@ -70,6 +75,9 @@ class User extends Authenticatable
         }        
 
     }
+
+    /* -------------------- SEGURANCA ----------------------*/
+
 
    
 }

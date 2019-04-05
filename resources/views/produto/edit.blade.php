@@ -1,10 +1,17 @@
-@can('update_permission')  
+@can('update_produto')  
 	@extends('layouts.app')
 	@section('title', 'Editar Produto')
 	@section('content')
 			<h1>
 		        Editar Produto
 		        <small>{{$produto->titulo}}</small>
+
+		        @if($produto->status)
+		    		<span class="btn btn-success">Ativo</span>
+		    	@else
+		    		<span class="btn btn-danger">Desativado</span>
+		    	@endif
+				    
 		    </h1>
 			
 
@@ -12,6 +19,25 @@
 				@csrf
 				<input type="hidden" name="_method" value="PATCH">						
 				
+			 	<div class="form-group col-md-12">
+				    <label for="status">Status:</label>				    
+
+				    <select class="form-control" name="status">
+				    	@if($produto->status)
+				    		<option value="1" selected="selected">Ativo</option>
+				    		<option value="0">Desativar</option>
+				    	@else
+				    		<option value="0" selected="selected">Desativado</option>
+				    		<option value="1">Ativar</option>
+				    	@endif
+				    	
+				    	
+				    </select>
+
+			 	</div>
+
+
+
 			 	<div class="form-group col-md-12">
 				    <label for="titulo">Título:</label>
 				    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ $produto->titulo }}" placeholder="Digite o Título..." required>

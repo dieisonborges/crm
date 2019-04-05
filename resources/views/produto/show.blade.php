@@ -5,7 +5,15 @@
 		<h1>
 	        Produto 
 	        <small>{{$produto->name}}</small>
-	        		<a href="{{$produto->id}}/edit" class="btn btn-warning">Editar</a>
+
+
+
+	        @if($produto->status)
+	    		<span class="btn btn-success">Ativo</span>
+	    	@else
+	    		<span class="btn btn-danger">Desativado</span>
+	    	@endif
+
 
 	    </h1>
 		<div class="row">		

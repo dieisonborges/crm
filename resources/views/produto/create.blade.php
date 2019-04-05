@@ -1,4 +1,4 @@
-@can('create_permission')  
+@can('create_produto')  
 	@extends('layouts.app')
 	@section('title', 'Novo Produto')
 	@section('content')

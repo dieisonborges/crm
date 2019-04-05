@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Usuários')
     @section('content')    
-    <h1>Usuários <a href="{{url('users/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
+    <h1>Usuários</h1>
 
 
 

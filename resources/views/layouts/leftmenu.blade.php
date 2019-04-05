@@ -35,17 +35,22 @@
           @endcan
           @can('read_user')
           
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-user"></i> <span>Usuários</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+          <li>
+            <a href="{{ url('users/') }}">
+              <i class="fa fa-user"></i> <span>Usuários</span>              
             </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('users/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('users/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
-            </ul>
+            
+          </li>
+
+          @endcan
+
+          @can('read_franquia')
+          
+          <li>
+            <a href="{{ url('franquias/') }}">
+              <i class="fa fa-home"></i> <span>Franquias</span>              
+            </a>
+            
           </li>
 
           @endcan
@@ -150,7 +155,6 @@
               <li><a href="{{ url('tickets/1/status') }}"><i class="fa fa-circle-o"></i> Abertos</a></li>
               <li><a href="{{ url('tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
               <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
-              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan   

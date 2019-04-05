@@ -13,6 +13,7 @@ use App\Http\Controllers\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+
 class RegisterController extends Controller
 {
     
@@ -64,6 +65,20 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    private function calcDatas($data_ini, $data_fim){
+        //Compara duas datas e retorna a diferença entre dias
+
+        //$data_ini = "2013-08-01";
+        //$data_fim = "2013-08-16";
+
+        $diferenca = strtotime($data_fim) - strtotime($data_ini);
+
+        //Calcula a diferença em dias
+        $dias = floor($diferenca / (60 * 60 * 24));
+
+        return $dias;
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -80,12 +95,27 @@ class RegisterController extends Controller
 
         //$data_expira = date('d/m/Y', strtotime('-2 days'));        
 
+        //Verifica se o Convite Existe
         $convite = Convite::where('email', $data['email'])
                             ->where('codigo', $data['codigo'])
                             /*->whereDate('created_at', '=', date('Y-m-d'))*/
                             ->first();
+        //Calcula se o convite tem mais de 02 dias ou 48 horas
+        $diferenca = $this->calcDatas(date('Y-m-d', strtotime($convite->created_at)), date ("Y-m-d"));
 
-        if(!$convite){
+
+        //Verifica se o convite existe
+        if($convite){
+            //Verifica se o convite foi usado
+            if(($convite->status)==0){
+               $data['codigo'] = null; 
+            }
+            //Verifica data do convite
+            if(($diferenca>2)or($diferenca<0)){
+                $data['codigo'] = null; 
+            }
+        //Convite não existe           
+        }else{
             $data['codigo'] = null;
         }
 
@@ -161,7 +191,7 @@ class RegisterController extends Controller
             ],    
             [
                 'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
-                'required' => 'O campo :attribute é obrigatório. Verifique se o valor inserido é válido.',
+                'required' => 'O campo :attribute é obrigatório. Verifique se o valor inserido é válido, sem uso e dentro da validade.',
             ]
         
         );
@@ -177,7 +207,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
+
         //Remove toda a pontuação do CPF
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
 
@@ -185,6 +215,12 @@ class RegisterController extends Controller
         $this->log("register.create:".$data['name']." ".$data['apelido']." ".$data['email']." ".$data['country']." ".$data['cpf']." ".$data['phone_number_country']." ".$data['phone_number']);
         //--------------------------------------------------------------------------------------------
         
+        /* ------- Setando o Convite como usado ----------- */
+        $convite = Convite::where('email', $data['email'])->first();
+        $convite->status = 0;
+        $convite->save();
+        /* ------- End Setando o Convite como usado ----------- */
+
         return User::create([
             
             'name' => $data['name'],

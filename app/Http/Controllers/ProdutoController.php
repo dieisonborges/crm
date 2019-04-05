@@ -226,7 +226,11 @@ class ProdutoController extends Controller
                     'titulo' => 'required|min:3',
                     'palavras_chave' => 'required|min:3',      
                     'descricao' => 'required|min:10',      
-            ]);            
+            ]);  
+
+            // 1 - Ativo
+            // 0 - Desativado
+            $produto->status = $request->input('status');          
                     
             $produto->titulo = $request->input('titulo');
             $produto->palavras_chave = $request->input('palavras_chave');

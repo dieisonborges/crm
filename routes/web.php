@@ -135,4 +135,11 @@ Route::post('convites/busca', 'ConviteController@busca');
 Route::resource('produtos', 'ProdutoController');
 Route::post('produtos/busca', 'ProdutoController@busca');
 
+//Produtos
+Route::resource('franquias', 'FranquiaController');
+Route::post('franquias/busca', 'FranquiaController@busca');
+Route::get('franquias/{id}/donos', 'FranquiaController@donos');
+Route::post('franquias/donoUpdate', 'FranquiaController@donoUpdate');
+Route::post('franquias/donoDestroy', 'FranquiaController@donoDestroy');
+
 
