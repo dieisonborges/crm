@@ -5,6 +5,7 @@
 
     <h1>Usuários/Roles(Grupos)</h1>
 
+        <a href="{{url('user/'.$user->id.'/setors')}}" class="btn btn-info btn-xs"> Alterar Setor de Trabalho</a>
 
         <br><br>
 

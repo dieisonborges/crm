@@ -5,6 +5,9 @@
 
     <h1>Setor(es) de Trabalho do Usuário</h1>
 
+        <h2>Somente para pessoal interno e-Cardume</h2>
+
+        <a href="{{url('user/'.$user->id.'/roles')}}" class="btn btn-info btn-xs"> Alterar Roles (grupos)</a>
 
         <br><br>
 

@@ -211,7 +211,7 @@ class FranquiaController extends Controller
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
                     'descricao' => 'required|min:10', 
-                    'cnpj' => 'cnpj',
+                    //'cnpj' => 'cnpj',
                     'email' => 'email'
 
             ]);            
@@ -333,7 +333,7 @@ class FranquiaController extends Controller
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
                     'descricao' => 'required|min:10',
-                    'cnpj' => 'cnpj',
+                    //'cnpj' => 'cnpj',
                     'email' => 'email'  
             ]);            
                     

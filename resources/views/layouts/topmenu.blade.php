@@ -45,12 +45,13 @@
                 
               </li>
 
+              @canany(['read_user', 'read_franquia', 'read_categoria', 'read_log', 'read_role', 'read_permission', 'read_setor', 'read_ticket'])
               <!-- -------------------------- MENU ADM ----------------------------- -->
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-cog"></i>
                   Configurações
-                  <span class="label label-danger">Adm</span>
+                  <span class="label label-info">Adm</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="header"></li>
@@ -61,7 +62,7 @@
                       @can('read_user')
                       <li>
                         <a href="{{ url('users/') }}">
-                          <i class="fa fa-user text-aqua"></i> Usuários
+                          <i class="fa fa-user-o text-aqua"></i> Usuários
                         </a>
                       </li>
                       @endcan
@@ -69,7 +70,7 @@
                       @can('read_franquia')          
                       <li>
                         <a href="{{ url('franquias/') }}">
-                          <i class="fa fa-home text-yellow"></i> <span>Franquias</span>              
+                          <i class="fa fa-building-o text-yellow"></i> <span>Franquias</span>              
                         </a>                        
                       </li>
                       @endcan
@@ -129,6 +130,8 @@
               </li>
 
               <!-- -------------------------- END MENU ADM ------------------------- -->
+
+              @endcanany
 
               <!-- -------------------- END MENU ICON TOP ------------------------- -->
 

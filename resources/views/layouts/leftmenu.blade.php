@@ -70,6 +70,19 @@
 
             @endforeach 
           @endif
+
+          @can('read_franqueado')     
+
+          <li class="header">Franqueado</li> 
+
+          <li>
+            <a href="{{ url('franqueados') }}">  
+              <i class="fa fa-building-o"></i> <span>Franqueado</span>
+              
+            </a>
+            
+          </li>
+          @endcan 
           
 
           <!-- ************************ Cliente ********************* -->

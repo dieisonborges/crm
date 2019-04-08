@@ -28,11 +28,11 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
 
-        <div class="col-lg-2 col-xs-2">
+        <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>{{$cont_aloc}}</h3>
+              <h3>{{$cont_aloc}} Tickets</h3>
 
               <p>Não Alocados</p>
             </div>
@@ -47,11 +47,11 @@
         <!-- ./col -->
 
 
-         <div class="col-lg-2 col-xs-2">
+         <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{$qtd_tick_aber}}</h3>
+              <h3>{{$qtd_tick_aber}} Tickets</h3>
 
               <p>Abertos</p>
             </div>
@@ -66,11 +66,11 @@
         <!-- ./col -->
 
 
-        <div class="col-lg-2 col-xs-2">
+        <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>{{$qtd_tick_fech}}</h3>
+              <h3>{{$qtd_tick_fech}} Tickets</h3>
 
               <p>Fechados</p>
             </div>
