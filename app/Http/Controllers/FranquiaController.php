@@ -68,10 +68,41 @@ class FranquiaController extends Controller
         return md5($salt);
     }
 
-    private function app_hash_encode(){
+    private function appHashEncode(){
         // APP_HASH_ENCODE
         // .env
         return config('app.app_hash_encode');
+    }
+
+    private function selectEstadosBrasil(){
+        return '
+                <option value="AC">Acre - AC</option>
+                <option value="AL">Alagoas - AL</option>
+                <option value="AP">Amapá - AP</option>
+                <option value="AM">Amazonas - AM</option>
+                <option value="BA">Bahia - BA</option>
+                <option value="CE">Ceará - CE</option>
+                <option value="DF">Distrito Federal - DF</option>
+                <option value="ES">Espírito Santo - ES</option>
+                <option value="GO">Goiás - GO</option>
+                <option value="MA">Maranhão - MA</option>
+                <option value="MT">Mato Grosso - MT</option>
+                <option value="MS">Mato Grosso do Sul - MS</option>
+                <option value="MG">Minas Gerais - MG</option>
+                <option value="PA">Pará - PA</option>
+                <option value="PB">Paraíba - PB</option>
+                <option value="PR">Paraná - PR</option>
+                <option value="PE">Pernambuco - PE</option>
+                <option value="PI">Piauí - PI</option>
+                <option value="RJ">Rio de Janeiro - RJ</option>
+                <option value="RN">Rio Grande do Norte - RN</option>
+                <option value="RS">Rio Grande do Sul - RS</option>
+                <option value="RO">Rondônia - RO</option>
+                <option value="RR">Roraima - RR</option>
+                <option value="SC">Santa Catarina - SC</option>
+                <option value="SP">São Paulo - SP</option>
+                <option value="SE">Sergipe - SE</option>
+                <option value="TO">Tocantins - TO</option>';
     }
 
     /**
@@ -156,8 +187,9 @@ class FranquiaController extends Controller
             $this->log("franquia.create");
             //--------------------------------------------------------------------------------------
         
+            $select_estados_brasil = $this->selectEstadosBrasil();
 
-            return view('franquia.create', compact('users'));
+            return view('franquia.create', compact('users', 'select_estados_brasil'));
         }
         else{
             return redirect('erro')->with('franquia_error', '403');
@@ -178,7 +210,10 @@ class FranquiaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
-                    'descricao' => 'required|min:10',    
+                    'descricao' => 'required|min:10', 
+                    'cnpj' => 'cnpj',
+                    'email' => 'email'
+
             ]);            
                     
             $franquia = new Franquia();
@@ -188,6 +223,18 @@ class FranquiaController extends Controller
             $franquia->descricao = $request->input('descricao');
             $franquia->url_site = $request->input('url_site');
             $franquia->url_blog = $request->input('url_blog');
+
+            //Dados Comerciais
+            $franquia->cnpj = $request->input('cnpj');
+            $franquia->telefone = $request->input('telefone');
+            $franquia->email = $request->input('email');
+            $franquia->endereco = $request->input('endereco');
+            $franquia->endereco_numero = $request->input('endereco_numero');
+            $franquia->endereco_bairro = $request->input('endereco_bairro');
+            $franquia->endereco_cep = $request->input('endereco_cep');
+            $franquia->endereco_cidade = $request->input('endereco_cidade');
+            $franquia->endereco_estado = $request->input('endereco_estado');
+
 
 
             $franquia->status = "1"; //Franquia Ativa
@@ -207,7 +254,7 @@ class FranquiaController extends Controller
                             base64_encode( 
                                 $salt.
                                 $request->input('loja_database_password').
-                                $this->app_hash_encode()
+                                $this->appHashEncode()
                             );
 
             //Se tem líder/afiliado vincula
@@ -261,7 +308,9 @@ class FranquiaController extends Controller
             $this->log("franquia.edit.id=".$franquia);
             //--------------------------------------------------------------------------------------
 
-            return view('franquia.edit', compact('franquia', 'users'));
+            $select_estados_brasil = $this->selectEstadosBrasil();
+
+            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil '));
         }
         else{
             return redirect('erro')->with('franquia_error', '403');
@@ -283,7 +332,9 @@ class FranquiaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
-                    'descricao' => 'required|min:10',    
+                    'descricao' => 'required|min:10',
+                    'cnpj' => 'cnpj',
+                    'email' => 'email'  
             ]);            
                     
             $franquia->nome = $request->input('nome');
@@ -300,6 +351,18 @@ class FranquiaController extends Controller
             $franquia->loja_database_name = $request->input('loja_database_name');
             $franquia->loja_database_user = $request->input('loja_database_user');
 
+            //Dados Comerciais
+            $franquia->cnpj = $request->input('cnpj');
+            $franquia->telefone = $request->input('telefone');
+            $franquia->email = $request->input('email');
+            $franquia->endereco = $request->input('endereco');
+            $franquia->endereco_numero = $request->input('endereco_numero');
+            $franquia->endereco_bairro = $request->input('endereco_bairro');
+            $franquia->endereco_cep = $request->input('endereco_cep');
+            $franquia->endereco_cidade = $request->input('endereco_cidade');
+            $franquia->endereco_estado = $request->input('endereco_estado');
+
+
             //Só modifica a Senha se não estiver vazio
             if($request->input('loja_database_password')){
                     //Password Database OpenCart
@@ -311,7 +374,7 @@ class FranquiaController extends Controller
                                     base64_encode( 
                                         $salt.
                                         $request->input('loja_database_password').
-                                        $this->app_hash_encode()
+                                        $this->appHashEncode()
                                     );
 
             }

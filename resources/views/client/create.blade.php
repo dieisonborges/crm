@@ -10,18 +10,6 @@
 
 			<form method="POST" action="{{url('clients')}}" enctype="multipart/form-data" id="form-create">
 				@csrf
-				
-				<!--
-
-			 	<div class="form-group col-md-4">					
-				    <label for="rotulo">Rótulo (Criticidade)</label>				    
-					<select class="form-control" name="rotulo">
-						   <option value=""> </option>
-					</select>
-			 	</div>
-
-			 	--> 	
-	 			 	
 
 			 	<div class="form-group col-md-12">
 				    <label for="titulo">Título (Descrição Resumida) <span style="color: red; font-size: 10px;">*80 caract.</span></label>
