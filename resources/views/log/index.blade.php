@@ -2,9 +2,11 @@
     @extends('layouts.app')
     @section('title', 'Logs')
     @section('content')    
-    <h1>Logs (Registros) do Sistema </h1>
+    <h1>Logs (Registros) do Sistema 
 
+    <a href="{{ url('logs/acesso') }}" class="btn btn-info btn-lg"><i class="fa fa-history"> </i> Logs de Acesso</a>
 
+     </h1>
 
         <div class="col-md-12">	
 

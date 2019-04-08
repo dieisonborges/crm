@@ -3,16 +3,16 @@
     <a href="{{ url('home/') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">
-          <img src="{{ asset('img/logo/favicon.png') }}" width="70%">
+          <img src="{{ asset('img/logo/logo-e-ecardume-mini-v3.png') }}" width="70%">
       </span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="{{ asset('img/logo/logo-ecardume.png') }}" width="125"></span>
+      <span class="logo-lg"><img src="{{ asset('img/logo/logo-ecardume-branca-v2.png') }}" width="125"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">Navegação</span>
       </a>
 
       <div class="navbar-custom-menu">
@@ -44,6 +44,91 @@
                 </a>
                 
               </li>
+
+              <!-- -------------------------- MENU ADM ----------------------------- -->
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i>
+                  Configurações
+                  <span class="label label-danger">Adm</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header"></li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                      
+                      @can('read_user')
+                      <li>
+                        <a href="{{ url('users/') }}">
+                          <i class="fa fa-user text-aqua"></i> Usuários
+                        </a>
+                      </li>
+                      @endcan
+
+                      @can('read_franquia')          
+                      <li>
+                        <a href="{{ url('franquias/') }}">
+                          <i class="fa fa-home text-yellow"></i> <span>Franquias</span>              
+                        </a>                        
+                      </li>
+                      @endcan
+
+                      @can('read_categoria')
+                      <li>
+                        <a href="{{ url('categorias/') }}">
+                          <i class="fa fa-list-alt"></i> <span>Categorias</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_log')
+                      <li>
+                        <a href="{{ url('logs/') }}">
+                          <i class="fa fa-history"></i> Logs
+                        </a>
+                      </li>
+                      @endcan
+
+                      @can('read_role')
+                      <li>
+                        <a href="{{ url('roles/') }}">
+                          <i class="fa fa-group"></i> <span>Roles (grupo)</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_permission')
+                      <li class="treeview">
+                        <a href="{{ url('permissions/') }}">
+                          <i class="fa fa-lock"></i> <span>Permissions</span>              
+                        </a>            
+                      </li>
+                      @endcan
+                      
+                      @can('read_setor')
+                      <li class="treeview">
+                        <a href="{{ url('setors/') }}">
+                          <i class="fa fa-black-tie"></i> <span>Setores Internos</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_ticket')
+                      <li>
+                        <a href="{{ url('tickets/1/status') }}">  
+                          <i class="fa fa-ticket"></i> <span>Tickets</span>                          
+                        </a>                        
+                      </li>
+                      @endcan  
+
+
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- -------------------------- END MENU ADM ------------------------- -->
 
               <!-- -------------------- END MENU ICON TOP ------------------------- -->
 

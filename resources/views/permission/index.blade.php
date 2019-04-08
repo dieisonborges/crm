@@ -2,7 +2,14 @@
     @extends('layouts.app')
     @section('title', 'Permissões')
     @section('content')
-    <h1>Permissões  <a href="{{url('permissions/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a></h1>
+    <h1>Permissões  
+
+        <a href="{{url('permissions/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
+
+        <a href="{{ url('permission/createAuto') }}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Automatizado</a>
+
+
+    </h1>
 
         @if (session('status'))
             <div class="alert alert-success" permission="alert">

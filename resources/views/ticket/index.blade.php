@@ -2,7 +2,16 @@
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
-    <h1>Tickets <a href="{{url('tickets/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
+    <h1>Tickets 
+
+
+        <a href="{{ url('tickets/1/status') }}" class="btn btn-info btn-lg"><i class="fa fa-search"> </i> Abertos</a> 
+
+        <a href="{{ url('tickets/0/status') }}" class="btn btn-info btn-lg"><i class="fa fa-search"> </i> Fechados</a> 
+
+        <a href="{{ url('tickets/') }}" class="btn btn-info btn-lg"><i class="fa fa-search"> </i> Todos</a> 
+
+    </h1>
 
 
 
