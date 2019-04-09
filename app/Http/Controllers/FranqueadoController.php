@@ -52,11 +52,14 @@ class FranqueadoController extends Controller
 
             $franquias = $user->franquia()->get(); 
 
+            //Afiliados
+            $afiliados = Franquia::where('user_id_afiliado', Auth::id())->get();
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("franqueado.index");
             //--------------------------------------------------------------------------------------
 
-            return view('franqueado.index', array('franquias' => $franquias, 'buscar' => null));
+            return view('franqueado.index', array('franquias' => $franquias, 'buscar' => null, 'afiliados' => $afiliados));
         }
         else{
             return redirect('erro')->with('franquia_error', '403');

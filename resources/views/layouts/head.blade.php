@@ -19,7 +19,11 @@
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{ asset('abower_components/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
+  <!-- Antigo -->
   <link rel="stylesheet" href="{{ asset('abower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Font Awesome 5.8.1 -->
+  <!-- Instalar depois -->    
+
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{ asset('abower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- Theme style -->

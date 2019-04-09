@@ -28,12 +28,12 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
 
+        <!--
+
         <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>0</h3>
-
               <p>Vendas</p>
             </div>
             <a href="{{url('franqueados/alocar')}}">
@@ -44,11 +44,9 @@
             <a href="{{url('franqueados/alocar')}}" class="small-box-footer">Visualizar Vendas <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
 
 
          <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>0</h3>
@@ -62,11 +60,9 @@
             <a href="{{url('franqueados/tickets/1/status')}}" class="small-box-footer">Visualizar Produtos em Transporte <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
 
 
         <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>0</h3>
@@ -81,10 +77,8 @@
             <a href="{{url('franqueados/tickets/0/status')}}" class="small-box-footer">Visualizar Produtos Entregues <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
 
         <div class="col-lg-4 col-xs-4">
-          <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
               <h3>2</h3>
@@ -99,7 +93,22 @@
             <a href="{{url('franqueados/tickets/0/status')}}" class="small-box-footer">Visualizar Produtos Entregues <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
+
+    -->
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Parabéns</span>
+              <span class="info-box-number">Sua franquia está em desenvolvimento.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
 
 
     
