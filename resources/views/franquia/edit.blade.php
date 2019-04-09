@@ -86,7 +86,7 @@
 					    <label for="endereco_estado">Estado (UF):</label>
 		                <select class="form-control select2" name="endereco_estado">
 		                	<option selected="selected" value="">Nenhum Estado</option>
-		                	<option selected="selected" value=""> {{ $franquia->endereco_estado }}</option>
+		                	<option selected="selected" value="{{ $franquia->endereco_estado }}"> {{ $franquia->endereco_estado }}</option>
 		                	{!!html_entity_decode($select_estados_brasil)!!}						
 		                </select>
 				 	</div>

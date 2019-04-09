@@ -310,7 +310,8 @@ class FranquiaController extends Controller
 
             $select_estados_brasil = $this->selectEstadosBrasil();
 
-            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil '));
+
+            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil'));
         }
         else{
             return redirect('erro')->with('franquia_error', '403');
