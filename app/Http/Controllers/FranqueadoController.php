@@ -46,7 +46,7 @@ class FranqueadoController extends Controller
     public function index()
     {
         //
-        if(!(Gate::denies('read_franquia'))){
+        if(!(Gate::denies('read_franqueado'))){
 
             $user = Auth::user();
 
@@ -71,7 +71,7 @@ class FranqueadoController extends Controller
     {
         
         //
-        if(!(Gate::denies('read_franquia'))){
+        if(!(Gate::denies('read_franqueado'))){
 
             $user = Auth::user();
 
