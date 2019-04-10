@@ -183,6 +183,31 @@ class ConviteController extends Controller
 
     }
 
+    public function updateStatus($id, $status){
+
+        if(!(Gate::denies('update_convite'))){
+            
+
+            $convite = Convite::find($id);            
+
+            $convite->status = $status;
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("convite.update.status=".$status);
+            //--------------------------------------------------------------------------------------
+
+            if($convite->save()){
+                return redirect('convites/')->with('success', 'Convite (atualizado com sucesso!');
+            }else{
+                return redirect('convites/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('convite_error', '403');
+        }
+
+    }
+
     public function destroy($id){
         if(!(Gate::denies('read_convite'))){
             $convite = Convite::find($id);        

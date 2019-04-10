@@ -55,13 +55,11 @@
                     {{date('d/m/Y H:i:s', strtotime('+2 days', strtotime($convite->created_at)))}}
                     </a></td>
                 <td>
-                    <a href="{{URL::to('convites')}}/{{$convite->id}}">
                         @if($convite->status)
-                            <span class='btn btn-danger'>NÃO</span>
+                            <a class='btn btn-danger' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/0">NÃO</a>
                         @else
-                            <span class='btn btn-success'>SIM</span>
+                            <a class='btn btn-success' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/1">SIM</a>
                         @endif
-                    </a>
                 </td>               
                 <td>
 

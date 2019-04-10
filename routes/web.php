@@ -132,6 +132,9 @@ Route::post('logs/busca', 'LogController@busca');
 // Convites - Plataforma
 Route::resource('convites', 'ConviteController');
 Route::post('convites/busca', 'ConviteController@busca');
+Route::get('convites/{id}/updateStatus/{status}', 'ConviteController@updateStatus');
+
+
 
 //Produtos
 Route::resource('produtos', 'ProdutoController');
