@@ -14,12 +14,19 @@
             <table class="table table-hover">
                 <tr>
                     <th>IP</th>
-                    <th>Host</th>
+                    <th>País</th>
                 </tr>
                 @forelse ($logs as $log)
                 <tr>
                     <td><a href="#">{{$log->ip}}</a></td>      
-                    <td><a href="#">{{$log->host}}</a></td>                 
+                    <td><a href="#">
+                    @php
+                    $ip = $log->ip;
+                        $details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$ip}"));
+                    @endphp
+
+                    {{$details->geoplugin_countryName}}
+                    </a></td>              
                 </tr>                
                 @empty
                     
