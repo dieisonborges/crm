@@ -25,7 +25,7 @@
                         $details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$ip}"));
                     @endphp
 
-                    {{$details->geoplugin_countryName}}
+                    {{$details->geoplugin_countryName}} | {{$details->geoplugin_stateName}} | {{$details->geoplugin_cityName}}
                     </a></td>              
                 </tr>                
                 @empty
