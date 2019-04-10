@@ -49,21 +49,4 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-      public function handle($request)
-      {
-          try
-          {
-              return parent::handle($request);
-          }
-              catch(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e)
-          {
-              return response()->view('errors.bug', [], 404);
-          }
-          catch (Exception $e)
-          {
-              $this->reportException($e);
-
-              return $this->renderException($request, $e);
-          }
-      }
 }

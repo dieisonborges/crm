@@ -3,10 +3,10 @@
 @section('content')
 	<h1>
 		<i class="fa fa-star"></i>
-        Score
-        <small>{{$user->name}}</small>
+        Perfil e Score
+        <small>de {{$user->name}}</small>
     </h1>
-	<div class="row">		
+	<div class="row">	
 		
 		<div class="box-body col-md-6">              
               <div class="callout callout-info">
@@ -21,6 +21,8 @@
               </div>
         </div>
 
+        @if($user_score)
+
         <div class="box-body col-md-12">              
               <div class="callout callout-primary">
               	<h3>Score Atual: <b> {{$user_score->valor}}</b> pontos</h3>
@@ -30,8 +32,8 @@
               		@endif
 
               		@if(($i % 30)==0)
-						<br>
-					@endif
+						        <br>
+					       @endif
               		<i class="fa fa-star" style="color: rgb({{$i}},{{$i}},0)"></i>
 
               	@endfor
@@ -39,11 +41,13 @@
               </div>
         </div>
 
+        @endif
+
 	</div>
 
 
 
-
+    @if($scores)
 
 	    <!-- Main content -->
     <section class="content">
@@ -183,6 +187,10 @@
 
     </section>
     <!-- /.content -->
+
+    @else
+
+    @endif
 	
 	
 @endsection
