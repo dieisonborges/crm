@@ -82,6 +82,8 @@ Route::resource('setors', 'SetorController');
 Route::post('setors/busca', 'SetorController@busca');
 
 // ClientController
+Route::get('clients/perfil', 'ClientController@perfil');
+
 Route::resource('clients', 'ClientController');
 Route::post('clients/busca', 'ClientController@busca');
 Route::get('clients/{id}/encerrar', 'ClientController@encerrar');
@@ -146,5 +148,9 @@ Route::post('franquias/donoDestroy', 'FranquiaController@donoDestroy');
 Route::resource('franqueados', 'FranqueadoController');
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
 
+//Score
+Route::resource('scores', 'ScoreController');
+Route::post('scores/busca', 'ScoreController@busca');
 
-
+//Franquia
+Route::resource('franquias', 'FranquiaController');

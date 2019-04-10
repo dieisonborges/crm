@@ -45,7 +45,7 @@
                 
               </li>
 
-              @canany(['read_user', 'read_franquia', 'read_categoria', 'read_log', 'read_role', 'read_permission', 'read_setor', 'read_ticket'])
+              @canany(['read_user', 'read_franquia', 'read_categoria', 'read_log', 'read_role', 'read_permission', 'read_setor', 'read_ticket', 'read_score', 'read_conquistas'])
               <!-- -------------------------- MENU ADM ----------------------------- -->
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -71,6 +71,22 @@
                       <li>
                         <a href="{{ url('franquias/') }}">
                           <i class="fa fa-building-o text-yellow"></i> <span>Franquias</span>              
+                        </a>                        
+                      </li>
+                      @endcan
+
+                      @can('read_score')          
+                      <li>
+                        <a href="{{ url('scores/') }}">
+                          <i class="fa fa-star"></i> <span>Scores</span>              
+                        </a>                        
+                      </li>
+                      @endcan
+
+                      @can('read_conquista')          
+                      <li>
+                        <a href="{{ url('conquistas/') }}">
+                          <i class="fa fa-certificate"></i> <span>Conquistas</span>              
                         </a>                        
                       </li>
                       @endcan
@@ -154,21 +170,21 @@
                     </p>
                   </li>
                   <!-- Menu Body -->
-                  <!--
+                  
                   <li class="user-body">
                     <div class="row">
                       <div class="col-xs-4 text-center">
-                        <a href="#">Followers</a>
+                        <a href="{{ url('clients/perfil') }}">Perfil</a>
+                      </div>
+                      <!--
+                      <div class="col-xs-4 text-center">
+                        <a href="#">Alterar Senha</a>
                       </div>
                       <div class="col-xs-4 text-center">
-                        <a href="#">Sales</a>
+                        <a href="#">Score</a>
                       </div>
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Friends</a>
-                      </div>
+                      -->
                     </div>
-                  -->
-                    <!-- /.row -->
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">

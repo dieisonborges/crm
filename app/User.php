@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Franquia::class);
     }
 
+    public function scores(){
+        
+        return $this->hasMany(\App\Score::class);
+    }
+
     /* --------------------- SEGURANCA ----------------------*/
 
     public function hasPermission(Permission $permission){

@@ -11,6 +11,7 @@ use Gate;
 use App\Ticket;
 use App\Categoria;
 use App\Setor; 
+use App\User; 
 use DB;
 
 use App\Http\Controllers\Log;
@@ -108,7 +109,7 @@ class ClientController extends Controller
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index");
-            //--------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
@@ -431,6 +432,39 @@ class ClientController extends Controller
         else{
             return redirect('erro')->with('permission_error', '403');
         }
+    }
+
+
+    public function perfil(){
+        //
+        if(Auth::id()){
+
+            $user_id = auth()->user()->id;
+
+            $user = User::where('id', $user_id)->first();
+
+            $scores = $user->scores()->paginate(40);  
+
+            $user_score = DB::table('scores')
+                    ->select(array('users.*', DB::raw('sum(scores.valor) as valor')))
+                    ->join('users', 'scores.user_id', '=', 'users.id')
+                    ->where('users.id', $user_id)                   
+                    ->groupBy('scores.user_id')
+                    ->orderBy('valor', 'asc')
+                    ->first();         
+            
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.index=".$scores);
+            //---------------------------------------------------------------------------------------
+
+            return view('client.perfil', compact('scores', 'user', 'user_score'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+
     }
 
 }
