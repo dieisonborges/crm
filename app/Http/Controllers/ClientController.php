@@ -449,7 +449,7 @@ class ClientController extends Controller
                     ->select(array('users.*', DB::raw('sum(scores.valor) as valor')))
                     ->join('users', 'scores.user_id', '=', 'users.id')
                     ->where('users.id', $user_id)                   
-                    ->groupBy('scores.user_id')
+                    ->groupBy('user_id')
                     ->orderBy('valor', 'asc')
                     ->first();         
             
