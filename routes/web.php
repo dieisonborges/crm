@@ -134,8 +134,6 @@ Route::resource('convites', 'ConviteController');
 Route::post('convites/busca', 'ConviteController@busca');
 Route::get('convites/{id}/updateStatus/{status}', 'ConviteController@updateStatus');
 
-
-
 //Produtos
 Route::resource('produtos', 'ProdutoController');
 Route::post('produtos/busca', 'ProdutoController@busca');
@@ -157,3 +155,12 @@ Route::post('scores/busca', 'ScoreController@busca');
 
 //Franquia
 Route::resource('franquias', 'FranquiaController');
+
+//Conquistas
+Route::resource('conquistas', 'ConquistaController');
+Route::post('conquistas/busca', 'ConquistaController@busca');
+
+
+Route::get('conquistas/{id}/user', 'ConquistaController@user');
+Route::post('conquistas/userUpdate', 'ConquistaController@userUpdate');
+Route::post('conquistas/userDestroy', 'ConquistaController@userDestroy');

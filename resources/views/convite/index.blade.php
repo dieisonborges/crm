@@ -56,9 +56,9 @@
                     </a></td>
                 <td>
                         @if($convite->status)
-                            <a class='btn btn-danger' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/0">NÃO</a>
+                            <a class='btn btn-danger btn-xs' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/0">NÃO</a>
                         @else
-                            <a class='btn btn-success' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/1">SIM</a>
+                            <a class='btn btn-success btn-xs' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/1">SIM</a>
                         @endif
                 </td>               
                 <td>

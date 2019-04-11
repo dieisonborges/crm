@@ -24,9 +24,7 @@
                     $ip = $log->ip;
                         $details = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$ip}"));
                     @endphp
-
-
-
+                    
                     {{$details->geoplugin_countryName}} | {{$details->geoplugin_region}} | {{$details->geoplugin_city}}
                     </a></td>              
                 </tr>                

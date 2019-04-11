@@ -8,7 +8,7 @@
     </h1>
 	<div class="row">	
 		
-		<div class="box-body col-md-6">              
+		    <div class="box-body col-md-4">              
               <div class="callout callout-info">
               	<h5>ID: <b> {{$user->id}}</b></h5>
                 <h5>Apelido: <b> {{$user->apelido}}</b></h5>
@@ -19,6 +19,22 @@
                 <h5>Desde: <b> {{date('d/m/Y H:i:s', strtotime($user->created_at))}}</b></h5>
                 
               </div>
+        </div>
+
+        <div class="col-md-12">              
+              
+            @foreach($conquistas as $conquista)
+            <div class="col-md-4"> 
+                <div class="form-group col-md-12">
+                  <div class="container-medalha">         
+                    <img src="{{url('img/conquistas/'.$conquista->imagem_medalha)}}" width="100%"  alt="{{$conquista->imagem_medalha}}" class="imagem-medalha-ajuste">
+                    <i class="{{$conquista->icone_medalha}} icone-medalha-ajuste"></i>
+                    <span class="imagem-texto"><b>{{$conquista->titulo}}</b> <br> {{$conquista->descricao}}</span>
+                  </div>
+                </div>
+            </div>
+            @endforeach
+
         </div>
 
         @if($user_score)

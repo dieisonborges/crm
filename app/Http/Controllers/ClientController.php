@@ -443,6 +443,7 @@ class ClientController extends Controller
 
             $user = User::where('id', $user_id)->first();
 
+            /* ------------ Score do Usuário ----------- */
             $scores = $user->scores()->paginate(40);  
 
             $user_score = DB::table('scores')
@@ -451,14 +452,18 @@ class ClientController extends Controller
                     ->where('users.id', $user_id)                   
                     ->groupBy('scores.user_id')
                     ->orderBy('valor', 'asc')
-                    ->first();         
+                    ->first();  
+
+            /* ------------ Conquistas do Usuário ----------- */      
+
+            $conquistas = $user->conquista()->get();       
             
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index=".$scores);
             //---------------------------------------------------------------------------------------
 
-            return view('client.perfil', compact('scores', 'user', 'user_score'));
+            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

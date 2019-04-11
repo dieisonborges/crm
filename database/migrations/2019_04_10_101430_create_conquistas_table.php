@@ -22,7 +22,9 @@ class CreateConquistasTable extends Migration
             //Descrição e motivo que alguém atinge esta conquista
             $table->mediumText('descricao');
             //Nome para carregar a imagem da medalha
-            $table->string('nome_medalha');
+            $table->string('imagem_medalha');
+            //Nome para carregar a icone da medalha (fa fa-icon)
+            $table->string('icone_medalha');
 
             $table->timestamps();
         });

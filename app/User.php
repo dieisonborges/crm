@@ -48,6 +48,10 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Franquia::class);
     }
 
+    public function conquista(){        
+        return $this->belongsToMany(\App\Conquista::class);
+    }    
+
     public function scores(){
         
         return $this->hasMany(\App\Score::class);

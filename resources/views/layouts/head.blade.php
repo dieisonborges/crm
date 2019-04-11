@@ -57,6 +57,9 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="{{ asset('css/fonts.googleapis.css')}}">
+
+  <!-- CSS Customizado-->
+  <link rel="stylesheet" href="{{ asset('css/customize.css')}}">
    
 
 </head>
