@@ -11,11 +11,11 @@
 			@csrf			
 			<div class="form-group mb-12">
 			    <label for="titulo">Título</label>
-			    <input type="text" class="form-control" id="titulo" name="titulo" value="" placeholder="Digite o Título" required>
+			    <input type="text" class="form-control" id="titulo" name="titulo" value="{{ old('titulo') }}" placeholder="Digite o Título" required>
 		 	</div>
 		 	<div class="form-group mb-12">
 			    <label for="valor_score">Valor do Score</label>
-			    <input type="text" class="form-control" id="valor_score" name="valor_score" value="" placeholder="+30" required>
+			    <input type="text" class="form-control" id="valor_score" name="valor_score" value="{{ old('valor_score') }}" placeholder="+30" required>
 		 	</div>		 	
 		 	<div class="form-group mb-12">
 			    <label for="imagem_medalha">Imagem da Medalha</label>
@@ -28,13 +28,13 @@
 		 	</div>
 		 	<div class="form-group mb-12">
 			    <label for="icone_medalha">Ícone Medalha (fa fa-icons)</label>
-			    <input type="text" class="form-control" id="icone_medalha" name="icone_medalha" value="" placeholder="fa fa-linux" required>
+			    <input type="text" class="form-control" id="icone_medalha" name="icone_medalha" value="{{ old('icone_medalha') }}" placeholder="fa fa-linux" required>
 			    <a href="https://adminlte.io/themes/AdminLTE/pages/UI/icons.html" target="_blank">* Ver lista Font Awesome - Icons</a>
 		 	</div>
 
 		 	<div class="form-group mb-12">
 			    <label for="descricao">Descrição/Motivo:</label>
-			    <input type="text" class="form-control" id="descricao" name="descricao" value="" placeholder="Digite o descrição" required>
+			    <input type="text" class="form-control" id="descricao" name="descricao" value="{{ old('descricao') }}" placeholder="Digite o descrição" required>
 		 	</div> 	
 		 	
 
