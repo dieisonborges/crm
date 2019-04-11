@@ -142,7 +142,7 @@ class ConquistaController extends Controller
             //Validação
             $this->validate($request,[
                     'titulo' => 'required|min:3|unique:conquistas',
-                    'valor_conquista' => 'required',                    
+                    'valor_score' => 'required',                    
                     'imagem_medalha' => 'required',
                     'icone_medalha' => 'required',
                     'descricao' => 'required|min:3',
@@ -151,7 +151,7 @@ class ConquistaController extends Controller
                     
             $conquista = new Conquista();
             $conquista->titulo = $request->input('titulo');
-            $conquista->valor_conquista = $request->input('valor_conquista');
+            $conquista->valor_score = $request->input('valor_score');
             $conquista->imagem_medalha = $request->input('imagem_medalha');
             $conquista->icone_medalha = $request->input('icone_medalha');
             $conquista->descricao = $request->input('descricao');
@@ -235,14 +235,14 @@ class ConquistaController extends Controller
             //Validação
             $this->validate($request,[
                     'titulo' => 'required|min:3',
-                    'valor_conquista' => 'required',                    
+                    'valor_score' => 'required',                    
                     'imagem_medalha' => 'required',
                     'icone_medalha' => 'required',
                     'descricao' => 'required|min:3',      
             ]);
                     
             $conquista->titulo = $request->input('titulo');
-            $conquista->valor_conquista = $request->input('valor_conquista');
+            $conquista->valor_score = $request->input('valor_score');
             $conquista->imagem_medalha = $request->input('imagem_medalha');
             $conquista->icone_medalha = $request->input('icone_medalha');
             $conquista->descricao = $request->input('descricao');
