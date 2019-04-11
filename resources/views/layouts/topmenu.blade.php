@@ -24,7 +24,7 @@
               <li class="dropdown messages-menu">
                 <a href="{{url('clients/create')}}" class="dropdown-toggle" alt="Novo Ticket">
                   <i class="fa fa-ticket"></i>
-                  Novo Ticket
+                  <span class="label label-info">+</span>
                 </a>
                 
               </li>  
@@ -32,7 +32,6 @@
               <li class="dropdown messages-menu">
                 <a href="{{ url('/home') }}" class="dropdown-toggle" alt="Home">
                   <i class="fa fa-home"></i>
-                  Home
                 </a>
                 
               </li>                            
@@ -40,7 +39,7 @@
               <li class="dropdown notifications-menu">
                 <a href="{{ url('/contato') }}" class="dropdown-toggle" alt="Bugs">
                   <i class="fa fa-envelope"></i>
-                  Bug
+                  <span class="label label-info">?</span>
                 </a>
                 
               </li>
@@ -49,9 +48,8 @@
               <!-- -------------------------- MENU ADM ----------------------------- -->
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-cog"></i>
-                  Configurações
-                  <span class="label label-info">Adm</span>
+                  <i class="fa fa-cog"></i>                  
+                  <span class="label label-info">!</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="header"></li>
