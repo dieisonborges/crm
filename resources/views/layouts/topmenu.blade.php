@@ -44,7 +44,19 @@
                 
               </li>
 
-              @canany(['read_user', 'read_franquia', 'read_categoria', 'read_log', 'read_role', 'read_permission', 'read_setor', 'read_ticket', 'read_score', 'read_conquistas'])
+              @canany([
+              'read_user', 
+              'read_franquia', 
+              'read_franqueado_vip',
+              'read_score',
+              'read_conquista',
+              'read_categoria', 
+              'read_log', 
+              'read_role', 
+              'read_permission', 
+              'read_setor', 
+              'read_ticket',
+              ])
               <!-- -------------------------- MENU ADM ----------------------------- -->
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -79,6 +91,15 @@
                           <i class="fa fa-certificate text-red"></i> 
                           <i class="fa fa-building-o text-red"></i> 
                           <span>Franqueados VIP</span>              
+                        </a>                        
+                      </li>
+                      @endcan
+
+                      @can('read_fornecedor')          
+                      <li>
+                        <a href="{{ url('fornecedor/') }}">
+                          <i class="fa fa-truck text-blue"></i> 
+                          <span>Fornecedores</span>              
                         </a>                        
                       </li>
                       @endcan

@@ -166,3 +166,7 @@ Route::post('conquistas/userDestroy', 'ConquistaController@userDestroy');
 //FranqueadoVip
 Route::resource('franqueadoVip', 'FranqueadoVipController');
 Route::post('franqueadoVip/busca', 'FranqueadoVipController@busca');
+
+//Fornecedor
+Route::resource('fornecedor', 'FornecedorController');
+Route::post('fornecedor/busca', 'FornecedorController@busca');

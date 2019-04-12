@@ -23,7 +23,7 @@ class ProdutoController extends Controller
 
         $log = new LogController;
         $log->store($filename, $info);
-        return null;     
+        return null;
     }
 
     /* ----------------------- END LOGS --------------------*/
