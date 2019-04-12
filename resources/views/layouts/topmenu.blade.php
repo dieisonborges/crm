@@ -73,6 +73,16 @@
                       </li>
                       @endcan
 
+                      @can('read_franqueado_vip')          
+                      <li>
+                        <a href="{{ url('franqueadoVip/') }}">
+                          <i class="fa fa-certificate text-red"></i> 
+                          <i class="fa fa-building-o text-red"></i> 
+                          <span>Franqueados VIP</span>              
+                        </a>                        
+                      </li>
+                      @endcan
+
                       @can('read_score')          
                       <li>
                         <a href="{{ url('scores/') }}">

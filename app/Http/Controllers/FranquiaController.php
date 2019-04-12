@@ -410,7 +410,7 @@ class FranquiaController extends Controller
     public function destroy(Franquia $franquia)
     {
         //
-        if(!(Gate::denies('read_franquia'))){
+        if(!(Gate::denies('delete_franquia'))){
             
             $franquia->delete();
 

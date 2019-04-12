@@ -3,80 +3,21 @@
 @section('content')
 	<h1>
 		<i class="fa fa-star"></i>
-        Perfil e Score
-        <small>de {{$user->name}}</small>
+        Score
+        <small>{{$user->name}}</small>
     </h1>
-	<div class="row">	
-
-
+	<div class="row">		
 		
-		    <div class="box-body col-md-4">              
+		<div class="box-body col-md-6">              
               <div class="callout callout-info">
               	<h5>ID: <b> {{$user->id}}</b></h5>
                 <h5>Apelido: <b> {{$user->apelido}}</b></h5>
                 <h5>Nome Completo: <b> {{$user->name}}</b></h5>
                 <h5>e-Mail: <b>{{$user->email}}</b></h5>
                 <h5>CPF: <b> {{$user->cpf}}</b></h5>
-                <h5>Telefone: <b> {{$user->phone_number}}</b></h5>
-                <h5>Desde: <b> {{date('d/m/Y H:i:s', strtotime($user->created_at))}}</b></h5>
                 
               </div>
         </div>
-
-        <div class="box-body col-md-6"> 
-          
-          <div class="form-group col-md-2"> 
-               <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
-          </div>
-          <div class="form-group col-md-2">
-              @if ($user->status)
-                  <form method="POST" action="{{action('UserController@updateActive')}}">
-                      @csrf    
-                      <input type="hidden" name="status" value="0">
-                      <input type="hidden" name="id" value="{{$user->id}}">                  
-                      <input type="submit" class="btn btn-danger btn-xl" value="- Desativar">
-                  </form>                        
-              @else
-                  <form method="POST" action="{{action('UserController@updateActive', $user->id)}}">
-                      @csrf       
-                      <input type="hidden" name="status" value="1">   
-                      <input type="hidden" name="id" value="{{$user->id}}">                   
-                      <input type="submit" class="btn btn-success btn-xl" value="+ Ativar">
-                  </form>
-                  
-              @endif
-          </div>
-          <div class="form-group col-md-2">
-              <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
-          </div>
-          <div class="form-group col-md-2">
-              <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
-          </div>
-          <div class="form-group col-md-2"> 
-              <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
-          </div> 
-
-        </div>
-
-        
-
-        <div class="col-md-12">              
-              
-            @foreach($conquistas as $conquista)
-            <div class="col-md-4"> 
-                <div class="form-group col-md-12">
-                  <div class="container-medalha">         
-                    <img src="{{url('img/conquistas/'.$conquista->imagem_medalha)}}" width="100%"  alt="{{$conquista->imagem_medalha}}" class="imagem-medalha-ajuste">
-                    <i class="{{$conquista->icone_medalha}} icone-medalha-ajuste"></i>
-                    <span class="imagem-texto"><b>{{$conquista->titulo}}</b> <br> {{$conquista->descricao}}</span>
-                  </div>
-                </div>
-            </div>
-            @endforeach
-
-        </div>
-
-        @if($user_score)
 
         <div class="box-body col-md-12">              
               <div class="callout callout-primary">
@@ -87,8 +28,8 @@
               		@endif
 
               		@if(($i % 30)==0)
-						        <br>
-					       @endif
+						<br>
+					@endif
               		<i class="fa fa-star" style="color: rgb({{$i}},{{$i}},0)"></i>
 
               	@endfor
@@ -96,13 +37,11 @@
               </div>
         </div>
 
-        @endif
-
 	</div>
 
 
 
-    @if($scores)
+
 
 	    <!-- Main content -->
     <section class="content">
@@ -242,10 +181,6 @@
 
     </section>
     <!-- /.content -->
-
-    @else
-
-    @endif
 	
 	
 @endsection

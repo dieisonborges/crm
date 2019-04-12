@@ -16,8 +16,8 @@
 				    <input type="text" class="form-control" id="name" name="name" value="{{$user->name}}" placeholder="Digite o nome completo..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
-				    <label for="cargo">Cargo/Posto/Graduação/Formação</label>
-				    <input type="text" class="form-control" id="cargo" name="cargo" value="{{$user->cargo}}" placeholder="Digite o Cargo, Posto, Graduação ou Formação..." required>
+				    <label for="apelido">Apelido (Como quer ser chamado)</label>
+				    <input type="text" class="form-control" id="apelido" name="apelido" value="{{$user->apelido}}" placeholder="Digite o Cargo, Posto, Graduação ou Formação..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
 				    <label for="email">E-mail</label>
@@ -28,8 +28,8 @@
 				    <input type="text" class="form-control" id="cpf" name="cpf" value="{{$user->cpf}}" placeholder="Digite o CPF..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
-				    <label for="telefone">Celular com DDD</label>
-				    <input type="text" class="form-control" id="telefone" name="telefone" value="{{$user->telefone}}" placeholder="Digite o Celular..." required>
+				    <label for="phone_number">Celular com DDD</label>
+				    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{$user->phone_number}}" placeholder="Digite o Celular..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
 				    <label for="status">Status (1 - Ativo | 0 - Inativo)</label>

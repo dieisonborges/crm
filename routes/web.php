@@ -159,8 +159,10 @@ Route::resource('franquias', 'FranquiaController');
 //Conquistas
 Route::resource('conquistas', 'ConquistaController');
 Route::post('conquistas/busca', 'ConquistaController@busca');
-
-
 Route::get('conquistas/{id}/user', 'ConquistaController@user');
 Route::post('conquistas/userUpdate', 'ConquistaController@userUpdate');
 Route::post('conquistas/userDestroy', 'ConquistaController@userDestroy');
+
+//FranqueadoVip
+Route::resource('franqueadoVip', 'FranqueadoVipController');
+Route::post('franqueadoVip/busca', 'FranqueadoVipController@busca');

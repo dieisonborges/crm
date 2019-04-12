@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScoresTable extends Migration
+class CreateFranqueadoVipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateScoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('scores', function (Blueprint $table) {
+        //*** Só pode ser franqueado Líder se for franqueado VIP também
+        Schema::create('franqueado_vips', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('valor');
-            $table->string('motivo');
+            //1 = Líder | 0 = Não é Líder
+            $table->integer('lider')->default(0);
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');
-
             $table->timestamps();
-        }); 
+        });
     }
 
     /**
@@ -35,6 +35,6 @@ class CreateScoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scores');
+        Schema::dropIfExists('franqueado_vips');
     }
 }

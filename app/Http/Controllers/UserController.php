@@ -54,15 +54,30 @@ class UserController extends Controller
     }
 
     // Seleciona por id
-    public function show($id){
+    public function show(User $user){
         if(!(Gate::denies('read_user'))){
-            $user = User::find($id);
 
-            //LOG ----------------------------------------------------------------------------------------
+
+            /* ------------ Score do Usuário ----------- */
+            $scores = $user->scores()->paginate(40);  
+
+            $user_score = DB::table('scores')
+                    ->select(array('users.*', DB::raw('sum(scores.valor) as valor')))
+                    ->join('users', 'scores.user_id', '=', 'users.id')
+                    ->where('users.id', $user->id)                   
+                    ->groupBy('scores.user_id')
+                    ->orderBy('valor', 'asc')
+                    ->first();  
+
+            /* ------------ Conquistas do Usuário ----------- */      
+
+            $conquistas = $user->conquista()->get();   
+
+            //LOG ----------------------------------------------------------------------------------
             $this->log("show.index");
-            //--------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
-            return view('user.show', array('user' => $user));
+            return view('user.show', compact('user', 'scores', 'user_score', 'conquistas'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -191,20 +206,20 @@ class UserController extends Controller
             //Validação
             $this->validate($request,[
                     'name' => 'required|min:3',
-                    'cargo' => 'required|min:3',
+                    'apelido' => 'required|min:3',
                     'email' => 'required|min:3',
                     'cpf' => 'required|min:3',
-                    'telefone' => 'required|min:3',
+                    'phone_number' => 'required|min:3',
                     'status' => 'required|numeric',
                     'login' => 'required|numeric',
             ]);
                     
         
             $user->name = $request->get('name');
-            $user->cargo = $request->get('cargo');
+            $user->apelido = $request->get('apelido');
             $user->email = $request->get('email');
             $user->cpf = $request->get('cpf');
-            $user->telefone = $request->get('telefone');
+            $user->phone_number = $request->get('phone_number');
             $user->status = $request->get('status');
             $user->login = $request->get('login');   
 
