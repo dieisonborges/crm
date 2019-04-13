@@ -29,7 +29,20 @@
             </a>
             
           </li>
-          @endcan  
+          @endcan
+
+          @can('read_orcamento')     
+
+          <li class="header">Orçamentos</li> 
+
+          <li>
+            <a href="{{ url('orcamento') }}">  
+              <i class="fa fa-list-ol"></i> <span>Orçamentos</span>
+              
+            </a>
+            
+          </li>
+          @endcan 
 
            
           @if(session()->get('setors'))

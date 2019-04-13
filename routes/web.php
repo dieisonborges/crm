@@ -170,3 +170,7 @@ Route::post('franqueadoVip/busca', 'FranqueadoVipController@busca');
 //Fornecedor
 Route::resource('fornecedor', 'FornecedorController');
 Route::post('fornecedor/busca', 'FornecedorController@busca');
+
+//Orçamento
+Route::resource('orcamento', 'OrcamentoController');
+Route::post('orcamento/busca', 'OrcamentoController@busca');

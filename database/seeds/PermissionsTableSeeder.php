@@ -202,6 +202,340 @@ class PermissionsTableSeeder extends Seeder
         ]);        
         // ------------------------------------------------------------
 
+        //Área - Gerência de Atendimentos
+        //Create
+        Permission::create([
+            'id'=>'29',
+            'name'=>'create_atendimento',
+            'label'=>'Create - Gerência de Atendimentos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'30',
+            'name'=>'read_atendimento',
+            'label'=>'Read - Gerência de Atendimentos',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'31',
+            'name'=>'update_atendimento',
+            'label'=>'Update - Gerência de Atendimentos',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'32',
+            'name'=>'delete_atendimento',
+            'label'=>'Delete - Gerência de Atendimentos',
+        ]);        
+        // ------------------------------------------------------------
+
+        //Área - Convidados a plataforma 
+        //Create        
+        Permission::create([
+            'id'=>'33',
+            'name'=>'create_convite',
+            'label'=>'Create -  Convidados a plataforma',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'34',
+            'name'=>'read_convite',
+            'label'=>'Read -  Convidados a plataforma',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'35',
+            'name'=>'update_convite',
+            'label'=>'Update -  Convidados a plataforma',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'36',
+            'name'=>'delete_convite',
+            'label'=>'Delete -  Convidados a plataforma',
+        ]); 
+            
+        // ------------------------------------------------------------
+
+        //Área - Financeiro 
+        //Create
+        Permission::create([
+            'id'=>'37',
+            'name'=>'create_financeiro',
+            'label'=>'Create - Financeiro - Atendimento ao Cliente',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'38',
+            'name'=>'read_financeiro',
+            'label'=>'Read - Financeiro - Atendimento ao Cliente',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'39',
+            'name'=>'update_financeiro',
+            'label'=>'Update - Financeiro - Atendimento ao Cliente',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'40',
+            'name'=>'delete_financeiro',
+            'label'=>'Delete - Financeiro - Atendimento ao Cliente',
+        ]); 
+           
+        // ------------------------------------------------------------
+
+        //Área - Suporte Técnico
+        //Create        
+        Permission::create([
+            'id'=>'41',
+            'name'=>'create_suporte_tecnico',
+            'label'=>'Create - Suporte Técnico - Atendimento ao Cliente ',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'42',
+            'name'=>'read_suporte_tecnico',
+            'label'=>'Read - Suporte Técnico - Atendimento ao Cliente ',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'43',
+            'name'=>'update_suporte_tecnico',
+            'label'=>'Update - Suporte Técnico - Atendimento ao Cliente ',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'44',
+            'name'=>'delete_suporte_tecnico',
+            'label'=>'Delete - Suporte Técnico - Atendimento ao Cliente ',
+        ]); 
+            
+        // ------------------------------------------------------------
+
+         //Área - Gerência Geral de Produtos 
+        //Create        
+        Permission::create([
+            'id'=>'45',
+            'name'=>'create_produto',
+            'label'=>'Create - Gerência Geral de Produtos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'46',
+            'name'=>'read_produto',
+            'label'=>'Read - Gerência Geral de Produtos ',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'47',
+            'name'=>'update_produto',
+            'label'=>'Update - Gerência Geral de Produtos ',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'48',
+            'name'=>'delete_produto',
+            'label'=>'Delete - Gerência Geral de Produtos ',
+        ]);      
+        // ------------------------------------------------------------
+
+        //Área - Gerência de 
+        //Create
+        Permission::create([
+            'id'=>'49',
+            'name'=>'create_franquia',
+            'label'=>'Create - Gerência de Franquias',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'50',
+            'name'=>'read_franquia',
+            'label'=>'Read - Gerência de Franquias',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'51',
+            'name'=>'update_franquia',
+            'label'=>'Update - Gerência de Franquias',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'52',
+            'name'=>'delete_franquia',
+            'label'=>'Delete - Gerência de Franquias',
+        ]); 
+     
+        // ------------------------------------------------------------
+
+        //Área - Franqueado e-Cardume 
+        //Create
+        Permission::create([
+            'id'=>'53',
+            'name'=>'create_franqueado',
+            'label'=>'Create - Franqueado e-Cardume',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'54',
+            'name'=>'read_franqueado',
+            'label'=>'Read - Franqueado e-Cardume',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'55',
+            'name'=>'update_franqueado',
+            'label'=>'Update - Franqueado e-Cardume',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'56',
+            'name'=>'delete_franqueado',
+            'label'=>'Delete - Franqueado e-Cardume',
+        ]); 
+   
+        // ------------------------------------------------------------
+
+        //Área - Gerência de Score (Pontuação)
+        //Create
+        Permission::create([
+            'id'=>'57',
+            'name'=>'create_score',
+            'label'=>'Create - Gerência de Score (Pontuação)',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'58',
+            'name'=>'read_score',
+            'label'=>'Read - Gerência de Score (Pontuação)',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'59',
+            'name'=>'update_score',
+            'label'=>'Update - Gerência de Score (Pontuação)',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'60',
+            'name'=>'delete_score',
+            'label'=>'Delete - Gerência de Score (Pontuação)',
+        ]); 
+          
+        // ------------------------------------------------------------
+
+        //Área - Gerência de Conquistas do Usuário
+        //Create
+        Permission::create([
+            'id'=>'61',
+            'name'=>'create_conquista',
+            'label'=>'Create - Gerência de Conquistas do Usuário',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'62',
+            'name'=>'read_conquista',
+            'label'=>'Read - Gerência de Conquistas do Usuário',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'63',
+            'name'=>'update_conquista',
+            'label'=>'Update - Gerência de Conquistas do Usuário',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'64',
+            'name'=>'delete_conquista',
+            'label'=>'Delete - Gerência de Conquistas do Usuário',
+        ]); 
+     
+        // ------------------------------------------------------------
+
+        //Área - Gerência dos Franqueados VIP e VIP Líder
+        //Create
+        Permission::create([
+            'id'=>'65',
+            'name'=>'create_franqueado_vip',
+            'label'=>'Create - Gerência dos Franqueados VIP e VIP Líder',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'66',
+            'name'=>'read_franqueado_vip',
+            'label'=>'Read - Gerência dos Franqueados VIP e VIP Líder',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'67',
+            'name'=>'update_franqueado_vip',
+            'label'=>'Update - Gerência dos Franqueados VIP e VIP Líder',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'68',
+            'name'=>'delete_franqueado_vip',
+            'label'=>'Delete - Gerência dos Franqueados VIP e VIP Líder',
+        ]); 
+              
+        // ------------------------------------------------------------
+
+        //Área - Gerência de Fornecedores
+        //Create
+        Permission::create([
+            'id'=>'69',
+            'name'=>'create_fornecedor',
+            'label'=>'Create - Gerência de Fornecedores',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'70',
+            'name'=>'read_fornecedor',
+            'label'=>'Read - Gerência de Fornecedores',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'71',
+            'name'=>'update_fornecedor',
+            'label'=>'Update - Gerência de Fornecedores',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'72',
+            'name'=>'delete_fornecedor',
+            'label'=>'Delete - Gerência de Fornecedores',
+        ]);      
+        // ------------------------------------------------------------
+
+        //Área - 
+        //Create
+        /*
+        Permission::create([
+            'id'=>'',
+            'name'=>'create_',
+            'label'=>'Create - ',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'',
+            'name'=>'read_',
+            'label'=>'Read - ',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'',
+            'name'=>'update_',
+            'label'=>'Update - ',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'',
+            'name'=>'delete_',
+            'label'=>'Delete - ',
+        ]); 
+        */       
+        // ------------------------------------------------------------
+
 
     }
 }
