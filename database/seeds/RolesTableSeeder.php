@@ -105,6 +105,13 @@ class RolesTableSeeder extends Seeder
             'label'=>'Gerência de Fornecedores',
         ]);
 
+        //Gerência de Orçamentos
+        Role::create([
+            'id'=>'14',
+            'name'=>'orcamento',
+            'label'=>'Gerência de Orçamentos',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*

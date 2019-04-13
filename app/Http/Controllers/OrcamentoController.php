@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Orcamento;
+use App\ItemOrcamento;
 use App\Fornecedor;
+use App\Produto;
 use Illuminate\Http\Request;
 use Gate;
+use DB;
 
 class OrcamentoController extends Controller
 {
@@ -78,7 +81,34 @@ class OrcamentoController extends Controller
         $token4 .= rand (0 , 9);
         $token  .= md5($token4);
 
+        $token .= date("Ymdhis");
+
         return $token;
+    }
+
+    private function unidadesMedidas()
+    {
+        
+        $units = array(
+                        'unidade',
+                        'caixa',
+                        'galão',
+                        'litro',
+                        'kilograma'
+        );
+
+        return $units;
+    }
+
+    private function moedas()
+    {
+        
+        $moeda = array(
+                        'US$',
+                        'R$'
+        );
+
+        return $moeda;
     }
 
     /**
@@ -154,7 +184,7 @@ class OrcamentoController extends Controller
     {
         //
         //
-        if(!(Gate::denies('read_orcamento'))){
+        if(!(Gate::denies('create_orcamento'))){
             //Validação
             $this->validate($request,[
                     'token_validade' => 'required',
@@ -173,7 +203,8 @@ class OrcamentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if($orcamento->save()){
-                return redirect('orcamento/')->with('success', 'Orcamento cadastrado com sucesso!');
+                    $id_orcamento = DB::getPdo()->lastInsertId();
+                    return redirect('orcamento/'.$id_orcamento)->with('success', 'Orcamento cadastrado com sucesso!');
             }else{
                 return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
             }
@@ -194,11 +225,32 @@ class OrcamentoController extends Controller
         //
         if(!(Gate::denies('read_orcamento'))){
 
+            $fornecedor = Fornecedor::find($orcamento->fornecedor_id);
+
+            $fornecedors = Fornecedor::all();
+
+            //$itens = ItemOrcamento::where('orcamento_id', $orcamento->id)->get();
+
+            $itens = DB::table('item_orcamentos')
+                    ->select(array(
+                        'item_orcamentos.id as item_id',
+                        'item_orcamentos.quantidade',
+                        'item_orcamentos.unidade_medida',
+                        'item_orcamentos.preco',
+                        'item_orcamentos.frete_preco',
+                        'item_orcamentos.frete_tipo',
+                        'produtos.*'
+                     ))
+                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')                    
+                    ->orderBy('produtos.id', 'asc')
+                    ->paginate(40);
+
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.show=".$orcamento);
             //--------------------------------------------------------------------------------------------
 
-            return view('orcamento.show', compact('orcamento'));
+            return view('orcamento.show', compact('orcamento', 'fornecedors', 'fornecedor', 'itens'));
         }
         else{
             return redirect('erro')->with('orcamento_error', '403');
@@ -215,12 +267,16 @@ class OrcamentoController extends Controller
     {
         //
         if(!(Gate::denies('read_orcamento'))){
+
+            $fornecedor = Fornecedor::find($orcamento->fornecedor_id);
+
+            $fornecedors = Fornecedor::all();
             
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.edit.id=".$orcamento);
             //--------------------------------------------------------------------------------------------
 
-            return view('orcamento.edit', compact('orcamento'));
+            return view('orcamento.edit', compact('orcamento', 'fornecedor', 'fornecedors'));
         }
         else{
             return redirect('erro')->with('orcamento_error', '403');
@@ -237,29 +293,16 @@ class OrcamentoController extends Controller
     public function update(Request $request, Orcamento $orcamento)
     {
         //
-        if(!(Gate::denies('read_orcamento'))){
+        if(!(Gate::denies('update_orcamento'))){
 
+            //Validação
             $this->validate($request,[
-                    'titulo' => 'required|min:3',
-                    'palavras_chave' => 'required|min:3',      
-                    'descricao' => 'required|min:10',      
-            ]);  
-
-            // 1 - Ativo
-            // 0 - Desativado
-            $orcamento->status = $request->input('status');          
+                    'token_validade' => 'required',
+                    'fornecedor_id' => 'required',     
+            ]);            
                     
-            $orcamento->titulo = $request->input('titulo');
-            $orcamento->palavras_chave = $request->input('palavras_chave');
-            $orcamento->descricao = $request->input('descricao');
-
-            //Cubagem
-            $orcamento->altura = $request->input('altura');
-            $orcamento->largura = $request->input('largura');
-            $orcamento->comprimento = $request->input('comprimento');
-            $orcamento->peso = $request->input('peso');
-
-            $orcamento->link_referencia = $request->input('link_referencia');  
+            $orcamento->token_validade = $request->input('token_validade');
+            $orcamento->fornecedor_id = $request->input('fornecedor_id');
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.update=".$orcamento);
@@ -286,20 +329,195 @@ class OrcamentoController extends Controller
     public function destroy(Orcamento $orcamento)
     {
         //
-        if(!(Gate::denies('read_orcamento'))){
-            $orcamento = Orcamento::find($id);        
+        if(!(Gate::denies('delete_orcamento'))){    
             
-            $orcamento->delete();
-
+            
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("orcamento.destroy.id=".$id);
+            $this->log("orcamento.destroy=".$orcamento);
             //--------------------------------------------------------------------------------------------
 
-            return redirect()->back()->with('success','Orcamento excluído com sucesso!');
+            if($orcamento->delete()){
+                return redirect('orcamento/')->with('success', 'Orcamento excluido com sucesso!');
+            }else{
+                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
 
         }
         else{
             return redirect('erro')->with('orcamento_error', '403');
         }
     }
+
+    public function item($id)
+    {
+        //
+        if(!(Gate::denies('read_orcamento'))){
+
+            $orcamento = Orcamento::find($id);
+
+            $produtos = Produto::all();
+
+            $unidades_medidas = $this->unidadesMedidas();
+
+            $moedas = $this->moedas();
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.create.item.id=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            return view('orcamento.item', compact('orcamento', 'produtos', 'unidades_medidas', 'moedas'));
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+    }
+
+    public function itemStore(Request $request)
+    {
+        //
+        //
+        if(!(Gate::denies('create_orcamento'))){
+            //Validação
+            $this->validate($request,[
+                    'quantidade' => 'required',
+                    'unidade_medida' => 'required',
+                    'orcamento_id' => 'required',
+                    'produto_id' => 'required',    
+            ]);            
+                    
+            $item_orcamento = new ItemOrcamento();
+
+            $item_orcamento->orcamento_id = $request->input('orcamento_id');
+            //redirect
+            $orcamento_id = $item_orcamento->orcamento_id;
+
+            $item_orcamento->produto_id = $request->input('produto_id');
+
+            $item_orcamento->quantidade = $request->input('quantidade');
+            $item_orcamento->unidade_medida = $request->input('unidade_medida');
+
+
+            $item_orcamento->preco = $request->input('preco');
+            $item_orcamento->frete_preco = $request->input('frete_preco');
+            $item_orcamento->frete_tipo = $request->input('frete_tipo');
+            $item_orcamento->moeda = $request->input('moeda');
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("item_orcamento.store=".$item_orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            if($item_orcamento->save()){
+                return redirect('orcamento/'.$orcamento_id)->with('success', 'Item adicionado ao orcamento com sucesso!');
+            }else{
+                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+    }
+
+    public function itemEdit($id)
+    {
+        //
+        if(!(Gate::denies('update_orcamento'))){
+
+            $item = ItemOrcamento::find($id);
+
+            $produto = Produto::where('id', $item->produto_id)->first();
+
+            $produtos = Produto::all();
+
+            $orcamento = Orcamento::where('id', $item->orcamento_id)->first();
+
+            $unidades_medidas = $this->unidadesMedidas();
+
+            $moedas = $this->moedas();
+
+            //$fornecedors = Fornecedor::all();
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.item.edit.id=".$item);
+            //--------------------------------------------------------------------------------------------
+
+            return view('orcamento.item_edit', compact('orcamento', 'produtos', 'produto', 'item', 'unidades_medidas', 'moedas'));
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+    }
+
+    public function itemUpdate(Request $request)
+    {
+        //
+        //
+        if(!(Gate::denies('update_orcamento'))){           
+
+            //Validação
+            $this->validate($request,[
+                    'quantidade' => 'required',
+                    'unidade_medida' => 'required',
+                    'item_id' => 'required',
+                    'produto_id' => 'required',    
+            ]);        
+
+            $item_orcamento = ItemOrcamento::find($request->input('item_id'))->first();
+    
+            $item_orcamento->produto_id = $request->input('produto_id');
+
+            $item_orcamento->quantidade = $request->input('quantidade');
+            $item_orcamento->unidade_medida = $request->input('unidade_medida');
+
+
+            $item_orcamento->preco = $request->input('preco');
+            $item_orcamento->frete_preco = $request->input('frete_preco');
+            $item_orcamento->frete_tipo = $request->input('frete_tipo');
+            $item_orcamento->moeda = $request->input('moeda');
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("item_orcamento.store=".$item_orcamento);
+            //--------------------------------------------------------------------------------------------
+
+
+            //redirect      
+            $orcamento_id = $request->input('orcamento_id');
+
+            if($item_orcamento->save()){
+                return redirect('orcamento/'.$orcamento_id)->with('success', 'Item alterado com sucesso!');
+            }else{
+                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+    }
+
+    public function itemDestroy($id)
+    {
+        //
+        dd("sdfsd");
+        if(!(Gate::denies('delete_orcamento'))){
+            $item = ItemOrcamento::find($id);  
+
+            $orcamento_id = $item->orcamento_id();      
+            
+            $item->delete();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.item.destroy=".$item);
+            //--------------------------------------------------------------------------------------------
+
+            if($item_orcamento->save()){
+                return redirect('orcamento/'.$orcamento_id)->with('success', 'Item removido com sucesso!');
+            }else{
+                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+    }
+
 }

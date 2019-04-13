@@ -15,16 +15,15 @@ class PermissionRoleTableSeeder extends Seeder
     {
         
 
-
         //Administrador (Todas as Permissões)
-        $total_permissions = 72;
+        $total_permissions = 73;
         for ($i = 1; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('1');
     
 		}
 
         //Diretoria e-Cardume
-        $total_permissions = 72;
+        $total_permissions = 73;
         for ($i = 1; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('4');
     
@@ -105,7 +104,14 @@ class PermissionRoleTableSeeder extends Seeder
         for ($i = 69; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('13');
     
-        }   
+        }
+
+        //Gerência de Orçamentos
+        $total_permissions = 76;
+        for ($i = 73; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('14');
+    
+        } 
 
         /* ---------------- Exemplo ---------------- */
         /*

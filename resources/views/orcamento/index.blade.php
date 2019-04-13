@@ -43,11 +43,11 @@
                 <tr>
                     <td>{{$orcamento->id}}</td>
                     <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->codigo}}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->token_validade}}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->created_at}}</a></td>
+                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y', strtotime($orcamento->token_validade)) }}</a></td>
+                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y H:i:s', strtotime($orcamento->created_at)) }}</a></td>
                     
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}">
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar">
                             <span class="fa fa-paper-plane"> Enviar</span>                        
                         </a>
                     </td>
@@ -67,13 +67,13 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Desativar</a>
+                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Remover</a>
                         </form> 
 
                         <script>
                            function confirmDelete{{$orcamento->id}}() {
 
-                            var result = confirm('Tem certeza que deseja desativar?');
+                            var result = confirm('Tem certeza que deseja remover?');
 
                             if (result) {
                                     document.getElementById("formDelete{{$orcamento->id}}").submit();

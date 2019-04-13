@@ -507,6 +507,33 @@ class PermissionsTableSeeder extends Seeder
         ]);      
         // ------------------------------------------------------------
 
+        //Área - Gerência de Orçamentos
+        //Create
+        Permission::create([
+            'id'=>'73',
+            'name'=>'create_orcamento',
+            'label'=>'Create - Gerência de Orçamentos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'74',
+            'name'=>'read_orcamento',
+            'label'=>'Read - Gerência de Orçamentos',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'75',
+            'name'=>'update_orcamento',
+            'label'=>'Update - Gerência de Orçamentos',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'76',
+            'name'=>'delete_orcamento',
+            'label'=>'Delete - Gerência de Orçamentos',
+        ]);       
+        // ------------------------------------------------------------
+
         //Área - 
         //Create
         /*

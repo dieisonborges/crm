@@ -4,70 +4,97 @@
 	@section('content')
 		<h1>
 	        Orcamento 
-	        <small>{{$orcamento->name}}</small>
-
- 
-
-	        @if($orcamento->status)
-	    		<span class="btn btn-success">Ativo</span>
-	    	@else
-	    		<span class="btn btn-danger">Desativado</span>
-	    	@endif
-
+	        <small>{{$orcamento->codigo}}</small>
+	        		<a href="{{$orcamento->id}}/item" class="btn btn-primary">
+	        			<i class="fa fa-plus"></i> Adicionar Item
+	        		</a>
+	        	    <a href="{{$orcamento->id}}/edit" class="btn btn-warning">
+	        	    	<i class="fa fa-edit"></i> Editar
+	        	    </a>
+	        	    <a href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar" class="btn btn-danger">
+                        <i class="fa fa-paper-plane"> Enviar</i>                       
+                    </a>
 
 	    </h1> 
 		<div class="row">		
 				
-			 	<div class="form-group col-md-12">
-				    <label for="titulo">Título:</label>
-				    <span class="form-control">{{$orcamento->titulo}}</span>
-			 	</div>
+			 	<div class="form-group col-md-2">
+				    <label for="token_validade">Validade do Token:</label>
+				    <span class="form-control" >{{ date('d/m/Y', strtotime($orcamento->token_validade)) }}</span>
+			 	</div>			 	
 
-			 	<div class="form-group col-md-12">
-				    <label for="palavras_chave">Palavras Chave (Separadas por vírgula):</label>
-				    <span class="form-control">{{$orcamento->palavras_chave}}</span>
-			 	</div>
-			 	
-		 		<div class="col-md-12">
-			   		<label for="palavras_chave">Cubagem:</label>
-				</div>
-			    <div class="form-group col-md-12">
-			    	<div class="col-md-3">
-			    		<label for="altura" class="text-aqua">Altura (cm)</label>
-			    		<span class="form-control">{{$orcamento->altura}}</span>
-			    	</div>
-			    	<div class="col-md-3">
-			    		<label for="largura" class="text-aqua">Largura (cm)</label>
-			    		<span class="form-control">{{$orcamento->largura}}</span>
-			    	</div>
-			    	<div class="col-md-3">
-			    		<label for="comprimento" class="text-aqua">Comprimento (cm)</label>
-			    		<span class="form-control">{{$orcamento->comprimento}}</span>
-			    	</div>
-			    	<div class="col-md-3">
-			    		<label for="peso" class="text-aqua">Peso (g)</label>
-			    		<span class="form-control">{{$orcamento->peso}}</span>
-			    	</div>
-			    	
-				</div>
-
-				<div class="form-group col-md-12">
-				    <label for="link_referencia">Link de Referência:</label>
-				    <input disabled="disabled" class="form-control" value="{{$orcamento->link_referencia}}">
-			 	</div>		 	
-
-
-			 	<div class="form-group col-md-12">
-				    <label for="descricao">Descrição:</label>				    
-					<!-- /.box-header -->
-		            <div class="box-body pad">
-		              <form>
-		                <textarea class="textarea" disabled="disabled" placeholder="Detalhes do orcamento"="required" name="descricao" 
-		                          style="width: 100%; height: 600px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$orcamento->descricao}}</textarea>
-		              </form>
-		            </div>
+		    	<div class="form-group col-md-10">
+				    <label for="fornecedor_id">Fornecedor:</label>
+				    <span class="form-control">{{$fornecedor->nome_fantasia}} | {{$fornecedor->responsavel}} | {{$fornecedor->email}} | {{$fornecedor->razao_social}} | {{$fornecedor->cnpj}} | {{$fornecedor->endereco_pais}}</span>
 			 	</div>	
 		</div>
+		<div class="form-group col-md-12">	
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+			            <table class="table table-hover">
+			                <tr>
+			                    <th>ID</th>
+			                    <th>Produto</th>
+			                    <th>Quantidade</th>
+			                    <th>Preço</th>
+			                    <th>Preço Frete</th>
+			                    <th>Tipo de Frete</th>
+			                    <th>Modificar</th>
+			                    <th>Remover</th>
+			                </tr>
+			                @forelse ($itens as $item)
+			                <tr>
+			                    <td>{{$item->item_id}}</td>
+			                    <td><a href="{{URL::to('produtos')}}/{{$item->id}}">{{$item->titulo}} 
+			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->quantidade}} {{$item->unidade_medida}}</a></td>
+			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->preco}}</a></td>
+			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->frete_preco}}</a></td>
+			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->frete_tipo}}</a></td>
+			                    <td>
+			                        <a class="btn btn-warning btn-xs" href="{{URL::to('orcamento/'.$item->item_id.'/itemEdit')}}"><i class="fa fa-edit"></i> Editar</a>
+			                    </td>
+			                    <td>
+
+			                        <form method="POST" action="{{action('OrcamentoController@itemDestroy', $item->item_id)}}" id="formDelete{{$item->item_id}}">
+			                            @csrf
+			                            <input type="hidden" name="_method" value="DELETE">
+			                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
+			                            <!--<input type="submit" name="Excluir">-->
+
+			                            <a href="javascript:confirmDelete{{$item->item_id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Remover</a>
+			                        </form> 
+
+			                        <script>
+			                           function confirmDelete{{$item->item_id}}() {
+
+			                            var result = confirm('Tem certeza que deseja remover?');
+
+			                            if (result) {
+			                                    document.getElementById("formDelete{{$item->item_id}}").submit();
+			                                } else {
+			                                    return false;
+			                                }
+			                            } 
+			                        </script>
+
+			                    </td>
+			                </tr>                
+			                @empty
+
+			                <tr>
+			                    <td><b>Nenhum Resultado.</b></td>
+			                </tr>
+			                    
+			                @endforelse      
+
+			                    
+			                
+			            </table>
+			        </div>
+			        <!-- /.box-body -->
+		</div>
+
+		<hr class="hr">
 		
 		<a href="{{$orcamento->id}}/edit" class="btn btn-warning">Editar</a>
 		

@@ -13,6 +13,7 @@ class CreateItemOrcamentosTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('item_orcamentos', function (Blueprint $table) {
 
             $table->increments('id');
@@ -21,11 +22,13 @@ class CreateItemOrcamentosTable extends Migration
 
             $table->string('unidade_medida');
 
-            $table->double('preco', 8, 2);
+            $table->double('preco', 8, 2)->nullable();
 
-            $table->double('frete_preco', 8, 2);
+            $table->double('frete_preco', 8, 2)->nullable();
 
-            $table->string('frete_tipo');
+            $table->string('frete_tipo')->nullable();
+
+            $table->string('moeda')->nullable();
 
             //Orçamento
             $table->integer('orcamento_id')->unsigned();
@@ -43,6 +46,7 @@ class CreateItemOrcamentosTable extends Migration
 
             $table->timestamps();
         });
+        
     }
 
     /**

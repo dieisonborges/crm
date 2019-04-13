@@ -174,3 +174,8 @@ Route::post('fornecedor/busca', 'FornecedorController@busca');
 //Orçamento
 Route::resource('orcamento', 'OrcamentoController');
 Route::post('orcamento/busca', 'OrcamentoController@busca');
+Route::get('orcamento/{id}/item', 'OrcamentoController@item');
+Route::post('orcamento/itemStore', 'OrcamentoController@itemStore');
+Route::get('orcamento/{id}/itemEdit', 'OrcamentoController@itemEdit');
+Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
+Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');

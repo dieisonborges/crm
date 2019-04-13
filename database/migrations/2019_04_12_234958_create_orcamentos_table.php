@@ -13,11 +13,17 @@ class CreateOrcamentosTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('orcamentos', function (Blueprint $table) {
             $table->increments('id');
 
+            // 0 - Em edição
+            // 1 - Bloqueado (Enviado Para Cotação)
+            // 3 - Cancelado
+            $table->string('status')->default('0');
+
             $table->date('validade')->nullable();
-            $table->longText('codigo');
+            $table->string('codigo')->unique();
             $table->longText('token');
             $table->date('token_validade');
 
@@ -29,6 +35,7 @@ class CreateOrcamentosTable extends Migration
 
             $table->timestamps();
         });
+        
 
     }
 
