@@ -56,33 +56,48 @@ class OrcamentoController extends Controller
     private function token()
     {
         
-        $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
+        $chars  = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
+        $chars2 = 'abcdefghijklmnpqrstuvwxyz';
 
         $token1 = $chars[rand (0 , 24)];
         $token1 .= $chars[rand (0 , 24)];
         $token1 .= rand (0 , 9);
         $token1 .= rand (0 , 9);
+        //TOKEN
         $token = md5($token1);
 
         $token2 = $chars[rand (0 , 24)];
+        $token2 .= rand (0 , 9);
         $token2 .= $chars[rand (0 , 24)];
-        $token2 .= rand (0 , 9);
-        $token2 .= rand (0 , 9);
-        $token  .= md5($token2);
+        $token2 .= rand (0 , 9); 
+        $token2 .= $chars[rand (0 , 24)];
+        $token2 .= rand (0 , 9); 
+        $token2 .= $chars[rand (0 , 24)]; 
+        //TOKEN
+        $token  .= $token2;
 
         $token3 = $chars[rand (0 , 24)];
         $token3 .= $chars[rand (0 , 24)];
         $token3 .= rand (0 , 9);
         $token3 .= rand (0 , 9);
+        //TOKEN
         $token  .= md5($token3);
 
         $token4 = $chars[rand (0 , 24)];
         $token4 .= $chars[rand (0 , 24)];
         $token4 .= rand (0 , 9);
         $token4 .= rand (0 , 9);
+        //TOKEN
         $token  .= md5($token4);
 
+        
+
         $token .= date("Ymdhis");
+
+        $token .= rand (0 , 9999999999);
+
+        $token .= $chars2[rand (0 , 24)];
+
 
         return $token;
     }
@@ -121,7 +136,17 @@ class OrcamentoController extends Controller
     {
         //
         if(!(Gate::denies('read_orcamento'))){
-            $orcamentos = Orcamento::paginate(40);  
+            //$orcamentos = Orcamento::paginate(40);  
+
+            $orcamentos = DB::table('orcamentos')
+                    ->select(array(
+                        'orcamentos.*',
+                        'fornecedors.nome_fantasia',
+                        'fornecedors.endereco_pais'
+                     ))
+                    ->join('fornecedors', 'orcamentos.fornecedor_id', '=', 'fornecedors.id')                    
+                    ->orderBy('orcamentos.id', 'DESC')
+                    ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.index");
@@ -137,8 +162,24 @@ class OrcamentoController extends Controller
     public function busca (Request $request){
         if(!(Gate::denies('read_orcamento'))){
             $buscaInput = $request->input('busca');
-            $orcamentos = Orcamento::where('codigo', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);  
+
+
+            //$orcamentos = Orcamento::where('codigo', 'LIKE', '%'.$buscaInput.'%')
+            //                    ->paginate(40); 
+
+            $orcamentos = DB::table('orcamentos')
+                    ->select(array(
+                        'orcamentos.*',
+                        'fornecedors.nome_fantasia',
+                        'fornecedors.endereco_pais'
+                     ))
+                    ->join('fornecedors', 'orcamentos.fornecedor_id', '=', 'fornecedors.id')
+                    ->where('orcamentos.codigo', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('fornecedors.nome_fantasia', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('fornecedors.endereco_pais', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('orcamentos.created_at', 'LIKE', '%'.$buscaInput.'%')                   
+                    ->orderBy('orcamentos.id', 'DESC')
+                    ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.busca=".$buscaInput);
@@ -242,7 +283,8 @@ class OrcamentoController extends Controller
                         'item_orcamentos.frete_tipo',
                         'produtos.*'
                      ))
-                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')                    
+                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')
+                    ->where('item_orcamentos.orcamento_id', $orcamento->id)                  
                     ->orderBy('produtos.id', 'asc')
                     ->paginate(40);
 
@@ -520,7 +562,7 @@ class OrcamentoController extends Controller
         }
     }
 
-    // Criar usuário
+    
     public function enviar($id){
 
         if(!(Gate::denies('create_orcamento'))){  
@@ -552,7 +594,7 @@ class OrcamentoController extends Controller
             ";
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("orcamento.store");
+            $this->log("orcamento.enviado=".$orcamento);
             //--------------------------------------------------------------------------------------------
 
             if($orcamento->save()){
@@ -589,20 +631,53 @@ class OrcamentoController extends Controller
 
     }
 
+    public function cancelar($id){
+
+        if(!(Gate::denies('create_orcamento'))){  
+
+            $orcamento = Orcamento::where('id', $id)->first(); 
+ 
+
+            $orcamento->status = 2;
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.cancelar=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            if($orcamento->save()){
+                return redirect('orcamento/')->with('success', 'Orçamento cancelado com sucesso!');
+            }else{
+                return redirect('orcamento/'.$id)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+
+    }
+
+    /*-------------------------------- SEGURANCA VIA TOKEN --------------------------------*/
+
     public function fornecedor($token)
     {
-        //
-            
+        
+        $orcamento = Orcamento::where('token', $token)->first();
+
+        if($orcamento){
+
             $orcamento = Orcamento::where('token', $token)->first();
 
             $itens = ItemOrcamento::where('orcamento_id', $orcamento->id)->get();
-
             
             $fornecedor = Fornecedor::find($orcamento->fornecedor_id);
 
             $fornecedors = Fornecedor::all();
 
+            $moedas = $this->moedas();
+            
+
             //$itens = ItemOrcamento::where('orcamento_id', $orcamento->id)->get();
+
 
             $itens = DB::table('item_orcamentos')
                     ->select(array(
@@ -612,9 +687,11 @@ class OrcamentoController extends Controller
                         'item_orcamentos.preco',
                         'item_orcamentos.frete_preco',
                         'item_orcamentos.frete_tipo',
+                        'item_orcamentos.moeda',
                         'produtos.*'
                      ))
-                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')                    
+                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')
+                    ->where('item_orcamentos.orcamento_id', $orcamento->id)                  
                     ->orderBy('produtos.id', 'asc')
                     ->paginate(40);
 
@@ -623,9 +700,102 @@ class OrcamentoController extends Controller
             $this->log("orcamento.show=".$orcamento);
             //--------------------------------------------------------------------------------------------
 
-            return view('orcamento.fornecedor', compact('orcamento', 'fornecedors', 'fornecedor', 'itens'));
+            return view('orcamento.fornecedor', compact('orcamento', 'fornecedors', 'fornecedor', 'itens', 'moedas'));
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }   
         
         
+    }
+
+    public function fornecedorUpdate(Request $request)
+    {
+        
+        $token = $request->input('token');
+
+        $orcamento = Orcamento::where('token', $token)->first();        
+
+        if($orcamento){
+
+            //Validação
+            /*
+            $this->validate($request,[
+                    'preco' => 'required',
+                    'frete_preco' => 'required',
+                    'frete_tipo' => 'required',
+                    'moeda' => 'required',    
+            ]);
+            */
+
+            /* ------------------------ POST ITEM -------------------- */
+            $id = $request->input('id');
+            $preco = $request->input('preco');
+            $frete_preco = $request->input('frete_preco');
+            $frete_tipo = $request->input('frete_tipo');
+            $moeda = $request->input('moeda');
+            /* ------------------------ END POST ITEM -------------------- */
+
+            //Total array
+            $total = sizeof($id);
+
+            
+
+            for ($i = 0; $i < $total; $i++) {
+                $item_orcamento = ItemOrcamento::where('id', $id[$i])->first();
+
+                //itens
+                $item_orcamento->preco = $preco[$i];
+                $item_orcamento->frete_preco = $frete_preco[$i];
+                $item_orcamento->frete_tipo = $frete_tipo[$i];
+                $item_orcamento->moeda = $moeda[$i];
+
+                if($item_orcamento->save()){
+                    $status = true;
+                }else{
+                    $status = false;
+                }
+            }
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.fornecedorUpdate=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            if($item_orcamento->save()){
+                return redirect('orcamento/fornecedor/'.$token)->with('success', 'Orçamento salvo com sucesso!');
+            }else{
+                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+        
+    }
+
+    public function fornecedorFinalizar($token){
+
+        $orcamento = Orcamento::where('token', $token)->first();
+
+        if($orcamento){
+             
+            //Cotação Finalizada
+            $orcamento->status = 3;
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.cancelar=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            if($orcamento->save()){
+                return redirect('/')->with('success', 'Orçamento finalizado com sucesso!');
+            }else{
+                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+
     }
 
 }

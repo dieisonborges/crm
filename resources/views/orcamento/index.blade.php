@@ -34,6 +34,8 @@
                     <th>Código</th>
                     <th>Validade do Token</th>
                     <th>Criado em</th>
+                    <th>Fornecedor</th>
+                    <th>País</th>
                     <th>Enviar</th>
                     <th>Status</th>
                     <th>Visualizar</th>
@@ -46,17 +48,24 @@
                     <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->codigo}}</a></td>
                     <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y', strtotime($orcamento->token_validade)) }}</a></td>
                     <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y H:i:s', strtotime($orcamento->created_at)) }}</a></td>
-                    
+                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->nome_fantasia}}</a></td>
+                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->endereco_pais}}</a></td>
+
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar">
+                        @if(($orcamento->status==0)or($orcamento->status==1))
+
+                            <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar">
                             <span class="fa fa-paper-plane"> Enviar</span>                        
-                        </a>
+                            </a>
+                        @else
+                            <span class="btn btn-warning btn-xs">Bloqueado</span>
+                        @endif
                     </td>
                     <td>
                         @if($orcamento->status==0)
                             <span class="btn btn-primary btn-xs">Em edição</span> 
                         @elseif($orcamento->status==1)
-                            <span class="btn btn-warning btn-xs">Bloqueado: Enviado para cotação</span> 
+                            <span class="btn btn-warning btn-xs">Bloqueado: Em cotação</span> 
                         @elseif($orcamento->status==2)
                             <span class="btn btn-danger btn-xs">Cancelado</span> 
                         @else($orcamento->status==3)

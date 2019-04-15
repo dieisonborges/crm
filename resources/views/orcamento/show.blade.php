@@ -27,9 +27,12 @@
 		        	    	<i class="fa fa-edit"></i> Editar
 		        	    </a>
 		        	@endif
+
+		        	@if(($orcamento->status==0)or($orcamento->status==1))
 	        	    <a href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar" class="btn btn-danger">
                         <i class="fa fa-paper-plane"> Enviar</i>                       
                     </a>
+                    @endif
 
 	    </h2> 
 		<div class="row">		
@@ -125,9 +128,13 @@
 
 		<hr class="hr">
 		@if(($orcamento->status)==0)	
-		<a href="{{$orcamento->id}}/edit" class="btn btn-warning">Editar</a>
-		@endif
+			<a href="{{$orcamento->id}}/edit" class="btn btn-warning">Editar</a>
+		@endif		
 		
-		<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+			<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+
+		@if(($orcamento->status)!=2)	
+			<a href="{{$orcamento->id}}/cancelar" class="btn btn-danger" style="float: right;">Cancelar Orçamento</a>
+		@endif
 	@endsection
 @endcan

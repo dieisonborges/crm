@@ -180,4 +180,10 @@ Route::get('orcamento/{id}/itemEdit', 'OrcamentoController@itemEdit');
 Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
 Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');
 Route::get('orcamento/{id}/enviar', 'OrcamentoController@enviar');
+Route::get('orcamento/{id}/cancelar', 'OrcamentoController@cancelar');
+
+
+/* -------------- SEGURANCA VIA TOKEN --------------------- */
 Route::get('orcamento/fornecedor/{token}', 'OrcamentoController@fornecedor');
+Route::post('orcamento/fornecedorUpdate', 'OrcamentoController@fornecedorUpdate');
+Route::get('orcamento/fornecedorFinalizar/{token}', 'OrcamentoController@fornecedorFinalizar');

@@ -1,8 +1,20 @@
-@if($orcamento->status==1)	
+@if($orcamento->status==1)
+
+	<script type="text/javascript">	
+		document.getElementById("body-nologin").className = "sidebar-collapse";
+
+	</script>
 
 	@extends('layouts.nologin')
 	@section('title', $orcamento->name)
 	@section('content')
+
+		<a href="https://translate.google.com.br/translate?hl=pt-BR&sl=pt&tl=en&u={{url('orcamento/fornecedor/'.$orcamento->token)}}" class="btn btn-primary">
+			<i class="fa fa-language"> Translate | 翻譯</i>
+		</a> 
+
+		<br>
+
 		<h1>
 	        Orcamento 
 
@@ -21,7 +33,7 @@
 	    <h2>
 	        <small>Código: <b>{{$orcamento->codigo}}</b></small>
 	        		
-	        	<a href="#" class="btn btn-success"><i class="fa fa-save"></i> Salvar</a>
+	        	<button class="btn btn-success" type="submit" form="orcamento_salvar" value="Salvar"> <i class="fa fa-save"></i> Salvar</button>
 
 
 	    </h2> 
@@ -44,37 +56,59 @@
 			<div class="box-body table-responsive no-padding">
 			            <table class="table table-hover">
 			                <tr>
-			                    <th>ID</th>
-			                    <th>Produto</th>
-			                    <th>Quantidade</th>
-			                    <th>Preço</th>
-			                    <th>Preço Frete</th>
-			                    <th>Tipo de Frete</th>			                    
-			                    <th>Salvar</th>
+			                    <th>SKU: </th>
+			                    <th>Produto: </th>
+			                    <th>Quantidade: </th>
+			                    <th>Preço: </th>
+			                    <th>Preço <br> Frete: </th>
+			                    <th>Tipo <br> de Frete: </th>
+			                    <th>Moeda: </th>			                    
+			                    <th>Salvar: </th>
 			                </tr>
-			                <form action="#" id="orcamento_salvar">
+			                <form method="POST" action="{{url('orcamento/fornecedorUpdate')}}" id="orcamento_salvar">
 
-			                	@csrf
+			                	@csrf			                	
 
 			                	<input type="hidden" name="token" value="{{$orcamento->token}}">
 
 				                @forelse ($itens as $item)
-				                <tr>
 
-				                    <td>{{$item->item_id}}</td>
-				                    <td><a target="_blank" href="{{$item->link_referencia}}">{{$item->titulo}}</a></td>
-				                    <td><a target="_blank" href="{{$item->link_referencia}}">{{$item->quantidade}} {{$item->unidade_medida}}</a></td>
+				                <input type="hidden" name="id[]" value="{{$item->item_id}}">
+
+				                <tr>
+				                	<td>
+				                		<a target="_blank" href="{{$item->link_referencia}}">{{$item->sku}}</a>
+				                	</td>
+				                    <td style="width:40%;">
+				                    	<a target="_blank" href="{{$item->link_referencia}}">{{$item->titulo}}</a>
+				                    </td>
+				                    <td>
+				                    	<a target="_blank" href="{{$item->link_referencia}}">{{$item->quantidade}} {{$item->unidade_medida}}</a>
+				                    </td>				                
 				                    <td> 
-				                    	<input type="text" name="preco[{{$item->id}}]" value="{{$item->preco}}">
+				                    	<input class="form-control" type="number" step="0.01" name="preco[]" value="{{$item->preco}}" size="1">
 				                    </td>
 				                    <td> 
-				                    	<input type="text" name="frete_preco[{{$item->id}}]" value="{{$item->frete_preco}}">
+				                    	<input class="form-control" type="number" step="0.01" name="frete_preco[]" value="{{$item->frete_preco}}" size="1">
 				                    </td>
 				                    <td> 
-				                    	<input type="text" name="frete_tipo[{{$item->id}}]" value="{{$item->frete_tipo}}">
+				                    	<input class="form-control" type="number" step="0.01" name="frete_tipo[]" value="{{$item->frete_tipo}}" size="1">
 				                    </td>
-				                    <td>				                    	
-				                    	<a href="#" class="btn btn-success btn-xs"><i class="fa fa-save"></i> Salvar</a>
+				                    <td> 
+				                    	 <select name="moeda[]" class="form-control" data-placeholder="Moeda" style="width: 80px;">
+							                	<option selected="selected" value="{{$item->moeda}}">{{$item->moeda}}</option>
+								                @forelse ($moedas as $moeda)
+								                    <option value="{{$moeda}}">
+								                        {{$moeda}}
+								                    </option>
+								                @empty
+								                    <option>Nenhuma Opção</option>     
+								                @endforelse
+							                      
+							        	</select>
+				                    </td>
+				                    <td>
+				                    	<button class="btn btn-success btn-xs" type="submit" form="orcamento_salvar" value="Salvar"> <i class="fa fa-save"></i> Salvar</button>
 				                    </td>
 				                    
 				                </tr>                
@@ -96,9 +130,9 @@
 
 		<hr class="hr">
 			
-		<a href="#" class="btn btn-success"><i class="fa fa-save"></i> Salvar</a>
+		<button class="btn btn-success" type="submit" form="orcamento_salvar" value="Salvar"> <i class="fa fa-save"></i> Salvar</button>
 
-		<a href="#" class="btn btn-primary"><i class="fa fa-close"></i> Finalizar Orçamento</a>
+		<a href="{{url('orcamento/fornecedorFinalizar/'.$orcamento->token)}}" class="btn btn-primary"><i class="fa fa-check"></i> Finalizar Orçamento</a>
 		
 		
 	@endsection
@@ -111,3 +145,4 @@
     </div>
 
 @endif
+

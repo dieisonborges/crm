@@ -3,14 +3,9 @@
 
   @include('layouts.head')
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" id="body-nologin">
 <div class="wrapper">
-  <div class="col-md-2">
-    <a href="/">
-        <b style="display:none;">{{ config('app.name') }}</b>        
-        <img src="{{ asset('img/logo/logo-ecardume-branca-v2.png') }}" width="80%">        
-    </a>     
-  </div>
+  
    
  
   <!-- Content Wrapper. Contains page content -->
@@ -19,11 +14,18 @@
     <!-- Main content -->
     <section class="content">  
 
-      <div class="row">
+      <div class="row">         
 
           <div class="col-md-12">
             <div class="box">
               <div class="box-header with-border">
+
+                <div class="col-md-4" style="float: right;">
+                  <a href="/">
+                      <b style="display:none;">{{ config('app.name') }}</b>        
+                      <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="80%">        
+                  </a>     
+                </div>
 
                 @include('layouts.error')
 
