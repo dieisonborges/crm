@@ -9,6 +9,7 @@ use App\Produto;
 use Illuminate\Http\Request;
 use Gate;
 use DB;
+use Mail;
 
 class OrcamentoController extends Controller
 {
@@ -496,7 +497,6 @@ class OrcamentoController extends Controller
     public function itemDestroy($id)
     {
         //
-        dd("sdfsd");
         if(!(Gate::denies('delete_orcamento'))){
             $item = ItemOrcamento::find($id);  
 
@@ -518,6 +518,114 @@ class OrcamentoController extends Controller
         else{
             return redirect('erro')->with('orcamento_error', '403');
         }
+    }
+
+    // Criar usuário
+    public function enviar($id){
+
+        if(!(Gate::denies('create_orcamento'))){  
+
+            $orcamento = Orcamento::where('id', $id)->first(); 
+ 
+
+            $fornecedor = Fornecedor::where('id', $orcamento->fornecedor_id)->first();    
+
+                                
+            // 0 - Em edição
+            // 1 - Bloqueado (Enviado Para Cotação)
+            // 2 - Cancelado
+            // 3 - Cotação Finalizada
+            $orcamento->status = 1;
+
+
+            $mail_to = $fornecedor->email;
+
+            $msg="                
+                Olá, você acabou de receber um pedido de orçamento, clique no link abaixo, e insira os valores dos produtos e frete: <br><br>
+                Código: <b>".$orcamento->codigo."</b> <br>
+                Fornecedor: ".$fornecedor->nome_fantasia." | ".$fornecedor->razao_social."
+                Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
+                link para preencher o orçamento: http://atendimento.ecardume.com.br/orcamento/fornecedor/".$orcamento->token."  
+                <br><br><br>
+                <span style='color:red;'>*Aguardamos o retorno o mais breve possível.</span>
+                <br><br><br>           
+            ";
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.store");
+            //--------------------------------------------------------------------------------------------
+
+            if($orcamento->save()){
+
+                $mailData = array(
+                    'nome' => "7P CRM e-Cardume | Relacionamento",
+                    'email' => "atendimento@ecardume.com.br",
+                    'assunto' => "Solicitação de orçamento e-Cardume",
+                    'msg' => $msg,
+                );
+
+                
+                //Destinatario
+                $mailFrom = array(
+                            'email'     => $mail_to,
+                            'name'      => $fornecedor->nome_fantasia,
+                            'subject'   => 'CRM e-Cardume | Relacionamento | Orçamento'
+                          );
+
+
+                Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
+                    $m->from('atendimento@ecardume.com.br','CRM e-Cardume | Relacionamento | Orçamento');
+                    $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+                });
+
+                return redirect('orcamento/')->with('success', 'Orçamento enviado com sucesso!');
+            }else{
+                return redirect('orcamento/'.$id)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('orcamento_error', '403');
+        }
+
+    }
+
+    public function fornecedor($token)
+    {
+        //
+            
+            $orcamento = Orcamento::where('token', $token)->first();
+
+            $itens = ItemOrcamento::where('orcamento_id', $orcamento->id)->get();
+
+            
+            $fornecedor = Fornecedor::find($orcamento->fornecedor_id);
+
+            $fornecedors = Fornecedor::all();
+
+            //$itens = ItemOrcamento::where('orcamento_id', $orcamento->id)->get();
+
+            $itens = DB::table('item_orcamentos')
+                    ->select(array(
+                        'item_orcamentos.id as item_id',
+                        'item_orcamentos.quantidade',
+                        'item_orcamentos.unidade_medida',
+                        'item_orcamentos.preco',
+                        'item_orcamentos.frete_preco',
+                        'item_orcamentos.frete_tipo',
+                        'produtos.*'
+                     ))
+                    ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')                    
+                    ->orderBy('produtos.id', 'asc')
+                    ->paginate(40);
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.show=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            return view('orcamento.fornecedor', compact('orcamento', 'fornecedors', 'fornecedor', 'itens'));
+        
+        
     }
 
 }

@@ -35,6 +35,7 @@
                     <th>Validade do Token</th>
                     <th>Criado em</th>
                     <th>Enviar</th>
+                    <th>Status</th>
                     <th>Visualizar</th>
                     <th>Editar</th>
                     <th>Excluir</th>
@@ -52,14 +53,31 @@
                         </a>
                     </td>
                     <td>
+                        @if($orcamento->status==0)
+                            <span class="btn btn-primary btn-xs">Em edição</span> 
+                        @elseif($orcamento->status==1)
+                            <span class="btn btn-warning btn-xs">Bloqueado: Enviado para cotação</span> 
+                        @elseif($orcamento->status==2)
+                            <span class="btn btn-danger btn-xs">Cancelado</span> 
+                        @else($orcamento->status==3)
+                            <span class="btn btn-success btn-xs">Cotação Finalizada</span> 
+                        @endif
+                    </td>
+                    <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}">
                             <span class="fa fa-eye"> Ver</span>                        
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{{URL::to('orcamento/'.$orcamento->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                        @if(($orcamento->status)==0)
+                            <a class="btn btn-warning btn-xs" href="{{URL::to('orcamento/'.$orcamento->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                        @else
+                            <span class="btn btn-warning btn-xs">Bloqueado</span>
+                        @endif
                     </td>
                     <td>
+
+                        @if(($orcamento->status)==0)
 
                         <form method="POST" action="{{action('OrcamentoController@destroy', $orcamento->id)}}" id="formDelete{{$orcamento->id}}">
                             @csrf
@@ -82,6 +100,10 @@
                                 }
                             } 
                         </script>
+
+                        @else
+                            <span class="btn btn-warning btn-xs">Bloqueado</span>
+                        @endif
 
                     </td>
                 </tr>                

@@ -179,3 +179,5 @@ Route::post('orcamento/itemStore', 'OrcamentoController@itemStore');
 Route::get('orcamento/{id}/itemEdit', 'OrcamentoController@itemEdit');
 Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
 Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');
+Route::get('orcamento/{id}/enviar', 'OrcamentoController@enviar');
+Route::get('orcamento/fornecedor/{token}', 'OrcamentoController@fornecedor');

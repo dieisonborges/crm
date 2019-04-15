@@ -7,8 +7,8 @@
 <div class="wrapper">
   <div class="col-md-2">
     <a href="/">
-        <b style="display:none;">SICARIO</b>        
-        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="70%">        
+        <b style="display:none;">{{ config('app.name') }}</b>        
+        <img src="{{ asset('img/logo/logo-ecardume-branca-v2.png') }}" width="80%">        
     </a>     
   </div>
    

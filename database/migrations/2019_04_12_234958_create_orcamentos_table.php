@@ -19,7 +19,8 @@ class CreateOrcamentosTable extends Migration
 
             // 0 - Em edição
             // 1 - Bloqueado (Enviado Para Cotação)
-            // 3 - Cancelado
+            // 2 - Cancelado
+            // 3 - Cotação Finalizada
             $table->string('status')->default('0');
 
             $table->date('validade')->nullable();
