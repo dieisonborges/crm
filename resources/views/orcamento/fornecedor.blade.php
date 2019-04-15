@@ -91,7 +91,7 @@
 				                    <td> 
 				                    	<input class="form-control" type="number" step="0.01" name="frete_preco[]" value="{{$item->frete_preco}}" size="1">
 				                    </td>
-				                    <td> 
+				                    <td style="width:10%;"> 
 				                    	<input class="form-control" type="text" name="frete_tipo[]" value="{{$item->frete_tipo}}" size="1">
 				                    </td>
 				                    <td> 
