@@ -13,6 +13,8 @@ use App\Categoria;
 use App\Setor; 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
+use App\Upload;
+use DB;
 
 class AtendimentoController extends Controller
 {
@@ -338,6 +340,9 @@ class AtendimentoController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
+            //Arquivos relacionados
+            $uploads = $ticket->uploads()->get();
+
             //Rotulos
             $rotulos = $this->ticketRotulo();
 
@@ -354,7 +359,7 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
 
-            return view('atendimento.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
+            return view('atendimento.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'uploads'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

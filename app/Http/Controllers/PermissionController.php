@@ -224,7 +224,7 @@ class PermissionController extends Controller
 
 
 
-        // Criar
+    // Criar
     public function createAuto(){
 
         if(!(Gate::denies('read_permission'))){
