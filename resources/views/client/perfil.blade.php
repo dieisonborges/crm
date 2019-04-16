@@ -18,7 +18,7 @@
                 <h5>e-Mail: <b>{{$user->email}}</b></h5>
                 <h5>CPF: <b> {{$user->cpf}}</b></h5>
                 <h5>Telefone: <b> {{$user->phone_number}}</b></h5>
-                <h5>Desde: <b> {{date('d/m/Y H:i:s', strtotime($user->created_at))}}</b></h5>
+                <h5>Desde: <b> {{date('d/m/Y H:i:s', strtotime($user->created_at))}}</b></h5> 
                 
               </div>
         </div>
