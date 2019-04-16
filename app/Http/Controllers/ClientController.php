@@ -11,7 +11,8 @@ use Gate;
 use App\Ticket;
 use App\Categoria;
 use App\Setor; 
-use App\User; 
+use App\User;
+use App\Upload; 
 use DB;
 
 use App\Http\Controllers\Log;
@@ -456,20 +457,129 @@ class ClientController extends Controller
 
             /* ------------ Conquistas do Usuário ----------- */      
 
-            $conquistas = $user->conquista()->get();       
+            $conquistas = $user->conquista()->get();     
+
+
+            /* ------------ FOTO PERFIL -------------------- */
+
+            $imagem = $user->uploads()->orderBy('id', 'DESC')->first();
             
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index=".$scores);
             //---------------------------------------------------------------------------------------
 
-            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas'));
+            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas', 'imagem'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
         }
 
 
+    }
+
+    public function imagem()
+    {
+        //
+        if(Auth::id()){  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("upload.imagem.client=".(Auth::id()));
+            //--------------------------------------------------------------------------------------------
+
+            return view('client.imagem');
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function imagemUpdate(Request $request)
+    {
+        if(Auth::id()){
+
+            //Validação
+            $this->validate($request,[
+                    'file' => 'required|mimes:jpeg,png,jpg,pdf',
+            ]);
+
+            $dir = "client".'/'.(Auth::id());
+
+            $id = Auth::id();
+
+            $area = "client";
+
+            /* -------------------------------- UPLOAD --------------------*/
+
+            $file = $request->file('file');
+
+            // Se informou o arquivo, retorna um boolean
+            //$file = $request->hasFile('file');
+             
+            // Se é válido, retorna um boolean
+            //$file = $request->file('file')->isValid();
+
+            // Retorna mime type do arquivo (Exemplo image/png)
+            $tipo = $request->file('file')->getMimeType();
+             
+            // Retorna o nome original do arquivo
+            $nome = $request->file('file')->getClientOriginalName();
+             
+            // Extensão do arquivo
+            //$request->file('file')->getClientOriginalExtension();
+            $ext = $request->file('file')->extension();
+             
+            // Tamanho do arquivo
+            $tam = $request->file('file')->getClientSize();
+
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $link = uniqid(date('HisYmd'));
+
+            // Define finalmente o nome
+            $link = "{$link}.{$ext}";
+
+            // Faz o upload:
+            $upload = $request->file->storeAs($dir, $link);
+            // Se tiver funcionado o arquivo foi armazenado em storage/app/public/categories/nomedinamicoarquivo.extensao
+
+
+            /* -------------------------------- END UPLOAD --------------------*/
+
+                    
+            $upload = new Upload();
+            $upload->titulo = "Perfil de Usuário";
+            $upload->dir = $dir;
+            $upload->link = $link;
+            $upload->tipo = $tipo;
+            $upload->nome = $nome;
+            $upload->ext = $ext;
+            $upload->tam = $tam;
+
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("perfil.imagem.store=".$request);
+            //--------------------------------------------------------------------------------------------
+
+            if($upload->save()){
+
+                /* ------------Vinculo do Arquivo------------- */
+
+                $upload_id = DB::getPdo()->lastInsertId();
+
+                
+                $status = User::find($id)->uploads()->attach($upload_id);
+                               
+
+                /* ------------END Vinculo do Arquivo------------- */
+
+                return redirect('clients/perfil')->with('success', 'Imagem Alterada com Sucesso!.');
+            }else{
+                return redirect('uploads/'.$id.'/create/'.$area)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
     }
 
 }

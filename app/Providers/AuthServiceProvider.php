@@ -132,6 +132,9 @@ class AuthServiceProvider extends ServiceProvider
 
 
         }
+
+        
+
         /* ------------- Carega setores para MENUS ---------------------*/
         if($this->first_deploy()){
             //Aviso

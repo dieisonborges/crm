@@ -6,9 +6,11 @@
         Perfil e Score
         <small>de {{$user->name}}</small>
     </h1>
-	<div class="row">	
+	<div class="row">
+
+
 		
-		    <div class="box-body col-md-4">              
+		    <div class="box-body col-md-6">              
               <div class="callout callout-info">
               	<h5>ID: <b> {{$user->id}}</b></h5>
                 <h5>Apelido: <b> {{$user->apelido}}</b></h5>
@@ -20,6 +22,20 @@
                 
               </div>
         </div>
+
+        <div class="box-body col-md-2">              
+              
+            @if($imagem)  
+                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" width="100%">
+            @else
+                <img src="{{ asset('img/default-user-image.png') }}" width="100%">
+            @endif
+
+            
+
+            <a href="{{URL::to('clients')}}/imagem" class="btn btn-primary col-md-12"><i class="fa fa-image"></i> Alterar Imagem</a>
+
+        </div>  </div> 
 
         <div class="col-md-12">              
               

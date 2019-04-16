@@ -57,6 +57,10 @@ class User extends Authenticatable
         return $this->hasMany(\App\Score::class);
     }
 
+    public function uploads(){        
+        return $this->belongsToMany('App\Upload','imagem_user');
+    }
+
     /* --------------------- SEGURANCA ----------------------*/
 
     public function hasPermission(Permission $permission){

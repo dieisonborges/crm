@@ -185,13 +185,33 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image">
+
+                  @php
+
+                  $imagem_perfil = Auth::user()->uploads()->orderBy('id', 'DESC')->first();
+
+                  @endphp
+
+
+                  
+                  @if($imagem_perfil)  
+                      <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="user-image" alt="User Image">
+                  @else
+                      <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image">
+                  @endif
+
+
                   <span class="hidden-xs">{{ Auth::user()->apelido }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image">
+                    @if($imagem_perfil)  
+                        <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="img-circle" alt="User Image">
+                    @else
+                        <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image">
+                    @endif
+                    
 
                     <p>
                       {{ Auth::user()->name }}

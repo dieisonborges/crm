@@ -83,6 +83,9 @@ Route::post('setors/busca', 'SetorController@busca');
 
 // ClientController
 Route::get('clients/perfil', 'ClientController@perfil');
+// Imagem Perfil
+Route::get('clients/imagem', 'ClientController@imagem');
+Route::post('clients/imagemUpdate', 'ClientController@imagemUpdate');
 
 Route::resource('clients', 'ClientController');
 Route::post('clients/busca', 'ClientController@busca');
