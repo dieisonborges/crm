@@ -4,9 +4,7 @@
 	@section('content')
 		<h1>
 	        Produto 
-	        <small>{{$produto->name}}</small>
-
-
+	        <small>{{$produto->titulo}}</small>
 
 	        @if($produto->status)
 	    		<span class="btn btn-success">Ativo</span>
@@ -14,8 +12,30 @@
 	    		<span class="btn btn-danger">Desativado</span>
 	    	@endif
 
+	    </h1>
 
-	    </h1> 
+	    <hr class="hr col-md-12">
+
+    	<div class="row justify-content-center form-group">
+		    <div class="col-md-12">
+		        
+		        	@forelse ($imagens as $imagem)
+		        	<div class="col-md-2">
+			            <a href="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" data-toggle="lightbox" data-gallery="example-gallery">
+			                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" class="img-fluid">
+			            </a>
+			        </div>
+			        @empty
+			        <div class="col-md-2">
+			        	<span class="btn btn-primary">
+	                        <i class="fa fa-image"></i>
+	                         Nenhuma imagem.
+	                    </span>
+	                </div>
+			        @endforelse	        
+		        
+		    </div>
+		</div>
 		<div class="row">		
 				
 			 	<div class="form-group col-md-12">

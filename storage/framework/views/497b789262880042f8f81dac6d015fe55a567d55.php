@@ -58,9 +58,9 @@
                     </a></td>
                 <td>
                         <?php if($convite->status): ?>
-                            <a class='btn btn-danger' href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>/updateStatus/0">NÃO</a>
+                            <a class='btn btn-danger btn-xs' href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>/updateStatus/0">NÃO</a>
                         <?php else: ?>
-                            <a class='btn btn-success' href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>/updateStatus/1">SIM</a>
+                            <a class='btn btn-success btn-xs' href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>/updateStatus/1">SIM</a>
                         <?php endif; ?>
                 </td>               
                 <td>

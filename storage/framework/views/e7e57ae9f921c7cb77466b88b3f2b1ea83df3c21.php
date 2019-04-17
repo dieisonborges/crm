@@ -36,6 +36,7 @@
                     <th>Título</th>
                     <th>Palavras Chave</th>
                     <th>Descrição</th>
+                    <th>Imagens</th>
                     <th>Status</th>
                     <th>Visualizar</th>
                     <th>Editar</th>
@@ -48,6 +49,12 @@
                     <td><a href="<?php echo e(URL::to('produtos')); ?>/<?php echo e($produto->id); ?>"><?php echo e($produto->titulo); ?></a></td>
                     <td><a href="<?php echo e(URL::to('produtos')); ?>/<?php echo e($produto->id); ?>"><?php echo e($produto->palavras_chave); ?></a></td>
                     <td><a href="<?php echo e(URL::to('produtos')); ?>/<?php echo e($produto->id); ?>"><?php echo e(str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...')); ?></a></td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('produtos')); ?>/<?php echo e($produto->id); ?>/imagem">
+                            <span class="fa fa-image"> Imagens</span>                        
+                        </a>
+                    </td>                    
+
                     <td>
                         <a href="<?php echo e(URL::to('produtos')); ?>/<?php echo e($produto->id); ?>">
                         <?php if($produto->status): ?>

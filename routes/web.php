@@ -141,6 +141,11 @@ Route::get('convites/{id}/updateStatus/{status}', 'ConviteController@updateStatu
 Route::resource('produtos', 'ProdutoController');
 Route::post('produtos/busca', 'ProdutoController@busca');
 
+// Imagem Produtos
+Route::get('produtos/{id}/imagem', 'ProdutoController@imagem');
+Route::post('produtos/imagemUpdate', 'ProdutoController@imagemUpdate');
+Route::post('produtos/imagemDestroy/{id}', 'ProdutoController@imagemDestroy');
+
 //Franquias
 Route::resource('franquias', 'FranquiaController');
 Route::post('franquias/busca', 'FranquiaController@busca');

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Produto; 
+use App\Upload; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Gate;
+use DB;
 
 //Log
 use App\Http\Controllers\Log;
@@ -110,7 +112,9 @@ class ProdutoController extends Controller
             $this->log("produto.show=".$produto);
             //--------------------------------------------------------------------------------------------
 
-            return view('produto.show', compact('produto'));
+            $imagens = $produto->imagens()->get();
+
+            return view('produto.show', compact('produto', 'imagens'));
         }
         else{
             return redirect('erro')->with('produto_error', '403');
@@ -284,6 +288,157 @@ class ProdutoController extends Controller
         }
         else{
             return redirect('erro')->with('produto_error', '403');
+        }
+    }
+
+    public function imagem($id)
+    {
+        //
+        if(!(Gate::denies('read_produto'))){ 
+
+            $produto = Produto::find($id);
+
+            $imagens = $produto->imagens()->get();
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("upload.imagem.produto");
+            //--------------------------------------------------------------------------------------------
+
+            return view('produto.imagem', compact('produto', 'imagens'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function imagemUpdate(Request $request)
+    {
+        if(!(Gate::denies('update_produto'))){
+
+            $id = $request->input('id');
+
+            //Validação
+            $this->validate($request,[
+                    'file' => 'required|mimes:jpeg,png,jpg,pdf',
+            ]);
+
+            $dir = 'files/produtos/'.$id.'/galeria';
+
+
+            /* -------------------------------- UPLOAD --------------------*/
+
+            $file = $request->file('file');
+
+            // Se informou o arquivo, retorna um boolean
+            //$file = $request->hasFile('file');
+             
+            // Se é válido, retorna um boolean
+            //$file = $request->file('file')->isValid();
+
+            // Retorna mime type do arquivo (Exemplo image/png)
+            $tipo = $request->file('file')->getMimeType();
+             
+            // Retorna o nome original do arquivo
+            $nome = $request->file('file')->getClientOriginalName();
+             
+            // Extensão do arquivo
+            //$request->file('file')->getClientOriginalExtension();
+            $ext = $request->file('file')->extension();
+             
+            // Tamanho do arquivo
+            $tam = $request->file('file')->getClientSize();
+
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $link = uniqid(date('HisYmd'));
+
+            // Define finalmente o nome
+            $link = "{$link}.{$ext}";
+
+            // Faz o upload:
+            $upload = $request->file->storeAs($dir, $link);
+            // Se tiver funcionado o arquivo foi armazenado em storage/app/public/categories/nomedinamicoarquivo.extensao
+
+
+            /* -------------------------------- END UPLOAD --------------------*/
+
+            //Pegar dados do Produto
+            $produto = Produto::find($id);
+
+                    
+            $upload = new Upload();
+            $upload->titulo = $produto->titulo;
+            $upload->dir = $dir;
+            $upload->link = $link;
+            $upload->tipo = $tipo;
+            $upload->nome = $nome;
+            $upload->ext = $ext;
+            $upload->tam = $tam;
+
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.imagem.store=".$request);
+            //--------------------------------------------------------------------------------------------
+
+            if($upload->save()){
+
+                /* ------------Vinculo do Arquivo------------- */
+
+                $upload_id = DB::getPdo()->lastInsertId();
+                
+                $status = Produto::find($id)->imagens()->attach($upload_id);                               
+
+                /* ------------END Vinculo do Arquivo------------- */
+
+                return redirect('produtos/'.$id.'/imagem')->with('success', 'Imagem Alterada com Sucesso!.');
+            }else{
+                return redirect('produtos/'.$id.'/imagem')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function imagemDestroy(Request $request, $id)
+    {
+        
+        //
+        if(!(Gate::denies('delete_upload'))){
+            $upload = Upload::find($id);  
+
+            $file = $upload->dir.'/'.$upload->link;    
+
+            //Apagar arquivo físico
+
+            if(Storage::delete($file)){
+
+                if($upload->delete()){
+                    $status = true;
+                }else{
+                    $status = false;
+                }
+
+            }else{
+               $status = false; 
+            } 
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("upload.imagem.produto.destroy.id=".$upload);
+            //--------------------------------------------------------------------------------------------
+
+            $produto_id = $request->input('produto_id');
+
+            if($status){
+                return redirect('produtos/'.$produto_id.'/imagem')->with('success', 'Imagem Excluida com Sucesso!.');
+            }else{
+                return redirect('produtos/'.$produto_id.'/imagem')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 }

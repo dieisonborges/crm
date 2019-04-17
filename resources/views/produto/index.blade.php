@@ -35,6 +35,7 @@
                     <th>Título</th>
                     <th>Palavras Chave</th>
                     <th>Descrição</th>
+                    <th>Imagens</th>
                     <th>Status</th>
                     <th>Visualizar</th>
                     <th>Editar</th>
@@ -47,6 +48,12 @@
                     <td><a href="{{URL::to('produtos')}}/{{$produto->id}}">{{$produto->titulo}}</a></td>
                     <td><a href="{{URL::to('produtos')}}/{{$produto->id}}">{{$produto->palavras_chave}}</a></td>
                     <td><a href="{{URL::to('produtos')}}/{{$produto->id}}">{{ str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...') }}</a></td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('produtos')}}/{{$produto->id}}/imagem">
+                            <span class="fa fa-image"> Imagens</span>                        
+                        </a>
+                    </td>                    
+
                     <td>
                         <a href="{{URL::to('produtos')}}/{{$produto->id}}">
                         @if($produto->status)

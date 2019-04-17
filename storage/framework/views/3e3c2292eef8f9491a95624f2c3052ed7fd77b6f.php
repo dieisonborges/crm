@@ -4,9 +4,7 @@
 	<?php $__env->startSection('content'); ?>
 		<h1>
 	        Produto 
-	        <small><?php echo e($produto->name); ?></small>
-
-
+	        <small><?php echo e($produto->titulo); ?></small>
 
 	        <?php if($produto->status): ?>
 	    		<span class="btn btn-success">Ativo</span>
@@ -14,8 +12,30 @@
 	    		<span class="btn btn-danger">Desativado</span>
 	    	<?php endif; ?>
 
+	    </h1>
 
-	    </h1> 
+	    <hr class="hr col-md-12">
+
+    	<div class="row justify-content-center form-group">
+		    <div class="col-md-12">
+		        
+		        	<?php $__empty_1 = true; $__currentLoopData = $imagens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $imagem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+		        	<div class="col-md-2">
+			            <a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" data-toggle="lightbox" data-gallery="example-gallery">
+			                <img src="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" class="img-fluid">
+			            </a>
+			        </div>
+			        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+			        <div class="col-md-2">
+			        	<span class="btn btn-primary">
+	                        <i class="fa fa-image"></i>
+	                         Nenhuma imagem.
+	                    </span>
+	                </div>
+			        <?php endif; ?>	        
+		        
+		    </div>
+		</div>
 		<div class="row">		
 				
 			 	<div class="form-group col-md-12">

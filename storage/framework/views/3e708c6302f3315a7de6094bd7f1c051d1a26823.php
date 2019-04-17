@@ -115,7 +115,12 @@
               <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?php echo e(date('H:i:s', strtotime($ticket->created_at))); ?></span>
 
-                <h3 class="timeline-header"><a href="#"><?php echo e($ticket->users->name); ?></a> <?php echo e($ticket->titulo); ?></h3>
+                <h3 class="user-header timeline-header">                    
+                        <img src="<?php echo e(asset('img/default-user-image.png')); ?>" class="img-circle" alt="User Image" width="30px"> 
+                        <a href="#"><?php echo e($ticket->users->apelido); ?></a> 
+                        <br><br>
+                        <?php echo e($ticket->titulo); ?>                    
+                </h3>
 
                 <div class="timeline-body">
                  <?php echo html_entity_decode($ticket->descricao); ?>
