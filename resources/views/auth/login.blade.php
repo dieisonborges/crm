@@ -7,7 +7,7 @@
 
     <a href="/">
         <b style="display:none;">e-Cardume</b>
-        <img src="{{ asset('img/logo/logo-7p-cardume-transp.png') }}" width="50%" style=" margin-left: 25%;">
+        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%" >
     </a>
 
     <hr>
