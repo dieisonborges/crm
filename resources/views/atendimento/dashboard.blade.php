@@ -271,7 +271,13 @@
 
                       @endphp
 
-                      <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" width="50px" height="50px" alt="{{$membro->apelido}}">
+                      @if($imagem_perfil)  
+                          <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="user-image" alt="User Image" width="50px">
+                      @else
+                          <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image" width="50px">
+                      @endif
+
+                      
                         <a class="users-list-name" href="#">{{$membro->apelido}}</a>
                     </li>
                     @endforeach

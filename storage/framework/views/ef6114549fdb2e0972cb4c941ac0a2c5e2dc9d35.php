@@ -273,7 +273,13 @@
 
                       ?>
 
-                      <img src="<?php echo e(url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link)); ?>" width="50px" height="50px" alt="<?php echo e($membro->apelido); ?>">
+                      <?php if($imagem_perfil): ?>  
+                          <img src="<?php echo e(url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link)); ?>" class="user-image" alt="User Image" width="50px">
+                      <?php else: ?>
+                          <img src="<?php echo e(asset('img/default-user-image.png')); ?>" class="user-image" alt="User Image" width="50px">
+                      <?php endif; ?>
+
+                      
                         <a class="users-list-name" href="#"><?php echo e($membro->apelido); ?></a>
                     </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
