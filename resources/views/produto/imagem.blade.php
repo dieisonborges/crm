@@ -18,14 +18,24 @@
 			    <span style="font-size: 15px; color: red;">Arquivos suportados: <b>jpeg, png, jpg</b></span>
 		 	</div>
 		 	
-    		<button type="submit" class="btn btn-success">Enviar</button>
+    		<button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Enviar</button>
 		 	
 
 		 	<div>
 		 		<hr class="hr col-md-12">
 		 	</div>
 
-			<a class="btn btn-primary" href="javascript:history.go(-1)"><i class="fa fa-arrow-left"></i> Voltar</a>
+                <a class="btn btn-primary" href="javascript:history.go(-1)">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+
+                <a class="btn btn-primary" href="{{ url('produtos/'.$produto->id) }}">
+                    <i class="fa fa-shopping-cart"></i> Produto
+                </a>
+
+                <a class="btn btn-primary" href="produtos/">
+                    <i class="fa fa-list-alt"></i> Lista de Produtos
+                </a>
 
 
 		 	<div>

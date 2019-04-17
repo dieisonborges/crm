@@ -22,7 +22,7 @@
 		        	@forelse ($imagens as $imagem)
 		        	<div class="col-md-2">
 			            <a href="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" data-toggle="lightbox" data-gallery="example-gallery">
-			                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" class="img-fluid">
+			                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" class="img-fluid" width="100%">
 			            </a>
 			        </div>
 			        @empty
