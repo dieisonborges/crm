@@ -231,6 +231,81 @@
     
     </section>
 
+        <section class="content">
+
+        <div class="form-group col-md-12">
+            <div class="box-header">
+            <h3 class="box-title">Arquivos: </h3>
+
+            <a href="<?php echo e(URL::to('uploads')); ?>/<?php echo e($ticket->id); ?>/create/ticket"  class="btn btn-info btn-md" style="float: right;"><i class="fa fa-plus-circle"></i> Novo Arquivo</a>
+            
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Nome</th>
+                        <th>Tamanho</th>
+                        <th>Tipo</th>
+                        <th>Ver</th>
+                        <th>Excluir</th>
+                    </tr>
+                    <?php $__empty_1 = true; $__currentLoopData = $uploads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $upload): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <tr>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank"><?php echo e($upload->link); ?></a> </td>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank"><?php echo e($upload->titulo); ?></a></td>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank"><?php echo e($upload->nome); ?></a></td>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank"><?php echo e(number_format(($upload->tam/1000), 2, ',', '')); ?> kbytes</a></td>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank"><?php echo e($upload->tipo); ?></a></td>
+                        <td><a href="<?php echo e(url('storage/'.$upload->dir.'/'.$upload->link)); ?>" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</a></td>                       
+
+                        <td>
+                            <form method="POST" action="<?php echo e(url('uploads/destroy', $upload->id)); ?>" id="formDelete<?php echo e($upload->id); ?>">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="id" value="<?php echo e($upload->id); ?>">                                
+
+                                <a href="javascript:confirmDelete<?php echo e($upload->id); ?>();" class="btn btn-danger"> <i class="fa fa-close"></i></a>
+                            </form> 
+
+                            <script>
+                               function confirmDelete<?php echo e($upload->id); ?>() {
+
+                                var result = confirm('Tem certeza que deseja excluir?');
+
+                                if (result) {
+                                        document.getElementById("formDelete<?php echo e($upload->id); ?>").submit();
+                                    } else {
+                                        return false;
+                                    }
+                                } 
+                            </script>
+
+                        </td>      
+                        
+                    </tr>                
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+
+                    <tr>
+                        <td>
+                            <span class="btn btn-primary">
+                                <i class="fa fa-archive"></i>
+                                 Nenhum arquivo relacionado.
+                            </span>
+                        </td>
+                        
+                    </tr>
+                        
+                    <?php endif; ?>            
+                    
+                </table>
+            </div>
+            <!-- /.box-body -->
+        
+        </div>
+
+    </section>
+
     <a href="#main-header" class="btn btn-primary" style="float: right;"><span class="fa fa-arrow-up"></span></a>
 
 
