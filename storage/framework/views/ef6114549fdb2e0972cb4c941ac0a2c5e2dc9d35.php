@@ -266,7 +266,14 @@
                   <ul class="users-list clearfix">
                     <?php $__currentLoopData = $equipe; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li>
-                      <img src="<?php echo e(asset('img/default-user-image.png')); ?>" width="50px" height="50px" alt="User Image">
+
+                      <?php
+
+                        $imagem_perfil = $membro->uploads()->orderBy('id', 'DESC')->first();
+
+                      ?>
+
+                      <img src="<?php echo e(url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link)); ?>" width="50px" height="50px" alt="<?php echo e($membro->apelido); ?>">
                         <a class="users-list-name" href="#"><?php echo e($membro->apelido); ?></a>
                     </li>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
