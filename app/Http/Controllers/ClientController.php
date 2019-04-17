@@ -503,7 +503,7 @@ class ClientController extends Controller
                     'file' => 'required|mimes:jpeg,png,jpg,pdf',
             ]);
 
-            $dir = "client".'/'.(Auth::id());
+            $dir = "files/"."client".'/'.(Auth::id());
 
             $id = Auth::id();
 

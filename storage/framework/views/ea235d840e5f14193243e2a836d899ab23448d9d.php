@@ -1,0 +1,113 @@
+<?php $__env->startSection('title', 'Regras'); ?>
+<?php $__env->startSection('content'); ?>
+<h1>Conquistas <a href="<?php echo e(url('conquistas/create')); ?>" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Criar Nova</a></h1>
+
+    <?php if(session('status')): ?>
+        <div class="alert alert-success" conquista="alert">
+            <?php echo e(session('status')); ?>
+
+        </div>
+    <?php endif; ?>
+    <div class="col-md-12">	
+
+        <form method="POST" enctype="multipart/form-data" action="<?php echo e(url('conquistas/busca')); ?>">
+            <?php echo csrf_field(); ?>
+            <div class="input-group input-group-lg">			
+                <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="<?php echo e($buscar); ?>">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                    </span>
+
+            </div>
+        </form>
+
+    </div>
+
+    <br><br><br>
+
+    <!--
+    <div class="box-header">
+        <h3 class="box-title"></h3>
+        
+    </div>
+    -->
+
+    <!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Valor Score</th>
+                <th>Descrição</th>
+                <th>Medalha</th>
+                <th>Ícone</th>
+                <th>Usuários</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+            <?php $__empty_1 = true; $__currentLoopData = $conquistas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conquista): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <tr>
+                <td><a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>"><?php echo e($conquista->id); ?></a></td>
+                <td><a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>"><?php echo e($conquista->titulo); ?></a></td>
+                <td><a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>"><?php echo e($conquista->valor_score); ?></a></td>
+                <td><a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>"><?php echo e($conquista->descricao); ?></a></td>
+                <td>
+                    <a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>">
+                        <img src="<?php echo e(url('img/conquistas/'.$conquista->imagem_medalha)); ?>" width="30px" alt="<?php echo e($conquista->imagem_medalha); ?>">
+                    </a>
+                </td>
+                <td>
+                    <a href="<?php echo e(URL::to('conquistas')); ?>/<?php echo e($conquista->id); ?>">
+                        <i class="<?php echo e($conquista->icone_medalha); ?>" style="font-size: 30px;"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('conquistas/'.$conquista->id.'/user')); ?>"><i class="fa fa-users"></i> Usuários</a>
+                </td>               
+                <td>
+                    <a class="btn btn-warning btn-xs" href="<?php echo e(URL::to('conquistas/'.$conquista->id.'/edit')); ?>"><i class="fa fa-edit"></i> Editar</a>
+                </td>
+                <td>
+
+                    <form method="POST" action="<?php echo e(action('ConquistaController@destroy', $conquista->id)); ?>" id="formDelete<?php echo e($conquista->id); ?>">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="_method" value="DELETE">
+                        <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
+                        <!--<input type="submit" name="Excluir">-->
+
+                        <a href="javascript:confirmDelete<?php echo e($conquista->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                    </form> 
+
+                    <script>
+                       function confirmDelete<?php echo e($conquista->id); ?>() {
+
+                        var result = confirm('Tem certeza que deseja excluir?');
+
+                        if (result) {
+                                document.getElementById("formDelete<?php echo e($conquista->id); ?>").submit();
+                            } else {
+                                return false;
+                            }
+                        } 
+                    </script>
+
+                </td>
+            </tr>                
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+
+            <tr>
+                <td><b>Nenhum Resultado.</b></td>
+            </tr>
+                
+            <?php endif; ?>            
+            
+        </table>
+    </div>
+    <!-- /.box-body -->
+    <?php echo e($conquistas->links()); ?>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

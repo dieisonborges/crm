@@ -81,7 +81,7 @@ class UploadController extends Controller
                     'file' => 'required|mimes:jpeg,png,jpg,pdf',
             ]);
 
-            $dir = $request->input('area').'/'.$request->input('id');
+            $dir = "files/".$request->input('area').'/'.$request->input('id');
 
             $id = $request->input('id');
 
