@@ -1,6 +1,12 @@
 <?php $__env->startSection('title', 'Regras'); ?>
 <?php $__env->startSection('content'); ?>
-<h1>Role - Grupo <a href="<?php echo e(url('roles/create')); ?>" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a></h1>
+<h1>Role - Grupo 
+
+    <a href="<?php echo e(url('roles/create')); ?>" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
+
+    <a href="<?php echo e(url('permissions')); ?>" class="btn btn-primary btn-lg"><i class="fa fa-lock"> </i> Permissions</a>
+
+</h1>
 
     <?php if(session('status')): ?>
         <div class="alert alert-success" role="alert">

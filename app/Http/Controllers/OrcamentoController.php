@@ -768,9 +768,9 @@ class OrcamentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if($item_orcamento->save()){
-                return redirect('orcamento/fornecedor/'.$token)->with('success', 'Orçamento salvo com sucesso!');
+                return redirect('orcamento/fornecedor/'.$token)->with('success', 'Orçamento salvo com sucesso! Budget saved successfully!');
             }else{
-                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente. (There was a problem, please try again.)');
             }
         }
         else{
@@ -793,9 +793,9 @@ class OrcamentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if($orcamento->save()){
-                return redirect('/')->with('success', 'Orçamento finalizado com sucesso!');
+                return redirect('/')->with('success', 'Orçamento finalizado com sucesso! (Budget completed successfully!)');
             }else{
-                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('orcamento/fornecedor/'.$token)->with('danger', 'Houve um problema, tente novamente. (There was a problem, please try again.)');
             }
         }
         else{

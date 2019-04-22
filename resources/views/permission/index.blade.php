@@ -8,6 +8,8 @@
 
         <a href="{{ url('permission/createAuto') }}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Automatizado</a>
 
+        <a href="{{ url('roles') }}" class="btn btn-primary btn-lg"><i class="fa fa-users"> </i> Roles (Grupos)</a>
+
 
     </h1>
 

@@ -531,7 +531,37 @@ class PermissionsTableSeeder extends Seeder
             'id'=>'76',
             'name'=>'delete_orcamento',
             'label'=>'Delete - Gerência de Orçamentos',
-        ]);       
+        ]);
+
+        // ------------------------------------------------------------
+
+        //Área - Upload de Arquivos
+        //Create        
+        Permission::create([
+            'id'=>'77',
+            'name'=>'create_upload',
+            'label'=>'Create - Upload de Arquivos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'78',
+            'name'=>'read_upload',
+            'label'=>'Read - Upload de Arquivos',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'79',
+            'name'=>'update_upload',
+            'label'=>'Update - Upload de Arquivos',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'80',
+            'name'=>'delete_upload',
+            'label'=>'Delete - Upload de Arquivos',
+        ]);
+
+
         // ------------------------------------------------------------
 
         //Área - 

@@ -112,6 +112,13 @@ class RolesTableSeeder extends Seeder
             'label'=>'Gerência de Orçamentos',
         ]);
 
+        //Upload de Arquivo     
+        Role::create([
+            'id'=>'15',
+            'name'=>'upload',
+            'label'=>'Upload de Arquivos',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*
