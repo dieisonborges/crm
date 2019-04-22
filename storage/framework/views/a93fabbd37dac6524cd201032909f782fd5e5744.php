@@ -87,7 +87,7 @@
                     </td>
                     <td>
 
-                        <?php if(($orcamento->status)==0): ?>
+                        <?php if((($orcamento->status)==0)or(($orcamento->status)==2)): ?>
 
                         <form method="POST" action="<?php echo e(action('OrcamentoController@destroy', $orcamento->id)); ?>" id="formDelete<?php echo e($orcamento->id); ?>">
                             <?php echo csrf_field(); ?>

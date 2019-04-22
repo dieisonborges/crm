@@ -273,14 +273,19 @@ class ConquistaController extends Controller
         //
         if(!(Gate::denies('delete_conquista'))){        
             
-            $conquista->delete();
-
 
             //LOG ------------------------------------------------------------------------
             $this->log("conquista.destroy=".$conquista);
             //--------------------------------------------------------------------------------
 
-            return redirect()->back()->with('success','Conquista excluída com sucesso!');
+            //return redirect()->back()->with('success','Conquista excluída com sucesso!');
+
+            if($conquista->delete()){
+                return redirect('conquistas/')->with('success', 'Conquista excluída com sucesso!');
+            }else{
+                return redirect('conquistas/')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
         }
         else{
             return redirect('erro')->with('permission_error', '403');

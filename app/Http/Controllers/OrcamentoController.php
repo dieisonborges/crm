@@ -106,11 +106,16 @@ class OrcamentoController extends Controller
     {
         
         $units = array(
-                        'unidade',
-                        'caixa',
-                        'galão',
-                        'litro',
-                        'kilograma'
+                        'un  | Unidade   | Unity',
+                        'cx  | Caixa     | Box',
+                        'emb | Embalagem | Packing',
+                        'fd  | Fardo     | Burden',
+                        'pct | Pacote    | Package',
+                        'ro  | Rolo      | Roll',
+                        'm   | Metro     | Meter',
+                        'fl  | Folha     | Sheet',
+                        'kg  | Kilograma | Kilogram'
+
         );
 
         return $units;
@@ -120,8 +125,9 @@ class OrcamentoController extends Controller
     {
         
         $moeda = array(
-                        'US$',
-                        'R$'
+                        'US$ | US Dollar',
+                        '€   | Euro',
+                        'R$  | Brazilian Real'
         );
 
         return $moeda;

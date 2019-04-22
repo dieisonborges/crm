@@ -23,7 +23,7 @@
                 <div class="col-md-4" style="float: right;">
                   <a href="/">
                       <b style="display:none;"><?php echo e(config('app.name')); ?></b>        
-                      <img src="<?php echo e(asset('img/logo/logo-ecardume.png')); ?>" width="80%">        
+                      <img src="<?php echo e(asset('img/logo/logo-ecardume-sem-borda.png')); ?>" width="80%">        
                   </a>     
                 </div>
 

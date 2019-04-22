@@ -86,7 +86,7 @@
                     </td>
                     <td>
 
-                        @if(($orcamento->status)==0)
+                        @if((($orcamento->status)==0)or(($orcamento->status)==2))
 
                         <form method="POST" action="{{action('OrcamentoController@destroy', $orcamento->id)}}" id="formDelete{{$orcamento->id}}">
                             @csrf
