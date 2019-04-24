@@ -10,11 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Index
+Route::get('/', function () {
+    return redirect('https://site.ecardume.com');
+});
  
 // Login
+/*
 Route::get('/', function () {
     return view('/auth/login');
 });
+*/
 
 // Auth - Controller Autenticacao
 Auth::routes();

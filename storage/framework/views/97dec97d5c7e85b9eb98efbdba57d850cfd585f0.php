@@ -6,7 +6,7 @@
 
     <a href="/">
         <b style="display:none;">e-Cardume</b>
-        <img src="<?php echo e(asset('img/logo/logo-ecardume.png')); ?>" width="100%">
+        <img src="<?php echo e(asset('img/logo/logo-ecardume.png')); ?>" width="100%" >
     </a>
 
     <hr>
