@@ -62,7 +62,7 @@ class ConviteController extends Controller
             return view('convite.index', array('convites' => $convites, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -79,7 +79,7 @@ class ConviteController extends Controller
             return view('convite.show', array('convite' => $convite));
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -99,7 +99,7 @@ class ConviteController extends Controller
             return view('convite.index', array('convites' => $convites, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -114,7 +114,7 @@ class ConviteController extends Controller
             return view('convite.create');                  
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -178,7 +178,7 @@ class ConviteController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -203,7 +203,7 @@ class ConviteController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -222,7 +222,7 @@ class ConviteController extends Controller
 
         }
         else{
-            return redirect('erro')->with('convite_error', '403');
+            return view('errors.403');
         }
     }
 

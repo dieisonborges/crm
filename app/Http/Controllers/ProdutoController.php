@@ -71,7 +71,7 @@ class ProdutoController extends Controller
             return view('produto.index', array('produtos' => $produtos, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -92,7 +92,7 @@ class ProdutoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -117,7 +117,7 @@ class ProdutoController extends Controller
             return view('produto.show', compact('produto', 'imagens'));
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -138,7 +138,7 @@ class ProdutoController extends Controller
             return view('produto.create');
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         } 
     }
 
@@ -186,7 +186,7 @@ class ProdutoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -210,7 +210,7 @@ class ProdutoController extends Controller
             return view('produto.edit', compact('produto'));
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }  
     }
 
@@ -260,7 +260,7 @@ class ProdutoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -287,7 +287,7 @@ class ProdutoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('produto_error', '403');
+            return view('errors.403');
         }
     }
 

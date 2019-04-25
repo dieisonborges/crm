@@ -57,7 +57,7 @@ class ScoreController extends Controller
             return view('score.index', array('scores' => $scores, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -86,7 +86,7 @@ class ScoreController extends Controller
 
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -109,7 +109,7 @@ class ScoreController extends Controller
             return view('score.create', compact('users'));                  
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -162,7 +162,7 @@ class ScoreController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -197,7 +197,7 @@ class ScoreController extends Controller
             return view('score.show', compact('scores', 'user', 'user_score'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
 

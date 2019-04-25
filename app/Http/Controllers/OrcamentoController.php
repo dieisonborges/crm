@@ -161,7 +161,7 @@ class OrcamentoController extends Controller
             return view('orcamento.index', array('orcamentos' => $orcamentos, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -195,7 +195,7 @@ class OrcamentoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -218,7 +218,7 @@ class OrcamentoController extends Controller
             return view('orcamento.create', compact('fornecedors'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -258,7 +258,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -302,7 +302,7 @@ class OrcamentoController extends Controller
             return view('orcamento.show', compact('orcamento', 'fornecedors', 'fornecedor', 'itens'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -328,7 +328,7 @@ class OrcamentoController extends Controller
             return view('orcamento.edit', compact('orcamento', 'fornecedor', 'fornecedors'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -365,7 +365,7 @@ class OrcamentoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -393,7 +393,7 @@ class OrcamentoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -417,7 +417,7 @@ class OrcamentoController extends Controller
             return view('orcamento.item', compact('orcamento', 'produtos', 'unidades_medidas', 'moedas'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -462,7 +462,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -492,7 +492,7 @@ class OrcamentoController extends Controller
             return view('orcamento.item_edit', compact('orcamento', 'produtos', 'produto', 'item', 'unidades_medidas', 'moedas'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -538,7 +538,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -564,7 +564,7 @@ class OrcamentoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -632,7 +632,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -657,7 +657,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -709,7 +709,7 @@ class OrcamentoController extends Controller
             return view('orcamento.fornecedor', compact('orcamento', 'fornecedors', 'fornecedor', 'itens', 'moedas'));
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }   
         
         
@@ -774,7 +774,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
         
     }
@@ -799,7 +799,7 @@ class OrcamentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('orcamento_error', '403');
+            return view('errors.403');
         }
 
     }

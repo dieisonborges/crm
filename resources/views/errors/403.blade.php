@@ -1,56 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.login')
+@section('content')
+<div class="login-box">
+  
+  <!-- /.login-logo -->
+  <div class="login-box-body">
 
-    <title>Unauthorized</title>
+    <a href="/">
+        <b style="display:none;">e-Cardume</b>
+        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%">
+    </a>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <hr>
 
-    <!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
+    @include('layouts.error')
 
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-    </style>
-</head>
-<body>
-<div class="flex-center position-ref full-height">
-    <div class="content">
-        <div class="title error403">
-            <p>{{$error}}</p>
-        </div>
+    
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-ban"></i> Erro: 403</h4>
+        <h5>Unauthorized</h5>
+        Desculpe, mas você não tem autorização para acessar essa página.
+        <br><br>
+        <small>Sorry, you do not have permission to access this page.</small>
     </div>
+
+    <a class="btn btn-primary" href="javascript:history.go(-1)">Voltar</a>
+   
+
+  </div>
+  <!-- /.login-box-body -->
 </div>
-</body>
-</html>
+<!-- /.login-box -->
+@endsection

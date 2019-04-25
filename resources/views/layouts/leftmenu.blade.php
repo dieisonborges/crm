@@ -88,13 +88,19 @@
 
           <li class="header">Franqueado</li> 
 
-          <li>
-            <a href="{{ url('franqueados') }}">  
+          <li class="treeview">
+            <a href="#">  
               <i class="fa fa-building-o"></i> <span>Franqueado</span>
-              
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
             </a>
-            
+            <ul class="treeview-menu">
+                <li><a href="{{ url('franqueados') }}"><i class="fa fa-circle-o"></i> Franquias</a></li>
+                <li><a href="{{ url('franqueados/produtos') }}"><i class="fa fa-circle-o"></i> Catálogo de Produtos</a></li>
+            </ul>
           </li>
+
           @endcan 
           
 

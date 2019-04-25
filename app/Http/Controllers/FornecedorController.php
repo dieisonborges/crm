@@ -45,7 +45,7 @@ class FornecedorController extends Controller
             return view('fornecedor.index', array('fornecedors' => $fornecedors, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -66,7 +66,7 @@ class FornecedorController extends Controller
 
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -87,7 +87,7 @@ class FornecedorController extends Controller
             return view('fornecedor.create');
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         } 
     }
 
@@ -152,7 +152,7 @@ class FornecedorController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -174,7 +174,7 @@ class FornecedorController extends Controller
             return view('fornecedor.show', compact('fornecedor'));
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -196,7 +196,7 @@ class FornecedorController extends Controller
             return view('fornecedor.edit', compact('fornecedor'));
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -259,7 +259,7 @@ class FornecedorController extends Controller
 
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -290,7 +290,7 @@ class FornecedorController extends Controller
 
         }
         else{
-            return redirect('erro')->with('fornecedor_error', '403');
+            return view('errors.403');
         }
     }
 }

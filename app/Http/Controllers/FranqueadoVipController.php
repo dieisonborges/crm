@@ -59,7 +59,7 @@ class FranqueadoVipController extends Controller
             return view('franqueado_vip.index', array('franqueado_vips' => $franqueado_vips, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -86,7 +86,7 @@ class FranqueadoVipController extends Controller
 
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -109,7 +109,7 @@ class FranqueadoVipController extends Controller
             return view('franqueado_vip.create', compact('users'));                  
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -158,7 +158,7 @@ class FranqueadoVipController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 

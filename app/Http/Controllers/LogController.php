@@ -25,7 +25,7 @@ class LogController extends Controller
             return view('log.index', array('logs' => $logs, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -45,7 +45,7 @@ class LogController extends Controller
             return view('log.index', array('logs' => $logs, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -143,7 +143,7 @@ class LogController extends Controller
             return view('log.show', compact('log', 'user'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -158,7 +158,7 @@ class LogController extends Controller
             return view('log.acesso', array('logs' => $logs, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 

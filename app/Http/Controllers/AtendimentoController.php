@@ -178,7 +178,7 @@ class AtendimentoController extends Controller
             return view('atendimento.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -215,7 +215,7 @@ class AtendimentoController extends Controller
             return view('atendimento.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -247,7 +247,7 @@ class AtendimentoController extends Controller
 
 
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -285,7 +285,7 @@ class AtendimentoController extends Controller
 
         
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -321,7 +321,7 @@ class AtendimentoController extends Controller
 
         
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -336,7 +336,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -362,7 +362,7 @@ class AtendimentoController extends Controller
             return view('atendimento.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'uploads'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -378,7 +378,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -396,7 +396,7 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if($ticket->status==0){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }else{
                 return view('atendimento.edit', compact('ticket','id', 'rotulos', 'categorias', 'status', 'setor'));
             }
@@ -404,7 +404,7 @@ class AtendimentoController extends Controller
             
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -423,7 +423,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -516,7 +516,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -535,7 +535,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -554,7 +554,7 @@ class AtendimentoController extends Controller
             return view('atendimento.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -574,7 +574,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $my_setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -591,7 +591,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -612,7 +612,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $my_setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -632,7 +632,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -647,7 +647,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -658,7 +658,7 @@ class AtendimentoController extends Controller
             return view('atendimento.acao', array('ticket' => $ticket, 'setor' => $setor));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -691,7 +691,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -716,7 +716,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -731,7 +731,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -742,7 +742,7 @@ class AtendimentoController extends Controller
             return view('atendimento.encerrar', compact('ticket', 'setor'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -777,7 +777,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -806,7 +806,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -821,7 +821,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -832,7 +832,7 @@ class AtendimentoController extends Controller
             return view('atendimento.reabrir', compact('ticket', 'setor'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -867,7 +867,7 @@ class AtendimentoController extends Controller
             $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
-                return redirect('erro')->with('permission_error', '403');
+                return view('errors.403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -896,7 +896,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -996,7 +996,7 @@ class AtendimentoController extends Controller
                         ));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
     /* ----------------------------- END DASHBOARD ---------------------*/
@@ -1033,7 +1033,7 @@ class AtendimentoController extends Controller
 
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -1060,7 +1060,7 @@ class AtendimentoController extends Controller
             return view('atendimento.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -1089,7 +1089,7 @@ class AtendimentoController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }
@@ -1127,7 +1127,7 @@ class AtendimentoController extends Controller
             return view('atendimento.data', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 

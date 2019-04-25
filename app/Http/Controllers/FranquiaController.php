@@ -123,7 +123,7 @@ class FranquiaController extends Controller
             return view('franquia.index', array('franquias' => $franquias, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -144,7 +144,7 @@ class FranquiaController extends Controller
 
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -167,7 +167,7 @@ class FranquiaController extends Controller
             return view('franquia.show', compact('franquia'));
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -192,7 +192,7 @@ class FranquiaController extends Controller
             return view('franquia.create', compact('users', 'select_estados_brasil'));
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         } 
     }
 
@@ -285,7 +285,7 @@ class FranquiaController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -314,7 +314,7 @@ class FranquiaController extends Controller
             return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil'));
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -397,7 +397,7 @@ class FranquiaController extends Controller
 
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -422,7 +422,7 @@ class FranquiaController extends Controller
 
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 

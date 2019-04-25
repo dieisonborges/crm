@@ -52,11 +52,13 @@ class ErroController extends Controller
     {   
         if(Auth::check()){
 
+            $error="";
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("erro");
             //--------------------------------------------------------------------------------------------
 
-            return view('home.index'); 
+            return view('errors.generic', compact('error')); 
 
         }else{
             return redirect('login')->with('danger', 'Erro: <b>400</b> Você não fez login no sistema');

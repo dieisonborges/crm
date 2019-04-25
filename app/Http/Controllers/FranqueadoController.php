@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Franquia;
 use App\User;
+use App\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -62,7 +63,7 @@ class FranqueadoController extends Controller
             return view('franqueado.index', array('franquias' => $franquias, 'buscar' => null, 'afiliados' => $afiliados));
         }
         else{
-            return redirect('erro')->with('franquia_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -92,14 +93,76 @@ class FranqueadoController extends Controller
             return view('franqueado.dashboard', compact('franquia'));
 
             }else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
 
             
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
+        }
+    }
+
+
+    public function produtos()
+    {
+
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            $produtos = Produto::paginate(40);            
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("franqueado.catalogo.produtos.index");
+            //--------------------------------------------------------------------------------------
+
+            return view('franqueado.produto', array('produtos' => $produtos, 'buscar' => null));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtosBusca (Request $request){
+        if(!(Gate::denies('read_franqueado'))){
+            $buscaInput = $request->input('busca');
+            $produtos = Produto::where('titulo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('sku', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->paginate(40);  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
+            return view('franqueado.produto', array('produtos' => $produtos, 'buscar' => $buscaInput ));
+
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtosShow($id)
+    {
+
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            $produto = Produto::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.show=".$produto);
+            //--------------------------------------------------------------------------------------------
+
+            $imagens = $produto->imagens()->get();
+
+            return view('franqueado.produtoshow', compact('produto', 'imagens'));
+        }
+        else{
+            return view('errors.403');
         }
     }
 

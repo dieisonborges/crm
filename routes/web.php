@@ -160,10 +160,6 @@ Route::get('franquias/{id}/donos', 'FranquiaController@donos');
 Route::post('franquias/donoUpdate', 'FranquiaController@donoUpdate');
 Route::post('franquias/donoDestroy', 'FranquiaController@donoDestroy');
 
-//Franqueados
-Route::resource('franqueados', 'FranqueadoController');
-Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
-
 //Score
 Route::resource('scores', 'ScoreController');
 Route::post('scores/busca', 'ScoreController@busca');
@@ -210,3 +206,12 @@ Route::get('uploads/{id}/create/{area}', 'UploadController@create');
 //Visualizar arquivos com segurança
 Route::get('/storage/{fileName}', 'UploadController@fileStorageServe')
 ->where(['fileName' => '.*'])->name('storage.gallery.file');
+
+
+//Franqueados (Área dos Franqueados)
+Route::get('franqueados/produtos', 'FranqueadoController@produtos');
+Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
+Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
+Route::resource('franqueados', 'FranqueadoController');
+Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
+

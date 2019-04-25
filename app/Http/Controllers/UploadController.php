@@ -58,7 +58,7 @@ class UploadController extends Controller
             return view('upload.create', compact('id', 'area'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -157,7 +157,7 @@ class UploadController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -184,7 +184,7 @@ class UploadController extends Controller
                 // big note here don't use Storage::url() // it's not working correctly.  
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -227,7 +227,7 @@ class UploadController extends Controller
             return redirect()->back()->with('success','Arquivo excluído com sucesso!');
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 }

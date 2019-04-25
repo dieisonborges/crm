@@ -53,7 +53,7 @@ class CategoriaController extends Controller
             return view('categoria.index', array('categorias' => $categorias, 'buscar' => null));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -71,7 +71,7 @@ class CategoriaController extends Controller
             return view('categoria.index', array('categorias' => $categorias, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -93,7 +93,7 @@ class CategoriaController extends Controller
             return view('categoria.show', array('categoria' => $categoria));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -114,7 +114,7 @@ class CategoriaController extends Controller
             return view('categoria.create');
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         } 
     }
 
@@ -151,7 +151,7 @@ class CategoriaController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -175,7 +175,7 @@ class CategoriaController extends Controller
             return view('categoria.edit', compact('categoria'));
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -214,7 +214,7 @@ class CategoriaController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
@@ -238,7 +238,7 @@ class CategoriaController extends Controller
             return redirect()->back()->with('success','Categoria excluída com sucesso!');
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
     }
 
