@@ -139,7 +139,7 @@ class ConviteController extends Controller
                 Código: <b>".$convite->codigo."</b> <br>
                 E-mail: <b>".$mail_to."</b> <br><br>
                 Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
-                link: http://atendimento.ecardume.com.br/register  
+                link: https://ecardume.com/register  
                 <br><br><br>
                 <span style='color:red;'>*O convite expira em 48 horas</span>
                 <br><br><br>           
