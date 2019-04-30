@@ -38,7 +38,8 @@
                 <th>e-mail</th>
                 <th>Código</th> 
                 <th>Gerado em:</th>
-                <th>Expira em:</th>   
+                <th>Expira em:</th>
+                <th>Reenviar:</th>   
                 <th>Usado:</th>                
                 <th>Excluir</th>
             </tr>
@@ -55,7 +56,15 @@
                 <td><a href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>">
                     <?php echo e(date('d/m/Y H:i:s', strtotime('+2 days', strtotime($convite->created_at)))); ?>
 
-                    </a></td>
+                    </a>
+                </td>
+                <td>
+                    <?php if($convite->status): ?>
+                        <a class='btn btn-primary btn-xs' href="<?php echo e(URL::to('convites/reenviar/'.$convite->id)); ?>"><i class="fa fa-paper-plane"></i> Reenviar</a>
+                    <?php else: ?>
+                        <span class="btn btn-success btn-xs">Foi Utilizado</span>
+                    <?php endif; ?>
+                </td> 
                 <td>
                         <?php if($convite->status): ?>
                             <a class='btn btn-danger btn-xs' href="<?php echo e(URL::to('convites')); ?>/<?php echo e($convite->id); ?>/updateStatus/0">NÃO</a>

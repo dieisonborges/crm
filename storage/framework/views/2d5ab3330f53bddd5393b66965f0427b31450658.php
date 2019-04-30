@@ -4,7 +4,7 @@
 		<table class="table table-bordered">
 		  <tbody>
 		  	<tr>
-		      <td colspan="2"><img src="http://atendimento.ecardume.com.br/img/logo/logo-ecardume.png" width="20%" align="center" alt="e-Cardume"></td>
+		      <td colspan="2"><img src="<?php echo e(url('img/logo/logo-ecardume.png')); ?>" width="20%" align="center" alt="e-Cardume"></td>
 		    </tr>		    
 		    <tr>
 		    	<td colspan="2"><br></td>

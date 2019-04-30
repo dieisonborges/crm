@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Gate;
 use Mail;
-
+use Carbon\Carbon;
 class ConviteController extends Controller
 {
     /* ----------------------- LOGS ----------------------*/
@@ -118,7 +118,7 @@ class ConviteController extends Controller
         }
     }
 
-    // Criar usuário
+    // Criar
     public function store(Request $request){
 
         if(!(Gate::denies('create_convite'))){
@@ -139,7 +139,7 @@ class ConviteController extends Controller
                 Código: <b>".$convite->codigo."</b> <br>
                 E-mail: <b>".$mail_to."</b> <br><br>
                 Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
-                link: https://ecardume.com/register  
+                link: ".url('/register')."  
                 <br><br><br>
                 <span style='color:red;'>*O convite expira em 48 horas</span>
                 <br><br><br>           
@@ -224,6 +224,72 @@ class ConviteController extends Controller
         else{
             return view('errors.403');
         }
+    }
+
+
+    // Criar
+    public function reenviar($id){
+
+        if(!(Gate::denies('read_convite'))){
+            
+            $convite = Convite::find($id);
+
+            $mail_to = $convite->email;
+
+            $msg="                
+                Para iniciar o acesso à plataforma de relacionamento clique no link abaixo, e confirme os dados: <br><br>
+                Código: <b>".$convite->codigo."</b> <br>
+                E-mail: <b>".$mail_to."</b> <br><br>
+                Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
+                link: ".url('/register')."  
+                <br><br><br>
+                <span style='color:red;'>*O convite expira em 48 horas</span>
+                <br><br><br>           
+            ";
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("convite.reenviar.=".$convite);
+            //--------------------------------------------------------------------------------------------
+
+
+            /* ----------------------- Atualizar data e hora do convite ------------------------------*/
+            $convite->created_at = Carbon::now();
+            $convite->updated_at = Carbon::now();
+            $convite->save();
+
+            /* ----------------------- END Atualizar data e hora do convite ------------------------------*/
+
+            $mailData = array(
+                'nome' => "CRM e-Cardume | Relacionamento",
+                'email' => "atendimento@ecardume.com.br",
+                'assunto' => "Parabéns! Você recebeu um convite e-Cardume",
+                'msg' => $msg,
+            );
+
+            
+            //Destinatario
+            $mailFrom = array(
+                        'email'     => $mail_to,
+                        'name'      => 'Convidado',
+                        'subject'   => 'CRM e-Cardume | Relacionamento'
+                      );
+
+
+            $status = Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
+                $m->from('atendimento@ecardume.com.br','CRM e-Cardume | Relacionamento');
+                $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+            });
+
+            if(!$status){
+                return redirect('convites/')->with('success', 'Convite reenviado com sucesso!');
+            }else{
+                return redirect('convites/')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
     }
 
 

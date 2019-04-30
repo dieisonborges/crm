@@ -38,7 +38,8 @@
                 <th>e-mail</th>
                 <th>Código</th> 
                 <th>Gerado em:</th>
-                <th>Expira em:</th>   
+                <th>Expira em:</th>
+                <th>Reenviar:</th>   
                 <th>Usado:</th>                
                 <th>Excluir</th>
             </tr>
@@ -53,7 +54,15 @@
                 </a></td>
                 <td><a href="{{URL::to('convites')}}/{{$convite->id}}">
                     {{date('d/m/Y H:i:s', strtotime('+2 days', strtotime($convite->created_at)))}}
-                    </a></td>
+                    </a>
+                </td>
+                <td>
+                    @if($convite->status)
+                        <a class='btn btn-primary btn-xs' href="{{URL::to('convites/reenviar/'.$convite->id)}}"><i class="fa fa-paper-plane"></i> Reenviar</a>
+                    @else
+                        <span class="btn btn-success btn-xs">Foi Utilizado</span>
+                    @endif
+                </td> 
                 <td>
                         @if($convite->status)
                             <a class='btn btn-danger btn-xs' href="{{URL::to('convites')}}/{{$convite->id}}/updateStatus/0">NÃO</a>

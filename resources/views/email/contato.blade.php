@@ -5,7 +5,7 @@
 		<table class="table table-bordered">
 		  <tbody>
 		  	<tr>
-		      <td colspan="2"><img src="https://ecardume.com/img/logo/logo-ecardume.png" width="20%" align="center" alt="e-Cardume"></td>
+		      <td colspan="2"><img src="{{url('img/logo/logo-ecardume.png')}}" width="20%" align="center" alt="e-Cardume"></td>
 		    </tr>		    
 		    <tr>
 		    	<td colspan="2"><br></td>
