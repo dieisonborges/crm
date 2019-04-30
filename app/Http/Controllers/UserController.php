@@ -91,7 +91,7 @@ class UserController extends Controller
             $buscaInput = $request->input('busca');
             $user = User::where('name', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('email', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('telefone', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('phone_number', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('cpf', 'LIKE', '%'.$buscaInput.'%')
                                 ->paginate(40); 
 
