@@ -44,6 +44,30 @@
           </li>
           @endcan 
 
+          @can('read_franquia')   
+
+          <li class="header">Franquia</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-building-o"></i> <span>Franquia</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{ url('franquiasIntegrada/') }}"><i class="fa fa-circle-o"></i> Franquia Integrada</a></li>
+                <li><a href="{{ url('franquias/') }}"><i class="fa fa-circle-o"></i> Franquias</a></li>
+                <li><a href="{{ url('franqueadoVip/') }}"><i class="fa fa-circle-o"></i> Franquias VIP</a></li>
+            </ul>
+          </li>         
+
+          @endcan 
+
+          <!-- Arrumar isso algum dia -->
+          @can('read_franqueado_vip')           
+          @endcan   
+
            
           @if(session()->get('setors'))
               @foreach((session()->get('setors')) as $sess_setors)

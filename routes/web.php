@@ -161,12 +161,19 @@ Route::get('franquias/{id}/donos', 'FranquiaController@donos');
 Route::post('franquias/donoUpdate', 'FranquiaController@donoUpdate');
 Route::post('franquias/donoDestroy', 'FranquiaController@donoDestroy');
 
+Route::get('franquias/enable/{id}', 'FranquiaController@enable');
+Route::get('franquias/disable/{id}', 'FranquiaController@disable');
+
+
 //Score
 Route::resource('scores', 'ScoreController');
 Route::post('scores/busca', 'ScoreController@busca');
 
-//Franquia
-Route::resource('franquias', 'FranquiaController');
+
+//Franquia Integrada
+Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
+Route::get('franquiasIntegrada/sync', 'FranquiaIntegradaController@sync');
+Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');
 
 //Conquistas
 Route::resource('conquistas', 'ConquistaController');

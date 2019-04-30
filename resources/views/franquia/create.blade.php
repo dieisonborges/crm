@@ -92,23 +92,21 @@
 				 	<div class="form-group col-md-8">
 					    <label for="endereco_cidade">Cidade:</label>
 					    <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade" value="{{ old('endereco_cidade') }}" placeholder="São Paulo">
-				 	</div>
-
-				 	
-			 	</div>
-
-			 	
+				 	</div>				 	
+			 	</div>			 	
 
 			 	<hr class="hr">
 			 	
 		 		<div class="form-group col-md-12">
-			   		<h3>OpenCart:</h3>
+			   		<h3>Loja Integrada:</h3>
 				</div>
 
 		    	<div class="form-group col-md-12">
-		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja:</label>
+		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada:</label>
 		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="{{ old('loja_url') }}" placeholder="http:// ...">
 		    	</div>
+		    	<!--
+		    	Não se usa mais OpenCart no projeto
 		    	<div class="form-group col-md-12">
 		    		<label for="loja_database_url" class="text-aqua">Endereço (URL) ou IP do Banco de Dados:</label>
 		    		<input type="text" class="form-control" id="loja_database_url" name="loja_database_url" value="{{ old('loja_database_url') }}" >
@@ -125,8 +123,7 @@
 		    		<label for="loja_database_password" class="text-aqua">Senha do Banco de Dados:</label>
 		    		<input type="password" class="form-control" id="loja_database_password" name="loja_database_password" value="">
 		    	</div>
-
-		    	
+		   		-->		    	
 
 		    	<hr class="hr">
 

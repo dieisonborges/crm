@@ -38,6 +38,7 @@
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
+                    <th>Ativar<br>Desativar</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
@@ -53,13 +54,22 @@
                         <?php if($franquia->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>/donos">
                             <span class="fa fa-users"> Dono(s)</span>                        
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>">
+                        <?php if($franquia->status): ?>
+                            <a href="<?php echo e(URL::to('franquias/disable/'.$franquia->id)); ?>" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativar</a>
+                        <?php else: ?>
+                             <a href="<?php echo e(URL::to('franquias/enable/'.$franquia->id)); ?>" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativar</a>
+                        <?php endif; ?>
                         </a>
                     </td>
                     <td>

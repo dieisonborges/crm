@@ -30,9 +30,10 @@ class CreateFranquiasTable extends Migration
             //1 - Ativo 0 - Desativada
             $table->integer('status')->unsigned()->default('1');
 
-            //Link OpenCart
+            //Link URL  LOJA
             $table->mediumText('loja_url')->nullable(); 
 
+            //Foi removido nas proximas migracoes *********************************************
             //Banco de Dados - OpenCart
             $table->string('loja_database_url')->nullable();
             $table->string('loja_database_name')->nullable();
@@ -40,6 +41,7 @@ class CreateFranquiasTable extends Migration
             //base64_encode(database_password_salt + database_password + APP_HASH_ENCODE)
             $table->mediumText('loja_database_password')->nullable();
             $table->mediumText('loja_database_password_salt')->nullable();
+            // END foi removido ***************************************************************
 
             // Quem indicou a franquia Unilevel
             // Líder

@@ -46,8 +46,6 @@
 
               @canany([
               'read_user', 
-              'read_franquia', 
-              'read_franqueado_vip',
               'read_score',
               'read_conquista',
               'read_categoria', 
@@ -75,25 +73,7 @@
                           <i class="fa fa-user-o text-aqua"></i> Usuários
                         </a>
                       </li>
-                      @endcan
-
-                      @can('read_franquia')          
-                      <li>
-                        <a href="{{ url('franquias/') }}">
-                          <i class="fa fa-building-o text-yellow"></i> <span>Franquias</span>              
-                        </a>                        
-                      </li>
-                      @endcan
-
-                      @can('read_franqueado_vip')          
-                      <li>
-                        <a href="{{ url('franqueadoVip/') }}">
-                          <i class="fa fa-certificate text-red"></i> 
-                          <i class="fa fa-building-o text-red"></i> 
-                          <span>Franqueados VIP</span>              
-                        </a>                        
-                      </li>
-                      @endcan
+                      @endcan                      
 
                       @can('read_fornecedor')          
                       <li>

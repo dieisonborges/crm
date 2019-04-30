@@ -44,6 +44,30 @@
           </li>
           <?php endif; ?> 
 
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>   
+
+          <li class="header">Franquia</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-building-o"></i> <span>Franquia</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="<?php echo e(url('franquiasIntegrada/')); ?>"><i class="fa fa-circle-o"></i> Franquia Integrada</a></li>
+                <li><a href="<?php echo e(url('franquias/')); ?>"><i class="fa fa-circle-o"></i> Franquias</a></li>
+                <li><a href="<?php echo e(url('franqueadoVip/')); ?>"><i class="fa fa-circle-o"></i> Franquias VIP</a></li>
+            </ul>
+          </li>         
+
+          <?php endif; ?> 
+
+          <!-- Arrumar isso algum dia -->
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franqueado_vip')): ?>           
+          <?php endif; ?>   
+
            
           <?php if(session()->get('setors')): ?>
               <?php $__currentLoopData = (session()->get('setors')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sess_setors): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

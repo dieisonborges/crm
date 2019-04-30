@@ -119,6 +119,7 @@ class FranquiaController extends Controller
             //LOG ----------------------------------------------------------------------------------------
             $this->log("franquia.index");
             //--------------------------------------------------------------------------------------
+            
 
             return view('franquia.index', array('franquias' => $franquias, 'buscar' => null));
         }
@@ -210,7 +211,8 @@ class FranquiaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
-                    'descricao' => 'required|min:10', 
+                    'descricao' => 'required|min:10',
+                    'loja_url'  =>  'required|min:3|unique:franquias',
                     //'cnpj' => 'cnpj',
                     'email' => 'email'
 
@@ -239,24 +241,24 @@ class FranquiaController extends Controller
 
             $franquia->status = "1"; //Franquia Ativa
 
-            //Dados da Loja Open Cart
+            //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
             //Database OpenCart
-            $franquia->loja_database_url = $request->input('loja_database_url');
-            $franquia->loja_database_name = $request->input('loja_database_name');
-            $franquia->loja_database_user = $request->input('loja_database_user');
+            //$franquia->loja_database_url = $request->input('loja_database_url');
+            //$franquia->loja_database_name = $request->input('loja_database_name');
+            //$franquia->loja_database_user = $request->input('loja_database_user');
             //Password Database OpenCart
             //Salt
+            /*
             $salt = $this->saltGen();
             $franquia->loja_database_password_salt = $salt;
-            //base64_encode(database_password_salt + database_password + APP_HASH_ENCODE) 
             $franquia->loja_database_password = 
                             base64_encode( 
                                 $salt.
                                 $request->input('loja_database_password').
                                 $this->appHashEncode()
                             );
-
+            */
             //Se tem líder/afiliado vincula
             if($request->input('user_id_afiliado')){
                     $franquia->user_id_afiliado = $request->input('user_id_afiliado');
@@ -333,7 +335,8 @@ class FranquiaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',      
-                    'descricao' => 'required|min:10',
+                    'descricao' => 'required|min:10',                    
+                    'loja_url'  =>  'required|min:3|unique:franquias',
                     //'cnpj' => 'cnpj',
                     'email' => 'email'  
             ]);            
@@ -345,12 +348,26 @@ class FranquiaController extends Controller
             $franquia->url_blog = $request->input('url_blog');
 
 
-            //Dados da Loja Open Cart
+            //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
             //Database OpenCart
-            $franquia->loja_database_url = $request->input('loja_database_url');
-            $franquia->loja_database_name = $request->input('loja_database_name');
-            $franquia->loja_database_user = $request->input('loja_database_user');
+            //$franquia->loja_database_url = $request->input('loja_database_url');
+            //$franquia->loja_database_name = $request->input('loja_database_name');
+            //$franquia->loja_database_user = $request->input('loja_database_user');
+            //Só modifica a Senha se não estiver vazio
+            /*
+            if($request->input('loja_database_password')){                    
+                    $salt = $this->saltGen();
+                    $franquia->loja_database_password_salt = $salt;
+                    $franquia->loja_database_password = 
+                                    base64_encode( 
+                                        $salt.
+                                        $request->input('loja_database_password').
+                                        $this->appHashEncode()
+                                    );
+
+            }
+            */
 
             //Dados Comerciais
             $franquia->cnpj = $request->input('cnpj');
@@ -363,22 +380,6 @@ class FranquiaController extends Controller
             $franquia->endereco_cidade = $request->input('endereco_cidade');
             $franquia->endereco_estado = $request->input('endereco_estado');
 
-
-            //Só modifica a Senha se não estiver vazio
-            if($request->input('loja_database_password')){
-                    //Password Database OpenCart
-                    //Salt
-                    $salt = $this->saltGen();
-                    $franquia->loja_database_password_salt = $salt;
-                    //base64_encode(database_password_salt + database_password + APP_HASH_ENCODE) 
-                    $franquia->loja_database_password = 
-                                    base64_encode( 
-                                        $salt.
-                                        $request->input('loja_database_password').
-                                        $this->appHashEncode()
-                                    );
-
-            }
 
             //Se tem líder/afiliado vincula
             if($request->input('user_id_afiliado')){
@@ -504,6 +505,56 @@ class FranquiaController extends Controller
         }
         else{
             return redirect('erro')->with('dono_error', '403');
+        }
+    }
+
+    public function enable($id)
+    {
+        //
+        if(!(Gate::denies('update_franquia'))){
+
+            $franquia = Franquia::find($id);                       
+                    
+            $franquia->status = 1;
+            
+            //LOG --------------------------------------------------------------------------------
+            $this->log("franquia.status.1.=".$franquia);
+            //------------------------------------------------------------------------------------    
+
+            if($franquia->save()){
+                return redirect('franquias/')->with('success', 'Franquia ativada com sucesso!');
+            }else{
+                return redirect('franquias/')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function disable($id)
+    {
+        //
+        if(!(Gate::denies('update_franquia'))){
+
+            $franquia = Franquia::find($id);                       
+                    
+            $franquia->status = 0;
+            
+            //LOG --------------------------------------------------------------------------------
+            $this->log("franquia.status.0.=".$franquia);
+            //------------------------------------------------------------------------------------    
+
+            if($franquia->save()){
+                return redirect('franquias/')->with('success', 'Franquia desativada com sucesso!');
+            }else{
+                return redirect('franquias/')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
+        }
+        else{
+            return view('errors.403');
         }
     }
 

@@ -37,6 +37,7 @@
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
+                    <th>Ativar<br>Desativar</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
@@ -52,13 +53,22 @@
                         @if($franquia->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
                         @endif
                         </a>
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
                             <span class="fa fa-users"> Dono(s)</span>                        
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{URL::to('franquias')}}/{{$franquia->id}}">
+                        @if($franquia->status)
+                            <a href="{{URL::to('franquias/disable/'.$franquia->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativar</a>
+                        @else
+                             <a href="{{URL::to('franquias/enable/'.$franquia->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativar</a>
+                        @endif
                         </a>
                     </td>
                     <td>

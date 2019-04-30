@@ -46,8 +46,6 @@
 
               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([
               'read_user', 
-              'read_franquia', 
-              'read_franqueado_vip',
               'read_score',
               'read_conquista',
               'read_categoria', 
@@ -75,25 +73,7 @@
                           <i class="fa fa-user-o text-aqua"></i> Usuários
                         </a>
                       </li>
-                      <?php endif; ?>
-
-                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>          
-                      <li>
-                        <a href="<?php echo e(url('franquias/')); ?>">
-                          <i class="fa fa-building-o text-yellow"></i> <span>Franquias</span>              
-                        </a>                        
-                      </li>
-                      <?php endif; ?>
-
-                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franqueado_vip')): ?>          
-                      <li>
-                        <a href="<?php echo e(url('franqueadoVip/')); ?>">
-                          <i class="fa fa-certificate text-red"></i> 
-                          <i class="fa fa-building-o text-red"></i> 
-                          <span>Franqueados VIP</span>              
-                        </a>                        
-                      </li>
-                      <?php endif; ?>
+                      <?php endif; ?>                      
 
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_fornecedor')): ?>          
                       <li>

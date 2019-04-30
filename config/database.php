@@ -55,6 +55,22 @@ return [
             'engine' => null,
         ],
 
+        'mysql_loja' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_LOJA', '127.0.0.1'),
+            'port' => env('DB_PORT_LOJA', '3306'),
+            'database' => env('DB_DATABASE_LOJA', 'forge'),
+            'username' => env('DB_USERNAME_LOJA', 'forge'),
+            'password' => env('DB_PASSWORD_LOJA', ''),
+            'unix_socket' => env('DB_SOCKET_LOJA', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            //'strict' => true,
+            'strict' => env('DB_STRICT_LOJA', ''),
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
