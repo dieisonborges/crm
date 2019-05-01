@@ -3,7 +3,7 @@
 
   @include('layouts.head')
 
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" id="body-nologin">
+<body class="hold-transition {{ config('app.skin') }} sidebar-mini sidebar-collapse" id="body-nologin">
 <div class="wrapper">
   
    

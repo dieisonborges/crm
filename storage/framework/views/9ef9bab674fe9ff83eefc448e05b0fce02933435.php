@@ -11,7 +11,7 @@
 
 <?php echo $__env->make('layouts.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+<body class="hold-transition <?php echo e(config('app.skin')); ?> sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
   <!-- TOP MENU -->

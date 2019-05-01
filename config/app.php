@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'name'),
+    'name' => env('APP_NAME', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     | in prodution never set true
     */
 
-    'first_deploy' => env('APP_FIRST_DEPLOY', 'first_deploy'),
+    'first_deploy' => env('APP_FIRST_DEPLOY', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,16 +38,16 @@ return [
     | permit bypass on security
     */
 
-    'active_adm' => env('APP_ACTIVE_ADM', 'active_adm'),
+    'active_adm' => env('APP_ACTIVE_ADM', false),
 
     /*
     |--------------------------------------------------------------------------
     | APP HASH ENCODE
     |--------------------------------------------------------------------------
-    | Utilizado para encriptar as senhas do opencart
+    | Utilizado para encriptar as senhas
     */
 
-    'app_hash_encode' => env('APP_HASH_ENCODE', 'app_hash_encode'),
+    'app_hash_encode' => env('APP_HASH_ENCODE', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +71,18 @@ return [
     */
 
     'compilation' => ('26 de Mar de 2019'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Skin
+    |--------------------------------------------------------------------------
+    |
+    | Tema utilizado no sistema
+    | https://adminlte.io/docs/2.4/layout  
+    |
+    */
+
+    'skin' => env('APP_SKIN', 'skin-blue'),
     
     /*
     |--------------------------------------------------------------------------

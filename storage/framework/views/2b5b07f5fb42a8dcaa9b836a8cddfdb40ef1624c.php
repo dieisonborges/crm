@@ -92,12 +92,8 @@
 				 	<div class="form-group col-md-8">
 					    <label for="endereco_cidade">Cidade:</label>
 					    <input type="text" class="form-control" id="endereco_cidade" name="endereco_cidade" value="<?php echo e(old('endereco_cidade')); ?>" placeholder="São Paulo">
-				 	</div>
-
-				 	
-			 	</div>
-
-			 	
+				 	</div>				 	
+			 	</div>			 	
 
 			 	<hr class="hr">
 			 	
@@ -106,7 +102,7 @@
 				</div>
 
 		    	<div class="form-group col-md-12">
-		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja:</label>
+		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada:</label>
 		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="<?php echo e(old('loja_url')); ?>" placeholder="http:// ...">
 		    	</div>
 		    	<!--
@@ -127,9 +123,7 @@
 		    		<label for="loja_database_password" class="text-aqua">Senha do Banco de Dados:</label>
 		    		<input type="password" class="form-control" id="loja_database_password" name="loja_database_password" value="">
 		    	</div>
-		   		-->
-
-		    	
+		   		-->		    	
 
 		    	<hr class="hr">
 
