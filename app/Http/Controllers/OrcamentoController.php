@@ -593,7 +593,7 @@ class OrcamentoController extends Controller
                 Código: <b>".$orcamento->codigo."</b> <br>
                 Fornecedor: ".$fornecedor->nome_fantasia." | ".$fornecedor->razao_social."
                 Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
-                link para preencher o orçamento: http://atendimento.ecardume.com.br/orcamento/fornecedor/".$orcamento->token."  
+                link para preencher o orçamento:".url('/orcamento/fornecedor/').$orcamento->token."  
                 <br><br><br>
                 <span style='color:red;'>*Aguardamos o retorno o mais breve possível.</span>
                 <br><br><br>           
