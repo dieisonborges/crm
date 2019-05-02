@@ -20,14 +20,18 @@
   <link rel="stylesheet" href="<?php echo e(asset('abower_components/bootstrap/dist/css/bootstrap.min.css')); ?>">
   <!-- Font Awesome -->
   <!-- Antigo -->
-  <link rel="stylesheet" href="<?php echo e(asset('abower_components/font-awesome/css/font-awesome.min.css')); ?>">
+  <!--<link rel="stylesheet" href="<?php echo e(asset('abower_components/font-awesome/css/font-awesome.min.css')); ?>">-->
+
+  <link href="<?php echo e(asset('abower_components/font-awesome-5/css/fontawesome.css')); ?>" rel="stylesheet">
+  <link href="<?php echo e(asset('abower_components/font-awesome-5/brands.css')); ?>" rel="stylesheet">
+  <link href="<?php echo e(asset('abower_components/font-awesome-5/css/solid.css')); ?>" rel="stylesheet">
   <!-- Font Awesome 5.8.1 -->
   <!-- Instalar depois -->    
 
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo e(asset('abower_components/Ionicons/css/ionicons.min.css')); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo e(asset('dist/css/AdminLTE.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('dist/css/AdminLTE.css')); ?>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo e(asset('dist/css/skins/_all-skins.min.css')); ?>">

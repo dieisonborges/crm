@@ -23,7 +23,7 @@
 
               <li class="dropdown messages-menu">
                 <a href="<?php echo e(url('clients/create')); ?>" class="dropdown-toggle" alt="Novo Ticket">
-                  <i class="fa fa-ticket"></i>
+                  <i class="fas fa-ticket-alt"></i>
                   <span class="label label-info">+</span>
                 </a>
                 
@@ -70,7 +70,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_user')): ?>
                       <li>
                         <a href="<?php echo e(url('users/')); ?>">
-                          <i class="fa fa-user-o text-aqua"></i> Usuários
+                          <i class="fas fa-user text-aqua"></i> Usuários
                         </a>
                       </li>
                       <?php endif; ?>                      
@@ -119,7 +119,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_role')): ?>
                       <li>
                         <a href="<?php echo e(url('roles/')); ?>">
-                          <i class="fa fa-group"></i> <span>Roles (grupo)</span>              
+                          <i class="fas fa-user-shield"></i> <span>Roles (grupo)</span>              
                         </a>            
                       </li>
                       <?php endif; ?>
@@ -127,7 +127,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_permission')): ?>
                       <li class="treeview">
                         <a href="<?php echo e(url('permissions/')); ?>">
-                          <i class="fa fa-lock"></i> <span>Permissions</span>              
+                          <i class="fas fa-shield-alt"></i> <span>Permissions</span>              
                         </a>            
                       </li>
                       <?php endif; ?>
@@ -135,7 +135,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_setor')): ?>
                       <li class="treeview">
                         <a href="<?php echo e(url('setors/')); ?>">
-                          <i class="fa fa-black-tie"></i> <span>Setores Internos</span>              
+                          <i class="fas fa-building"></i> <span>Setores Internos</span>              
                         </a>            
                       </li>
                       <?php endif; ?>
@@ -143,7 +143,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_ticket')): ?>
                       <li>
                         <a href="<?php echo e(url('tickets/1/status')); ?>">  
-                          <i class="fa fa-ticket"></i> <span>Tickets</span>                          
+                          <i class="fas fa-ticket-alt"></i> <span>Tickets</span>                          
                         </a>                        
                       </li>
                       <?php endif; ?>  

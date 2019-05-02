@@ -34,7 +34,7 @@
 
 	    </h1>
 	    <h2>
-	        <small>Código: <b>{{$orcamento->codigo}}</b></small>
+	        <small>Código (Code): <b>{{$orcamento->codigo}}</b></small>
 	        		
 	        	<button class="btn btn-success" type="submit" form="orcamento_salvar" value="Salvar (Save)"> <i class="fa fa-save"></i> Salvar (Save)</button>
 

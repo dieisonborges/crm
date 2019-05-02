@@ -32,13 +32,13 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3><?php echo e($cont_aloc); ?> Tickets</h3>
+              <h3><?php echo e($cont_aloc); ?></h3>
 
-              <p>Não Alocados</p>
+              <p>Tickets Não Alocados</p>
             </div>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/alocar')); ?>">
               <div class="icon">                
-                    <i class="fa fa-ticket"></i>                
+                    <i class="fas fa-ticket-alt"></i>                
               </div>
             </a>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/alocar')); ?>" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
@@ -51,13 +51,13 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php echo e($qtd_tick_aber); ?> Tickets</h3>
+              <h3><?php echo e($qtd_tick_aber); ?></h3>
 
-              <p>Abertos</p>
+              <p>Tickets Abertos</p>
             </div>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/tickets/1/status')); ?>">
               <div class="icon">                
-                    <i class="fa fa-ticket"></i>                
+                    <i class="fas fa-ticket-alt"></i>                
               </div>
             </a>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/tickets/1/status')); ?>" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
@@ -70,13 +70,13 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?php echo e($qtd_tick_fech); ?> Tickets</h3>
+              <h3><?php echo e($qtd_tick_fech); ?></h3>
 
-              <p>Fechados</p>
+              <p>Tickets Fechados</p>
             </div>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/tickets/0/status')); ?>">
               <div class="icon">
-                <i class="fa fa-ticket"></i>
+                <i class="fas fa-ticket-alt"></i>
               </div>
             </a>
             <a href="<?php echo e(url('atendimentos/'.$setor->name.'/tickets/0/status')); ?>" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>

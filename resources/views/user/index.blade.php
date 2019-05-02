@@ -102,7 +102,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$user->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete{{$user->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
                         </form> 
 
                         <script>

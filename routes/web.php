@@ -223,3 +223,14 @@ Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
 
+
+//Produto Preços
+
+Route::get('produtoPrecos/enable/{id}', 'ProdutoPrecoController@enable');
+Route::get('produtoPrecos/disable/{id}', 'ProdutoPrecoController@disable');
+
+Route::get('produtoPrecos/{id}/orcamento', 'ProdutoPrecoController@orcamento');
+Route::post('produtoPrecos/orcamentoCreate', 'ProdutoPrecoController@orcamentoCreate');
+
+Route::resource('produtoPrecos', 'ProdutoPrecoController');
+Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');

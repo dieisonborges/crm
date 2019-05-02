@@ -19,6 +19,13 @@
 	    </h1>
 	    <h2>
 	        <small>Código: <b>{{$orcamento->codigo}}</b></small>
+
+	        		@if($orcamento->status==3)
+	        		<a href="{{URL::to('produtoPrecos/'.$orcamento->id.'/orcamento')}}" class="btn btn-primary">
+	        			<i class="fas fa-money-bill-alt"></i> Precificar Todos Ítens
+	        		</a> 
+	        		@endif
+
 	        		@if(($orcamento->status)==0)
 		        		<a href="{{$orcamento->id}}/item" class="btn btn-primary">
 		        			<i class="fa fa-plus"></i> Adicionar Item
@@ -59,8 +66,9 @@
 			                    <th>Produto</th>
 			                    <th>Quantidade</th>
 			                    <th>Preço</th>
-			                    <th>Preço Frete</th>
-			                    <th>Tipo de Frete</th>
+			                    <th>P. Frete</th>
+			                    <th>Frete</th>
+			                    <th>Moeda</th>
 			                    <th>Modificar</th>			                    
 			                    <th>Remover</th>
 			                </tr>
@@ -72,6 +80,7 @@
 			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->preco}}</a></td>
 			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->frete_preco}}</a></td>
 			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->frete_tipo}}</a></td>
+			                    <td><a href="{{URL::to('item')}}/{{$item->item_id}}">{{$item->moeda}}</a></td>
 			                    <td>
 			                    	@if(($orcamento->status)==0)
 			                        	<a class="btn btn-warning btn-xs" href="{{URL::to('orcamento/'.$item->item_id.'/itemEdit')}}"><i class="fa fa-edit"></i> Editar</a>
@@ -89,7 +98,7 @@
 			                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
 			                            <!--<input type="submit" name="Excluir">-->
 
-			                            <a href="javascript:confirmDelete{{$item->item_id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Remover</a>
+			                            <a href="javascript:confirmDelete{{$item->item_id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
 			                        </form> 
 
 			                        <script>

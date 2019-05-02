@@ -119,6 +119,13 @@ class RolesTableSeeder extends Seeder
             'label'=>'Upload de Arquivos',
         ]);
 
+        //Gerência de Preços de Produtos     
+        Role::create([
+            'id'=>'16',
+            'name'=>'produto_preco',
+            'label'=>'Gerência de Preços de Produtos',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*

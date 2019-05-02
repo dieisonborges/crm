@@ -54,7 +54,7 @@
                         <?php if($franquia->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
-                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
                     </td>
@@ -66,7 +66,7 @@
                     <td>
                         <a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>">
                         <?php if($franquia->status): ?>
-                            <a href="<?php echo e(URL::to('franquias/disable/'.$franquia->id)); ?>" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativar</a>
+                            <a href="<?php echo e(URL::to('franquias/disable/'.$franquia->id)); ?>" class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativar</a>
                         <?php else: ?>
                              <a href="<?php echo e(URL::to('franquias/enable/'.$franquia->id)); ?>" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativar</a>
                         <?php endif; ?>
@@ -83,7 +83,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete<?php echo e($franquia->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete<?php echo e($franquia->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
                         </form> 
 
                         <script>

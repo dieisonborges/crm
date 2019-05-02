@@ -56,7 +56,7 @@
                         @if($franquia->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
-                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
                     </td>                    
@@ -100,7 +100,7 @@
                         @if($franquia->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
-                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
                     </td>                                       

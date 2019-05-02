@@ -19,6 +19,13 @@
 	    </h1>
 	    <h2>
 	        <small>Código: <b><?php echo e($orcamento->codigo); ?></b></small>
+
+	        		<?php if($orcamento->status==3): ?>
+	        		<a href="<?php echo e(URL::to('produtoPrecos/'.$orcamento->id.'/orcamento')); ?>" class="btn btn-primary">
+	        			<i class="fas fa-money-bill-alt"></i> Precificar Todos Ítens
+	        		</a> 
+	        		<?php endif; ?>
+
 	        		<?php if(($orcamento->status)==0): ?>
 		        		<a href="<?php echo e($orcamento->id); ?>/item" class="btn btn-primary">
 		        			<i class="fa fa-plus"></i> Adicionar Item
@@ -59,8 +66,9 @@
 			                    <th>Produto</th>
 			                    <th>Quantidade</th>
 			                    <th>Preço</th>
-			                    <th>Preço Frete</th>
-			                    <th>Tipo de Frete</th>
+			                    <th>P. Frete</th>
+			                    <th>Frete</th>
+			                    <th>Moeda</th>
 			                    <th>Modificar</th>			                    
 			                    <th>Remover</th>
 			                </tr>
@@ -72,6 +80,7 @@
 			                    <td><a href="<?php echo e(URL::to('item')); ?>/<?php echo e($item->item_id); ?>"><?php echo e($item->preco); ?></a></td>
 			                    <td><a href="<?php echo e(URL::to('item')); ?>/<?php echo e($item->item_id); ?>"><?php echo e($item->frete_preco); ?></a></td>
 			                    <td><a href="<?php echo e(URL::to('item')); ?>/<?php echo e($item->item_id); ?>"><?php echo e($item->frete_tipo); ?></a></td>
+			                    <td><a href="<?php echo e(URL::to('item')); ?>/<?php echo e($item->item_id); ?>"><?php echo e($item->moeda); ?></a></td>
 			                    <td>
 			                    	<?php if(($orcamento->status)==0): ?>
 			                        	<a class="btn btn-warning btn-xs" href="<?php echo e(URL::to('orcamento/'.$item->item_id.'/itemEdit')); ?>"><i class="fa fa-edit"></i> Editar</a>
@@ -89,7 +98,7 @@
 			                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
 			                            <!--<input type="submit" name="Excluir">-->
 
-			                            <a href="javascript:confirmDelete<?php echo e($item->item_id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Remover</a>
+			                            <a href="javascript:confirmDelete<?php echo e($item->item_id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
 			                        </form> 
 
 			                        <script>

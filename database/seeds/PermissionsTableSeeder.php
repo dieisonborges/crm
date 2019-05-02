@@ -564,6 +564,33 @@ class PermissionsTableSeeder extends Seeder
 
         // ------------------------------------------------------------
 
+        //Área - Gerência de Preços de Produtos
+        //Create
+        Permission::create([
+            'id'=>'81',
+            'name'=>'create_produto_preco',
+            'label'=>'Create - Gerência de Preços de Produtos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'82',
+            'name'=>'read_produto_preco',
+            'label'=>'Read - Gerência de Preços de Produtos',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'83',
+            'name'=>'update_produto_preco',
+            'label'=>'Update - Gerência de Preços de Produtos',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'84',
+            'name'=>'delete_produto_preco',
+            'label'=>'Delete - Gerência de Preços de Produtos',
+        ]);     
+        // ------------------------------------------------------------
+
         //Área - 
         //Create
         /*

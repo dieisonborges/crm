@@ -23,7 +23,7 @@
 
               <li class="dropdown messages-menu">
                 <a href="{{url('clients/create')}}" class="dropdown-toggle" alt="Novo Ticket">
-                  <i class="fa fa-ticket"></i>
+                  <i class="fas fa-ticket-alt"></i>
                   <span class="label label-info">+</span>
                 </a>
                 
@@ -70,7 +70,7 @@
                       @can('read_user')
                       <li>
                         <a href="{{ url('users/') }}">
-                          <i class="fa fa-user-o text-aqua"></i> Usuários
+                          <i class="fas fa-user text-aqua"></i> Usuários
                         </a>
                       </li>
                       @endcan                      
@@ -119,7 +119,7 @@
                       @can('read_role')
                       <li>
                         <a href="{{ url('roles/') }}">
-                          <i class="fa fa-group"></i> <span>Roles (grupo)</span>              
+                          <i class="fas fa-user-shield"></i> <span>Roles (grupo)</span>              
                         </a>            
                       </li>
                       @endcan
@@ -127,7 +127,7 @@
                       @can('read_permission')
                       <li class="treeview">
                         <a href="{{ url('permissions/') }}">
-                          <i class="fa fa-lock"></i> <span>Permissions</span>              
+                          <i class="fas fa-shield-alt"></i> <span>Permissions</span>              
                         </a>            
                       </li>
                       @endcan
@@ -135,7 +135,7 @@
                       @can('read_setor')
                       <li class="treeview">
                         <a href="{{ url('setors/') }}">
-                          <i class="fa fa-black-tie"></i> <span>Setores Internos</span>              
+                          <i class="fas fa-building"></i> <span>Setores Internos</span>              
                         </a>            
                       </li>
                       @endcan
@@ -143,7 +143,7 @@
                       @can('read_ticket')
                       <li>
                         <a href="{{ url('tickets/1/status') }}">  
-                          <i class="fa fa-ticket"></i> <span>Tickets</span>                          
+                          <i class="fas fa-ticket-alt"></i> <span>Tickets</span>                          
                         </a>                        
                       </li>
                       @endcan  

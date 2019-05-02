@@ -44,21 +44,34 @@
           </li>
           <?php endif; ?> 
 
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto_preco')): ?>     
+
+          <li class="header">Precificação de Produtos</li> 
+
+          <li>
+            <a href="<?php echo e(url('produtoPrecos')); ?>">  
+              <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>
+              
+            </a>
+            
+          </li>
+          <?php endif; ?> 
+
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>   
 
           <li class="header">Franquia</li> 
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-building-o"></i> <span>Franquia</span>
+              <i class="fas fa-store"></i> <span>Franquia</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="<?php echo e(url('franquiasIntegrada/')); ?>"><i class="fa fa-circle-o"></i> Franquia Integrada</a></li>
-                <li><a href="<?php echo e(url('franquias/')); ?>"><i class="fa fa-circle-o"></i> Franquias</a></li>
-                <li><a href="<?php echo e(url('franqueadoVip/')); ?>"><i class="fa fa-circle-o"></i> Franquias VIP</a></li>
+                <li><a href="<?php echo e(url('franquiasIntegrada/')); ?>"><i class="fas fa-circle-notch"></i> Franquia Integrada</a></li>
+                <li><a href="<?php echo e(url('franquias/')); ?>"><i class="fas fa-circle-notch"></i> Franquias</a></li>
+                <li><a href="<?php echo e(url('franqueadoVip/')); ?>"><i class="fas fa-circle-notch"></i> Franquias VIP</a></li>
             </ul>
           </li>         
 
@@ -79,25 +92,25 @@
                 
                   <li>
                     <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>">  
-                      <i class="fa fa-tachometer"></i> <span>Dashboard | <?php echo e(ucfirst($sess_setors->name)); ?></span>                      
+                      <i class="fas fa-tachometer-alt"></i> <span>Dashboard | <?php echo e(ucfirst($sess_setors->name)); ?></span>                      
                     </a>                    
                   </li>
 
                   <li class="treeview">
                     <a href="#">  
-                      <i class="fa fa-ticket text-red"></i> <span>Tickets | <?php echo e(ucfirst($sess_setors->name)); ?></span>
+                      <i class="fas fa-ticket-alt text-red"></i> <span>Tickets | <?php echo e(ucfirst($sess_setors->name)); ?></span>
                       <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fa fa-circle-o"></i> Listar</a></li>
+                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fas fa-circle-notch"></i> Listar</a></li>
 
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/1/status')); ?>"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/0/status')); ?>"><i class="fa fa-circle-o"></i> Fechados</a></li>
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fa fa-circle-o"></i> Todos</a></li>
+                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/1/status')); ?>"><i class="fas fa-circle-notch text-yellow"></i> Abertos</a></li>
+                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/0/status')); ?>"><i class="fas fa-circle-notch"></i> Fechados</a></li>
+                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fas fa-circle-notch"></i> Todos</a></li>
 
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/buscaData')); ?>"><i class="fa fa-circle-o"></i> Todos por Data</a></li>
+                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/buscaData')); ?>"><i class="fas fa-circle-notch"></i> Todos por Data</a></li>
                       
                     </ul>
                   </li>
@@ -114,14 +127,14 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-building-o"></i> <span>Franqueado</span>
+              <i class="fas fa-store-alt"></i> <span>Franqueado</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="<?php echo e(url('franqueados')); ?>"><i class="fa fa-circle-o"></i> Franquias</a></li>
-                <li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fa fa-circle-o"></i> Catálogo de Produtos</a></li>
+                <li><a href="<?php echo e(url('franqueados')); ?>"><i class="fas fa-circle-notch"></i> Franquias</a></li>
+                <li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
             </ul>
           </li>
 
@@ -134,17 +147,17 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-ticket text-aqua"></i> <span>Meus Tickets</span>
+              <i class="fas fa-ticket-alt text-aqua"></i> <span>Meus Tickets</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             
             <ul class="treeview-menu">
-              <li><a href="<?php echo e(url('clients/create')); ?>"><i class="fa fa-circle-o text-red"></i> Novo</a></li>
-              <li><a href="<?php echo e(url('clients/1/status')); ?>"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
-              <li><a href="<?php echo e(url('clients/0/status')); ?>"><i class="fa fa-circle-o"></i> Fechados</a></li>
-              <li><a href="<?php echo e(url('clients/')); ?>"><i class="fa fa-circle-o"></i> Todos</a></li>
+              <li><a href="<?php echo e(url('clients/create')); ?>"><i class="fas fa-circle-notch text-red"></i> Novo</a></li>
+              <li><a href="<?php echo e(url('clients/1/status')); ?>"><i class="fas fa-circle-notch text-yellow"></i> Abertos</a></li>
+              <li><a href="<?php echo e(url('clients/0/status')); ?>"><i class="fas fa-circle-notch"></i> Fechados</a></li>
+              <li><a href="<?php echo e(url('clients/')); ?>"><i class="fas fa-circle-notch"></i> Todos</a></li>
               
             </ul>
           </li>          

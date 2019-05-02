@@ -34,7 +34,7 @@
 
 	    </h1>
 	    <h2>
-	        <small>Código: <b><?php echo e($orcamento->codigo); ?></b></small>
+	        <small>Código (Code): <b><?php echo e($orcamento->codigo); ?></b></small>
 	        		
 	        	<button class="btn btn-success" type="submit" form="orcamento_salvar" value="Salvar (Save)"> <i class="fa fa-save"></i> Salvar (Save)</button>
 

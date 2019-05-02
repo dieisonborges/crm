@@ -58,7 +58,7 @@
                         @if($fornecedor->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
                     </td>
@@ -78,7 +78,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$fornecedor->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete{{$fornecedor->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
                         </form> 
 
                         <script>

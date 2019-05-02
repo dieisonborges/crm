@@ -95,7 +95,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete<?php echo e($orcamento->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Remover</a>
+                            <a href="javascript:confirmDelete<?php echo e($orcamento->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
                         </form> 
 
                         <script>

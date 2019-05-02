@@ -287,6 +287,7 @@ class OrcamentoController extends Controller
                         'item_orcamentos.preco',
                         'item_orcamentos.frete_preco',
                         'item_orcamentos.frete_tipo',
+                        'item_orcamentos.moeda',
                         'produtos.*'
                      ))
                     ->join('produtos', 'item_orcamentos.produto_id', '=', 'produtos.id')

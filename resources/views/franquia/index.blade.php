@@ -53,7 +53,7 @@
                         @if($franquia->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
-                            <span class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
                     </td>
@@ -65,7 +65,7 @@
                     <td>
                         <a href="{{URL::to('franquias')}}/{{$franquia->id}}">
                         @if($franquia->status)
-                            <a href="{{URL::to('franquias/disable/'.$franquia->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Desativar</a>
+                            <a href="{{URL::to('franquias/disable/'.$franquia->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativar</a>
                         @else
                              <a href="{{URL::to('franquias/enable/'.$franquia->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativar</a>
                         @endif
@@ -82,7 +82,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$franquia->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete{{$franquia->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
                         </form> 
 
                         <script>
