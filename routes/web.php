@@ -154,6 +154,11 @@ Route::get('produtos/{id}/imagem', 'ProdutoController@imagem');
 Route::post('produtos/imagemUpdate', 'ProdutoController@imagemUpdate');
 Route::post('produtos/imagemDestroy/{id}', 'ProdutoController@imagemDestroy');
 
+Route::get('produtos/{id}/categorias', 'ProdutoController@categoria');
+Route::post('produtos/categoriaUpdate', 'ProdutoController@categoriaUpdate');
+Route::post('produtos/categoriaDestroy', 'ProdutoController@categoriaDestroy');
+
+
 //Franquias
 Route::resource('franquias', 'FranquiaController');
 Route::post('franquias/busca', 'FranquiaController@busca');
@@ -191,7 +196,6 @@ Route::resource('fornecedor', 'FornecedorController');
 Route::post('fornecedor/busca', 'FornecedorController@busca');
 
 //Orçamento
-Route::resource('orcamento', 'OrcamentoController');
 Route::post('orcamento/busca', 'OrcamentoController@busca');
 Route::get('orcamento/{id}/item', 'OrcamentoController@item');
 Route::post('orcamento/itemStore', 'OrcamentoController@itemStore');
@@ -200,6 +204,8 @@ Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
 Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');
 Route::get('orcamento/{id}/enviar', 'OrcamentoController@enviar');
 Route::get('orcamento/{id}/cancelar', 'OrcamentoController@cancelar');
+
+Route::resource('orcamento', 'OrcamentoController');
 
 
 /* -------------- SEGURANCA VIA TOKEN --------------------- */
@@ -234,3 +240,6 @@ Route::post('produtoPrecos/orcamentoCreate', 'ProdutoPrecoController@orcamentoCr
 
 Route::resource('produtoPrecos', 'ProdutoPrecoController');
 Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');
+
+Route::get('produtoPrecosSincronizar', 'ProdutoPrecoController@sync');
+Route::get('produtoPrecosSincronizarUpdate', 'ProdutoPrecoController@syncUpdate');

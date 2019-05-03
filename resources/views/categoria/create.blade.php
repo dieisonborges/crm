@@ -14,6 +14,11 @@
 				    <label for="nome">Nome</label>
 				    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome completo..." value="{{ old('nome') }}" required>
 			 	</div>
+
+			 	<div class="form-group mb-12">
+				    <label for="valor">Valor (Dinâmico)</label>
+				    <input type="number" class="form-control" id="valor" name="valor" value="{{ old('valor') }}" placeholder="Digite o Valor..." required>
+			 	</div>
 			 	
 			 	<div class="form-group mb-12">
 				    <label for="descricao">Descrição</label>

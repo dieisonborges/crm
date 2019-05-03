@@ -28,13 +28,13 @@
 
         <hr class="hr col-md-12">
 
-        <a href="{{url('franquiasIntegrada/sync')}}" class="btn btn-info btn-lg"><i class="fa fa-refresh"> </i> Sincronizar</a>
+        <a href="{{url('franquiasIntegrada/sync')}}" class="btn btn-info btn-lg"><i class="fas fa-sync-alt"></i>Sincronizar</a>
 
         <hr class="hr col-md-12">           
         
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding col-md-6">
-            <h3>Franquias Locais</h3> 
+            <h3>Franquias Locais (7p CRM)</h3> 
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
@@ -78,7 +78,7 @@
         
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding col-md-6">
-            <h3>Franquias Remotas (Lojas)</h3> 
+            <h3>Franquias Remotas (Lic - Lojas)</h3> 
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>

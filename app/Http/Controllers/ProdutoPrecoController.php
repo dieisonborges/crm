@@ -485,6 +485,147 @@ class ProdutoPrecoController extends Controller
             return view('errors.403');
         }
     }
+
+    public function sync(Request $request)
+    {
+        //
+        if(!(Gate::denies('read_produto_preco'))){
+
+            if($request){
+                $buscaInput=$request->input('busca');
+            }else{
+                $buscaInput=""; 
+            }
+            
+
+            $produto_precos = DB::table('produto_precos')
+                    ->select(array(
+                        'produto_precos.*',
+                        'produtos.sku',
+                        'produtos.titulo',
+                        'fornecedors.nome_fantasia'
+                     ))
+                    ->join('produtos', 'produto_precos.produto_id', '=', 'produtos.id') 
+                    ->join('fornecedors', 'produto_precos.fornecedor_id', '=', 'fornecedors.id')  
+                    ->where('produtos.titulo', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('produtos.palavras_chave', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('produtos.sku', 'LIKE', '%'.$buscaInput.'%')
+                    ->orwhere('produtos.descricao', 'LIKE', '%'.$buscaInput.'%')                  
+                    ->orderBy('produto_precos.id', 'DESC')
+                    ->paginate(40);
+
+            
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.preco.sync.index");
+            //--------------------------------------------------------------------------------------
+
+            //Conecta nas lojas remotas
+            /*$produto_precos_remotos = DB::connection('mysql_loja')
+                                        ->table('franquias')
+                                        ->orderBy('id_7p')
+                                        ->get();
+            */
+
+            return  view('produto_preco.sincronizar', 
+                    array(
+
+                        'produto_precos' => $produto_precos,
+                        'produto_precos_remotos' => $produto_precos,
+                        'buscar' => null
+
+                    ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function syncUpdate()
+    {
+        //
+        if(!(Gate::denies('update_produto_preco'))){
+
+            $franquias = Franquia::get();
+
+            foreach ($franquias as $franquia) {
+                $franquia_remota = DB::connection('mysql_loja')
+                                        ->table('franquias')
+                                        ->where('id_7p', $franquia->id)
+                                        ->first();
+                if($franquia_remota){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('franquias')
+                                        ->where('id_7p', $franquia->id)
+                                        ->update(array(
+                                            'loja_url' => $franquia->loja_url,
+                                            'codigo_franquia' => $franquia->codigo_franquia,
+                                            'nome' => $franquia->nome,
+                                            'slogan' => $franquia->slogan,
+                                            'descricao' => $franquia->descricao,
+                                            'url_site' => $franquia->url_site,
+                                            'url_blog' => $franquia->url_blog,
+                                            'status' => $franquia->status,
+                                            'cnpj' => $franquia->cnpj,
+                                            'telefone' => $franquia->telefone,
+                                            'email' => $franquia->email,
+                                            'endereco' => $franquia->endereco,
+                                            'endereco_numero' => $franquia->endereco_numero,
+                                            'endereco_bairro' => $franquia->endereco_bairro,
+                                            'endereco_cidade' => $franquia->endereco_cidade,
+                                            'endereco_estado' => $franquia->endereco_estado,
+                                            'endereco_cep' => $franquia->endereco_cep,
+                                        ));
+                    if($status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('franquias')
+                                        ->insert(array(
+                                            /* -----------SYNC feito por aqui-- */
+                                            'id_7p' => $franquia->id,
+                                            /* ------------------------------- */
+                                            'loja_url' => $franquia->loja_url,
+                                            'codigo_franquia' => $franquia->codigo_franquia,
+                                            'nome' => $franquia->nome,
+                                            'slogan' => $franquia->slogan,
+                                            'descricao' => $franquia->descricao,
+                                            'url_site' => $franquia->url_site,
+                                            'url_blog' => $franquia->url_blog,
+                                            'status' => $franquia->status,
+                                            'cnpj' => $franquia->cnpj,
+                                            'telefone' => $franquia->telefone,
+                                            'email' => $franquia->email,
+                                            'endereco' => $franquia->endereco,
+                                            'endereco_numero' => $franquia->endereco_numero,
+                                            'endereco_bairro' => $franquia->endereco_bairro,
+                                            'endereco_cidade' => $franquia->endereco_cidade,
+                                            'endereco_estado' => $franquia->endereco_estado,
+                                            'endereco_cep' => $franquia->endereco_cep,
+                                        ));
+                    if(!$status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("franquiaIntegrada.sync");
+            //--------------------------------------------------------------------------------------
+
+            return redirect('franquiasIntegrada/')->with('success', 'Sincronizado com sucesso!');
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
         
     
 
