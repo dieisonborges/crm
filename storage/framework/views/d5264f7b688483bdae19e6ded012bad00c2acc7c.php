@@ -68,7 +68,7 @@
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="_method" value="DELETE">
 
-                        <a href="javascript:confirmDelete<?php echo e($franqueado_vip->vip_id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Destituir</a>
+                        <a href="javascript:confirmDelete<?php echo e($franqueado_vip->vip_id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Destituir</a>
                     </form> 
 
                     <script>

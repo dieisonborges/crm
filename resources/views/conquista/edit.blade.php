@@ -41,7 +41,7 @@
 			 	<div class="form-group col-md-12">
 				    <label for="icone_medalha">Ícone Medalha (fa fa-icons)</label>
 				    <input type="text" class="form-control" id="icone_medalha" name="icone_medalha" value="{{$conquista->icone_medalha}}" placeholder="fa fa-linux" required>
-				    <a href="https://adminlte.io/themes/AdminLTE/pages/UI/icons.html" target="_blank">* Ver lista Font Awesome - Icons</a>
+				    <a href="https://fontawesome.com/icons?d=gallery" target="_blank">* Ver lista Font Awesome - Icons</a>
 			 	</div>
 
 			 	<div class="form-group col-md-12">

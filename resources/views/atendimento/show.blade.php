@@ -116,10 +116,10 @@
             <!-- /.timeline-label -->
             <!-- timeline item -->
             <li>
-              <i class="fa fa-ticket bg-blue"></i>
+              <i class="fa fa-ticket-alt bg-blue"></i>
 
               <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($ticket->created_at))}}</span>
+                <span class="time"><i class="fas fa-clock"></i> {{date('H:i:s', strtotime($ticket->created_at))}}</span>
 
 
                 <h3 class="user-header timeline-header">                    
@@ -152,7 +152,7 @@
                   <i class="fa fa-comments  bg-gray"></i>
 
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($prontuario->created_at))}}</span>
+                    <span class="time"><i class="fas fa-clock"></i> {{date('H:i:s', strtotime($prontuario->created_at))}}</span>
 
                     <h3 class="user-header timeline-header">                    
                             <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px"> 
@@ -175,7 +175,7 @@
             @if (($ticket->status)==1)
 
             <li>
-              <i class="fa fa-clock-o bg-gray"></i>
+              <i class="fa fa-clock bg-gray"></i>
             </li>
 
             

@@ -48,6 +48,10 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Franquia::class);
     }
 
+    public function franqueadoVip(){        
+        return $this->hasMany(\App\FranqueadoVip::class);
+    }
+
     public function conquista(){        
         return $this->belongsToMany(\App\Conquista::class);
     }    

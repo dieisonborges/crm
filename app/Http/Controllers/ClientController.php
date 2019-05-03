@@ -13,6 +13,7 @@ use App\Categoria;
 use App\Setor; 
 use App\User;
 use App\Upload; 
+use App\FranqueadoVip; 
 use DB;
 
 use App\Http\Controllers\Log;
@@ -463,13 +464,16 @@ class ClientController extends Controller
             /* ------------ FOTO PERFIL -------------------- */
 
             $imagem = $user->uploads()->orderBy('id', 'DESC')->first();
-            
+
+            /* ---------------- VIP e VIP Líder ----------- */
+
+            $franqueadoVip = $user->franqueadoVip()->first();
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index=".$scores);
             //---------------------------------------------------------------------------------------
 
-            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas', 'imagem'));
+            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas', 'imagem', 'franqueadoVip'));
         }
         else{
             return view('errors.403');

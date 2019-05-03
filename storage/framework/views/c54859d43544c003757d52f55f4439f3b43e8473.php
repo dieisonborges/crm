@@ -219,7 +219,7 @@
             <!-- /.timeline-label -->
             <!-- timeline item -->
             <li>
-              <i class="fa fa-close bg-gray"></i>
+              <i class="fa fa-times-circle bg-gray"></i>
               <div class="timeline-item">
                 <h3 class="timeline-header"><a href="#">Encerrado</a></h3>
               </div>

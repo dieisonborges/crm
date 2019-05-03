@@ -56,8 +56,9 @@ class HomeController extends Controller
 
             }
 
+            return redirect('clients/perfil');
 
-            return view('home.index'); 
+            //return view('home.index'); 
 
         }else{
             return redirect('login')->with('danger', 'Erro: <b>400</b> Você não fez login no sistema');

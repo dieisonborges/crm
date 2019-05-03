@@ -10,7 +10,7 @@
 
 
 		
-		    <div class="box-body col-md-6">              
+		    <div class="box-body col-md-4">              
               <div class="callout callout-info">
               	<h5>ID: <b> {{$user->id}}</b></h5>
                 <h5>Apelido: <b> {{$user->apelido}}</b></h5>
@@ -30,12 +30,31 @@
             @else
                 <img src="{{ asset('img/default-user-image.png') }}" width="100%">
             @endif
-
-            
+           
 
             <a href="{{URL::to('clients')}}/imagem" class="btn btn-primary col-md-12"><i class="fa fa-image"></i> Alterar Imagem</a>
 
-        </div>  </div> 
+        </div>
+
+
+        <div class="box-body col-md-6"> 
+
+            @if($franqueadoVip)               
+            <div class="col-md-6"> 
+                <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="100%" alt="VIP">
+            </div>
+            @endif
+
+            @if($franqueadoVip)
+            @if($franqueadoVip->lider)
+            <div class="col-md-6"> 
+                <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="100%" alt="Líder">
+            </div>
+            @endif
+            @endif
+
+        </div> 
+  </div> 
 
         <div class="col-md-12">              
               
@@ -107,7 +126,7 @@
               <i class="fa fa-user bg-blue"></i>
 
               <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($user->created_at))}}</span>
+                <span class="time"><i class="fa fa-clock"></i> {{date('H:i:s', strtotime($user->created_at))}}</span>
 
                 <h3 class="timeline-header"><a href="#">Score: </a><b>0</b></h3>
 
@@ -143,7 +162,7 @@
                     @endif
 
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($score->created_at))}}</span>
+                    <span class="time"><i class="fa fa-clock"></i> {{date('H:i:s', strtotime($score->created_at))}}</span>
 
                     @if(($score->valor)>=0)
 	                    <h3 class="timeline-header"><a href="#">Parabéns você ganhou: </a><b>{{$score->valor}} pontos</b></h3>
@@ -178,7 +197,7 @@
             @if (($user->status)==1)
 
             <li>
-              <i class="fa fa-clock-o bg-gray"></i>
+              <i class="fa fa-clock bg-gray"></i>
             </li>
 
             
