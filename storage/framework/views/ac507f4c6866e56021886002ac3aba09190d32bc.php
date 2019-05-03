@@ -44,17 +44,22 @@
           </li>
           <?php endif; ?> 
 
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto_preco')): ?>     
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto_preco')): ?> 
 
           <li class="header">Precificação de Produtos</li> 
 
-          <li>
-            <a href="<?php echo e(url('produtoPrecos')); ?>">  
+          <li class="treeview">
+            <a href="#">  
               <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>
-              
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
             </a>
-            
-          </li>
+            <ul class="treeview-menu">
+                <li><a href="<?php echo e(url('produtoPrecos')); ?>"><i class="fas fa-circle-notch"></i> Preços de Produtos</a></li>
+                <li><a href="<?php echo e(url('produtoPrecosSincronizar')); ?>"><i class="fas fa-circle-notch"></i> Sincronizar Lojas</a></li>
+            </ul>
+          </li> 
           <?php endif; ?> 
 
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>   

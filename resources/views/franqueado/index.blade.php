@@ -23,7 +23,8 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>
-                    <th>Ver</th>
+                    <th>Abrir</th>
+                    <th>Gerenciar</th>
 
                 </tr>
                 @forelse ($franquias as $franquia)
@@ -44,14 +45,28 @@
                     </td>
 
                     <td>
-                        <a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">
+                        
                         @if($franquia->status)
-                            <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
+                            <a href="https://{{$franquia->loja_url}}" target="_blank">
+                                <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
+                            </a>
                         @else
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
-                        </a>
-                    </td>                   
+                       
+                    </td> 
+
+                    <td>
+                        
+                        @if($franquia->status)
+                            <a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">
+                                <span class="btn btn-primary btn-xs"><i class="fas fa-wrench"></i> Gerenciar</span>
+                            </a>
+                        @else
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
+                        @endif
+                        
+                    </td>                  
                     
                 </tr>                
                 @empty

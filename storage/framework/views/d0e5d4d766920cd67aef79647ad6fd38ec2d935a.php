@@ -24,7 +24,8 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>
-                    <th>Ver</th>
+                    <th>Abrir</th>
+                    <th>Gerenciar</th>
 
                 </tr>
                 <?php $__empty_1 = true; $__currentLoopData = $franquias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $franquia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
@@ -39,20 +40,34 @@
                         <?php if($franquia->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
                     </td>
 
                     <td>
-                        <a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($franquia->id); ?>/dashboard">
+                        
                         <?php if($franquia->status): ?>
-                            <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
+                            <a href="https://<?php echo e($franquia->loja_url); ?>">
+                                <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
+                            </a>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
-                        </a>
-                    </td>                   
+                       
+                    </td> 
+
+                    <td>
+                        
+                        <?php if($franquia->status): ?>
+                            <a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($franquia->id); ?>/dashboard">
+                                <span class="btn btn-primary btn-xs"><i class="fas fa-wrench"></i> Gerenciar</span>
+                            </a>
+                        <?php else: ?>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
+                        <?php endif; ?>
+                        
+                    </td>                  
                     
                 </tr>                
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -97,7 +112,7 @@
                         <?php if($afiliado->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
                     </td>
@@ -107,7 +122,7 @@
                         <?php if($afiliado->status): ?>
                             <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
                     </td>                  
