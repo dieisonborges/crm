@@ -94,10 +94,8 @@
 
 			                        <form method="POST" action="{{action('OrcamentoController@itemDestroy', $item->item_id)}}" id="formDelete{{$item->item_id}}">
 			                            @csrf
-			                            <input type="hidden" name="_method" value="DELETE">
-			                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
-			                            <!--<input type="submit" name="Excluir">-->
-
+			                            <input type="hidden" name="item_id" value="{{$item->item_id}}">
+			                            <input type="hidden" name="orcamento_id" value="{{$orcamento->id}}">
 			                            <a href="javascript:confirmDelete{{$item->item_id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
 			                        </form> 
 
@@ -137,13 +135,13 @@
 
 		<hr class="hr">
 		@if(($orcamento->status)==0)	
-			<a href="{{$orcamento->id}}/edit" class="btn btn-warning">Editar</a>
+			<a href="{{$orcamento->id}}/edit" class="btn btn-warning"><i class="fa fa-edit"></i>  Editar</a>
 		@endif		
 		
-			<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+			<a href="javascript:history.go(-1)" class="btn btn-success"><i class="fas fa-arrow-left"></i> Voltar</a>
 
 		@if(($orcamento->status)!=2)	
-			<a href="{{$orcamento->id}}/cancelar" class="btn btn-danger" style="float: right;">Cancelar Orçamento</a>
+			<a href="{{$orcamento->id}}/cancelar" class="btn btn-danger" style="float: right;"><i class="fa fa-times-circle"></i> Cancelar Orçamento</a>
 		@endif
 	@endsection
 @endcan

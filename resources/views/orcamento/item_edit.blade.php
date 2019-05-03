@@ -97,7 +97,7 @@
 
 			 	<div class="col-md-12">
 			 			 		
-			 		<input type="submit" form="formSubmit" class="btn btn-primary" value="Alterar Item">
+			 		<input type="submit" form="formSubmit" class="btn btn-primary" value="Salvar Alterações">
 			 		<hr>
 
 			 	</div>

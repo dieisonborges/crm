@@ -44,7 +44,7 @@ class CategoriaController extends Controller
     {
         //
         if(!(Gate::denies('read_categoria'))){
-            $categorias = Categoria::paginate(40);     
+            $categorias = Categoria::orderBy('valor','DESC')->paginate(40);     
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("categoria.index");
@@ -62,6 +62,7 @@ class CategoriaController extends Controller
             $buscaInput = $request->input('busca');
             $categorias = Categoria::where('nome', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('valor','DESC')
                                 ->paginate(40);  
 
             //LOG ----------------------------------------------------------------------------------------
@@ -132,12 +133,14 @@ class CategoriaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'descricao' => 'required|min:15',
+                    'valor' => 'required',
             ]);
            
                     
             $categoria = new Categoria();
             $categoria->nome = $request->input('nome');
             $categoria->descricao = $request->input('descricao');
+            $categoria->valor = $request->input('valor');
 
             
             //LOG --------------------------------------------------------------------------------------
@@ -195,11 +198,13 @@ class CategoriaController extends Controller
             $this->validate($request,[
                     'nome' => 'required|min:3',
                     'descricao' => 'required|min:15',
+                    'valor' => 'required',
             ]);                   
         
             
             $categoria->nome = $request->get('nome');
             $categoria->descricao = $request->get('descricao');
+            $categoria->valor = $request->input('valor');
 
             
             //LOG ---------------------------------------------------------------------------------------

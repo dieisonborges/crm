@@ -15,6 +15,11 @@
 				    <label for="nome">Nome</label>
 				    <input type="text" class="form-control" id="nome" name="nome" value="{{$categoria->nome}}" placeholder="Digite o Nome..." required>
 			 	</div>
+
+			 	<div class="form-group mb-12">
+				    <label for="valor">Valor (Dinâmico)</label>
+				    <input type="number" class="form-control" id="valor" name="valor" value="{{$categoria->valor}}" placeholder="Digite o Valor..." required>
+			 	</div>
 			 	
 			 	<div class="form-group mb-12">
 				    <label for="descricao">Descrição</label>

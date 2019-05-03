@@ -30,9 +30,10 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Valor</th>
                     <th>Editar</th>
                     <th>Excluir</th>
-                </tr>
+                </tr> 
                 @forelse ($categorias as $categoria)
                 <tr>
                     <td>{{$categoria->id}}</td>
@@ -44,6 +45,10 @@
                     <td>
                         <a href="{{URL::to('categorias')}}/{{$categoria->id}}">{{$categoria->descricao}}</a>
                     </td>
+
+                    <td>
+                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}"><span class="btn btn-primary btn-xs">{{$categoria->valor}}</span></a>
+                    </td> 
 
                     <td>
                         <a class="btn btn-warning btn-xs" href="{{URL::to('categorias/'.$categoria->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>

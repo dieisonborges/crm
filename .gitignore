@@ -5,7 +5,7 @@
 /storage/files
 storage/logs/
 storage/framework/views/
-storage/framework/sessions/
+storage/logs/laravel.log
 /vendor
 /.idea
 /.vscode

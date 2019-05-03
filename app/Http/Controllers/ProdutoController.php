@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produto; 
 use App\Upload; 
+use App\Categoria; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -439,6 +440,88 @@ class ProdutoController extends Controller
         }
         else{
             return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+    public function categoria($id){
+        if(!(Gate::denies('read_produto'))){
+            //Recupera a permissão
+
+            $produto = Produto::find($id);
+
+            //recuperar permissões
+            $categorias = $produto->categorias()->get();
+
+            //todas permissoes
+            $all_categorias = Categoria::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.categoria.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
+            return view('produto.categoria', compact('produto', 'categorias', 'all_categorias'));
+        }
+        else{
+            return view('errors.403');
+        }
+
+
+    }
+
+    public function categoriaUpdate(Request $request){
+
+        if(!(Gate::denies('update_produto'))){
+
+            $produto_id = $request->input('produto_id');
+            $categoria_id_array = $request->input('categoria_id'); 
+
+            $produto  = Produto::find($produto_id);
+
+            foreach ($categoria_id_array as $categoria_id) {
+                    $status = $produto->categorias()->attach($categoria_id);
+            }            
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.categoriaUpdate.id=".$produto_id."Categoria".$categoria_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if(!$status){
+                return redirect('produtos/'.$produto_id.'/categorias')->with('success', 'Categoria atualizada com sucesso!');
+            }else{
+                return redirect('produtos/'.$produto_id.'/categorias')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
+    public function categoriaDestroy(Request $request){
+        if(!(Gate::denies('delete_produto'))){
+
+            /* -------------------- */
+
+            $produto_id = $request->input('produto_id');
+            $categoria_id = $request->input('categoria_id'); 
+
+            $produto  = Produto::find($produto_id);
+
+            $status = $produto->categorias()->detach($categoria_id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.categoria.destroy.id=".$produto." Categoria".$categoria_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if($status){
+                return redirect('produtos/'.$produto_id.'/categorias')->with('success', 'Categoria removida com sucesso!');
+            }else{
+                return redirect('produtos/'.$produto_id.'/categorias')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
         }
     }
 }

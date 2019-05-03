@@ -9,7 +9,7 @@ use App\Produto;
 use Illuminate\Http\Request;
 use Gate;
 use DB;
-use Mail;
+use Mail; 
 
 class OrcamentoController extends Controller
 {
@@ -543,24 +543,24 @@ class OrcamentoController extends Controller
         }
     }
 
-    public function itemDestroy($id)
+    public function itemDestroy(Request $request)
     {
+        
         //
         if(!(Gate::denies('delete_orcamento'))){
-            $item = ItemOrcamento::find($id);  
 
-            $orcamento_id = $item->orcamento_id();      
-            
-            $item->delete();
+            $orcamento_id = $request->input('orcamento_id');
+
+            $item = ItemOrcamento::find($request->input('item_id'));
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("orcamento.item.destroy=".$item);
             //--------------------------------------------------------------------------------------------
 
-            if($item_orcamento->save()){
+            if($item->delete()){
                 return redirect('orcamento/'.$orcamento_id)->with('success', 'Item removido com sucesso!');
             }else{
-                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('orcamento/'.$orcamento_id)->with('danger', 'Houve um problema, tente novamente.');
             }
 
         }
