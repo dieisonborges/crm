@@ -7,12 +7,14 @@
 	        <small>{{$produto->titulo}}</small>|
 	        <small>Precificação nº {{$produtoPreco->id}}</small>
 	    </h1>
+	    	<small>Status do Produto: </small>
 	        @if($produto->status)
 	    		<span class="btn btn-success">Produto Ativo</span>
 	    	@else
 	    		<span class="btn btn-danger">Produto Desativado</span>
 	    	@endif
 
+	    	<small>Status da Precificação: </small>
 	    	@if($produtoPreco->status)
 	    		<span class="btn btn-success">Liberado</span>
 	    	@else

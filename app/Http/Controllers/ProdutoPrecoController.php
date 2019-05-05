@@ -179,7 +179,6 @@ class ProdutoPrecoController extends Controller
         //
         if(!(Gate::denies('read_produto_preco'))){
 
-
             $produto = $produtoPreco->produtos()->first();
 
             //LOG ----------------------------------------------------------------------------------------
@@ -512,7 +511,7 @@ class ProdutoPrecoController extends Controller
                     ->orwhere('produtos.sku', 'LIKE', '%'.$buscaInput.'%')
                     ->orwhere('produtos.descricao', 'LIKE', '%'.$buscaInput.'%')                  
                     ->orderBy('produto_precos.id', 'DESC')
-                    ->paginate(40);
+                    ->get();
 
             
 
@@ -521,20 +520,30 @@ class ProdutoPrecoController extends Controller
             //--------------------------------------------------------------------------------------
 
             //Conecta nas lojas remotas
-            /*$produto_precos_remotos = DB::connection('mysql_loja')
-                                        ->table('franquias')
-                                        ->orderBy('id_7p')
+            $produto_precos_remotos = DB::connection('mysql_loja')
+                                        ->table('produto_precos')
+                                        ->select(array(
+                                            'produto_precos.*',
+                                            'produtos.sku',
+                                            'produtos.titulo',
+                                         ))
+                                        ->join('produtos', 'produto_precos.produto_id', '=', 'produtos.id') 
+                                        ->where('produtos.titulo', 'LIKE', '%'.$buscaInput.'%')
+                                        ->orwhere('produtos.palavras_chave', 'LIKE', '%'.$buscaInput.'%')
+                                        ->orwhere('produtos.sku', 'LIKE', '%'.$buscaInput.'%')
+                                        ->orwhere('produtos.descricao', 'LIKE', '%'.$buscaInput.'%')                  
+                                        ->orderBy('id_7p', 'DESC')
                                         ->get();
-            */
+            
 
             return  view('produto_preco.sincronizar', 
-                    array(
+                                                array(
 
-                        'produto_precos' => $produto_precos,
-                        'produto_precos_remotos' => $produto_precos,
-                        'buscar' => null
+                                                    'produto_precos' => $produto_precos,
+                                                    'produto_precos_remotos' => $produto_precos_remotos,
+                                                    'buscar' => null
 
-                    ));
+                                                ));
         }
         else{
             return view('errors.403');
@@ -546,64 +555,68 @@ class ProdutoPrecoController extends Controller
         //
         if(!(Gate::denies('update_produto_preco'))){
 
-            $franquias = Franquia::get();
+            /* --------------------------- Sincroniza os Produtos ------------------------------ */
+            $produtos = Produto::all();
 
-            foreach ($franquias as $franquia) {
-                $franquia_remota = DB::connection('mysql_loja')
-                                        ->table('franquias')
-                                        ->where('id_7p', $franquia->id)
+
+            foreach ($produtos as $produto) {
+                
+                //Conecta nas lojas remotas
+                $produto_remoto = DB::connection('mysql_loja')
+                                        ->table('produto_precos')
+                                        ->where('id_7p', $produto->id)
                                         ->first();
-                if($franquia_remota){
+
+                //Verifica se existe o preço do produto remoto
+                //Se existir ele atualiza
+                if($produto_remoto){
                     $status =       DB::connection('mysql_loja')
-                                        ->table('franquias')
-                                        ->where('id_7p', $franquia->id)
+                                        ->table('produtos')
+                                        ->where('id_7p', $produto->id)
                                         ->update(array(
-                                            'loja_url' => $franquia->loja_url,
-                                            'codigo_franquia' => $franquia->codigo_franquia,
-                                            'nome' => $franquia->nome,
-                                            'slogan' => $franquia->slogan,
-                                            'descricao' => $franquia->descricao,
-                                            'url_site' => $franquia->url_site,
-                                            'url_blog' => $franquia->url_blog,
-                                            'status' => $franquia->status,
-                                            'cnpj' => $franquia->cnpj,
-                                            'telefone' => $franquia->telefone,
-                                            'email' => $franquia->email,
-                                            'endereco' => $franquia->endereco,
-                                            'endereco_numero' => $franquia->endereco_numero,
-                                            'endereco_bairro' => $franquia->endereco_bairro,
-                                            'endereco_cidade' => $franquia->endereco_cidade,
-                                            'endereco_estado' => $franquia->endereco_estado,
-                                            'endereco_cep' => $franquia->endereco_cep,
+                                            'sku' => $produto->sku,
+                                            'titulo' => $produto->titulo,
+                                            'palavras_chave' => $produto->palavras_chave,
+                                            'descricao' => $produto->descricao,
+                                            'status' => $produto->status,
+                                            'altura' => $produto->altura,
+                                            'largura' => $produto->largura,
+                                            'comprimento' => $produto->comprimento,
+                                            'peso' => $produto->peso,
+                                            'link_referencia' => $produto->link_referencia,
+                                            /*--------REMOVER - Foi Modificado Itens de Layout----------*/
+                                            'preco' => "0.0",
+                                            'frete_fixo' => "0.0",
+                                            'is_new' => "0",
+                                            'desconto' => "0",
+
                                         ));
                     if($status){
                        //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
                     }
-
+                //Caso não tenha ele cria
                 }else{
                     $status =    DB::connection('mysql_loja')
-                                        ->table('franquias')
+                                        ->table('produtos')
                                         ->insert(array(
                                             /* -----------SYNC feito por aqui-- */
-                                            'id_7p' => $franquia->id,
+                                            'id_7p' => $produto->id,
                                             /* ------------------------------- */
-                                            'loja_url' => $franquia->loja_url,
-                                            'codigo_franquia' => $franquia->codigo_franquia,
-                                            'nome' => $franquia->nome,
-                                            'slogan' => $franquia->slogan,
-                                            'descricao' => $franquia->descricao,
-                                            'url_site' => $franquia->url_site,
-                                            'url_blog' => $franquia->url_blog,
-                                            'status' => $franquia->status,
-                                            'cnpj' => $franquia->cnpj,
-                                            'telefone' => $franquia->telefone,
-                                            'email' => $franquia->email,
-                                            'endereco' => $franquia->endereco,
-                                            'endereco_numero' => $franquia->endereco_numero,
-                                            'endereco_bairro' => $franquia->endereco_bairro,
-                                            'endereco_cidade' => $franquia->endereco_cidade,
-                                            'endereco_estado' => $franquia->endereco_estado,
-                                            'endereco_cep' => $franquia->endereco_cep,
+                                            'sku' => $produto->sku,
+                                            'titulo' => $produto->titulo,
+                                            'palavras_chave' => $produto->palavras_chave,
+                                            'descricao' => $produto->descricao,
+                                            'status' => $produto->status,
+                                            'altura' => $produto->altura,
+                                            'largura' => $produto->largura,
+                                            'comprimento' => $produto->comprimento,
+                                            'peso' => $produto->peso,
+                                            'link_referencia' => $produto->link_referencia,
+                                            /*--------REMOVER - Foi Modificado Itens de Layout----------*/
+                                            'preco' => "0.0",
+                                            'frete_fixo' => "0.0",
+                                            'is_new' => "0",
+                                            'desconto' => "0",
                                         ));
                     if(!$status){
                        //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
@@ -614,12 +627,76 @@ class ProdutoPrecoController extends Controller
 
 
 
+            /* --------------------------- END Sincroniza os Produtos -------------------------- */
+
+
+            /* ---------------------------- Sincroniza Preço de Produto ----------------------------------- */
+            $produto_precos = ProdutoPreco::where('status', 1)->get();
+
+            foreach ($produto_precos as $produto_preco) {
+                
+                //Conecta nas lojas remotas
+                $produto_preco_remoto = DB::connection('mysql_loja')
+                                        ->table('produto_precos')
+                                        ->where('id_7p', $produto_preco->id)
+                                        ->first();
+
+                //Verifica se existe o preço do produto remoto
+                //Se existir ele atualiza
+                if($produto_preco_remoto){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('produto_precos')
+                                        ->where('id_7p', $produto_preco->id)
+                                        ->update(array(
+                                            'status' => $produto_preco->status,
+                                            'produto_id' => $produto_preco->produto_id,
+                                            'quantidade' => $produto_preco->quantidade,
+                                            'unidade_medida' => $produto_preco->unidade_medida,
+                                            'preco' => $produto_preco->preco,
+                                            'frete_preco' => $produto_preco->frete_preco,
+                                            'frete_tipo' => $produto_preco->frete_tipo,
+                                            'moeda' => $produto_preco->moeda,
+                                            'taxa_plataforma' => $produto_preco->taxa_plataforma,
+                                            'impostos' => $produto_preco->impostos,                                            
+                                        ));
+                    if($status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+                //Caso não tenha ele cria
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('produto_precos')
+                                        ->insert(array(
+                                            /* -----------SYNC feito por aqui-- */
+                                            'id_7p' => $produto_preco->id,
+                                            /* ------------------------------- */
+                                            'status' => $produto_preco->status,
+                                            'produto_id' => $produto_preco->produto_id,
+                                            'quantidade' => $produto_preco->quantidade,
+                                            'unidade_medida' => $produto_preco->unidade_medida,
+                                            'preco' => $produto_preco->preco,
+                                            'frete_preco' => $produto_preco->frete_preco,
+                                            'frete_tipo' => $produto_preco->frete_tipo,
+                                            'moeda' => $produto_preco->moeda,
+                                            'taxa_plataforma' => $produto_preco->taxa_plataforma,
+                                            'impostos' => $produto_preco->impostos, 
+                                        ));
+                    if(!$status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+            /* --------------------------------- END PRECO de Produto ------------------------------- */
+
+
+
 
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("franquiaIntegrada.sync");
+            $this->log("produtoPrecos.sync");
             //--------------------------------------------------------------------------------------
 
-            return redirect('franquiasIntegrada/')->with('success', 'Sincronizado com sucesso!');
+            return redirect('produtoPrecosSincronizar/')->with('success', 'Sincronizado com sucesso!');
             
         }
         else{

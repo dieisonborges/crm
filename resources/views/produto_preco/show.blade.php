@@ -7,12 +7,13 @@
 	        <small>{{$produto->titulo}}</small>|
 	        <small>Precificação nº {{$produtoPreco->id}}</small>
 	    </h1>
+	    	<small>Status do Produto: </small>
 	        @if($produto->status)
 	    		<span class="btn btn-success">Produto Ativo</span>
 	    	@else
 	    		<span class="btn btn-danger">Produto Desativado</span>
 	    	@endif
-
+	    	<small>Status da Precificação: </small>
 	    	@if($produtoPreco->status)
 	    		<span class="btn btn-success">Liberado</span>
 	    	@else
@@ -37,7 +38,7 @@
 			 	@if($produtoPreco->item_orcamento_id)
 			 	<div class="form-group col-md-2">
 				    <label for="titulo">Nº de Item de Orçamento:</label>
-				    <span class="form-control">{{$produtoPreco->item_orcamento->id}}</span>
+				    <span class="form-control">{{$produtoPreco->itemOrcamentos->id}}</span>
 			 	</div>
 			 	@endif
 

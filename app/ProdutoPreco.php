@@ -16,4 +16,12 @@ class ProdutoPreco extends Model
         return $this->belongsTo('App\Fornecedor', 'fornecedor_id', 'id');
     }
 
+    public function orcamentos(){        
+        return $this->belongsTo('App\Orcamento', 'orcamento_id', 'id');
+    }
+
+    public function itemOrcamentos(){        
+        return $this->belongsTo('App\ItemOrcamento', 'item_orcamento_id', 'id');
+    }
+
 }

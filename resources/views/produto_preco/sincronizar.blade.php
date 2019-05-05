@@ -25,13 +25,13 @@
      
         </div>
 
-        <br><br><br>   
+        <br><br><br>    
 
         <hr class="hr col-md-12">
 
-        <a href="{{url('produto_precosIntegrada/sync')}}" class="btn btn-info btn-lg"><i class="fas fa-sync-alt"></i> Sincronizar</a>
+        <a href="{{url('produtoPrecosSincronizarUpdate')}}" class="btn btn-info btn-lg"><i class="fas fa-sync-alt"></i> Sincronizar</a>
 
-        <hr class="hr col-md-12">           
+        <hr class="hr col-md-12">            
         
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding col-md-6">
@@ -50,12 +50,12 @@
                 @forelse ($produto_precos as $produto_preco)
                 <tr>
                     <td>{{$produto_preco->id}}</td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->sku}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->titulo}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->nome_fantasia}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->quantidade }}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->preco }}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->frete_preco }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->sku}}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->titulo}}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->nome_fantasia}}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->quantidade }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->preco }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->frete_preco }}</a></td>
                     <td>
                         @if($produto_preco->status)                                      
                             <span class="btn btn-success btn-xs"> Liberado</span>                        
@@ -88,21 +88,19 @@
                     <th>ID</th>
                     <th>SKU</th>
                     <th>Produto</th>
-                    <th>Forne.</th>
                     <th>Qtd</th>
                     <th>Preço</th>
                     <th>Frete</th>
                     <th>Status</th>                   
                 </tr>
-                @forelse ($produto_precos as $produto_preco)
+                @forelse ($produto_precos_remotos as $produto_preco)
                 <tr>
                     <td>{{$produto_preco->id}}</td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->sku}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->titulo}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->nome_fantasia}}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->quantidade }}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->preco }}</a></td>
-                    <td><a href="{{URL::to('produto_precos')}}/{{$produto_preco->id}}">{{$produto_preco->frete_preco }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->sku}}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->titulo}}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->quantidade }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->preco }}</a></td>
+                    <td><a href="{{URL::to('produtoPrecos')}}/{{$produto_preco->id}}">{{$produto_preco->frete_preco }}</a></td>
                     <td>
                         @if($produto_preco->status)                                      
                             <span class="btn btn-success btn-xs"> Liberado</span>                        
