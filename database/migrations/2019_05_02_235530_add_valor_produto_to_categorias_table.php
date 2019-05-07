@@ -13,11 +13,13 @@ class AddValorProdutoToCategoriasTable extends Migration
      */
     public function up()
     {
+        //Valor da Categoria
         Schema::table('categorias', function (Blueprint $table) {
             //
             $table->integer('valor')->default(0);
         });
 
+        //Produto Categoria
         Schema::create('categoria_produto', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('categoria_id')->unsigned();            

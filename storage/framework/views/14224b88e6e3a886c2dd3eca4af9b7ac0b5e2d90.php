@@ -5,8 +5,7 @@
 			<h1>
 		        Editar Categoria
 		        <small><?php echo e($categoria->nome); ?></small>
-		    </h1>
-			
+		    </h1>			
 
 			<form method="POST" enctype="multipart/form-data" action="<?php echo e(action('CategoriaController@update',$categoria->id)); ?>">
 				<?php echo csrf_field(); ?>
@@ -15,6 +14,11 @@
 				<div class="form-group mb-12">
 				    <label for="nome">Nome</label>
 				    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo e($categoria->nome); ?>" placeholder="Digite o Nome..." required>
+			 	</div>
+
+			 	<div class="form-group mb-12">
+				    <label for="valor">Valor (Dinâmico)</label>
+				    <input type="number" class="form-control" id="valor" name="valor" value="<?php echo e($categoria->valor); ?>" placeholder="Digite o Valor..." required>
 			 	</div>
 			 	
 			 	<div class="form-group mb-12">

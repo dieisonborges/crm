@@ -7,6 +7,7 @@ use App\Sistema;
 use App\User;
 use Illuminate\Http\Request;
 use Gate;
+use DB;
 
 //Log
 use App\Http\Controllers\Log;
@@ -44,13 +45,23 @@ class CategoriaController extends Controller
     {
         //
         if(!(Gate::denies('read_categoria'))){
-            $categorias = Categoria::orderBy('valor','DESC')->paginate(40);     
+            $categorias = Categoria::orderBy('id')->get();     
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("categoria.index");
             //--------------------------------------------------------------------------------------------
 
-            return view('categoria.index', array('categorias' => $categorias, 'buscar' => null));
+            //Conecta nas lojas remotas
+            $categorias_remotas = DB::connection('mysql_loja')
+                                        ->table('categorias')
+                                        ->orderBy('id_7p')
+                                        ->get();
+
+            return view('categoria.index', array(
+                                                'categorias' => $categorias, 
+                                                'categorias_remotas' => $categorias_remotas, 
+                                                'buscar' => null
+                                            ));
         }
         else{
             return view('errors.403');
@@ -62,14 +73,29 @@ class CategoriaController extends Controller
             $buscaInput = $request->input('busca');
             $categorias = Categoria::where('nome', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
-                                ->orderBy('valor','DESC')
-                                ->paginate(40);  
+                                ->orderBy('id')
+                                ->paginate(40);
+
+            //Conecta nas lojas remotas
+            $categorias_remotas = DB::connection('mysql_loja')
+                                        ->table('categorias')
+                                        ->where('nome', 'LIKE', '%'.$buscaInput.'%')
+                                        ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                        ->orderBy('id_7p')
+                                        ->get();
+
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("categoria.busca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
 
-            return view('categoria.index', array('categorias' => $categorias, 'buscar' => $buscaInput ));
+
+
+            return view('categoria.index', array(
+                                                'categorias' => $categorias,
+                                                'categorias_remotas' => $categorias_remotas, 
+                                                'buscar' => $buscaInput
+                                            ));
         }
         else{
             return view('errors.403');
@@ -241,6 +267,67 @@ class CategoriaController extends Controller
             //--------------------------------------------------------------------------------------------
 
             return redirect()->back()->with('success','Categoria excluída com sucesso!');
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+
+    public function sync()
+    {
+        //
+        if(!(Gate::denies('update_categoria'))){
+
+            //Lista todas as categorias
+            $categorias = Categoria::get();
+
+            foreach ($categorias as $categoria) {
+                $categoria_remota = DB::connection('mysql_loja')
+                                        ->table('categorias')
+                                        ->where('id_7p', $categoria->id)
+                                        ->first();
+                if($categoria_remota){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('categorias')
+                                        ->where('id_7p', $categoria->id)
+                                        ->update(array(
+                                            'nome' => $categoria->nome,
+                                            'descricao' => $categoria->descricao,
+                                            'valor' => $categoria->valor,
+                                        ));
+                    if($status){
+                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('categorias')
+                                        ->insert(array(
+                                            /* -----------SYNC feito por aqui-- */
+                                            'id_7p' => $categoria->id,
+                                            /* ------------------------------- */
+                                            'nome' => $categoria->nome,
+                                            'descricao' => $categoria->descricao,
+                                            'valor' => $categoria->valor,
+                                        ));
+                    if(!$status){
+                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("categoria.sync");
+            //--------------------------------------------------------------------------------------
+
+            return redirect('categorias/')->with('success', 'Sincronizado com sucesso!');
+            
         }
         else{
             return view('errors.403');

@@ -65,6 +65,8 @@ Route::post('user/setorUpdate', 'UserController@setorUpdate');
 Route::post('user/setorDestroy', 'UserController@setorDestroy');
 
 //Categorias
+Route::get('categorias/sincronizar', 'CategoriaController@sync');
+
 Route::resource('/categorias', 'CategoriaController');
 Route::post('categorias/busca', 'CategoriaController@busca');
 
