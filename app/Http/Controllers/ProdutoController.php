@@ -301,12 +301,14 @@ class ProdutoController extends Controller
 
             $imagens = $produto->imagens()->get();
 
+            $imagem_principal = Upload::where('id', $produto->upload_id)->first();
+
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("upload.imagem.produto");
             //--------------------------------------------------------------------------------------------
 
-            return view('produto.imagem', compact('produto', 'imagens'));
+            return view('produto.imagem', compact('produto', 'imagem_principal', 'imagens'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -441,6 +443,33 @@ class ProdutoController extends Controller
         else{
             return redirect('erro')->with('permission_error', '403');
         }
+    }
+
+    public function imagemPrincipal($imagem_id, $produto_id)
+    {
+        
+        
+
+        if(!(Gate::denies('update_produto'))){
+
+            $produto = Produto::find($produto_id);
+
+            $produto->upload_id = $imagem_id;
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.imagem.principal.Update.id=".$produto_id."Imagem".$imagem_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if($produto->save()){
+                return redirect('produtos/'.$produto_id.'/imagem')->with('success', 'Imagem atualizada com sucesso!');
+            }else{
+                return redirect('produtos/'.$produto_id.'/imagem')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
     }
 
 

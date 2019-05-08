@@ -80,6 +80,7 @@ class FranqueadoController extends Controller
 
             $franquia = $franquias->where('id', $id)->first();
 
+            //Verifica se tem permissão na franquia
             if($franquia){            
 
             
@@ -104,7 +105,129 @@ class FranqueadoController extends Controller
         }
     }
 
+    /* ------------------------------ Produtos da Franquia --------------------------*/
+    public function produtosFranqueado($id)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
 
+            $user = Auth::user();
+
+            $franquias = $user->franquia()->get(); 
+
+            $franquia = $franquias->where('id', $id)->first();
+
+            //Verifica se tem permissão na franquia
+            if($franquia){
+
+                 $produtos = $franquia->franquiaProdutos()->where('produtos.status', 1)->get();
+
+                 $todos_produtos = Produto::where('status', 1)->get();
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("franqueado.produtosFranqueado=".$franquia);
+            //--------------------------------------------------------------------------------------
+
+
+
+            return view('franqueado.produto_franqueado', compact('franquia', 'produtos', 'todos_produtos'));
+
+            }else{
+            return view('errors.403');
+        }
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtosRemover($id, $id_produto)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            $user = Auth::user();
+
+            $franquias = $user->franquia()->get(); 
+
+            $franquia = $franquias->where('id', $id)->first();
+
+            //Verifica se tem permissão na franquia
+            if($franquia){
+
+                $status = $franquia->franquiaProdutos()->detach($id_produto);
+
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franqueado.produtos.remover=".$franquia);
+                //--------------------------------------------------------------------------------------
+
+                if($status){
+                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto removido com sucesso!');
+                }else{
+                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
+                }
+            }
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtosAdicionar($id, $id_produto)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            $user = Auth::user();
+
+            $franquias = $user->franquia()->get(); 
+
+            $franquia = $franquias->where('id', $id)->first();
+
+            //Verifica se tem permissão na franquia
+            if($franquia){
+
+
+                if($franquia->franquiaProdutos()->where('produto_id', $id_produto)->first()){
+
+                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto já está cadastrado para sua franquia!');
+
+                }else{
+                    $status = $franquia->franquiaProdutos()->attach($id_produto);
+
+
+                    //LOG ----------------------------------------------------------------------------------------
+                    $this->log("franqueado.produtos.remover=".$franquia);
+                    //--------------------------------------------------------------------------------------
+
+                    if(!$status){
+                            return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto adicionado com sucesso!');
+                    }else{
+                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
+                    }
+
+                }
+
+                
+            }
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    //Catálogo de Produtos -------------------------------------------------------------------------------------------------------
     public function produtos()
     {
 
@@ -165,6 +288,10 @@ class FranqueadoController extends Controller
             return view('errors.403');
         }
     }
+
+    // FIM Catálogo de Produtos --------------------------------------------------------------------------------------------------------
+
+
 
 
 

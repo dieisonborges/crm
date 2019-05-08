@@ -96,19 +96,37 @@
 
     -->
 
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa fa-exclamation-triangle"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Parabéns</span>
-              <span class="info-box-number">Sua franquia está em desenvolvimento.</span>
+              <span class="info-box-number">Franquia em desenvolvimento.</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/'.$franquia->id.'/produtosFranqueado')}}">
+              <span class="info-box-icon bg-blue"><i class="fa fa-shopping-bag"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Produtos</span>
+              <span class="info-box-number">Produtos de sua franquia.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+  
 
 
     

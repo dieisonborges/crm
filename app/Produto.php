@@ -14,4 +14,8 @@ class Produto extends Model
     public function categorias(){        
         return $this->belongsToMany('App\Categoria','categoria_produto', 'produto_id', 'categoria_id');
     }
+
+    public function imagemPrincipal(){        
+        return $this->hasMany('App\Upload','id', 'upload_id');
+    }
 }

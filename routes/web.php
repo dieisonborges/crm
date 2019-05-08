@@ -155,6 +155,8 @@ Route::post('produtos/busca', 'ProdutoController@busca');
 Route::get('produtos/{id}/imagem', 'ProdutoController@imagem');
 Route::post('produtos/imagemUpdate', 'ProdutoController@imagemUpdate');
 Route::post('produtos/imagemDestroy/{id}', 'ProdutoController@imagemDestroy');
+Route::get('produtos/imagemPrincipal/{imagem_id}/{produto_id}', 'ProdutoController@imagemPrincipal');
+
 
 Route::get('produtos/{id}/categorias', 'ProdutoController@categoria');
 Route::post('produtos/categoriaUpdate', 'ProdutoController@categoriaUpdate');
@@ -229,7 +231,15 @@ Route::get('franqueados/produtos', 'FranqueadoController@produtos');
 Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
 Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
+
+//--Config Franquias
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
+Route::get('franqueados/{id}/produtosFranqueado', 'FranqueadoController@produtosFranqueado');
+Route::get('franqueados/{id}/produtosRemover/{id_produto}', 'FranqueadoController@produtosRemover');
+Route::get('franqueados/{id}/produtosAdicionar/{id_produto}', 'FranqueadoController@produtosAdicionar');
+
+
+
 
 
 //Produto Preços
