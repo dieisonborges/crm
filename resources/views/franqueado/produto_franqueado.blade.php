@@ -146,6 +146,7 @@
                           
                         </div>
                         <!-- /.box-body -->
+                        <div class="box-body">
 
                         <p>{{ str_limit(strip_tags($produto->descricao), $limit = 30, $end = '...') }}</p>
 
@@ -155,7 +156,7 @@
 
 
                           <a href="{{url('franqueados/produtos/'.$produto->id)}}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Ver</a>
-
+                        </div>
                         <br><br>
                         
                       </div>
