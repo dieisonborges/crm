@@ -129,7 +129,7 @@
                       <div class="box box-widget">
                         <div class="box-header with-border">
                           <div class="text-center">
-                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{$produto->titulo}}</a></span>
+                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 40, $end = '...') }}</a></span>
                             
                           </div>
                           <!-- /.user-block -->
