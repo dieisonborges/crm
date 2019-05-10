@@ -136,8 +136,8 @@
                           
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body" style="min-height: 250px; ">
-                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
+                        <div class="box-body" style="height: 220px;">
+                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}" style="max-height: 210px;">
 
                           <!-- ----------------------------- Carousel ----------------------------------------- -->                      
 
