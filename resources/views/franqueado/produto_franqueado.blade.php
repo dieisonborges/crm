@@ -129,7 +129,7 @@
                       <div class="box box-widget">
                         <div class="box-header with-border">
                           <div class="text-center">
-                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 40, $end = '...') }}</a></span>
+                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 30, $end = '...') }}</a></span>
                             
                           </div>
                           <!-- /.user-block -->
@@ -147,7 +147,7 @@
                         </div>
                         <!-- /.box-body -->
 
-                        <p>{{ str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...') }}</p>
+                        <p>{{ str_limit(strip_tags($produto->descricao), $limit = 30, $end = '...') }}</p>
 
 
                           <a href="{{url('franqueados/'.$franquia->id.'/produtosAdicionar/'.$produto->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Adicionar</a>
