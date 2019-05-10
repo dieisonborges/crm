@@ -148,7 +148,7 @@
                         <!-- /.box-body -->
                         <div class="box-body">
 
-                        <p>{{ str_replace('&nbsp;', '', str_limit(strip_tags($produto->descricao), $limit = 30, $end = '...')) }}</p>
+                        <p>{{ str_limit(strip_tags(str_replace('&nbsp;', '', $produto->descricao)), $limit = 30, $end = '...') }}</p>
 
 
                           <a href="{{url('franqueados/'.$franquia->id.'/produtosAdicionar/'.$produto->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Adicionar</a>
