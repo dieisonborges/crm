@@ -32,7 +32,7 @@
             @endif
            
 
-            <a href="{{URL::to('clients')}}/imagem" class="btn btn-primary col-md-12"><i class="fa fa-image"></i> Alterar Imagem</a>
+            <a href="{{URL::to('clients')}}/imagem" class="btn btn-primary btn-xs"><i class="fa fa-image"></i> Alterar Imagem</a>
 
         </div>
 
@@ -54,7 +54,7 @@
             @endif
 
         </div> 
-  </div> 
+  
 
         <div class="col-md-12">              
               
@@ -95,6 +95,8 @@
         @endif
 
 	</div>
+
+  <div class="col-md-12">
 
 
 
@@ -242,6 +244,5 @@
     @else
 
     @endif
-	
-	
+    </div>	
 @endsection

@@ -30,11 +30,11 @@
 
         <br><br><br> 
 
-        <div class="col-md-12">
+        <div class="box box-success col-md-12">
         
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-                <h3>Produtos Selecionados</h3>
+                <h3 class="text-green">Produtos Selecionados</h3>
                 
                     @forelse ($produtos as $produto)
 
@@ -100,13 +100,12 @@
             <!-- /.box-body -->
         </div>
 
-        <hr class="col-md-12 hr">
 
-        <div class="col-md-12">
+        <div class="box box-warning col-md-12">
 
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
-                <h3>Produtos Disponíveis</h3>
+                <h3 class="text-orange">Produtos Disponíveis</h3>
                 
                 @forelse ($todos_produtos as $produto)
 
@@ -125,12 +124,11 @@
                     @endphp
 
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <!-- Box Comment -->
                       <div class="box box-widget">
                         <div class="box-header with-border">
-                          <div class="user-block">
-                            <img class="img-circle" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
+                          <div class="text-center">
                             <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{$produto->titulo}}</a></span>
                             
                           </div>
@@ -138,19 +136,27 @@
                           
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body" style="min-height: 150px; ">
                           <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
 
                           <!-- ----------------------------- Carousel ----------------------------------------- -->                      
 
                           <!-- ----------------------------- END Carousel ------------------------------------- -->
 
-                          <p>{{ str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...') }}</p>
-                          <a href="{{url('franqueados/'.$franquia->id.'/produtosAdicionar/'.$produto->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Adicionar</a>
-                          <a href="{{url('franqueados/produtos/'.$produto->id)}}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Ver Produto</a>
+                          
                         </div>
                         <!-- /.box-body -->
-                        
+
+                        <p>{{ str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...') }}</p>
+
+
+                          <a href="{{url('franqueados/'.$franquia->id.'/produtosAdicionar/'.$produto->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Adicionar</a>
+
+
+
+                          <a href="{{url('franqueados/produtos/'.$produto->id)}}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Ver</a>
+
+                        <br><br>
                         
                       </div>
                       <!-- /.box -->
