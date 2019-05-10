@@ -2,7 +2,17 @@
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
-    <h1>Tickets</h1>
+    <h1>Tickets <small>{{$setor->name}}</small></h1>
+
+        <a href="{{ url('atendimentos/'.$setor->name.'/tickets/') }}" class="btn btn-info btn-xs"><i class="fa fa-ticket-alt"> </i> Todos</a>
+
+        <a href="{{ url('atendimentos/'.$setor->name.'/tickets/1/status') }}" class="btn btn-info btn-xs"><i class="fa fa-ticket-alt"> </i> Abertos</a>
+
+        <a href="{{ url('atendimentos/'.$setor->name.'/tickets/0/status') }}" class="btn btn-info btn-xs"><i class="fa fa-ticket-alt"> </i> Fechados</a>
+
+        <a href="{{ url('atendimentos/'.$setor->name.'/buscaData') }}" class="btn btn-info btn-xs"><i class="fa fa-ticket-alt"> </i> Período</a>
+
+        <br><br>
 
 
 

@@ -88,37 +88,55 @@
 
            
           @if(session()->get('setors'))
+
+              @php
+
+              $color_p=0;
+
+              @endphp
+
               @foreach((session()->get('setors')) as $sess_setors)
 
               @can('read_'.$sess_setors->name)             
 
                 <li class="header">{{ucfirst($sess_setors->label)}}</li>
 
-                
-                  <li>
-                    <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
-                      <i class="fas fa-tachometer-alt"></i> <span>Dashboard | {{ucfirst($sess_setors->name)}}</span>                      
-                    </a>                    
-                  </li>
+                @php
+
+                //RRGGBB
+
+                $color_p += 1;
+
+                $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
+
+                @endphp
 
                   <li class="treeview">
-                    <a href="#">  
-                      <i class="fas fa-ticket-alt text-red"></i> <span>Tickets | {{ucfirst($sess_setors->name)}}</span>
-                      <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                    </a>
-                    <ul class="treeview-menu">
-                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}"><i class="fas fa-circle-notch"></i> Listar</a></li>
+                      <a href="#">  
+                        <i class="fa fa-tachometer-alt {{$color[$color_p]}}"></i> <span>{{$sess_setors->label}}</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li>
+                          <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
+                            <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
+                          </a>
+                          
+                        </li>
 
-                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/1/status') }}"><i class="fas fa-circle-notch text-yellow"></i> Abertos</a></li>
-                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/0/status') }}"><i class="fas fa-circle-notch"></i> Fechados</a></li>
-                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}"><i class="fas fa-circle-notch"></i> Todos</a></li>
+                        <li>
+                          <a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}">
+                            <i class="fa fa-ticket-alt"></i> Tickets
+                          </a>
+                        </li>                                          
+                        
+                      </ul>
+                </li> 
 
-                      <li><a href="{{ url('atendimentos/'.$sess_setors->name.'/buscaData') }}"><i class="fas fa-circle-notch"></i> Todos por Data</a></li>
-                      
-                    </ul>
-                  </li>
+
+                  
 
 
               @endcan 
