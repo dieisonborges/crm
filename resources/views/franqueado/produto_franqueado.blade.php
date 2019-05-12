@@ -4,7 +4,15 @@
     @section('content')
     <h1>Produtos da Franquia <small>{{$franquia->nome}}</small></h1>
 
-    <a href="https://{{$franquia->loja_url}}" target="_blank" class="btn btn-info btn-lg">{{$franquia->loja_url}}</a>
+    <a href="{{url('franqueados/'.$franquia->id.'/produtosSincronizar')}}" class="btn btn-primary btn-lg">
+      <i class="fa fa-sync-alt"></i> Sincronizar Produtos
+    </a>
+
+    <a href="https://{{$franquia->loja_url}}" target="_blank" class="btn btn-info btn-lg" style="float: right;">
+      <i class="fa fa-link"></i>Abrir: {{$franquia->loja_url}}
+    </a>
+
+    
 
     <br><br>
         @if (session('status'))
@@ -15,8 +23,9 @@
         
         <div class="col-md-12">	
 
-            <form method="POST" enctype="multipart/form-data" action="{{url('franqueados/produtos/busca')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{action('FranqueadoController@produtosFranqueadoBusca',$franquia->id)}}">
                 @csrf
+                <input type="hidden" name="_method" value="POST">
                 <div class="input-group input-group-lg">			
                     <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="">
                         <span class="input-group-btn">
@@ -76,6 +85,8 @@
                           <p>{{ str_limit(strip_tags($produto->descricao), $limit = 40, $end = '...') }}</p>
                           <a href="{{url('franqueados/'.$franquia->id.'/produtosRemover/'.$produto->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Remover</a>
                           <a href="{{url('franqueados/produtos/'.$produto->id)}}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Ver Produto</a>
+                          <a href="{{url('franqueados/'.$franquia->id.'/produtosLucro/'.$produto->id)}}" class="btn btn-default btn-xs"><i class="fa fa-money-bill-alt"></i> Margem de Lucro: {{$produto->lucro}}%</a>
+
                         </div>
                         <!-- /.box-body -->                        
 

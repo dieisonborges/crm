@@ -20,7 +20,7 @@
    
     <div class="col-lg-12 col-xs-12">
       @include('layouts.error')
-    </div>
+    </div>   
 
 
     <!-- Main content -->
@@ -28,81 +28,35 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
 
-        <!--
-
-        <div class="col-lg-4 col-xs-4">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3>0</h3>
-              <p>Vendas</p>
-            </div>
-            <a href="{{url('franqueados/alocar')}}">
-              <div class="icon">                
-                    <i class="fa fa-shopping-cart"></i>                
-              </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="info-box bg-aqua">
+            <a href="https://{{$franquia->loja_url}}" target="_blank">
+              <span class="info-box-icon"><i class="fa fa-store text-white"></i></span>
             </a>
-            <a href="{{url('franqueados/alocar')}}" class="small-box-footer">Visualizar Vendas <i class="fa fa-arrow-circle-right"></i></a>
+            <div class="info-box-content">
+              <span class="info-box-text">Laboratório e-Cardume</span>
+              <span class="info-box-number">{{$franquia->nome}}</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 40%"></div>
+              </div>
+              <span class="progress-description">
+                    Loja 40% Concluída, previsão 01 de Agosto de 2019.
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+            
           </div>
         </div>
-
-
-         <div class="col-lg-4 col-xs-4">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3>0</h3>
-              <p>Produtos em Transporte</p>
-            </div>
-            <a href="{{url('franqueados/tickets/1/status')}}">
-              <div class="icon">                
-                    <i class="fa fa-truck"></i>                
-              </div>
-            </a>
-            <a href="{{url('franqueados/tickets/1/status')}}" class="small-box-footer">Visualizar Produtos em Transporte <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-
-        <div class="col-lg-4 col-xs-4">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3>0</h3>
-
-              <p>Produtos Entregues</p>
-            </div>
-            <a href="{{url('franqueados/tickets/0/status')}}">
-              <div class="icon">
-                <i class="fa fa-house"></i>
-              </div>
-            </a>
-            <a href="{{url('franqueados/tickets/0/status')}}" class="small-box-footer">Visualizar Produtos Entregues <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-xs-4">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3>2</h3>
-
-              <p>Reclamações</p>
-            </div>
-            <a href="{{url('franqueados/tickets/0/status')}}">
-              <div class="icon">
-                <i class="fa fa-ticket"></i>
-              </div>
-            </a>
-            <a href="{{url('franqueados/tickets/0/status')}}" class="small-box-footer">Visualizar Produtos Entregues <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-    -->
-
+        
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-exclamation-triangle"></i></span>
-
+            <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}">
+              <span class="info-box-icon bg-olive"><i class="fa fa-tools"></i></span>
+            </a>
             <div class="info-box-content">
-              <span class="info-box-text">Parabéns</span>
-              <span class="info-box-number">Franquia em desenvolvimento.</span>
+              <span class="info-box-text">Configurações</span>
+              <span class="info-box-number">Dados importantes de sua Franquia.</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -124,6 +78,24 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-exclamation-triangle"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Parabéns</span>
+              <span class="info-box-number">Franquia em desenvolvimento.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        
+
+        
 
 
   

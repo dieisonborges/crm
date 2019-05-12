@@ -28,7 +28,7 @@
 
         <hr class="hr col-md-12">
 
-        <a href="{{url('franquiasIntegrada/sync')}}" class="btn btn-info btn-lg"><i class="fas fa-sync-alt"></i>Sincronizar</a>
+        <a href="{{url('franquiasIntegrada/sync/all')}}" class="btn btn-info btn-lg"><i class="fas fa-sync-alt"></i>Sincronizar</a>
 
         <hr class="hr col-md-12">           
         

@@ -230,4 +230,25 @@ class UploadController extends Controller
             return view('errors.403');
         }
     }
+
+
+    /* ------------------------------ IMAGENS PUBLICAS --------------------------------------- */
+    public function filePublicStorageServe($file) {
+
+        $link = explode('/', $file);
+
+        if($link[1]=='produtos'){
+                if (!Storage::disk('local')->exists($file)){ 
+                    abort('404');
+                } 
+
+                return response()->file(storage_path($file));
+
+        }else{
+            return view('errors.403');
+        }
+       
+    }
+    /* ------------------------------ IMAGENS PUBLICAS --------------------------------------- */
+
 }

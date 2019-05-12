@@ -7,6 +7,7 @@ use App\Produto;
 use App\Orcamento;
 use App\ItemOrcamento;
 use App\Fornecedor;
+use App\Upload;
 use Illuminate\Http\Request;
 use Gate;
 use DB;
@@ -555,6 +556,69 @@ class ProdutoPrecoController extends Controller
         //
         if(!(Gate::denies('update_produto_preco'))){
 
+            
+
+
+            /* --------------------------- Sincroniza Uploads ------------------------------ */
+            $uploads = Upload::all();
+
+
+            foreach ($uploads as $upload) {
+                
+                //Conecta nas lojas remotas
+                $upload_remoto = DB::connection('mysql_loja')
+                                        ->table('uploads')
+                                        ->where('id_7p', $upload->id)
+                                        ->first();
+
+
+                //Verifica se existe o preço do upload remoto
+                //Se existir ele atualiza
+                if($upload_remoto){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('uploads')
+                                        ->where('id_7p', $upload->id)
+                                        ->update(array(
+                                            'titulo' => $upload->titulo,
+                                            'link' => $upload->link,
+                                            'dir' => $upload->dir,
+                                            'ext' => $upload->ext,
+                                            'tipo' => $upload->tipo,
+                                            'nome' => $upload->nome,
+                                            'tam' => $upload->tam
+
+                                        ));
+                    if($status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+                //Caso não tenha ele cria
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('uploads')
+                                        ->insert(array(
+                                            'id' => $upload->id,
+                                            /* -----------SYNC feito por aqui-- */
+                                            'id_7p' => $upload->id,
+                                            /* ------------------------------- */
+                                            'titulo' => $upload->titulo,
+                                            'link' => $upload->link,
+                                            'dir' => $upload->dir,
+                                            'ext' => $upload->ext,
+                                            'tipo' => $upload->tipo,
+                                            'nome' => $upload->nome,
+                                            'tam' => $upload->tam
+                                        ));
+                    if(!$status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+
+
+
+            /* --------------------------- END Sincroniza Uploads -------------------------- */
+
             /* --------------------------- Sincroniza os Produtos ------------------------------ */
             $produtos = Produto::all();
 
@@ -563,9 +627,10 @@ class ProdutoPrecoController extends Controller
                 
                 //Conecta nas lojas remotas
                 $produto_remoto = DB::connection('mysql_loja')
-                                        ->table('produto_precos')
+                                        ->table('produtos')
                                         ->where('id_7p', $produto->id)
                                         ->first();
+
 
                 //Verifica se existe o preço do produto remoto
                 //Se existir ele atualiza
@@ -574,6 +639,7 @@ class ProdutoPrecoController extends Controller
                                         ->table('produtos')
                                         ->where('id_7p', $produto->id)
                                         ->update(array(
+                                            'upload_id' => $produto->upload_id,
                                             'sku' => $produto->sku,
                                             'titulo' => $produto->titulo,
                                             'palavras_chave' => $produto->palavras_chave,
@@ -599,9 +665,11 @@ class ProdutoPrecoController extends Controller
                     $status =    DB::connection('mysql_loja')
                                         ->table('produtos')
                                         ->insert(array(
+                                            'id' => $produto->id,
                                             /* -----------SYNC feito por aqui-- */
                                             'id_7p' => $produto->id,
                                             /* ------------------------------- */
+                                            'upload_id' => $produto->upload_id,
                                             'sku' => $produto->sku,
                                             'titulo' => $produto->titulo,
                                             'palavras_chave' => $produto->palavras_chave,
@@ -629,11 +697,64 @@ class ProdutoPrecoController extends Controller
 
             /* --------------------------- END Sincroniza os Produtos -------------------------- */
 
+            /* --------------------------- Sincroniza Galeria Produtos ------------------------------ */
+            $galeria_produtos = DB::table('galeria_produto')->get();
+                                        
+
+
+            foreach ($galeria_produtos as $galeria_produto) {
+                
+                //Conecta nas lojas remotas
+                $galeria_produto_remoto = DB::connection('mysql_loja')
+                                        ->table('galeria_produto')
+                                        ->where('id_7p', $galeria_produto->id)
+                                        ->first();
+
+
+                //Verifica se existe o preço do galeria_produto remoto
+                //Se existir ele atualiza
+                if($galeria_produto_remoto){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('galeria_produto')
+                                        ->where('id_7p', $galeria_produto->id)
+                                        ->update(array(
+                                            'upload_id' => $galeria_produto->upload_id,
+                                            'produto_id' => $galeria_produto->produto_id
+
+                                        ));
+                    if($status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+                //Caso não tenha ele cria
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('galeria_produto')
+                                        ->insert(array(
+                                            'id' => $galeria_produto->id,
+                                            /* -----------SYNC feito por aqui-- */
+                                            'id_7p' => $galeria_produto->id,
+                                            /* ------------------------------- */
+                                            'upload_id' => $galeria_produto->upload_id,
+                                            'produto_id' => $galeria_produto->produto_id
+                                        ));
+                    if(!$status){
+                       //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+
+
+
+            /* --------------------------- END Sincroniza Galeria Produtos  -------------------------- */
+
 
             /* ---------------------------- Sincroniza Preço de Produto ----------------------------------- */
             $produto_precos = ProdutoPreco::where('status', 1)->get();
 
             foreach ($produto_precos as $produto_preco) {
+
+                //dd($produto_preco);
                 
                 //Conecta nas lojas remotas
                 $produto_preco_remoto = DB::connection('mysql_loja')

@@ -145,12 +145,28 @@ class FranquiaIntegradaController extends Controller
         }
     }
 
-    public function sync()
+    public function sync($id)
     {
         //
-        if(!(Gate::denies('update_franquia'))){
+        if((!(Gate::denies('update_franquia')))or(!(Gate::denies('update_franqueado')))){
 
-            $franquias = Franquia::get();
+            if($id=='all'){
+                $franquias = Franquia::get();
+            }else{
+                //Verifica se o Franqueado pode acessar a franquia
+                $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+                if($franquia){
+                    //Seleciona a franquia
+                    $franquias = Franquia::where('id', $id)->get();
+                }else{
+                    return view('errors.403');
+                }
+            }
+            
 
             foreach ($franquias as $franquia) {
                 $franquia_remota = DB::connection('mysql_loja')
@@ -179,6 +195,7 @@ class FranquiaIntegradaController extends Controller
                                             'endereco_cidade' => $franquia->endereco_cidade,
                                             'endereco_estado' => $franquia->endereco_estado,
                                             'endereco_cep' => $franquia->endereco_cep,
+                                            'lucro' => $franquia->lucro,
                                         ));
                     if($status){
                        //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
@@ -208,6 +225,7 @@ class FranquiaIntegradaController extends Controller
                                             'endereco_cidade' => $franquia->endereco_cidade,
                                             'endereco_estado' => $franquia->endereco_estado,
                                             'endereco_cep' => $franquia->endereco_cep,
+                                            'lucro' => $franquia->lucro,
                                         ));
                     if(!$status){
                        //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
@@ -223,7 +241,7 @@ class FranquiaIntegradaController extends Controller
             $this->log("franquiaIntegrada.sync");
             //--------------------------------------------------------------------------------------
 
-            return redirect('franquiasIntegrada/')->with('success', 'Sincronizado com sucesso!');
+            return redirect()->back()->with('success','Franquia atualizada com sucesso!');
             
         }
         else{

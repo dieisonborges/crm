@@ -181,7 +181,7 @@ Route::post('scores/busca', 'ScoreController@busca');
 
 //Franquia Integrada
 Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
-Route::get('franquiasIntegrada/sync', 'FranquiaIntegradaController@sync');
+Route::get('franquiasIntegrada/sync/{id}', 'FranquiaIntegradaController@sync');
 Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');
 
 //Conquistas
@@ -221,25 +221,36 @@ Route::get('orcamento/fornecedorFinalizar/{token}', 'OrcamentoController@fornece
 Route::resource('uploads', 'UploadController');
 Route::post('uploads/destroy/{id}', 'UploadController@destroy');
 Route::get('uploads/{id}/create/{area}', 'UploadController@create');
+
 //Visualizar arquivos com segurança
 Route::get('/storage/{fileName}', 'UploadController@fileStorageServe')
 ->where(['fileName' => '.*'])->name('storage.gallery.file');
 
+//Imagens Publicas
+Route::get('/storagePublic/{fileName}', 'UploadController@filePublicStorageServe')
+->where(['fileName' => '.*'])->name('storage.gallery.file');
 
-//Franqueados (Área dos Franqueados)
+
+//Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
+//--Config Franquias
+Route::post('franqueados/{id}/configuracoesUpdate', 'FranqueadoController@configuracoesUpdate');
+Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
+Route::get('franqueados/{id}/configuracoes', 'FranqueadoController@configuracoes');
+Route::get('franqueados/{id}/configuracoesEdit', 'FranqueadoController@configuracoesEdit');
+Route::get('franqueados/{id}/produtosFranqueado', 'FranqueadoController@produtosFranqueado');
+Route::get('franqueados/{id}/produtosRemover/{id_produto}', 'FranqueadoController@produtosRemover');
+Route::get('franqueados/{id}/produtosAdicionar/{id_produto}', 'FranqueadoController@produtosAdicionar');
+Route::get('franqueados/{id}/produtosLucro/{id_produto}', 'FranqueadoController@produtosLucro');
+Route::post('franqueados/{id}/produtosLucroUpdate', 'FranqueadoController@produtosLucroUpdate');
+
+Route::post('franqueados/{id}/produtosFranqueadoBusca', 'FranqueadoController@produtosFranqueadoBusca');
+
 Route::get('franqueados/produtos', 'FranqueadoController@produtos');
 Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
 Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
 
-//--Config Franquias
-Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
-Route::get('franqueados/{id}/produtosFranqueado', 'FranqueadoController@produtosFranqueado');
-Route::get('franqueados/{id}/produtosRemover/{id_produto}', 'FranqueadoController@produtosRemover');
-Route::get('franqueados/{id}/produtosAdicionar/{id_produto}', 'FranqueadoController@produtosAdicionar');
-
-
-
+Route::get('franqueados/{id}/produtosSincronizar', 'FranqueadoController@produtosSincronizar');
 
 
 //Produto Preços
@@ -255,3 +266,4 @@ Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');
 
 Route::get('produtoPrecosSincronizar', 'ProdutoPrecoController@sync');
 Route::get('produtoPrecosSincronizarUpdate', 'ProdutoPrecoController@syncUpdate');
+//END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
