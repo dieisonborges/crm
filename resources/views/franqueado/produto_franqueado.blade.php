@@ -68,7 +68,7 @@
                         <div class="box-header with-border">
                           <div class="user-block">
                             <img class="img-circle" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
-                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 40, $end = '...') }}</a></span>
+                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 36, $end = '...') }}</a></span>
                             <span class="description">Adicionado em: {{date('d/m/Y h:i:s', strtotime($produto->created_at))}}</span>
                           </div>
                           <!-- /.user-block -->
