@@ -68,15 +68,15 @@
                         <div class="box-header with-border">
                           <div class="user-block">
                             <img class="img-circle" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
-                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{$produto->titulo}}</a></span>
+                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 40, $end = '...') }}</a></span>
                             <span class="description">Adicionado em: {{date('d/m/Y h:i:s', strtotime($produto->created_at))}}</span>
                           </div>
                           <!-- /.user-block -->
                           
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
-                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}">
+                        <div class="box-body" style="height: 270px;">
+                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}" style="max-height: 190px;">
 
                           <!-- ----------------------------- Carousel ----------------------------------------- -->                      
 
@@ -140,26 +140,26 @@
                       <div class="box box-widget">
                         <div class="box-header with-border">
                           <div class="text-center">
-                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 30, $end = '...') }}</a></span>
+                            <span class="username"><a href="{{url('franqueados/produtos/'.$produto->id)}}">{{ str_limit(strip_tags($produto->titulo), $limit = 22, $end = '...') }}</a></span>
                             
                           </div>
                           <!-- /.user-block -->
                           
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body" style="height: 220px;">
-                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}" style="max-height: 210px;">
+                        <div class="box-body" style="height: 200px; display: block;">
+                          <img class="img-responsive pad" src="{{url($imagem_principal_link)}}" alt="{{$produto->titulo}}" style="max-height: 195px;">
 
-                          <!-- ----------------------------- Carousel ----------------------------------------- -->                      
+                          <!-- -------------- Carousel -------------- -->
 
-                          <!-- ----------------------------- END Carousel ------------------------------------- -->
+                          <!-- -------------- END Carousel ---------- -->
 
                           
                         </div>
                         <!-- /.box-body -->
                         <div class="box-body">
 
-                        <p>{{ str_limit(strip_tags(str_replace('&nbsp;', '', $produto->descricao)), $limit = 30, $end = '...') }}</p>
+                        <p>{{ str_limit(strip_tags(str_replace('&nbsp;', '', $produto->descricao)), $limit = 20, $end = '...') }}</p>
 
 
                           <a href="{{url('franqueados/'.$franquia->id.'/produtosAdicionar/'.$produto->id)}}" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Adicionar</a>
