@@ -52,6 +52,9 @@ class ConviteController extends Controller
     }
 
     public function index(){
+
+        return view('errors.419');
+
         if(!(Gate::denies('read_convite'))){
             $convites = Convite::paginate(40);  
 

@@ -334,8 +334,8 @@ class FranquiaController extends Controller
             //Validação
             $this->validate($request,[
                     'nome' => 'required|min:3',
-                    'slogan' => 'required|min:3',      
-                    'descricao' => 'required|min:10',                    
+                    'slogan' => 'required|min:3',     
+                    'descricao' => 'required|min:10',               
                     'loja_url'  =>  'required|min:3|unique:franquias',
                     //'cnpj' => 'cnpj',
                     'email' => 'email'  

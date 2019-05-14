@@ -12,27 +12,27 @@
 				@csrf			
 				
 			 	<div class="form-group col-md-12">
-				    <label for="nome">Nome:</label>
-				    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" placeholder="Digite o Nome..." required>
+				    <label for="nome">Nome: <i class="text-red fa fa-exclamation-circle"></i> </label>
+				    <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" placeholder="Digite o Nome..." required="required">
 			 	</div>
 			 	<div class="form-group col-md-12">
-				    <label for="slogan">Slogan:</label>
-				    <input type="text" class="form-control" id="slogan" name="slogan" value="{{ old('slogan') }}" placeholder="Slogan ..." required>
+				    <label for="slogan">Slogan:  <i class="text-red fa fa-exclamation-circle"></i> </label>
+				    <input type="text" class="form-control" id="slogan" name="slogan" value="{{ old('slogan') }}" placeholder="Slogan ..." >
 			 	</div>
 			 	<div class="form-group col-md-12">
 				    <label for="url_site">Endereço (URL) do Site:</label>
-				    <input type="text" class="form-control" id="url_site" name="url_site" value="{{ old('url_site') }}" placeholder="http:// ..." required>
+				    <input type="text" class="form-control" id="url_site" name="url_site" value="{{ old('url_site') }}" placeholder="http:// ..." >
 			 	</div>
 			 	<div class="form-group col-md-12">
 				    <label for="url_blog">Endereço (URL) do Blog:</label>
-				    <input type="text" class="form-control" id="url_blog" name="url_blog" value="{{ old('url_blog') }}" placeholder="http:// ..." required>
+				    <input type="text" class="form-control" id="url_blog" name="url_blog" value="{{ old('url_blog') }}" placeholder="http:// ..." >
 			 	</div>
 
 			 	<div class="form-group col-md-12">
-				    <label for="descricao">Descrição:</label>				    
+				    <label for="descricao">Descrição: <i class="text-red fa fa-exclamation-circle"></i> </label>				    
 					<!-- /.box-header -->
 		            <div class="box-body pad">
-		                <textarea class="textarea" placeholder="Detalhes do franquia" required="required" name="descricao" 
+		                <textarea class="textarea" placeholder="Detalhes do franquia" name="descricao" 
 		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('descricao') }}</textarea>
 		            </div>
 			 	</div>
@@ -53,8 +53,8 @@
 			 	</div>
 
 			 	<div class="form-group col-md-12">
-			 	    <label for="email">e-Mail Comercial:</label>
-				    <input type="mail" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="contato@suafranquia.com.br" >
+			 	    <label for="email">e-Mail Comercial: <i class="text-red fa fa-exclamation-circle"></i> </label>
+				    <input type="mail" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="contato@suafranquia.com.br" required="required">
 			 	</div>
 
 			 	<div class="form-group col-md-12">
@@ -102,8 +102,8 @@
 				</div>
 
 		    	<div class="form-group col-md-12">
-		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada:</label>
-		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="{{ old('loja_url') }}" placeholder="http:// ...">
+		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada: <i class="text-red fa fa-exclamation-circle"></i> </label>
+		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="{{ old('loja_url') }}" placeholder="loja1.com" required="required">
 		    	</div>
 		    	<!--
 		    	Não se usa mais OpenCart no projeto
@@ -167,6 +167,11 @@
 			 		<input type="submit" form="formSubmit" class="btn btn-primary" value="Cadastrar">
 			 		<hr>
 
+			 	</div>
+
+
+			 	<div>
+			 		<i class="text-red fa fa-exclamation-circle"></i> <small>Campos Obrigatórios.</small>
 			 	</div>
 			</form>
 	@endsection

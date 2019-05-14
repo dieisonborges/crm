@@ -88,37 +88,55 @@
 
            
           <?php if(session()->get('setors')): ?>
+
+              <?php
+
+              $color_p=0;
+
+              ?>
+
               <?php $__currentLoopData = (session()->get('setors')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sess_setors): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_'.$sess_setors->name)): ?>             
 
                 <li class="header"><?php echo e(ucfirst($sess_setors->label)); ?></li>
 
-                
-                  <li>
-                    <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>">  
-                      <i class="fas fa-tachometer-alt"></i> <span>Dashboard | <?php echo e(ucfirst($sess_setors->name)); ?></span>                      
-                    </a>                    
-                  </li>
+                <?php
+
+                //RRGGBB
+
+                $color_p += 1;
+
+                $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
+
+                ?>
 
                   <li class="treeview">
-                    <a href="#">  
-                      <i class="fas fa-ticket-alt text-red"></i> <span>Tickets | <?php echo e(ucfirst($sess_setors->name)); ?></span>
-                      <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                    </a>
-                    <ul class="treeview-menu">
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fas fa-circle-notch"></i> Listar</a></li>
+                      <a href="#">  
+                        <i class="fa fa-tachometer-alt <?php echo e($color[$color_p]); ?>"></i> <span><?php echo e($sess_setors->label); ?></span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li>
+                          <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>">  
+                            <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
+                          </a>
+                          
+                        </li>
 
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/1/status')); ?>"><i class="fas fa-circle-notch text-yellow"></i> Abertos</a></li>
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/0/status')); ?>"><i class="fas fa-circle-notch"></i> Fechados</a></li>
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>"><i class="fas fa-circle-notch"></i> Todos</a></li>
+                        <li>
+                          <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>">
+                            <i class="fa fa-ticket-alt"></i> Tickets
+                          </a>
+                        </li>                                          
+                        
+                      </ul>
+                </li> 
 
-                      <li><a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/buscaData')); ?>"><i class="fas fa-circle-notch"></i> Todos por Data</a></li>
-                      
-                    </ul>
-                  </li>
+
+                  
 
 
               <?php endif; ?> 

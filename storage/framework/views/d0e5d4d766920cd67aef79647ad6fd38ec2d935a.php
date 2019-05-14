@@ -48,7 +48,7 @@
                     <td>
                         
                         <?php if($franquia->status): ?>
-                            <a href="https://<?php echo e($franquia->loja_url); ?>">
+                            <a href="https://<?php echo e($franquia->loja_url); ?>" target="_blank">
                                 <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
                             </a>
                         <?php else: ?>

@@ -44,6 +44,63 @@
 		 	
 		</form>
 
+        <section class="content">
+
+        <div class="form-group col-md-12">
+            <div class="box-header">
+            <h3 class="box-title">Imagem Principal: </h3>
+                        
+            </div>
+            <!-- /.box-header -->
+            <div class="box box-warning">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th></th>
+                            <th>Imagem Princpal</th>
+                            <th>Link</th>
+                            <th>Titulo</th>
+                            <th>Nome</th>
+                            <th>Tamanho</th>
+                            <th>Tipo</th>
+                            <th>Ver</th>
+                        </tr>
+                        <?php if($imagem_principal): ?>
+                        <tr class="border-yellow text-white">
+                            <td><br><span class="btn btn-warning"><i class="fa fa-star"></i></span></td>
+                            <td>
+                                <img src="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" width="150px">
+                            </td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->link); ?></a> </td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->titulo); ?></a></td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->nome); ?></a></td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e(number_format(($imagem_principal->tam/1000), 2, ',', '')); ?> kbytes</a></td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->tipo); ?></a></td>
+                            <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</a></td>                        
+                        </tr>                
+                        <?php else: ?>
+
+                        <tr>
+                            <td>
+                                <span class="btn btn-primary">
+                                    <i class="fa fa-image"></i>
+                                     Nenhuma imagem PRINCIPAL para este produto.
+                                </span>
+                            </td>
+                            
+                        </tr>
+                            
+                        <?php endif; ?>            
+                        
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        
+        </div>
+
+    </section>
+
 
 		<section class="content">
 
@@ -56,11 +113,13 @@
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                     <tr>
-                    	<th></th>
+                    	<th>Imagem</th>
+                        <th>Link</th>
                         <th>Titulo</th>
                         <th>Nome</th>
                         <th>Tamanho</th>
                         <th>Tipo</th>
+                        <th>Principal</th>
                         <th>Ver</th>
                         <th>Excluir</th>
                     </tr>
@@ -74,6 +133,9 @@
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->nome); ?></a></td>
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e(number_format(($imagem->tam/1000), 2, ',', '')); ?> kbytes</a></td>
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->tipo); ?></a></td>
+
+                        <td><a href="<?php echo e(url('produtos/imagemPrincipal/'.$imagem->id.'/'.$produto->id)); ?>" class="btn btn-primary"><i class="fa fa-star"></i></a></td> 
+
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</a></td>                       
 
                         <td>
@@ -83,7 +145,7 @@
 
                                 <input type="hidden" name="produto_id" value="<?php echo e($produto->id); ?>">                                
 
-                                <a href="javascript:confirmDelete<?php echo e($imagem->id); ?>();" class="btn btn-danger"> <i class="fa fa-close"></i></a>
+                                <a href="javascript:confirmDelete<?php echo e($imagem->id); ?>();" class="btn btn-danger"> <i class="fa fa-times"></i></a>
                             </form> 
 
                             <script>
