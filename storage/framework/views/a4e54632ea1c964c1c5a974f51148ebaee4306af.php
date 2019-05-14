@@ -73,6 +73,14 @@
                           <i class="fas fa-user text-aqua"></i> Usuários
                         </a>
                       </li>
+                      <?php endif; ?>
+
+                      <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>
+                      <li>
+                        <a href="<?php echo e(url('franqueadoVip/')); ?>">
+                            <i class="fas fa-store text-aqua"></i> Franqueados VIP
+                        </a> 
+                      </li>
                       <?php endif; ?>                      
 
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_fornecedor')): ?>          

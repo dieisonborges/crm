@@ -126,6 +126,13 @@ class RolesTableSeeder extends Seeder
             'label'=>'Gerência de Preços de Produtos',
         ]);
 
+        //Sincronizar Lojas    
+        Role::create([
+            'id'=>'17',
+            'name'=>'sincronizar',
+            'label'=>'Sincronizar Lojas',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*

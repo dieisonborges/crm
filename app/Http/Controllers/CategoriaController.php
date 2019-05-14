@@ -271,68 +271,7 @@ class CategoriaController extends Controller
         else{
             return view('errors.403');
         }
-    }
-
-
-
-    public function sync()
-    {
-        //
-        if(!(Gate::denies('update_categoria'))){
-
-            //Lista todas as categorias
-            $categorias = Categoria::get();
-
-            foreach ($categorias as $categoria) {
-                $categoria_remota = DB::connection('mysql_loja')
-                                        ->table('categorias')
-                                        ->where('id_7p', $categoria->id)
-                                        ->first();
-                if($categoria_remota){
-                    $status =       DB::connection('mysql_loja')
-                                        ->table('categorias')
-                                        ->where('id_7p', $categoria->id)
-                                        ->update(array(
-                                            'nome' => $categoria->nome,
-                                            'descricao' => $categoria->descricao,
-                                            'valor' => $categoria->valor,
-                                        ));
-                    if($status){
-                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
-                    }
-
-                }else{
-                    $status =    DB::connection('mysql_loja')
-                                        ->table('categorias')
-                                        ->insert(array(
-                                            /* -----------SYNC feito por aqui-- */
-                                            'id_7p' => $categoria->id,
-                                            /* ------------------------------- */
-                                            'nome' => $categoria->nome,
-                                            'descricao' => $categoria->descricao,
-                                            'valor' => $categoria->valor,
-                                        ));
-                    if(!$status){
-                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
-                    }
-
-                }
-            }
-
-
-
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("categoria.sync");
-            //--------------------------------------------------------------------------------------
-
-            return redirect('categorias/')->with('success', 'Sincronizado com sucesso!');
-            
-        }
-        else{
-            return view('errors.403');
-        }
-    }
+    }    
 
 
     

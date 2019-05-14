@@ -7,7 +7,7 @@
 	        <small>{{ $franquia->nome }}</small>
 	    </h1>
 
-	    <a class="btn btn-primary" href="{{url('franquiasIntegrada/sync/'.$franquia->id)}}">
+	    <a class="btn btn-primary" href="{{url('franquiasSincronizarUpdate/'.$franquia->id)}}">
               <i class="fa fa-sync-alt"></i> Atualizar e Sincronizar Configurações
         </a>
 

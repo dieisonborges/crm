@@ -73,6 +73,14 @@
                           <i class="fas fa-user text-aqua"></i> Usuários
                         </a>
                       </li>
+                      @endcan
+
+                      @can('read_franquia')
+                      <li>
+                        <a href="{{ url('franqueadoVip/') }}">
+                            <i class="fas fa-store text-aqua"></i> Franqueados VIP
+                        </a> 
+                      </li>
                       @endcan                      
 
                       @can('read_fornecedor')          

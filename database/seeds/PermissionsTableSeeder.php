@@ -591,6 +591,33 @@ class PermissionsTableSeeder extends Seeder
         ]);     
         // ------------------------------------------------------------
 
+        //Área - Sincronizar Lojas
+        //Create        
+        Permission::create([
+            'id'=>'85',
+            'name'=>'create_sincronizar',
+            'label'=>'Create - Sincronizar Lojas',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'86',
+            'name'=>'read_sincronizar',
+            'label'=>'Read - Sincronizar Lojas',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'87',
+            'name'=>'update_sincronizar',
+            'label'=>'Update - Sincronizar Lojas',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'88',
+            'name'=>'delete_sincronizar',
+            'label'=>'Delete - Sincronizar Lojas',
+        ]); 
+        
+
         //Área - 
         //Create
         /*

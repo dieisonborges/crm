@@ -64,8 +64,7 @@ Route::get('user/{id}/setors', 'UserController@setors');
 Route::post('user/setorUpdate', 'UserController@setorUpdate');
 Route::post('user/setorDestroy', 'UserController@setorDestroy');
 
-//Categorias
-Route::get('categorias/sincronizar', 'CategoriaController@sync');
+
 
 Route::resource('/categorias', 'CategoriaController');
 Route::post('categorias/busca', 'CategoriaController@busca');
@@ -179,11 +178,6 @@ Route::resource('scores', 'ScoreController');
 Route::post('scores/busca', 'ScoreController@busca');
 
 
-//Franquia Integrada
-Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
-Route::get('franquiasIntegrada/sync/{id}', 'FranquiaIntegradaController@sync');
-Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');
-
 //Conquistas
 Route::resource('conquistas', 'ConquistaController');
 Route::post('conquistas/busca', 'ConquistaController@busca');
@@ -250,7 +244,7 @@ Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
 Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
 
-Route::get('franqueados/{id}/produtosSincronizar', 'FranqueadoController@produtosSincronizar');
+
 
 
 //Produto Preços
@@ -264,6 +258,44 @@ Route::post('produtoPrecos/orcamentoCreate', 'ProdutoPrecoController@orcamentoCr
 Route::resource('produtoPrecos', 'ProdutoPrecoController');
 Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');
 
-Route::get('produtoPrecosSincronizar', 'ProdutoPrecoController@sync');
-Route::get('produtoPrecosSincronizarUpdate', 'ProdutoPrecoController@syncUpdate');
+
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
+
+
+/* -------------- ***** SINCRONIZAR LOJAS ***** ----------------------------- */
+
+//Categorias
+Route::get('sincronizarTudo', 'SincronizarController@all');
+
+//Categorias
+Route::get('categoriasSincronizarUpdate', 'SincronizarController@categoriasUpdate');
+
+//Preço de Produto
+//Route::get('produtoPrecosSincronizar', 'ProdutoPrecoController@sync');
+//Route::get('produtoPrecosSincronizarUpdate', 'ProdutoPrecoController@syncUpdate');
+
+//Uploads
+Route::get('uploadsSincronizar', 'SincronizarController@uploads');
+Route::get('uploadsSincronizarUpdate', 'SincronizarController@uploadsUpdate');
+
+//Produtos
+Route::get('produtosSincronizar', 'SincronizarController@produtos');
+Route::get('produtosSincronizarUpdate', 'SincronizarController@produtosUpdate');
+
+//Preço de Produto
+Route::get('produtoPrecosSincronizar', 'SincronizarController@produtoPrecos');
+Route::get('produtoPrecosSincronizarUpdate', 'SincronizarController@produtoPrecosUpdate');
+
+//Produto do Franqueado
+Route::get('produtosFranqueadoUpdate/{id}', 'SincronizarController@produtosFranqueadoUpdate');
+
+//Franquias
+Route::get('franquiasSincronizar', 'SincronizarController@franquias');
+Route::get('franquiasSincronizarUpdate/{id}', 'SincronizarController@franquiasUpdate');
+
+
+
+//Franquia Integrada
+//Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
+//Route::get('franquiasIntegrada/sync/{id}', 'FranquiaIntegradaController@sync');
+//Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');

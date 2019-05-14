@@ -6,7 +6,61 @@
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-                    
+                  
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_sincronizar')): ?>
+          <li class="header">Sincronização</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-sync"></i> <span>Sincronizar Lojas</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <!--
+                <li>
+                  <a href="<?php echo e(url('produtoPrecos')); ?>">
+                    <i class="fas fa-circle-notch"></i> Tudo
+                  </a>
+                </li>
+                -->
+                <li>
+                  <a href="<?php echo e(url('uploadsSincronizar')); ?>">
+                    <i class="fas fa-circle-notch"></i> Uploads
+                  </a>
+                </li>              
+                <li>
+                  <a href="<?php echo e(url('produtosSincronizar')); ?>">
+                    <i class="fas fa-circle-notch"></i> Produtos
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo e(url('categorias')); ?>">
+                    <i class="fas fa-circle-notch"></i> Categorias
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo e(url('produtoPrecosSincronizar')); ?>">
+                    <i class="fas fa-circle-notch"></i> Preços de Produtos
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo e(url('franquiasSincronizar')); ?>">
+                    <i class="fas fa-circle-notch"></i> Franquias
+                  </a>
+                </li>
+
+                <li>
+                  <a href="<?php echo e(url('sincronizarTudo')); ?>">
+                    <i class="fas fa-sync text-red"></i> Sincronizar Tudo
+                  </a>
+                </li>
+
+                                
+            </ul>
+          </li> 
+          <?php endif; ?>   
 
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_convite')): ?>
           <li>
@@ -18,66 +72,54 @@
   
  
 
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto')): ?>     
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([
+              'read_produto', 
+              'read_orcamento',
+              'read_produto_preco',
+              ])): ?>     
 
           <li class="header">Produtos e Estoque</li> 
 
-          <li>
-            <a href="<?php echo e(url('produtos')); ?>">  
-              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
-              
-            </a>
-            
-          </li>
-          <?php endif; ?>
-
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_orcamento')): ?>     
-
-          <li class="header">Orçamentos</li> 
-
-          <li>
-            <a href="<?php echo e(url('orcamento')); ?>">  
-              <i class="fa fa-list-ol"></i> <span>Orçamentos</span>
-              
-            </a>
-            
-          </li>
-          <?php endif; ?> 
-
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto_preco')): ?> 
-
-          <li class="header">Precificação de Produtos</li> 
-
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>
+              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>              
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                  <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="<?php echo e(url('produtoPrecos')); ?>"><i class="fas fa-circle-notch"></i> Preços de Produtos</a></li>
-                <li><a href="<?php echo e(url('produtoPrecosSincronizar')); ?>"><i class="fas fa-circle-notch"></i> Sincronizar Lojas</a></li>
-            </ul>
-          </li> 
-          <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto')): ?>
+                <li>
+                  <a href="<?php echo e(url('produtos')); ?>">  
+                    <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
+                  </a>
+                </li>
+              <?php endif; ?>
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_orcamento')): ?>
+              <li>
+                <a href="<?php echo e(url('orcamento')); ?>">  
+                  <i class="fa fa-list-ol"></i> <span>Orçamentos</span>              
+                </a>            
+              </li>
+              <?php endif; ?>
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto_preco')): ?> 
+              <li>
+                <a href="<?php echo e(url('produtoPrecos')); ?>">  
+                  <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>              
+                </a>           
+              </li> 
+              <?php endif; ?> 
+            </ul>            
+          </li>
+          <?php endif; ?>         
 
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>   
+          
 
-          <li class="header">Franquia</li> 
-
-          <li class="treeview">
-            <a href="#">  
-              <i class="fas fa-store"></i> <span>Franquia</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="<?php echo e(url('franquiasIntegrada/')); ?>"><i class="fas fa-circle-notch"></i> Franquia Integrada</a></li>
-                <li><a href="<?php echo e(url('franquias/')); ?>"><i class="fas fa-circle-notch"></i> Franquias</a></li>
-                <li><a href="<?php echo e(url('franqueadoVip/')); ?>"><i class="fas fa-circle-notch"></i> Franquias VIP</a></li>
-            </ul>
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>
+          <li>
+            <a href="<?php echo e(url('franquias/')); ?>">  
+              <i class="fas fa-store"></i> <span>Franquias</span>              
+            </a>            
           </li>         
 
           <?php endif; ?> 

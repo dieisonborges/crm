@@ -4,7 +4,7 @@
     @section('content')
     <h1>Produtos da Franquia <small>{{$franquia->nome}}</small></h1>
 
-    <a href="{{url('franqueados/'.$franquia->id.'/produtosSincronizar')}}" class="btn btn-primary btn-lg">
+    <a href="{{url('produtosFranqueadoUpdate/'.$franquia->id)}}" class="btn btn-primary btn-lg">
       <i class="fa fa-sync-alt"></i> Sincronizar Produtos
     </a>
 

@@ -5,7 +5,7 @@
     <h1>Categorias <a href="<?php echo e(url('categorias/create')); ?>" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
 
 
-    <a href="<?php echo e(url('categorias/sincronizar')); ?>" class="btn btn-info btn-lg"><i class="fa fa-sync"> </i> Sincronizar</a> 
+    <a href="<?php echo e(url('categoriasSincronizarUpdate')); ?>" class="btn btn-info btn-lg"><i class="fa fa-sync"> </i> Sincronizar</a> 
 
         <br><br><br>
 

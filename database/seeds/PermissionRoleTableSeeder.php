@@ -14,7 +14,7 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         
-        $total_geral = 84;
+        $total_geral = 88;
 
         //Administrador (Todas as Permissões)
         $total_permissions = $total_geral;
@@ -125,6 +125,13 @@ class PermissionRoleTableSeeder extends Seeder
         $total_permissions = 84;
         for ($i = 81; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('16');
+    
+        }
+
+        //
+        $total_permissions = 88;
+        for ($i = 85; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('17');
     
         }
 

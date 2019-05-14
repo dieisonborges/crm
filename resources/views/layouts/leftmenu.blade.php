@@ -6,7 +6,61 @@
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-                    
+                  
+          @can('read_sincronizar')
+          <li class="header">Sincronização</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-sync"></i> <span>Sincronizar Lojas</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <!--
+                <li>
+                  <a href="{{ url('produtoPrecos') }}">
+                    <i class="fas fa-circle-notch"></i> Tudo
+                  </a>
+                </li>
+                -->
+                <li>
+                  <a href="{{ url('uploadsSincronizar') }}">
+                    <i class="fas fa-circle-notch"></i> Uploads
+                  </a>
+                </li>              
+                <li>
+                  <a href="{{ url('produtosSincronizar') }}">
+                    <i class="fas fa-circle-notch"></i> Produtos
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ url('categorias') }}">
+                    <i class="fas fa-circle-notch"></i> Categorias
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ url('produtoPrecosSincronizar') }}">
+                    <i class="fas fa-circle-notch"></i> Preços de Produtos
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ url('franquiasSincronizar') }}">
+                    <i class="fas fa-circle-notch"></i> Franquias
+                  </a>
+                </li>
+
+                <li>
+                  <a href="{{ url('sincronizarTudo') }}">
+                    <i class="fas fa-sync text-red"></i> Sincronizar Tudo
+                  </a>
+                </li>
+
+                                
+            </ul>
+          </li> 
+          @endcan   
 
           @can('read_convite')
           <li>
@@ -18,66 +72,54 @@
   
  
 
-          @can('read_produto')     
+          @canany([
+              'read_produto', 
+              'read_orcamento',
+              'read_produto_preco',
+              ])     
 
           <li class="header">Produtos e Estoque</li> 
 
-          <li>
-            <a href="{{ url('produtos') }}">  
-              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
-              
-            </a>
-            
-          </li>
-          @endcan
-
-          @can('read_orcamento')     
-
-          <li class="header">Orçamentos</li> 
-
-          <li>
-            <a href="{{ url('orcamento') }}">  
-              <i class="fa fa-list-ol"></i> <span>Orçamentos</span>
-              
-            </a>
-            
-          </li>
-          @endcan 
-
-          @can('read_produto_preco') 
-
-          <li class="header">Precificação de Produtos</li> 
-
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>
+              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>              
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                  <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ url('produtoPrecos') }}"><i class="fas fa-circle-notch"></i> Preços de Produtos</a></li>
-                <li><a href="{{ url('produtoPrecosSincronizar') }}"><i class="fas fa-circle-notch"></i> Sincronizar Lojas</a></li>
-            </ul>
-          </li> 
-          @endcan 
+              @can('read_produto')
+                <li>
+                  <a href="{{ url('produtos') }}">  
+                    <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
+                  </a>
+                </li>
+              @endcan
+              @can('read_orcamento')
+              <li>
+                <a href="{{ url('orcamento') }}">  
+                  <i class="fa fa-list-ol"></i> <span>Orçamentos</span>              
+                </a>            
+              </li>
+              @endcan
+              @can('read_produto_preco') 
+              <li>
+                <a href="{{ url('produtoPrecos') }}">  
+                  <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>              
+                </a>           
+              </li> 
+              @endcan 
+            </ul>            
+          </li>
+          @endcanany         
 
-          @can('read_franquia')   
+          
 
-          <li class="header">Franquia</li> 
-
-          <li class="treeview">
-            <a href="#">  
-              <i class="fas fa-store"></i> <span>Franquia</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="{{ url('franquiasIntegrada/') }}"><i class="fas fa-circle-notch"></i> Franquia Integrada</a></li>
-                <li><a href="{{ url('franquias/') }}"><i class="fas fa-circle-notch"></i> Franquias</a></li>
-                <li><a href="{{ url('franqueadoVip/') }}"><i class="fas fa-circle-notch"></i> Franquias VIP</a></li>
-            </ul>
+          @can('read_franquia')
+          <li>
+            <a href="{{ url('franquias/') }}">  
+              <i class="fas fa-store"></i> <span>Franquias</span>              
+            </a>            
           </li>         
 
           @endcan 
