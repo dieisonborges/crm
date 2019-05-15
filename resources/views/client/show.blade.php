@@ -121,8 +121,8 @@
                         <a href="#">{{$ticket->users->apelido}}</a> 
 
                         <!-- Setores de Trabalho -->
-                        @foreach(($ticket->users->setors) as $setor)
-                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                        @foreach(($ticket->users->setors) as $setor_t)
+                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor_t->label}}</span>
                         @endforeach
                         <!-- END Setores de Trabalho -->
 
@@ -195,8 +195,8 @@
 
                         <a href="#">{{$prontuario->users->apelido}}</a>
 
-                        @foreach($prontuario->users->setors as $setor)
-                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                        @foreach($prontuario->users->setors as $setor_t)
+                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor_t->label}}</span>
                         @endforeach  
 
                         <!-- VIP -->

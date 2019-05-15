@@ -19,6 +19,7 @@ use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 use App\Upload;
 use DB;
+use Mail;
 
 class AtendimentoController extends Controller
 {
@@ -123,6 +124,51 @@ class AtendimentoController extends Controller
         return $week;
     }
 
+    private function mailTicket($id, $msg){
+
+        if(Auth::check()){
+
+            $ticket = Ticket::find($id);
+
+            $user_ticket = $ticket->users()->first();
+            $user_email = $user_ticket->email;
+
+
+                $msg_comp =     "<br> Nº do atendimento (ticket):".
+                                $ticket->protocolo."<br>".
+                                $ticket->titulo."<br>".
+                                $ticket->descricao.
+                                "<br>Para mais informações acesse <a href='https://ecardume.com'>ecardume.com</a> e acesse o CRM 7p e-cardume.<br><br><br>";
+
+
+                $mailData = array(
+                    'nome' => "CRM 7p e-Cardume | Atendimento",
+                    'email' => "nao-responder@ecardume.com.br",
+                    'assunto' => "Atendimento nº: ". $ticket->protocolo." |  ".$msg,
+                    'msg' => "<h1>".$msg."</h1><br>".$msg_comp,
+                );
+
+                
+                //Destinatario
+                $mailFrom = array(
+                            'email'     => $user_ticket->email,
+                            'name'      => $user_ticket->apelido,
+                            'subject'   => 'CRM 7p e-Cardume | Atendimento nº: '.$ticket->protocolo
+                          );
+
+
+                Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
+                    $m->from('atendimento@ecardume.com.br','CRM 7p e-Cardume | Relacionamento');
+                    $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+                });
+
+                return true;
+        }else{
+            return false;
+        }
+
+    }
+
     private function storeAcaoAuto($setor, $descricao, $ticket_id, $tipo_acao, $tipo_acao_cor)
     {
 
@@ -145,7 +191,13 @@ class AtendimentoController extends Controller
         $this->log("tecnico.storeAcao:".$ticket_id);
         //--------------------------------------------------------------------------------------------
 
+        
+
         if(!$status){
+
+            //Email de Aviso
+            $this->mailTicket($ticket_id, 'Houve alterações no seu atendimento.');
+
             return true;
         }else{
             return false;
@@ -532,6 +584,9 @@ class AtendimentoController extends Controller
                 $this->storeAcaoAuto($setor, $descricao_acao, $id, $tipo_acao, $tipo_acao_cor);
                 /* -----------End Salva mudanças na acao----------- */
 
+                //Email de Aviso
+                $this->mailTicket($ticket->id, 'Houve alterações no seu atendimento.');
+
 
                 return redirect('atendimentos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
             }else{
@@ -733,6 +788,10 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if(!$status){
+
+                //Email de Aviso
+                $this->mailTicket($ticket_id, 'Houve alterações no seu atendimento.');
+
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
             }else{
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
@@ -760,7 +819,7 @@ class AtendimentoController extends Controller
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("atendimento.encerrar:".$id);
-            //--------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------            
 
             return view('atendimento.encerrar', compact('ticket', 'setor'));
         }
@@ -823,6 +882,10 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
+
+                //Email de Aviso
+                $this->mailTicket($ticket_id, 'Seu ticket de atendimento foi encerrado!');
+
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
             }else{
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
@@ -913,6 +976,10 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
+
+                //Email de Aviso
+                $this->mailTicket($ticket_id, 'Seu ticket de atendimento foi reaberto!');
+
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Reaberto com sucesso!');
             }else{
                 return redirect('atendimentos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
