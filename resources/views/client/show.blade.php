@@ -187,7 +187,7 @@
 
 
                     <h3 class="timeline-header">
-                        @if($ticket_user_image)
+                        @if($prontuario_user_image)
                             <img src="{{url('storage/'.$prontuario_user_image->dir.'/'.$prontuario_user_image->link)}}" class="img-circle" alt="User Image" width="30px" height="30px"> 
                         @else
                             <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px" height="30px"> 
