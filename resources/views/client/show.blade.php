@@ -110,9 +110,35 @@
               <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock"></i> {{date('H:i:s', strtotime($ticket->created_at))}}</span>
 
-                <h3 class="user-header timeline-header">                    
-                        <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px"> 
+                <h3 class="user-header timeline-header">
+
+                        @if($ticket_user_image)
+                            <img src="{{url('storage/'.$ticket_user_image->dir.'/'.$ticket_user_image->link)}}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @else
+                            <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @endif
+
                         <a href="#">{{$ticket->users->apelido}}</a> 
+
+                        <!-- Setores de Trabalho -->
+                        @foreach(($ticket->users->setors) as $setor)
+                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                        @endforeach
+                        <!-- END Setores de Trabalho -->
+
+                        <!-- VIP -->
+                        @php
+                        $lider = $ticket->users->franqueadoVip->first();
+                        @endphp
+
+                        @if($lider)
+                            <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="90px" alt="e-Cardume VIP">
+                            @if($lider->lider)
+                                <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="90px" alt="e-Cardume Líder VIP">
+                            @endif
+                        @endif
+                        <!-- END VIP -->
+
                         <br><br>
                         {{$ticket->titulo}}                    
                 </h3>
@@ -142,7 +168,52 @@
                   <div class="timeline-item">
                     <span class="time"><i class="fa fa-clock"></i> {{date('H:i:s', strtotime($prontuario->created_at))}}</span>
 
-                    <h3 class="timeline-header"><a href="#">{{$prontuario->users->name}}</a></h3>
+                    @php
+                    //Socorro
+                    //Resolver esse código
+                    //Está horrível
+
+                    $prontuario_user = $prontuario->users()->first();
+
+                    $prontuario_user_image = DB::table('imagem_user')
+                                            ->select('uploads.*')
+                                            ->join('uploads', 'uploads.id', 'imagem_user.upload_id')
+                                            ->where('imagem_user.user_id', $prontuario_user->id)
+                                            ->orderBy('uploads.id', 'DESC')
+                                            ->first();
+
+                    @endphp
+
+
+
+                    <h3 class="timeline-header">
+                        @if($ticket_user_image)
+                            <img src="{{url('storage/'.$prontuario_user_image->dir.'/'.$prontuario_user_image->link)}}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @else
+                            <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @endif
+
+                        <a href="#">{{$prontuario->users->apelido}}</a>
+
+                        @foreach($prontuario->users->setors as $setor)
+                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                        @endforeach  
+
+                        <!-- VIP -->
+                        @php
+                        $lider = $prontuario->users->franqueadoVip->first();
+                        @endphp
+
+                        @if($lider)
+                            <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="90px" alt="e-Cardume VIP">
+                            @if($lider->lider)
+                                <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="90px" alt="e-Cardume Líder VIP">
+                            @endif
+                        @endif
+                        <!-- END VIP -->
+
+
+                    </h3>
 
                     <div class="timeline-body">
                      {!!html_entity_decode($prontuario->descricao)!!}
@@ -211,6 +282,56 @@
     @else
         
     @endif
+
+    <section class="content">
+
+        <div class="form-group col-md-12">
+            <div class="box-header">
+            <h3 class="box-title">Arquivos: </h3>
+
+            <a href="{{URL::to('uploads')}}/{{$ticket->id}}/create/ticket"  class="btn btn-info btn-md" style="float: right;"><i class="fa fa-plus-circle"></i> Novo Arquivo</a>
+            
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Nome</th>
+                        <th>Tamanho</th>
+                        <th>Tipo</th>
+                        <th>Ver</th>
+                    </tr>
+                    @forelse ($uploads as $upload)
+                    <tr>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank">{{ $upload->link }}</a> </td>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank">{{ $upload->titulo }}</a></td>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank">{{ $upload->nome }}</a></td>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank">{{ number_format(($upload->tam/1000), 2, ',', '') }} kbytes</a></td>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank">{{ $upload->tipo }}</a></td>
+                        <td><a href="{{ url('storage/'.$upload->dir.'/'.$upload->link) }}" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</a></td>                        
+                    </tr>                
+                    @empty
+
+                    <tr>
+                        <td>
+                            <span class="btn btn-primary">
+                                <i class="fa fa-archive"></i>
+                                 Nenhum arquivo relacionado.
+                            </span>
+                        </td>
+                        
+                    </tr>
+                        
+                    @endforelse            
+                    
+                </table>
+            </div>
+            <!-- /.box-body -->
+        
+        </div>
+
+    </section>
 
     
 

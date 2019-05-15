@@ -122,9 +122,38 @@
                 <span class="time"><i class="fas fa-clock"></i> {{date('H:i:s', strtotime($ticket->created_at))}}</span>
 
 
-                <h3 class="user-header timeline-header">                    
-                        <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px"> 
+                <h3 class="user-header timeline-header">  
+                                
+                        @if($ticket_user_image)
+                            <img src="{{url('storage/'.$ticket_user_image->dir.'/'.$ticket_user_image->link)}}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @else
+                            <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @endif
                         <a href="#">{{$ticket->users->apelido}}</a> 
+
+                        
+
+                        <!-- Setores de Trabalho -->
+                        @foreach(($ticket->users->setors) as $setor)
+                            <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                        @endforeach
+                        <!-- END Setores de Trabalho -->
+
+                        <!-- VIP -->
+                        @php
+                        $lider = $ticket->users->franqueadoVip->first();
+                        @endphp
+
+                        @if($lider)
+                            <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="90px" alt="e-Cardume VIP">
+                            @if($lider->lider)
+                                <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="90px" alt="e-Cardume Líder VIP">
+                            @endif
+                        @endif
+                        <!-- END VIP -->
+
+
+
                         <br><br>
                         {{$ticket->titulo}}                    
                 </h3>
@@ -154,9 +183,50 @@
                   <div class="timeline-item">
                     <span class="time"><i class="fas fa-clock"></i> {{date('H:i:s', strtotime($prontuario->created_at))}}</span>
 
-                    <h3 class="user-header timeline-header">                    
-                            <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px"> 
-                            <a href="#">{{$prontuario->users->apelido}}</a>                                                
+                    @php
+                    //Socorro
+                    //Resolver esse código
+                    //Está horrível
+
+                    $prontuario_user = $prontuario->users()->first();
+
+                    $prontuario_user_image = DB::table('imagem_user')
+                                            ->select('uploads.*')
+                                            ->join('uploads', 'uploads.id', 'imagem_user.upload_id')
+                                            ->where('imagem_user.user_id', $prontuario_user->id)
+                                            ->orderBy('uploads.id', 'DESC')
+                                            ->first();
+
+                    @endphp
+
+                    <h3 class="user-header timeline-header">   
+
+                        @if($ticket_user_image)
+                            <img src="{{url('storage/'.$prontuario_user_image->dir.'/'.$prontuario_user_image->link)}}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @else
+                            <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="30px" height="30px"> 
+                        @endif
+
+                            <a href="#">{{$prontuario->users->apelido}}</a>
+
+                            @foreach($prontuario->users->setors as $setor)
+                                <span class="btn btn-default btn-xs"><i class="fa fa-fish text-aqua"></i> {{$setor->label}}</span>
+                            @endforeach 
+
+
+                            <!-- VIP -->
+                            @php
+                            $lider = $prontuario->users->franqueadoVip->first();
+                            @endphp
+
+                            @if($lider)
+                                <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="90px" alt="e-Cardume VIP">
+                                @if($lider->lider)
+                                    <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="90px" alt="e-Cardume Líder VIP">
+                                @endif
+                            @endif
+                            <!-- END VIP -->
+
                     </h3>
 
                     <div class="timeline-body">
@@ -191,7 +261,7 @@
             <!-- /.timeline-label -->
             <!-- timeline item -->
             <li>
-              <i class="fa fa-close bg-gray"></i>
+              <i class="fa fa-times bg-gray"></i>
               <div class="timeline-item">
                 <h3 class="timeline-header"><a href="#">Encerrado</a></h3>
               </div>
@@ -232,7 +302,7 @@
         
     @endif    
 
-    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('atendimentos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('atendimentos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-users"></i> Setores Vinculados Ao Ticket</a>
     
     </section>
 
@@ -270,7 +340,7 @@
                                 @csrf
                                 <input type="hidden" name="id" value="{{$upload->id}}">                                
 
-                                <a href="javascript:confirmDelete{{$upload->id}}();" class="btn btn-danger"> <i class="fa fa-close"></i></a>
+                                <a href="javascript:confirmDelete{{$upload->id}}();" class="btn btn-danger"> <i class="fa fa-times"></i></a>
                             </form> 
 
                             <script>

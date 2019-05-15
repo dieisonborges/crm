@@ -134,6 +134,7 @@ class FranquiaController extends Controller
             $franquias = Franquia::where('codigo_franquia', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('nome', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('slogan', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('loja_url', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
                                 ->paginate(40);  
 

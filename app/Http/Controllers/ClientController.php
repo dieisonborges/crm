@@ -274,6 +274,13 @@ class ClientController extends Controller
 
             $ticket = Ticket::where('id', $id)->where('user_id', $user_id)->limit(1)->first();
 
+            $ticket_user_image = DB::table('imagem_user')
+                                    ->select('uploads.*')
+                                    ->join('uploads', 'uploads.id', 'imagem_user.upload_id')
+                                    ->where('imagem_user.user_id', $ticket->id)
+                                    ->orderBy('uploads.id', 'DESC')
+                                    ->first();
+
             //Verifica permissão de acesso por usuário
             //Ao ticket
             if(!isset($ticket)){
@@ -291,12 +298,23 @@ class ClientController extends Controller
 
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
+            //Arquivos relacionados
+            $uploads = $ticket->uploads()->get();
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.show.id=".$id);
             //--------------------------------------------------------------------------------------------
 
 
-            return view('client.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
+            return view('client.show', compact(
+                                        'ticket', 
+                                        'rotulos', 
+                                        'status', 
+                                        'data_aberto', 
+                                        'prontuarios', 
+                                        'uploads', 
+                                        'ticket_user_image'
+                                    ));
         }
         else{
             return view('errors.403');

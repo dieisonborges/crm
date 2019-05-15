@@ -25,10 +25,79 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
+      
+
+
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-silver"><i class="fa fa-user"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Usuários</span>
+              <span class="info-box-number">{{$qtd_users}}</span>
+              <a class="btn btn-default" style="float: right;" href="{{url('users')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-silver"><i class="fa fa-store"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Franquias</span>
+              <span class="info-box-number">{{$qtd_franquias}}</span>
+              <a class="btn btn-default" style="float: right;" href="{{url('franquias')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-silver"><i class="fa fa-star"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Franqueados VIP</span>
+              <span class="info-box-number">{{$qtd_franqueados_vip}}</span>
+              <a class="btn btn-default" style="float: right;" href="{{url('franqueadoVip')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-silver"><i class="fa fa-truck"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Fornecedores</span>
+              <span class="info-box-number">{{$qtd_fornecedores}}</span>
+              <a class="btn btn-default" style="float: right;" href="{{url('fornecedor')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+
+
+
+
+
+
       <div class="row">
 
-        <div class="col-lg-4 col-xs-4">
+        <div class="col-lg-3">
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
@@ -47,7 +116,7 @@
         <!-- ./col -->
 
 
-         <div class="col-lg-4 col-xs-4">
+         <div class="col-lg-3">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
@@ -66,7 +135,7 @@
         <!-- ./col -->
 
 
-        <div class="col-lg-4 col-xs-4">
+        <div class="col-lg-3">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -84,11 +153,38 @@
         </div>
         <!-- ./col -->
 
+        <div class="col-lg-3">
+          <!-- small box -->
+          <div class="small-box bg-teal">
+            <div class="inner">
+              <h3>{{$qtd_todos_tickets}}</h3>
+
+              <p>Tickets</p>
+            </div>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/')}}">
+              <div class="icon">
+                <i class="fas fa-ticket-alt"></i>
+              </div>
+            </a>
+            <a href="{{url('atendimentos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar Todos os Tickets <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
 
     
         
       </div>
       <!-- /.row -->
+
+
+
+
+
+
+
+
+
       <!-- Main row -->     
 
    
@@ -272,9 +368,9 @@
                       @endphp
 
                       @if($imagem_perfil)  
-                          <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="user-image" alt="User Image" width="50px">
+                          <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="img-circle" alt="User Image" style="width: 50px; height: 50px">
                       @else
-                          <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image" width="50px">
+                          <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" style="width: 50px; height: 50px">
                       @endif
 
                       
@@ -287,7 +383,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Todos</a>
+                  <span class="uppercase">Todos</span>
                 </div>
                 <!-- /.box-footer -->
               </div>

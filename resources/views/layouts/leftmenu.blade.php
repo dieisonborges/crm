@@ -6,7 +6,115 @@
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-                  
+
+          <!-- ----------------------------------- END Configurações ----------------------- -->
+
+
+          @canany([
+              'read_user', 
+              'read_score',
+              'read_conquista',
+              'read_categoria', 
+              'read_log', 
+              'read_role', 
+              'read_permission', 
+              'read_setor', 
+              'read_ticket',
+              ])    
+
+          <li class="header">Configurações</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-cog"></i> <span>Configurações</span>              
+              <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('read_user')
+                <li>
+                  <a href="{{ url('users/') }}">
+                    <i class="fas fa-user text-aqua"></i> <span>Usuários</span>
+                  </a>
+                </li>
+              @endcan
+              @can('read_franquia')
+              <li>
+                <a href="{{ url('franqueadoVip/') }}">
+                    <i class="fas fa-store text-aqua"></i> <span>Franqueados VIP</span>
+                </a>             
+              </li>
+              @endcan
+              @can('read_fornecedor')
+              <li>
+                <a href="{{ url('fornecedor/') }}">
+                  <i class="fa fa-truck text-blue"></i><span>Fornecedores</span>              
+                </a>           
+              </li> 
+              @endcan 
+              @can('read_score') 
+              <li>
+                <a href="{{ url('scores/') }}">
+                  <i class="fa fa-star"></i> <span>Scores</span>              
+                </a>           
+              </li> 
+              @endcan 
+              @can('read_conquista')
+              <li>
+                <a href="{{ url('conquistas/') }}">
+                  <i class="fa fa-certificate"></i> <span>Conquistas</span>              
+                </a>             
+              </li> 
+              @endcan 
+              @can('read_categoria')
+              <li>
+                <a href="{{ url('categorias/') }}">
+                  <i class="fa fa-list-alt"></i> <span>Categorias</span>              
+                </a>           
+              </li> 
+              @endcan 
+              @can('read_log')
+              <li>
+                <a href="{{ url('logs/') }}">
+                  <i class="fa fa-history"></i> <span>Logs</span>
+                </a>          
+              </li> 
+              @endcan 
+              @can('read_role')
+              <li>
+                <a href="{{ url('roles/') }}">
+                  <i class="fas fa-user-shield"></i> <span>Roles (grupo)</span>              
+                </a>          
+              </li> 
+              @endcan 
+              @can('read_permission')
+              <li>
+                <a href="{{ url('permissions/') }}">
+                  <i class="fas fa-shield-alt"></i> <span>Permissions</span>              
+                </a>            
+              </li> 
+              @endcan 
+              @can('read_setor')
+              <li>
+                <a href="{{ url('setors/') }}">
+                  <i class="fas fa-building"></i> <span>Setores Internos</span>              
+                </a>           
+              </li> 
+              @endcan 
+              @can('read_ticket')
+              <li>
+                <a href="{{ url('tickets/1/status') }}">  
+                  <i class="fas fa-ticket-alt"></i> <span>Tickets</span>                          
+                </a>            
+              </li> 
+              @endcan 
+            </ul>            
+          </li>
+          @endcanany
+
+          <!-- ----------------------------------- END Configurações ----------------------- -->
+
           @can('read_sincronizar')
           <li class="header">Sincronização</li> 
 
@@ -124,66 +232,64 @@
 
           @endcan 
 
-          <!-- Arrumar isso algum dia -->
-          @can('read_franqueado_vip')           
-          @endcan   
-
-           
+          <!-- Arrumar isso algum dia -->           
           @if(session()->get('setors'))
 
               @php
 
-              $color_p=0;
+                $color_p=0;
 
               @endphp
 
               @foreach((session()->get('setors')) as $sess_setors)
 
-              @can('read_'.$sess_setors->name)             
+                @can('read_'.$sess_setors->name)   
 
-                <li class="header">{{ucfirst($sess_setors->label)}}</li>
-
-                @php
-
-                //RRGGBB
-
-                $color_p += 1;
-
-                $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
-
-                @endphp
-
-                  <li class="treeview">
-                      <a href="#">  
-                        <i class="fa fa-tachometer-alt {{$color[$color_p]}}"></i> <span>{{$sess_setors->label}}</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li>
-                          <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
-                            <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
-                          </a>
                           
-                        </li>
 
-                        <li>
-                          <a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}">
-                            <i class="fa fa-ticket-alt"></i> Tickets
-                          </a>
-                        </li>                                          
-                        
-                      </ul>
-                </li> 
+                  <!--<li class="header">{{ucfirst($sess_setors->label)}}</li>-->
 
+                  @php
+
+                  //RRGGBB
+
+                  $color_p += 1;
+
+                  $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
+
+                  @endphp
+                  <!--
+                    <li class="treeview">
+                        <a href="#">  
+                          <i class="fa fa-tachometer-alt {{$color[$color_p]}}"></i> <span>{{$sess_setors->label}}</span>
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+                          <li>
+                            <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
+                              <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
+                            </a>
+                            
+                          </li>
+
+                          <li>
+                            <a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}">
+                              <i class="fa fa-ticket-alt"></i> Tickets
+                            </a>
+                          </li>                                          
+                          
+                        </ul>
+                  </li> 
+                -->
 
                   
 
 
-              @endcan 
+                @endcan 
 
-            @endforeach 
+              @endforeach 
           @endif
 
           @can('read_franqueado')     
@@ -198,7 +304,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch"></i> Franquias</a></li>
+                <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>
                 <li><a href="{{ url('franqueados/produtos') }}"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
             </ul>
           </li>
@@ -225,10 +331,7 @@
               <li><a href="{{ url('clients/') }}"><i class="fas fa-circle-notch"></i> Todos</a></li>
               
             </ul>
-          </li>          
-
-         
-                   
+          </li>    
           
         </ul>
       </section>

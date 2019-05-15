@@ -89,7 +89,7 @@
                         <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-building"></i> Setor</a>
                     </td>
                     <td>
                         <a class="btn btn-warning btn-xs" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>

@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Storage;
 //use Request;
 use Gate;
 use App\Ticket;
+use App\User;
+use App\Fornecedor;
+use App\Franquia;
+use App\FranqueadoVip;
 use App\Categoria;
 use App\Setor; 
 use App\Http\Controllers\Log;
@@ -331,6 +335,17 @@ class AtendimentoController extends Controller
         if(!(Gate::denies('read_'.$setor))){
             $ticket = Ticket::find($id);
 
+            $ticket_user = $ticket->users()->first();
+
+            $ticket_user_image = DB::table('imagem_user')
+                                    ->select('uploads.*')
+                                    ->join('uploads', 'uploads.id', 'imagem_user.upload_id')
+                                    ->where('imagem_user.user_id', $ticket_user->id)
+                                    ->orderBy('uploads.id', 'DESC')
+                                    ->first();
+
+
+
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
             $setors_security = $ticket->setors()->where('name', $setor)->first();
@@ -359,7 +374,15 @@ class AtendimentoController extends Controller
             //--------------------------------------------------------------------------------------------
 
 
-            return view('atendimento.show', compact('ticket', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'uploads'));
+            return view('atendimento.show', compact(
+                                            'ticket_user_image',
+                                            'ticket', 
+                                            'rotulos', 
+                                            'status', 
+                                            'data_aberto', 
+                                            'prontuarios', 
+                                            'setor', 
+                                            'uploads'));
         }
         else{
             return view('errors.403');
@@ -915,7 +938,7 @@ class AtendimentoController extends Controller
             $equipe = $setor->users()->get();
             $equipe_qtd = $setor->users()->count();     
 
-            /* .................... END QTD Tickets Abertos ................... */
+            /* .................... END EQUIPE ................... */
 
             /* .................... QTD Tickets Abertos ................... */
             $qtd_tick_aber = $setor->tickets()                                
@@ -929,11 +952,33 @@ class AtendimentoController extends Controller
                                 ->count();
             /* .................... END QTD Tickets FECHADOS ................... */
 
-            /* .................... Tickets Abertos ................... */
+            /* .................... TODOS Tickets ................... */
+            $qtd_todos_tickets = $setor->tickets()->count();
+            /* .................... END QTD TODOS Tickets ................... */
+
+            /* .................... QTD Users ................... */
+            $qtd_users = User::all()->count();
+            /* .................... END QTD Users ................... */
+
+            /* .................... QTD Users ................... */
+            $qtd_franquias = Franquia::all()->count();
+            /* .................... END QTD Users ................... */
+
+            /* .................... QTD Users ................... */
+            $qtd_franqueados_vip = FranqueadoVip::all()->count();
+            /* .................... END QTD Users ................... */
+
+            /* .................... QTD Users ................... */
+            $qtd_fornecedores = Fornecedor::all()->count();
+            /* .................... END QTD Users ................... */
+
+            /* .................... Listagem de Tickets Abertos ................... */
             $tickets = $setor->tickets()                                
                                 ->where('status', 1)
                                 ->get();
-            /* .................... END QTD Tickets Abertos ................... */
+            /* .................... END Tickets Abertos ................... */
+
+            
 
 
             /* WEEK */
@@ -986,6 +1031,11 @@ class AtendimentoController extends Controller
             return view('atendimento.dashboard', compact(
                             'qtd_tick_fech', 
                             'qtd_tick_aber', 
+                            'qtd_todos_tickets',
+                            'qtd_users',
+                            'qtd_franquias',
+                            'qtd_franqueados_vip',
+                            'qtd_fornecedores',
                             'setor',
                             'equipe',
                             'equipe_qtd',

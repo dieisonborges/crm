@@ -34,6 +34,7 @@
                     <th>Código da Franquia</th>
                     <th>Nome</th>
                     <th>Slogan</th>
+                    <th>Url</th>
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
@@ -47,6 +48,7 @@
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->codigo_franquia}}</a></td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->nome}}</a></td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->slogan), $limit = 40, $end = '...') }}</a></td>
+                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->loja_url}}</a></td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->descricao), $limit = 40, $end = '...') }}</a></td>
                     <td>
                         <a href="{{URL::to('franquias')}}/{{$franquia->id}}">
@@ -58,8 +60,20 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
-                            <span class="fa fa-users"> Dono(s)</span>                        
+                        
+                            @php
+                                $dono = $franquia->franquiaUser()->first();                                
+                            @endphp
+
+                            @if($dono)
+                                <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
+                                    <span class="fa fa-users"> {{$dono->apelido}}</span>
+                                </a>
+                            @else
+                                <a class="btn btn-danger btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
+                                    <span class="fa fa-users"> Nenhum</span>
+                                </a>
+                            @endif                    
                         </a>
                     </td>
                     <td>
