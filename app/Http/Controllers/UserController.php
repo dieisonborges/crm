@@ -73,11 +73,19 @@ class UserController extends Controller
 
             $conquistas = $user->conquista()->get();   
 
+            /* ------------ FOTO PERFIL -------------------- */
+
+            $imagem = $user->uploads()->orderBy('id', 'DESC')->first();
+
+            /* ---------------- VIP e VIP Líder ----------- */
+
+            $franqueadoVip = $user->franqueadoVip()->first();
+
             //LOG ----------------------------------------------------------------------------------
             $this->log("show.index");
             //--------------------------------------------------------------------------------------
 
-            return view('user.show', compact('user', 'scores', 'user_score', 'conquistas'));
+            return view('user.show', compact('user', 'scores', 'user_score', 'conquistas', 'imagem', 'franqueadoVip'));
         }
         else{
             return view('errors.403');

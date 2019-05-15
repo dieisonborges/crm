@@ -23,40 +23,68 @@
               </div>
         </div>
 
-        <div class="box-body col-md-6"> 
+        <div class="box-body col-md-2"> 
           
-          <div class="form-group col-md-2"> 
-               <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
-          </div>
-          <div class="form-group col-md-2">
-              @if ($user->status)
-                  <form method="POST" action="{{action('UserController@updateActive')}}">
-                      @csrf    
-                      <input type="hidden" name="status" value="0">
-                      <input type="hidden" name="id" value="{{$user->id}}">                  
-                      <input type="submit" class="btn btn-danger btn-xl" value="- Desativar">
-                  </form>                        
-              @else
-                  <form method="POST" action="{{action('UserController@updateActive', $user->id)}}">
-                      @csrf       
-                      <input type="hidden" name="status" value="1">   
-                      <input type="hidden" name="id" value="{{$user->id}}">                   
-                      <input type="submit" class="btn btn-success btn-xl" value="+ Ativar">
-                  </form>
-                  
-              @endif
-          </div>
-          <div class="form-group col-md-2">
-              <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
-          </div>
-          <div class="form-group col-md-2">
-              <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
-          </div>
-          <div class="form-group col-md-2"> 
-              <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
-          </div> 
+              <div class="form-group col-md-12"> 
+                   <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+              </div>
+              <div class="form-group col-md-12">
+                  @if ($user->status)
+                      <form method="POST" action="{{action('UserController@updateActive')}}">
+                          @csrf    
+                          <input type="hidden" name="status" value="0">
+                          <input type="hidden" name="id" value="{{$user->id}}">                  
+                          <input type="submit" class="btn btn-danger btn-xl" value="- Desativar">
+                      </form>                        
+                  @else
+                      <form method="POST" action="{{action('UserController@updateActive', $user->id)}}">
+                          @csrf       
+                          <input type="hidden" name="status" value="1">   
+                          <input type="hidden" name="id" value="{{$user->id}}">                   
+                          <input type="submit" class="btn btn-success btn-xl" value="+ Ativar">
+                      </form>
+                      
+                  @endif
+              </div>
+              <div class="form-group col-md-12">
+                  <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
+              </div>
+              <div class="form-group col-md-12">
+                  <a class="btn btn-primary btn-xl" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-building"></i> Setor</a>
+              </div>
+              <div class="form-group col-md-12"> 
+                  <a class="btn btn-warning btn-xl" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+              </div> 
 
         </div>
+
+        <div class="box-body col-md-2">              
+              
+            @if($imagem)  
+                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" width="100%">
+            @else
+                <img src="{{ asset('img/default-user-image.png') }}" width="100%">
+            @endif
+        </div>
+
+
+        <div class="box-body col-md-4"> 
+
+            @if($franqueadoVip)               
+            <div class="col-md-6"> 
+                <img src="{{asset('img/conquistas/conquistas-vip.png')}}" width="100%" alt="VIP">
+            </div>
+            @endif
+
+            @if($franqueadoVip)
+            @if($franqueadoVip->lider)
+            <div class="col-md-6"> 
+                <img src="{{asset('img/conquistas/conquistas-lider.png')}}" width="100%" alt="Líder">
+            </div>
+            @endif
+            @endif
+
+        </div> 
 
         
 
@@ -201,7 +229,7 @@
             @if (($user->status)==1)
 
             <li>
-              <i class="fa fa-clock-o bg-gray"></i>
+              <i class="fa fa-clock bg-gray"></i>
             </li>
 
             
@@ -219,13 +247,13 @@
             <li>
               <i class="fa fa-times-circle bg-gray"></i>
               <div class="timeline-item">
-                <h3 class="timeline-header"><a href="#">Encerrado</a></h3>
+                <h3 class="timeline-header"><a href="#">Usuário Desativado</a></h3>
               </div>
             </li>
             <!-- END timeline item -->
 
             <li>
-              <i class="fa fa-flag-checkered bg-green"></i>
+              <i class="fa fa-flag-checkered bg-red"></i>
             </li>
 
             <!-- -------------- FIM ENCERRAMENTO ------------- -->
