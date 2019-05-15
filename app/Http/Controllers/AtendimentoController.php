@@ -505,7 +505,7 @@ class AtendimentoController extends Controller
             //Validação
             $this->validate($request,[
                     'rotulo' => 'required',
-                    'titulo' => 'required|string|max:30',
+                    'titulo' => 'required|string|max:80',
                     /*'descricao' => 'required|string|min:15',*/
             ]);
 
