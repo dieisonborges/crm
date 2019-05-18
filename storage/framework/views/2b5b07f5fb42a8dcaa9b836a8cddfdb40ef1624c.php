@@ -16,7 +16,7 @@
 				    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo e(old('nome')); ?>" placeholder="Digite o Nome..." required="required">
 			 	</div>
 			 	<div class="form-group col-md-12">
-				    <label for="slogan">Slogan: </label>
+				    <label for="slogan">Slogan:  <i class="text-red fa fa-exclamation-circle"></i> </label>
 				    <input type="text" class="form-control" id="slogan" name="slogan" value="<?php echo e(old('slogan')); ?>" placeholder="Slogan ..." >
 			 	</div>
 			 	<div class="form-group col-md-12">
@@ -103,7 +103,13 @@
 
 		    	<div class="form-group col-md-12">
 		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada: <i class="text-red fa fa-exclamation-circle"></i> </label>
-		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="<?php echo e(old('loja_url')); ?>" placeholder="loja1.com" required="required">
+		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="<?php echo e(old('loja_url')); ?>" placeholder="loja.com.br" required="required">
+		    	</div>
+
+		    	<div class="form-group col-md-12">
+		    		<label for="loja_url_alternativa" class="text-aqua">Endereço Alternativo (URL) da loja integrada: <i class="text-red fa fa-exclamation-circle"></i> </label>
+		    		<input type="text" class="form-control" id="loja_url_alternativa" name="loja_url_alternativa" value="<?php echo e(old('loja_url_alternativa')); ?>" placeholder="loja" required="required">
+		    		<span style="color: red; font-size: 12px;">*a url alternativa ficará assim: https://loja.venderaqui.com.br</span>
 		    	</div>
 		    	<!--
 		    	Não se usa mais OpenCart no projeto

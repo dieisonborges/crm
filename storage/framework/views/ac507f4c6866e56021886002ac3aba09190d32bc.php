@@ -6,7 +6,115 @@
 
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-                  
+
+          <!-- ----------------------------------- END Configurações ----------------------- -->
+
+
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([
+              'read_user', 
+              'read_score',
+              'read_conquista',
+              'read_categoria', 
+              'read_log', 
+              'read_role', 
+              'read_permission', 
+              'read_setor', 
+              'read_ticket',
+              ])): ?>    
+
+          <li class="header">Configurações</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-cog"></i> <span>Configurações</span>              
+              <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_user')): ?>
+                <li>
+                  <a href="<?php echo e(url('users/')); ?>">
+                    <i class="fas fa-user text-aqua"></i> <span>Usuários</span>
+                  </a>
+                </li>
+              <?php endif; ?>
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franquia')): ?>
+              <li>
+                <a href="<?php echo e(url('franqueadoVip/')); ?>">
+                    <i class="fas fa-store text-aqua"></i> <span>Franqueados VIP</span>
+                </a>             
+              </li>
+              <?php endif; ?>
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_fornecedor')): ?>
+              <li>
+                <a href="<?php echo e(url('fornecedor/')); ?>">
+                  <i class="fa fa-truck text-blue"></i><span>Fornecedores</span>              
+                </a>           
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_score')): ?> 
+              <li>
+                <a href="<?php echo e(url('scores/')); ?>">
+                  <i class="fa fa-star"></i> <span>Scores</span>              
+                </a>           
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_conquista')): ?>
+              <li>
+                <a href="<?php echo e(url('conquistas/')); ?>">
+                  <i class="fa fa-certificate"></i> <span>Conquistas</span>              
+                </a>             
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_categoria')): ?>
+              <li>
+                <a href="<?php echo e(url('categorias/')); ?>">
+                  <i class="fa fa-list-alt"></i> <span>Categorias</span>              
+                </a>           
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_log')): ?>
+              <li>
+                <a href="<?php echo e(url('logs/')); ?>">
+                  <i class="fa fa-history"></i> <span>Logs</span>
+                </a>          
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_role')): ?>
+              <li>
+                <a href="<?php echo e(url('roles/')); ?>">
+                  <i class="fas fa-user-shield"></i> <span>Roles (grupo)</span>              
+                </a>          
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_permission')): ?>
+              <li>
+                <a href="<?php echo e(url('permissions/')); ?>">
+                  <i class="fas fa-shield-alt"></i> <span>Permissions</span>              
+                </a>            
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_setor')): ?>
+              <li>
+                <a href="<?php echo e(url('setors/')); ?>">
+                  <i class="fas fa-building"></i> <span>Setores Internos</span>              
+                </a>           
+              </li> 
+              <?php endif; ?> 
+              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_ticket')): ?>
+              <li>
+                <a href="<?php echo e(url('tickets/1/status')); ?>">  
+                  <i class="fas fa-ticket-alt"></i> <span>Tickets</span>                          
+                </a>            
+              </li> 
+              <?php endif; ?> 
+            </ul>            
+          </li>
+          <?php endif; ?>
+
+          <!-- ----------------------------------- END Configurações ----------------------- -->
+
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_sincronizar')): ?>
           <li class="header">Sincronização</li> 
 
@@ -124,66 +232,64 @@
 
           <?php endif; ?> 
 
-          <!-- Arrumar isso algum dia -->
-          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franqueado_vip')): ?>           
-          <?php endif; ?>   
-
-           
+          <!-- Arrumar isso algum dia -->           
           <?php if(session()->get('setors')): ?>
 
               <?php
 
-              $color_p=0;
+                $color_p=0;
 
               ?>
 
               <?php $__currentLoopData = (session()->get('setors')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sess_setors): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-              <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_'.$sess_setors->name)): ?>             
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_'.$sess_setors->name)): ?>   
 
-                <li class="header"><?php echo e(ucfirst($sess_setors->label)); ?></li>
-
-                <?php
-
-                //RRGGBB
-
-                $color_p += 1;
-
-                $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
-
-                ?>
-
-                  <li class="treeview">
-                      <a href="#">  
-                        <i class="fa fa-tachometer-alt <?php echo e($color[$color_p]); ?>"></i> <span><?php echo e($sess_setors->label); ?></span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li>
-                          <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>">  
-                            <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
-                          </a>
                           
-                        </li>
 
-                        <li>
-                          <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>">
-                            <i class="fa fa-ticket-alt"></i> Tickets
-                          </a>
-                        </li>                                          
-                        
-                      </ul>
-                </li> 
+                  <!--<li class="header"><?php echo e(ucfirst($sess_setors->label)); ?></li>-->
 
+                  <?php
+
+                  //RRGGBB
+
+                  $color_p += 1;
+
+                  $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
+
+                  ?>
+                  <!--
+                    <li class="treeview">
+                        <a href="#">  
+                          <i class="fa fa-tachometer-alt <?php echo e($color[$color_p]); ?>"></i> <span><?php echo e($sess_setors->label); ?></span>
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+                          <li>
+                            <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>">  
+                              <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
+                            </a>
+                            
+                          </li>
+
+                          <li>
+                            <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/tickets/')); ?>">
+                              <i class="fa fa-ticket-alt"></i> Tickets
+                            </a>
+                          </li>                                          
+                          
+                        </ul>
+                  </li> 
+                -->
 
                   
 
 
-              <?php endif; ?> 
+                <?php endif; ?> 
 
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
           <?php endif; ?>
 
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franqueado')): ?>     
@@ -198,7 +304,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="<?php echo e(url('franqueados')); ?>"><i class="fas fa-circle-notch"></i> Franquias</a></li>
+                <li><a href="<?php echo e(url('franqueados')); ?>"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>
                 <li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
             </ul>
           </li>
@@ -225,10 +331,7 @@
               <li><a href="<?php echo e(url('clients/')); ?>"><i class="fas fa-circle-notch"></i> Todos</a></li>
               
             </ul>
-          </li>          
-
-         
-                   
+          </li>    
           
         </ul>
       </section>

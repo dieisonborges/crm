@@ -214,6 +214,7 @@ class FranquiaController extends Controller
                     'slogan' => 'required|min:3',      
                     'descricao' => 'required|min:10',
                     'loja_url'  =>  'required|min:3|unique:franquias',
+                    'loja_url_alternativa'  =>  'required|min:3|unique:franquias',
                     //'cnpj' => 'cnpj',
                     'email' => 'email'
 
@@ -244,6 +245,7 @@ class FranquiaController extends Controller
 
             //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
+            $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
             //Database OpenCart
             //$franquia->loja_database_url = $request->input('loja_database_url');
             //$franquia->loja_database_name = $request->input('loja_database_name');
@@ -337,7 +339,8 @@ class FranquiaController extends Controller
                     'nome' => 'required|min:3',
                     'slogan' => 'required|min:3',     
                     'descricao' => 'required|min:10',               
-                    'loja_url'  =>  'required|min:3|unique:franquias',
+                    'loja_url'  =>  'required|min:3',
+                    'loja_url_alternativa'  =>  'required|min:3',
                     //'cnpj' => 'cnpj',
                     'email' => 'email'  
             ]);            
@@ -351,6 +354,7 @@ class FranquiaController extends Controller
 
             //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
+            $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
             //Database OpenCart
             //$franquia->loja_database_url = $request->input('loja_database_url');
             //$franquia->loja_database_name = $request->input('loja_database_name');

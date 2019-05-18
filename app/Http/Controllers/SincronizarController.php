@@ -150,6 +150,7 @@ class SincronizarController extends Controller
                                         ->where('id_7p', $franquia->id)
                                         ->update(array(
                                             'loja_url' => $franquia->loja_url,
+                                            'loja_url_alternativa' => $franquia->loja_url_alternativa,
                                             'codigo_franquia' => $franquia->codigo_franquia,
                                             'nome' => $franquia->nome,
                                             'slogan' => $franquia->slogan,
@@ -181,6 +182,7 @@ class SincronizarController extends Controller
                                             'id_7p' => $franquia->id,
                                             /* ------------------- */
                                             'loja_url' => $franquia->loja_url,
+                                            'loja_url_alternativa' => $franquia->loja_url_alternativa,
                                             'codigo_franquia' => $franquia->codigo_franquia,
                                             'nome' => $franquia->nome,
                                             'slogan' => $franquia->slogan,

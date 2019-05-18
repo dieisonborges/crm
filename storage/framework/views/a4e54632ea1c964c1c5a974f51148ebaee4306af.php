@@ -32,17 +32,48 @@
               <li class="dropdown messages-menu">
                 <a href="<?php echo e(url('/home')); ?>" class="dropdown-toggle" alt="Home">
                   <i class="fa fa-home"></i>
-                </a>
-                
-              </li>                            
-
-              <li class="dropdown notifications-menu">
-                <a href="<?php echo e(url('/contato')); ?>" class="dropdown-toggle" alt="Bugs">
-                  <i class="fa fa-envelope"></i>
-                  <span class="label label-info">?</span>
-                </a>
-                
+                </a>                
               </li>
+
+              
+
+
+
+
+
+              <?php
+
+                $color_p=0;
+
+            
+                  //RRGGBB
+
+                  $pst = 1;
+
+                  $color = array('', 'bg-maroon', 'bg-lime', 'bg-orange', 'bg-yellow', 'bg-aqua');           
+
+              ?>
+
+
+
+
+
+
+              <?php if(session()->get('setors')): ?>
+                  <?php $__currentLoopData = (session()->get('setors')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sess_setors): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                  <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_'.$sess_setors->name)): ?>                   
+
+                      <li class="dropdown messages-menu">
+                        <a href="<?php echo e(url('atendimentos/'.$sess_setors->name.'/dashboard/')); ?>" class="dropdown-toggle" alt="Novo Ticket">
+                          <i class="fa fa-headset"></i>
+                          <span class="label label-default <?php echo e($color[$pst++]); ?>"><?php echo e(strtoupper(substr($sess_setors->name, 0, 1))); ?></span>
+                        </a>                        
+                      </li>
+                  <?php endif; ?> 
+
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+              <?php endif; ?>               
 
               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([
               'read_user', 
@@ -56,6 +87,7 @@
               'read_ticket',
               ])): ?>
               <!-- -------------------------- MENU ADM ----------------------------- -->
+              <!--
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-cog"></i>                  
@@ -64,7 +96,6 @@
                 <ul class="dropdown-menu">
                   <li class="header"></li>
                   <li>
-                    <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_user')): ?>
@@ -119,7 +150,7 @@
                       <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_log')): ?>
                       <li>
                         <a href="<?php echo e(url('logs/')); ?>">
-                          <i class="fa fa-history"></i> Logs
+                          <i class="fa fa-history"></i> <span>Logs </span>
                         </a>
                       </li>
                       <?php endif; ?>
@@ -161,7 +192,7 @@
                   </li>
                 </ul>
               </li>
-
+  -->
               <!-- -------------------------- END MENU ADM ------------------------- -->
 
               <?php endif; ?>

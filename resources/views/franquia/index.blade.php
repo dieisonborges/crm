@@ -35,6 +35,7 @@
                     <th>Nome</th>
                     <th>Slogan</th>
                     <th>Url</th>
+                    <th>Url Alt.</th>
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
@@ -48,7 +49,16 @@
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->codigo_franquia}}</a></td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->nome}}</a></td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->slogan), $limit = 40, $end = '...') }}</a></td>
-                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->loja_url}}</a></td>
+                    <td>
+                        <a class="btn btn-primary btn-xs"  target="_blank" href="https://{{$franquia->loja_url}}">
+                            <i class="fa fa-link"></i> {{$franquia->loja_url}}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" target="_blank" href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br">
+                            <i class="fa fa-link"></i> {{$franquia->loja_url_alternativa}}
+                        </a>
+                    </td>
                     <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->descricao), $limit = 40, $end = '...') }}</a></td>
                     <td>
                         <a href="{{URL::to('franquias')}}/{{$franquia->id}}">

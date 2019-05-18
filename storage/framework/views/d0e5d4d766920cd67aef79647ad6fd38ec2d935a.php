@@ -24,7 +24,7 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>
-                    <th>Abrir</th>
+                    <th>Abrir loja</th>
                     <th>Gerenciar</th>
 
                 </tr>
@@ -49,13 +49,22 @@
                         
                         <?php if($franquia->status): ?>
                             <a href="https://<?php echo e($franquia->loja_url); ?>" target="_blank">
-                                <span class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Visualizar</span>
+                                <span class="btn btn-primary btn-xs"><i class="fa fa-link"></i> Principal</span>
                             </a>
                         <?php else: ?>
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                        
-                    </td> 
+                                            
+                        <?php if($franquia->status): ?>
+                            <a href="https://<?php echo e($franquia->loja_url_alternativa); ?>.venderaqui.com.br" target="_blank">
+                                <span class="btn btn-warning btn-xs"><i class="fa fa-link"></i> Alternativo</span>
+                            </a>
+                        <?php else: ?>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
+                        <?php endif; ?>
+                       
+                    </td>
 
                     <td>
                         

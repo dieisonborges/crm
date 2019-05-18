@@ -35,6 +35,8 @@
                     <th>Código da Franquia</th>
                     <th>Nome</th>
                     <th>Slogan</th>
+                    <th>Url</th>
+                    <th>Url Alt.</th>
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
@@ -48,6 +50,18 @@
                     <td><a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>"><?php echo e($franquia->codigo_franquia); ?></a></td>
                     <td><a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>"><?php echo e($franquia->nome); ?></a></td>
                     <td><a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>"><?php echo e(str_limit(strip_tags($franquia->slogan), $limit = 40, $end = '...')); ?></a></td>
+                    <td>
+                        <a class="btn btn-primary btn-xs"  target="_blank" href="https://<?php echo e($franquia->loja_url); ?>">
+                            <i class="fa fa-link"></i> <?php echo e($franquia->loja_url); ?>
+
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" target="_blank" href="https://<?php echo e($franquia->loja_url_alternativa); ?>.venderaqui.com.br">
+                            <i class="fa fa-link"></i> <?php echo e($franquia->loja_url_alternativa); ?>
+
+                        </a>
+                    </td>
                     <td><a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>"><?php echo e(str_limit(strip_tags($franquia->descricao), $limit = 40, $end = '...')); ?></a></td>
                     <td>
                         <a href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>">
@@ -59,8 +73,20 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>/donos">
-                            <span class="fa fa-users"> Dono(s)</span>                        
+                        
+                            <?php
+                                $dono = $franquia->franquiaUser()->first();                                
+                            ?>
+
+                            <?php if($dono): ?>
+                                <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>/donos">
+                                    <span class="fa fa-users"> <?php echo e($dono->apelido); ?></span>
+                                </a>
+                            <?php else: ?>
+                                <a class="btn btn-danger btn-xs" href="<?php echo e(URL::to('franquias')); ?>/<?php echo e($franquia->id); ?>/donos">
+                                    <span class="fa fa-users"> Nenhum</span>
+                                </a>
+                            <?php endif; ?>                    
                         </a>
                     </td>
                     <td>

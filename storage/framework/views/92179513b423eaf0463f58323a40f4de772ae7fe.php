@@ -107,7 +107,13 @@
 
 		    	<div class="form-group col-md-12">
 		    		<label for="loja_url" class="text-aqua">Endereço (URL) da loja integrada:</label>
-		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="<?php echo e($franquia->loja_url); ?>" placeholder="http:// ...">
+		    		<input type="text" class="form-control" id="loja_url" name="loja_url" value="<?php echo e($franquia->loja_url); ?>" placeholder="loja.com.br">
+		    	</div>
+
+		    	<div class="form-group col-md-12">
+		    		<label for="loja_url_alternativa" class="text-aqua">Endereço Alternativo (URL) da loja integrada:</label>
+		    		<input type="text" class="form-control" id="loja_url_alternativa" name="loja_url_alternativa" value="<?php echo e($franquia->loja_url_alternativa); ?>" placeholder="loja">
+		    		<span style="color: red; font-size: 12px;">*a url alternativa ficará assim: https://loja.venderaqui.com.br</span>
 		    	</div>
 		    	<!--
 		    	<div class="form-group col-md-12">
