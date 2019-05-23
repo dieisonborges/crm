@@ -46,16 +46,16 @@
                 <tr>
                     <td>{{$lista_prospecto->id}}</td>
                     <td>
-                        <a href="{{URL::to('franqueados/'.$franqueado->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->name}}</a>
+                        <a href="{{URL::to('franqueados/'.$franquia->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->name}}</a>
                     </td>
                     <td>
-                        <a href="{{URL::to('franqueados/'.$franqueado->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->email}}</a>
+                        <a href="{{URL::to('franqueados/'.$franquia->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->email}}</a>
                     </td>
                     <td>
-                        <a href="{{URL::to('franqueados/'.$franqueado->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->phone_number}}</a>
+                        <a href="{{URL::to('franqueados/'.$franquia->id.'/prospectos/'.$lista_prospecto->id)}}">{{$lista_prospecto->phone_number}}</a>
                     </td>
                     <td>
-                        <a href="{{URL::to('franqueados/'.$franqueado->id.'/prospectos/'.$lista_prospecto->id)}}" class="btn btn-primary btn-xs">
+                        <a href="{{URL::to('franqueados/'.$franquia->id.'/prospectos/'.$lista_prospecto->id)}}" class="btn btn-primary btn-xs">
                             <i class="fa fa-eye"></i> Ver
                         </a>
                     </td>                    

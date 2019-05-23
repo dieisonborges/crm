@@ -246,6 +246,7 @@ Route::resource('franqueados', 'FranqueadoController');
 
 //Prospectos
 Route::get('franqueados/{id}/prospectos', 'FranqueadoController@prospectos');
+Route::get('franqueados/{id}/prospectos/{prospecto_id}', 'FranqueadoController@prospectoShow');
 
 
 //Produto Preços

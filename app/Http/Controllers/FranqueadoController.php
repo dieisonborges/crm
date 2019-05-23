@@ -674,7 +674,8 @@ class FranqueadoController extends Controller
                 //-------------------------------------------------------------------------------
 
                 return view('franqueado.prospectos', array(
-                                                    //'buscar' => $busca, 
+                                                    //'buscar' => $busca,
+                                                    'franquia' => $franquia, 
                                                     'lista_prospectos' => $lista_prospectos
                                                 ));
             }else{
@@ -690,8 +691,9 @@ class FranqueadoController extends Controller
 
 
 
-    public function prospectoShow(ListaProspecto $listaProspecto)
+    public function prospectoShow($id, $prospecto_id)
     {
+        
         //
         if(!(Gate::denies('read_franqueado'))){
             //Selecionar franquia com segurança
@@ -703,26 +705,37 @@ class FranqueadoController extends Controller
             //Verifica se tem permissão na franquia-------------------------------------------------------------
             if($franquia){  
 
-                $prospecto = $listaProspecto;
+                $prospecto = $franquia->listaProspecto()->where('lista_prospectos.id',$prospecto_id)->first();
 
-                //Produtos
-                $franquias = $prospecto->listaProspectoFranquia()->get();
 
-                $produtos = $prospecto->listaProspectoProduto()->get();
+                //Verifica se o usuário pode acessar o propecto
+                if($prospecto){
 
-                $categorias = $prospecto->listaProspectoCategoria()->get();
+                    //Produtos
+                    $franquias = $prospecto->listaProspectoFranquia()->get();
+
+                    $produtos = $prospecto->listaProspectoProduto()->get();
+
+                    $categorias = $prospecto->listaProspectoCategoria()->get();
+
+                    
+
+                    //LOG -------------------------------------------------------------------
+                    $this->log("franqueado.prospecto.show=".$prospecto);
+                    //------------------------------------------------------------------------
+
+                    return view('franqueado.prospecto_show', compact(
+                                                    'prospecto',
+                                                    'produtos',
+                                                    'categorias'
+                                                ));
+
+                }else{
+                    return view('errors.403');
+                }
+
 
                 
-
-                //LOG -----------------------------------------------------------------------------
-                $this->log("franqueado.prospecto.show=".$prospecto);
-                //---------------------------------------------------------------------------------
-
-                return view('franqueado.prospecto', compact(
-                                                'prospecto',
-                                                'produtos',
-                                                'categorias'
-                                            ));
             }else{
                 return view('errors.403');
             }
