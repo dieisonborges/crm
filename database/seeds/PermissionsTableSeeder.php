@@ -616,6 +616,32 @@ class PermissionsTableSeeder extends Seeder
             'name'=>'delete_sincronizar',
             'label'=>'Delete - Sincronizar Lojas',
         ]); 
+
+        //Área - Gerência de Lista de Prospectos
+        //Create
+        Permission::create([
+            'id'=>'89',
+            'name'=>'create_lista_prospecto',
+            'label'=>'Create - Gerência de Lista de Prospectos',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'90',
+            'name'=>'read_lista_prospecto',
+            'label'=>'Read - Gerência de Lista de Prospectos',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'91',
+            'name'=>'update_lista_prospecto',
+            'label'=>'Update - Gerência de Lista de Prospectos',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'92',
+            'name'=>'delete_lista_prospecto',
+            'label'=>'Delete - Gerência de Lista de Prospectos',
+        ]);         
         
 
         //Área - 

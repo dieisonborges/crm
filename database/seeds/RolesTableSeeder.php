@@ -133,6 +133,13 @@ class RolesTableSeeder extends Seeder
             'label'=>'Sincronizar Lojas',
         ]);
 
+        //Gerência de Lista de Prospectos
+        Role::create([
+            'id'=>'18',
+            'name'=>'lista_prospecto',
+            'label'=>'Gerência de Lista de Prospectos',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*

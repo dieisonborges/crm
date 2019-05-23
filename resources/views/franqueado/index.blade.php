@@ -44,7 +44,7 @@
                         </a>
                     </td>
 
-                    <td>
+                    <td> 
                         
                         @if($franquia->status)
                             <a href="https://{{$franquia->loja_url}}" target="_blank">

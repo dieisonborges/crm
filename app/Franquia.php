@@ -14,6 +14,10 @@ class Franquia extends Model
     public function franquiaProdutos(){        
         return $this->belongsToMany('App\Produto','produto_franquia', 'franquia_id', 'produto_id');
     }
+
+    public function listaProspecto(){        
+        return $this->belongsToMany(\App\ListaProspecto::class, 'lista_prospecto_franquia');
+    }
     
 }
  

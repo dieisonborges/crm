@@ -45,7 +45,7 @@
                         </a>
                     </td>
 
-                    <td>
+                    <td> 
                         
                         <?php if($franquia->status): ?>
                             <a href="https://<?php echo e($franquia->loja_url); ?>" target="_blank">

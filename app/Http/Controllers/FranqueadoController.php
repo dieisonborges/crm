@@ -116,13 +116,29 @@ class FranqueadoController extends Controller
 
             
 
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("franqueado.dashboard=".$franquia);
-            //--------------------------------------------------------------------------------------
+                //LOG --------------------------------------------------------------------------
+                $this->log("franqueado.dashboard=".$franquia);
+                //------------------------------------------------------------------------------
+
+                /* ------------------------ Contagem REGRESSIVA DASHBOARD ---------*/
+                $inicio_contagem = '2018-11-01';
+                $data_inicial = date('Y-m-d');                
+                $data_final = '2019-08-01';
+                
+
+                // Dias que faltam
+                $diferenca = strtotime($data_final) - strtotime($data_inicial);
+                $faltam = floor($diferenca / (60 * 60 * 24));
+
+                // Total de dias
+                $total_contagem = strtotime($data_final) - strtotime($inicio_contagem);
+                $total = floor($total_contagem / (60 * 60 * 24));
 
 
-
-            return view('franqueado.dashboard', compact('franquia'));
+                $porcentagem = (($total-$faltam) * 100 )/$total;
+                /* ------------------------ Contagem REGRESSIVA DASHBOARD ---------*/
+                
+            return view('franqueado.dashboard', compact('franquia', 'faltam', 'total', 'porcentagem'));
 
             }else{
             return view('errors.403');
@@ -629,6 +645,93 @@ class FranqueadoController extends Controller
         else{
             return view('errors.403');
         }
+    }
+
+    public function prospectos($id)
+    {
+        //
+        if(!(Gate::denies('read_franqueado'))){
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                $lista_prospectos = $franquia->listaProspecto()->paginate(40);
+
+                //$busca = $request->input('busca');
+                /*$busca = "";
+                $lista_prospectos = ListaProspecto::where('name', 'LIKE', '%'.$busca.'%')
+                                    ->orwhere('email', 'LIKE', '%'.$busca.'%')
+                                    ->orwhere('phone_number', 'LIKE', '%'.$busca.'%')
+                                    ->paginate(40);*/
+
+                //LOG ---------------------------------------------------------------------------
+                $this->log("lista_prospecto.franquia=".$franquia);
+                //-------------------------------------------------------------------------------
+
+                return view('franqueado.prospectos', array(
+                                                    //'buscar' => $busca, 
+                                                    'lista_prospectos' => $lista_prospectos
+                                                ));
+            }else{
+                return view('errors.403');
+            }
+
+        }
+        else{
+            return view('errors.403');
+        }
+        
+    }
+
+
+
+    public function prospectoShow(ListaProspecto $listaProspecto)
+    {
+        //
+        if(!(Gate::denies('read_franqueado'))){
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                $prospecto = $listaProspecto;
+
+                //Produtos
+                $franquias = $prospecto->listaProspectoFranquia()->get();
+
+                $produtos = $prospecto->listaProspectoProduto()->get();
+
+                $categorias = $prospecto->listaProspectoCategoria()->get();
+
+                
+
+                //LOG -----------------------------------------------------------------------------
+                $this->log("franqueado.prospecto.show=".$prospecto);
+                //---------------------------------------------------------------------------------
+
+                return view('franqueado.prospecto', compact(
+                                                'prospecto',
+                                                'produtos',
+                                                'categorias'
+                                            ));
+            }else{
+                return view('errors.403');
+            }
+
+        }
+        else{
+            return view('errors.403');
+        }
+        
     }
 
     

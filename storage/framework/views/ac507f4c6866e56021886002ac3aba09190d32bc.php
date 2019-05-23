@@ -171,11 +171,33 @@
           <?php endif; ?>   
 
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_convite')): ?>
-          <li>
-            <a href="<?php echo e(url('convites/')); ?>">
-              <i class="fa fa-paper-plane"></i> <span>Convites</span>              
-            </a>            
-          </li>
+          
+          <li class="header">Prospecção</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-paper-plane"></i> <span>Propecção</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                
+                <li>
+                  <a href="<?php echo e(url('convites/')); ?>">
+                    <i class="fa fa-paper-plane"></i> <span>Convites</span>              
+                  </a>            
+                </li>
+
+                <li>
+                  <a href="<?php echo e(url('listaProspectos')); ?>">
+                    <i class="fas fa-list-alt"></i> <span>Lista Propectos</span>
+                  </a>
+                </li>
+
+                                
+            </ul>
+          </li> 
           <?php endif; ?> 
   
  

@@ -244,7 +244,8 @@ Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
 Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
 
-
+//Prospectos
+Route::get('franqueados/{id}/prospectos', 'FranqueadoController@prospectos');
 
 
 //Produto Preços
@@ -257,6 +258,8 @@ Route::post('produtoPrecos/orcamentoCreate', 'ProdutoPrecoController@orcamentoCr
 
 Route::resource('produtoPrecos', 'ProdutoPrecoController');
 Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');
+
+
 
 
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
@@ -299,3 +302,6 @@ Route::get('franquiasSincronizarUpdate/{id}', 'SincronizarController@franquiasUp
 //Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
 //Route::get('franquiasIntegrada/sync/{id}', 'FranquiaIntegradaController@sync');
 //Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');
+
+//Lista de Prospectos
+Route::resource('listaProspectos', 'ListaProspectoController');
