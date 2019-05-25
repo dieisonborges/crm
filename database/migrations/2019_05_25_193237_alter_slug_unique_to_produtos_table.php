@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSlugToProdutosTable extends Migration
+class AlterSlugUniqueToProdutosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddSlugToProdutosTable extends Migration
     {
         Schema::table('produtos', function (Blueprint $table) {
             //
-            $table->string('slug')/*->default(0)*/;
+            $table->unique('slug');
         });
     }
 
@@ -28,7 +28,6 @@ class AddSlugToProdutosTable extends Migration
     {
         Schema::table('produtos', function (Blueprint $table) {
             //
-            $table->dropColumn('slug');
         });
     }
 }

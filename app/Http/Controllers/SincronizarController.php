@@ -438,7 +438,6 @@ class SincronizarController extends Controller
                                         ->where('id_7p', $produto->id)
                                         ->first();
 
-
                 //Verifica se existe o preço do produto remoto
                 //Se existir ele atualiza
                 if($produto_remoto){
