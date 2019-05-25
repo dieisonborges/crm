@@ -44,6 +44,11 @@
 			 	</div>
 
 			 	<div class="form-group col-md-12">
+				    <label for="slug">Slug Url Amigável:</label>
+				    <span class="form-control">{{$produto->slug}}</span>
+			 	</div>
+
+			 	<div class="form-group col-md-12">
 				    <label for="palavras_chave">Palavras Chave (Separadas por vírgula):</label>
 				    <span class="form-control">{{$produto->palavras_chave}}</span>
 			 	</div>

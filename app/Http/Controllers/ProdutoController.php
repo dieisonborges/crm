@@ -156,6 +156,7 @@ class ProdutoController extends Controller
             //Validação
             $this->validate($request,[
                     'titulo' => 'required|min:3',
+                    //'slug' => 'required|min:3|unique:produtos',
                     'palavras_chave' => 'required|min:3',      
                     'descricao' => 'required|min:10',      
             ]);            
@@ -163,6 +164,7 @@ class ProdutoController extends Controller
             $produto = new Produto();
             $produto->sku = $this->skuGenerate();
             $produto->titulo = $request->input('titulo');
+            $produto->slug = str_slug($request->input('titulo'));//URL AMIGÁVEL
             $produto->palavras_chave = $request->input('palavras_chave');
             $produto->descricao = $request->input('descricao');
             $produto->status = "1"; //Produto Ativo
@@ -229,6 +231,7 @@ class ProdutoController extends Controller
 
             $this->validate($request,[
                     'titulo' => 'required|min:3',
+                    //'slug' => 'required|min:3',
                     'palavras_chave' => 'required|min:3',      
                     'descricao' => 'required|min:10',      
             ]);  
@@ -238,6 +241,7 @@ class ProdutoController extends Controller
             $produto->status = $request->input('status');          
                     
             $produto->titulo = $request->input('titulo');
+            $produto->slug = str_slug($request->input('titulo'));//URL AMIGÁVEL
             $produto->palavras_chave = $request->input('palavras_chave');
             $produto->descricao = $request->input('descricao');
 
