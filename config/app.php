@@ -269,7 +269,10 @@ return [
         formato_placa_de_veiculo - Valida se o campo tem o formato válido de uma placa de veículo.
         */
 
-        LaravelLegends\PtBrValidator\ValidatorProvider::class
+        LaravelLegends\PtBrValidator\ValidatorProvider::class,
+
+        /* -------- GEO IP -------*/
+        \Torann\GeoIP\GeoIPServiceProvider::class
 
     ],
 
@@ -319,7 +322,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        /* ------------ GEOIP ---------- */
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class
 
 
 

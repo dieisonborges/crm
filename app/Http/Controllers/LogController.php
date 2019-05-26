@@ -69,7 +69,18 @@ class LogController extends Controller
     {
      
         $log = new Log();
-        $log->ip = request()->ip();
+        
+        $ip = request()->ip();
+
+        $log->ip = $ip;
+
+        /* ----------- GEOIP ------------ */
+        $arr_ip = geoip()->getLocation($ip);
+
+        $arr_ip = serialize($arr_ip);
+
+        $log->geoip = $arr_ip;
+        /* ------------------------------ */
 
         /*
         $logmac = shell_exec("arp -an ".$log->ip."");

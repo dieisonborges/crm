@@ -15,6 +15,7 @@
         "laravel/tinker": "^1.0",
         "laravellegends/pt-br-validator": "5.1.*",
         "league/flysystem-aws-s3-v3": "~1.0",
+        "torann/geoip": "^1.0",
         "twbs/bootstrap": "^4.1"
     },
     "require-dev": {
