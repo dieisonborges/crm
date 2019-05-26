@@ -63,6 +63,19 @@
 			@endif
 
 			<div class="col-md-12">
+				<div class="box box-primary">
+					<label><strong>GEO IP: </strong></label>
+
+					<br>
+					<br>
+
+					{!! html_entity_decode(str_replace(';','<br>',$log->geoip)) !!}
+
+				</div>
+				
+			</div>
+
+			<div class="col-md-12">
 				<div class="box box-success">
 					<label><strong>Info: </strong></label>
 					<textarea class="form-control" style="min-height: 200px;" >{{$log->info}}</textarea>					
