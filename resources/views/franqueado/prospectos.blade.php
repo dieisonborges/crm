@@ -2,17 +2,13 @@
     @extends('layouts.app')
     @section('title', 'Lista Prospectos')
     @section('content')    
-    <h1>Lista de Prospectos
-
-    <a href="{{url('listaProspectos/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
-
-    </h1>
+    <h1>Lista de Prospectos</h1>
 
 
 
         <div class="col-md-12">	
 
-            <form method="POST" enctype="multipart/form-data" action="">
+            <form method="POST" enctype="multipart/form-data" action="{{ url('franqueados/'.$franquia->id.'/prospectosBusca') }}">
                 @csrf
                 <div class="input-group input-group-lg">			
                     <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="">

@@ -158,7 +158,11 @@
                     <i class="fas fa-circle-notch"></i> Franquias
                   </a>
                 </li>
-
+                <li>
+                  <a href="{{ url('prospectosSincronizar') }}">
+                    <i class="fas fa-circle-notch"></i> Prospectos
+                  </a>
+                </li>
                 <li>
                   <a href="{{ url('sincronizarTudo') }}">
                     <i class="fas fa-sync text-red"></i> Sincronizar Tudo

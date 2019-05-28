@@ -3,9 +3,9 @@
     @section('title', 'Lista Prospectos')
     @section('content')    
     <h1>Lista de Prospectos
-
+    <!--
     <a href="{{url('listaProspectos/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
-
+    -->
     </h1>
 
 

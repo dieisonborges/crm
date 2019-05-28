@@ -246,6 +246,7 @@ Route::resource('franqueados', 'FranqueadoController');
 
 //Prospectos
 Route::get('franqueados/{id}/prospectos', 'FranqueadoController@prospectos');
+Route::post('franqueados/{id}/prospectosBusca', 'FranqueadoController@prospectosBusca');
 Route::get('franqueados/{id}/prospectos/{prospecto_id}', 'FranqueadoController@prospectoShow');
 
 
@@ -296,6 +297,10 @@ Route::get('produtosFranqueadoUpdate/{id}', 'SincronizarController@produtosFranq
 //Franquias
 Route::get('franquiasSincronizar', 'SincronizarController@franquias');
 Route::get('franquiasSincronizarUpdate/{id}', 'SincronizarController@franquiasUpdate');
+
+//Prospectos
+Route::get('prospectosSincronizar', 'SincronizarController@listaProspectos');
+Route::get('prospectosSincronizarUpdate', 'SincronizarController@listaProspectosUpdate');
 
 
 

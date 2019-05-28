@@ -1,4 +1,4 @@
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create_permission')): ?>  
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('create_produto')): ?>  
 	
 	<?php $__env->startSection('title', 'Novo Produto'); ?>
 	<?php $__env->startSection('content'); ?>

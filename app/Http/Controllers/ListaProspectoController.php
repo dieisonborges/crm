@@ -99,6 +99,13 @@ class ListaProspectoController extends Controller
      */
     public function store(Request $request)
     {
+        
+        return view('errors.403');
+
+        die();
+
+        //Desativado para sincronização
+
         //
         if(!(Gate::denies('create_lista_prospecto'))){
 

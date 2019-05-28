@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Http\Controllers\SincronizarController;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -26,6 +28,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        //Sincroniza CRM e Loja
+        
+        /*
+        $schedule->call(function () {
+            SincronizarController::all();
+        })->everyMinute()->emailOutputTo('dieisoncomix@gmail.com');
+        */
     }
 
     /**

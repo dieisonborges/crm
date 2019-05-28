@@ -689,6 +689,48 @@ class FranqueadoController extends Controller
         
     }
 
+    public function prospectosBusca($id, Request $request)
+    {
+        //
+        if(!(Gate::denies('read_franqueado'))){
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                //$lista_prospectos = $franquia->listaProspecto()->paginate(40);
+
+                $busca = $request->input('busca');
+                $lista_prospectos = $franquia->listaProspecto()
+                                    ->where('name', 'LIKE', '%'.$busca.'%')
+                                    ->orwhere('email', 'LIKE', '%'.$busca.'%')
+                                    ->orwhere('phone_number', 'LIKE', '%'.$busca.'%')
+                                    ->paginate(40);
+
+                //LOG ---------------------------------------------------------------------------
+                $this->log("lista_prospecto.franquia=".$franquia);
+                //-------------------------------------------------------------------------------
+
+                return view('franqueado.prospectos', array(
+                                                    //'buscar' => $busca,
+                                                    'franquia' => $franquia, 
+                                                    'lista_prospectos' => $lista_prospectos
+                                                ));
+            }else{
+                return view('errors.403');
+            }
+
+        }
+        else{
+            return view('errors.403');
+        }
+        
+    }
+
 
 
     public function prospectoShow($id, $prospecto_id)

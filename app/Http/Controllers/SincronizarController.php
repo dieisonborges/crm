@@ -9,6 +9,7 @@ use App\Upload;
 use App\Produto;
 use App\Categoria;
 use App\ProdutoPreco;
+use App\ListaProspecto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -951,6 +952,233 @@ class SincronizarController extends Controller
 
     /* ******************************************************************************* */
     /* ----------------- FIM Produtos Selecionados Pelo Franqueado -------------------- */
+    /* ******************************************************************************* */
+
+
+
+    /* ******************************************************************************* */
+    /* ------------------------------- ListaProspectos -------------------- */
+    /* ******************************************************************************* */
+
+
+
+    public function listaProspectos()
+    {
+        //
+        if(!(Gate::denies('read_sincronizar'))){
+            $lista_prospectos = ListaProspecto::orderBy('id')
+                                        ->get();  
+
+            //LOG -----------------------------------------------------
+            $this->log("ListaProspecto.index");
+            //-----------------------------------------------------
+
+            //Conecta nas lojas remotas
+            $lista_prospectos_remotas = DB::connection('mysql_loja')
+                                        ->table('lista_prospectos')
+                                        ->orderBy('id_7p')
+                                        ->get();
+
+            return  view('sincronizar.lista_prospecto', 
+                    array(
+
+                        'lista_prospectos' => $lista_prospectos,
+                        'lista_prospectos_remotas' => $lista_prospectos_remotas,
+                        'buscar' => null
+
+                    )); 
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function listaProspectosUpdate()
+    {
+        // Sincroniza da Loja para o CRM 7p
+        //
+        if(!(Gate::denies('update_sincronizar'))){
+
+            //Lista todos os prospectos remotos
+            $lista_prospecto_remotos = DB::connection('mysql_loja')
+                                        ->table('lista_prospectos')
+                                        ->get();
+
+            foreach ($lista_prospecto_remotos as $prospecto_remoto) {
+
+                $prospecto = ListaProspecto::where('email', $prospecto_remoto->email)
+                                            ->first();
+
+                if(!($prospecto)){
+
+                        /* ------------- Cria Novo Prospecto no 7p ------------ */
+                        $prospecto = new ListaProspecto;
+                        $prospecto->name = $prospecto_remoto->name;
+                        $prospecto->email = $prospecto_remoto->email;
+                        $prospecto->phone_number = $prospecto_remoto->phone_number;
+
+                        $status = $prospecto->save();
+
+                }
+
+            }
+
+
+            //Atualiza o ID 7p nas lojas
+
+            $prospectos = ListaProspecto::all();
+            foreach ($prospectos as $prospecto) {
+
+                //Verifica se existe nas lojas prospecto sem id_7p
+                $prospecto_remoto = DB::connection('mysql_loja')
+                                        ->table('lista_prospectos')
+                                        ->where('email', $prospecto->email)
+                                        ->where('id_7p', null)
+                                        ->first();
+                if($prospecto_remoto){
+                    //Adficiona o id_7p
+                    $status = DB::connection('mysql_loja')
+                            ->table('lista_prospectos')
+                            ->where('email', $prospecto->email)
+                            ->update(array(
+                                'id_7p' => $prospecto->id
+                            ));
+                }                
+
+            }
+
+
+            //FRANQUIA - Verifica Id's Lojas e Lista Prospectos ----------------------------------------------------------
+
+            $lista_prospectos_franquia_remoto = DB::connection('mysql_loja')
+                                                ->table('lista_prospecto_franquia')
+                                                ->get();
+
+
+            //Sincroniza a base remota com a local com a lista de prospectos FRANQUIAS
+            foreach ($lista_prospectos_franquia_remoto  as $lista_prospecto_franquia_remoto ) {
+
+                    //Pega o ID do 7p
+                    /* ------------------- Adaptação ------------ */
+                    $prospecto_temp = DB::connection('mysql_loja')
+                                            ->table('lista_prospectos')
+                                            ->where('id', $lista_prospecto_franquia_remoto->lista_prospecto_id)
+                                            ->first();
+                    /* ------------------- END Adaptação ------------ */
+
+                    
+                    //Conecta nas lojas locais
+                    $lista_prospecto_franquia = DB::table('lista_prospecto_franquia')
+                                            ->where('franquia_id', $lista_prospecto_franquia_remoto->franquia_id)
+                                            ->where('lista_prospecto_id', $prospecto_temp->id_7p)
+                                            ->first();                       
+
+
+                    //Verifica se existe local
+                    //Caso não exista ele cria
+                    if(!$lista_prospecto_franquia){
+                        $status =    DB::table('lista_prospecto_franquia')
+                                    ->insert(array(
+                                        'franquia_id' => $lista_prospecto_franquia_remoto->franquia_id,
+                                        'lista_prospecto_id' => $prospecto_temp->id_7p,
+                                    ));                            
+                    }
+            }
+
+            //PRODUTOS - Verifica Id's Lojas e Lista Prospectos ----------------------------------------------------------
+
+            $lista_prospectos_produto_remoto = DB::connection('mysql_loja')
+                                                ->table('lista_prospecto_produto')
+                                                ->get();
+
+            //Sincroniza a base remota com a local com a lista de prospectos PRODUTOS
+            foreach ($lista_prospectos_produto_remoto  as $lista_prospecto_produto_remoto ) {
+
+                    //Pega o ID do 7p
+                    /* ------------------- Adaptação ------------ */
+                    $prospecto_temp = DB::connection('mysql_loja')
+                                            ->table('lista_prospectos')
+                                            ->where('id', $lista_prospecto_produto_remoto->lista_prospecto_id)
+                                            ->first();
+                    /* ------------------- END Adaptação ------------ */
+
+                        
+                    //Conecta nas lojas locais
+                    $lista_prospecto_produto = DB::table('lista_prospecto_produto')
+                                            ->where('produto_id', $lista_prospecto_produto_remoto->produto_id)
+                                            ->where('lista_prospecto_id', $prospecto_temp->id_7p)
+                                            ->first();
+
+                        
+
+
+                    //Verifica se existe local
+                    //Caso não exista ele cria
+                    if(!$lista_prospecto_produto){
+                        $status =    DB::table('lista_prospecto_produto')
+                                    ->insert(array(
+                                        'produto_id' => $lista_prospecto_produto_remoto->produto_id,
+                                        'lista_prospecto_id' => $prospecto_temp->id_7p,
+                                    ));                            
+                    }
+            }
+
+            //CATEGORIAS - Verifica Id's Lojas e Lista Prospectos ----------------------------------------------------------
+
+            $lista_prospectos_categoria_remoto = DB::connection('mysql_loja')
+                                                ->table('lista_prospecto_categoria')
+                                                ->get();
+
+            //Sincroniza a base remota com a local com a lista de prospectos categoriaS
+            foreach ($lista_prospectos_categoria_remoto  as $lista_prospecto_categoria_remoto ) {
+
+                    //Pega o ID do 7p
+                    /* ------------------- Adaptação ------------ */
+                    $prospecto_temp = DB::connection('mysql_loja')
+                                            ->table('lista_prospectos')
+                                            ->where('id', $lista_prospecto_categoria_remoto->lista_prospecto_id)
+                                            ->first();
+                    /* ------------------- END Adaptação ------------ */
+
+                        
+                    //Conecta nas lojas locais
+                    $lista_prospecto_categoria = DB::table('lista_prospecto_categoria')
+                                            ->where('categoria_id', $lista_prospecto_categoria_remoto->categoria_id)
+                                            ->where('lista_prospecto_id', $prospecto_temp->id_7p)
+                                            ->first();
+
+                        
+
+
+                    //Verifica se existe local
+                    //Caso não exista ele cria
+                    if(!$lista_prospecto_categoria){
+                        $status =    DB::table('lista_prospecto_categoria')
+                                    ->insert(array(
+                                        'categoria_id' => $lista_prospecto_categoria_remoto->categoria_id,
+                                        'lista_prospecto_id' => $prospecto_temp->id_7p,
+                                    ));                            
+                    }
+            }
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("lista_prospecto.sync");
+            //--------------------------------------------------------------------------------------
+
+            return redirect('prospectosSincronizar/')->with('success', 'Sincronizado com sucesso!');
+            
+        }
+        else{
+            return view('errors.403');
+        }
+        
+    }
+
+    /* ******************************************************************************* */
+    /* --------------------------- FIM ListaProspectos -------------------- */
     /* ******************************************************************************* */
 
 
