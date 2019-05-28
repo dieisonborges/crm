@@ -17,6 +17,8 @@ use Gate;
 use DB;
 
 
+
+
 class SincronizarController extends Controller
 {
     //
@@ -66,6 +68,9 @@ class SincronizarController extends Controller
 
             //Sincroniza os Produtos de todos os franqueados
             $this->produtosFranqueadoUpdate('all');
+
+            //Sincroniza lista de Prospectos
+            $this->listaProspectosUpdate();
 
             return redirect()->back()->with('success','Sincronização TOTAL efetuada com sucesso!');
 

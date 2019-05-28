@@ -33,9 +33,10 @@ class Kernel extends ConsoleKernel
         
         /*
         $schedule->call(function () {
-            SincronizarController::all();
+            SincronizarController::listaProspectosUpdate();
         })->everyMinute()->emailOutputTo('dieisoncomix@gmail.com');
         */
+        
     }
 
     /**
