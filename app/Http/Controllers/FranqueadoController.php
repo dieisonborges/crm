@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Franquia;
 use App\User;
 use App\Produto;
+use App\Convite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Gate; 
 use DB;
+use Mail;
 
 
 //Log
@@ -67,6 +69,23 @@ class FranqueadoController extends Controller
 
     public function __construct(Franquia $franquia){
         $this->franquia = $franquia;
+    }
+
+    private function conviteCodeGenerator()
+    {
+        
+        $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
+
+        $protocolo = $chars[rand (0 , 24)];
+        $protocolo .= $chars[rand (0 , 24)];
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+
+        return "CF".date("Ymd").$protocolo;
     }
 
 
@@ -788,6 +807,245 @@ class FranqueadoController extends Controller
         }
         
     }
+
+
+/*=====================================================================================*/
+/* --------------------------- Convite GERADO pelo Franquado VIP --------------------- */
+/*=====================================================================================*/
+
+
+    public function convite(){
+        //Gera convite via Franqueado
+
+        if(!(Gate::denies('read_franqueado'))){
+
+            $user = auth()->user();
+
+            $convites = Convite::where('user_id', $user->id)->paginate(40);
+
+            $qtd_convites_usuario = $user->qtd_convites;
+
+            //$qtd_convites_usados = Convite::where('status', 0)->where('user_id', $user->id)->count();
+
+            $qtd_convites_usados = Convite::where('user_id', $user->id)->count();
+
+            //LOG -------------------------------------------------------------------------------------
+            $this->log("convite.index");
+            //-----------------------------------------------------------------------------------
+
+            return view('franqueado.convite', array(
+                                            'convites' => $convites, 
+                                            'qtd_convites_usuario' => $qtd_convites_usuario,
+                                            'qtd_convites_usados' => $qtd_convites_usados,
+                                            'buscar' => null
+                                        ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    // Seleciona por id
+    public function conviteShow($id){
+        //Gera convite via Franqueado
+
+        if(!(Gate::denies('read_franqueado'))){
+            $convite = Convite::find($id);
+
+            //LOG ---------------------------------------------------------------------------
+            $this->log("convite.show.id=".$id);
+            //-------------------------------------------------------------------------------
+           
+
+            return view('franqueado.convite_show', array('convite' => $convite));
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
+    public function conviteBusca (Request $request){
+        //Gera convite via Franqueado
+
+        if(!(Gate::denies('read_franqueado'))){
+            $buscaInput = $request->input('busca');
+
+            $user = auth()->user();
+
+            $convites = Convite::where(function ($query) use ($buscaInput) {
+                $query->where('codigo', 'LIKE', '%'.$buscaInput.'%')
+                      ->orwhere('email', 'LIKE', '%'.$buscaInput.'%');
+            })
+            ->where('user_id', $user->id)
+            ->paginate(40);
+
+
+
+            $qtd_convites_usuario = $user->qtd_convites;
+
+            //$qtd_convites_usados = Convite::where('status', 0)->where('user_id', $user->id)->count();
+
+            $qtd_convites_usados = Convite::where('user_id', $user->id)->count();
+
+            //LOG ---------------------------------------------------------------------------------
+            $this->log("convite.ibusca=".$buscaInput);
+            //-------------------------------------------------------------------------------------
+
+            return view('franqueado.convite', array(
+                                            'convites' => $convites, 
+                                            'qtd_convites_usuario' => $qtd_convites_usuario,
+                                            'qtd_convites_usados' => $qtd_convites_usados,
+                                            'buscar' => null
+                                        ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function conviteCreate(){
+
+        //Gera convite via Franqueado
+        if(!(Gate::denies('create_franqueado'))){
+
+            $user = auth()->user();
+
+
+            //Verifica se tem convites
+            $convites = Convite::where('user_id', $user->id)->paginate(40);
+
+            $qtd_convites_usuario = $user->qtd_convites;
+
+            //$qtd_convites_usados = Convite::where('status', 0)->where('user_id', $user->id)->count();
+
+            $qtd_convites_usados = Convite::where('user_id', $user->id)->count();
+
+
+            //Verifica se é VIP
+
+            //Verifica se o usuário é VIP e tem convites
+            if(($user->franqueadoVip()->count())and($qtd_convites_usuario-$qtd_convites_usados )>0){
+                //LOG ------------------------------------------------------------
+                $this->log("convite.franqueado.create");
+                //----------------------------------------------------------------
+
+                return view('franqueado.convite_create');  
+
+            }else{
+                return view('errors.403');
+            }
+
+                            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    // Criar
+    public function conviteStore(Request $request){
+        //Gera convite via Franqueado
+        if(!(Gate::denies('create_franqueado'))){
+
+
+            $user = auth()->user();
+
+            //Verifica se tem convites
+            $convites = Convite::where('user_id', $user->id)->paginate(40);
+
+            $qtd_convites_usuario = $user->qtd_convites;
+
+            //$qtd_convites_usados = Convite::where('status', 0)->where('user_id', $user->id)->count();
+
+            $qtd_convites_usados = Convite::where('user_id', $user->id)->count();
+
+
+
+
+            //Verifica se é VIP
+
+            //Verifica se o usuário é VIP e tem convites
+            if(($user->franqueadoVip()->count())and($qtd_convites_usuario-$qtd_convites_usados )>0){
+
+                //Validação
+                $this->validate($request,[
+                        'email' => 'required|min:3',               
+                ]);
+
+                //Verifica se o email já foi convidado
+                if((Convite::where('email', $request->input('email'))->count())>0){
+                    return redirect('franqueados/convite/create')->with('danger', 'O usuário já foi convidado por um franqueado');
+                }else{
+
+                                    
+                    $convite = new Convite();
+                    $convite->email = $request->input('email');
+                    $convite->codigo = $this->conviteCodeGenerator();
+                    $convite->user_id = auth()->user()->id;
+
+
+                    $mail_to = $request->input('email');
+
+                    $msg="                
+                        Para iniciar o acesso à plataforma de relacionamento clique no link abaixo, e confirme os dados: <br><br>
+                        Código: <b>".$convite->codigo."</b> <br>
+                        E-mail: <b>".$mail_to."</b> <br><br>
+                        Gerado em: <b>".date("d/m/Y às H:m")."</b><br><br>               
+                        link: ".url('/register')." 
+                        <br><br>
+                        Convite enviado por:".$user->name." | ".$user->email."
+                        <br><br><br>
+                        <span style='color:red;'>*O convite expira em 48 horas</span>
+                        <br><br><br>           
+                    ";
+
+                    //LOG --------------------------------------------------------
+                    $this->log("convite.franqueado.store");
+                    //------------------------------------------------------------
+
+                    if($convite->save()){
+
+                        $mailData = array(
+                            'nome' => "CRM e-Cardume | Relacionamento",
+                            'email' => "atendimento@ecardume.com.br",
+                            'assunto' => "Parabéns! Você recebeu um convite e-Cardume",
+                            'msg' => $msg,
+                        );
+
+                        
+                        //Destinatario
+                        $mailFrom = array(
+                                    'email'     => $mail_to,
+                                    'name'      => 'Convidado',
+                                    'subject'   => 'CRM e-Cardume | Relacionamento'
+                                  );
+
+
+                        Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
+                            $m->from('atendimento@ecardume.com.br','CRM e-Cardume | Relacionamento');
+                            $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+                        });
+
+                        return redirect('franqueados/convites')->with('success', 'Convite (Regra) cadastrada com sucesso!');
+                    }else{
+                        return view('errors.403');
+                    }
+                }
+            }else{
+                return redirect('franqueados/convite/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
+/*=====================================================================================*/
+/* --------------------------- END Convite GERADO pelo Franquado VIP ----------------- */
+/*=====================================================================================*/
 
     
 

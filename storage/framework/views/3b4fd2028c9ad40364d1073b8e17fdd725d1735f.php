@@ -1,7 +1,7 @@
 <?php $__env->startSection('title', 'Convites'); ?>
 <?php $__env->startSection('content'); ?>
 	<h1>
-        Permission - Rótulo - Regra
+        Convite
         <small><?php echo e($convite->name); ?></small>
     </h1>
 	<div class="row">		

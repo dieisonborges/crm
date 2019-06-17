@@ -64,6 +64,9 @@ Route::get('user/{id}/setors', 'UserController@setors');
 Route::post('user/setorUpdate', 'UserController@setorUpdate');
 Route::post('user/setorDestroy', 'UserController@setorDestroy');
 
+Route::get('user/{id}/convites', 'UserController@convites');
+Route::post('user/conviteUpdate', 'UserController@conviteUpdate');
+
 
 
 Route::resource('/categorias', 'CategoriaController');
@@ -226,6 +229,14 @@ Route::get('/storagePublic/{fileName}', 'UploadController@filePublicStorageServe
 
 
 //Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
+
+//Convites
+Route::get('franqueados/convites', 'FranqueadoController@convite');
+Route::get('franqueados/conviteShow/{id}', 'FranqueadoController@conviteShow');
+Route::post('franqueados/convites/busca', 'FranqueadoController@conviteBusca');
+Route::get('franqueados/convite/create', 'FranqueadoController@conviteCreate');
+Route::post('franqueados/convite/conviteStore', 'FranqueadoController@conviteStore');
+
 //--Config Franquias
 Route::post('franqueados/{id}/configuracoesUpdate', 'FranqueadoController@configuracoesUpdate');
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
@@ -248,6 +259,9 @@ Route::resource('franqueados', 'FranqueadoController');
 Route::get('franqueados/{id}/prospectos', 'FranqueadoController@prospectos');
 Route::post('franqueados/{id}/prospectosBusca', 'FranqueadoController@prospectosBusca');
 Route::get('franqueados/{id}/prospectos/{prospecto_id}', 'FranqueadoController@prospectoShow');
+
+
+
 
 
 //Produto Preços

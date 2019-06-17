@@ -40,9 +40,10 @@
             <tr>
                 <th>ID</th>
                 <th>Apelido</th>
-                <th>Nome</th>
+                <th>Nome</th>                
                 <th>e-mail</th>
                 <th>CPF</th>
+                <th>Convites</th>
                 <th>Líder</th>
                 <th>Destituir</th>
             </tr>
@@ -53,6 +54,13 @@
                 <td><a href="{{URL::to('users')}}/{{$franqueado_vip->id}}">{{$franqueado_vip->name}}</a></td>
                 <td><a href="{{URL::to('users')}}/{{$franqueado_vip->id}}">{{$franqueado_vip->email}}</a></td>
                 <td><a href="{{URL::to('users')}}/{{$franqueado_vip->id}}">{{$franqueado_vip->cpf}}</a></td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$franqueado_vip->id.'/convites')}}"> 
+
+                        <i class="fa fa-edit"></i> |  
+
+                        {{$franqueado_vip->qtd_convites}}</a>
+                </td>
                 <td>
                     <a href="{{URL::to('users')}}/{{$franqueado_vip->id}}">
                     @if(($franqueado_vip->lider)==0)

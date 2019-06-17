@@ -31,7 +31,7 @@
             <?php endif; ?>
            
 
-            <a href="<?php echo e(URL::to('clients')); ?>/imagem" class="btn btn-primary col-md-12"><i class="fa fa-image"></i> Alterar Imagem</a>
+            <a href="<?php echo e(URL::to('clients')); ?>/imagem" class="btn btn-primary btn-xs"><i class="fa fa-image"></i> Alterar Imagem</a>
 
         </div>
 
@@ -53,7 +53,7 @@
             <?php endif; ?>
 
         </div> 
-  </div> 
+  
 
         <div class="col-md-12">              
               
@@ -94,6 +94,8 @@
         <?php endif; ?>
 
 	</div>
+
+  <div class="col-md-12">
 
 
 
@@ -244,7 +246,6 @@
     <?php else: ?>
 
     <?php endif; ?>
-	
-	
+    </div>	
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

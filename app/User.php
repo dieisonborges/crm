@@ -48,6 +48,8 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Franquia::class);
     }
 
+
+
     public function franqueadoVip(){        
         return $this->hasMany(\App\FranqueadoVip::class);
     }
@@ -63,6 +65,10 @@ class User extends Authenticatable
 
     public function uploads(){        
         return $this->belongsToMany('App\Upload','imagem_user');
+    }
+
+    public function convites(){        
+        return $this->belongsTo(\App\Convite::class);
     }
 
     /* --------------------- SEGURANCA ----------------------*/

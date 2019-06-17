@@ -38,6 +38,7 @@
                     <th>CPF</th>
                     <th>Celular</th>
                     <th>Status</th>
+                    <th>Convites</th>
                     <th>Login<br> (Max 15)</th>
                     <th>Desativar <br>Ativar</th>
                     <th>Roles <br> Grupo</th>
@@ -58,6 +59,9 @@
                         @else
                             <span class="label label-danger">INATIVO</span>
                         @endif
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/convites')}}"> {{$user->qtd_convites}}</a>
                     </td>
                     <td>
                         @if (($user->login)<=15)
@@ -85,6 +89,7 @@
                             
                         @endif
                     </td>
+                    
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
                     </td>

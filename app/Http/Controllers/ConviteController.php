@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Gate;
 use Mail;
 use Carbon\Carbon;
+
 class ConviteController extends Controller
 {
     /* ----------------------- LOGS ----------------------*/
@@ -53,7 +54,7 @@ class ConviteController extends Controller
 
     public function index(){
 
-        return view('errors.419');
+        //return view('errors.419');
 
         if(!(Gate::denies('read_convite'))){
             $convites = Convite::paginate(40);  
@@ -95,9 +96,9 @@ class ConviteController extends Controller
                                 ->orwhere('email', 'LIKE', '%'.$buscaInput.'%')
                                 ->paginate(40);  
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG ---------------------------------------------------------------------------------
             $this->log("convite.ibusca=".$buscaInput);
-            //--------------------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------
 
             return view('convite.index', array('convites' => $convites, 'buscar' => $buscaInput ));
         }
@@ -134,6 +135,7 @@ class ConviteController extends Controller
             $convite = new Convite();
             $convite->email = $request->input('email');
             $convite->codigo = $this->conviteCodeGenerator();
+            $convite->user_id = auth()->user()->id;
 
             $mail_to = $request->input('email');
 
@@ -233,7 +235,7 @@ class ConviteController extends Controller
     // Criar
     public function reenviar($id){
 
-        if(!(Gate::denies('read_convite'))){
+        if((!(Gate::denies('read_convite')))or(!(Gate::denies('read_franqueado')))){
             
             $convite = Convite::find($id);
 
@@ -284,9 +286,9 @@ class ConviteController extends Controller
             });
 
             if(!$status){
-                return redirect('convites/')->with('success', 'Convite reenviado com sucesso!');
+                return redirect()->back()->with('success','Convite reenviado com sucesso!');
             }else{
-                return redirect('convites/')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect()->back()->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{
@@ -294,9 +296,5 @@ class ConviteController extends Controller
         }
 
     }
-
-
-
-
 
 }

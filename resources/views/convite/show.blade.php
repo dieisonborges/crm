@@ -2,7 +2,7 @@
 @section('title', 'Convites')
 @section('content')
 	<h1>
-        Permission - Rótulo - Regra
+        Convite
         <small>{{$convite->name}}</small>
     </h1>
 	<div class="row">		

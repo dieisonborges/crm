@@ -180,7 +180,7 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-paper-plane"></i> <span>Propecção</span>
+              <i class="fa fa-paper-plane"></i> <span>Prospecção</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -195,7 +195,7 @@
 
                 <li>
                   <a href="{{ url('listaProspectos') }}">
-                    <i class="fas fa-list-alt"></i> <span>Lista Propectos</span>
+                    <i class="fas fa-list-alt"></i> <span>Lista Prospectos</span>
                   </a>
                 </li>
 
@@ -332,6 +332,7 @@
             <ul class="treeview-menu">
                 <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>
                 <li><a href="{{ url('franqueados/produtos') }}"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
+                <li><a href="{{ url('franqueados/convites') }}"><i class="fas fa-paper-plane"></i> Convites</a></li>
             </ul>
           </li>
 

@@ -127,6 +127,21 @@
         </div>
         <!-- /.col -->
 
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="<?php echo e(url('franqueados/convites')); ?>">
+              <span class="info-box-icon bg-aqua"><i class="fa fa-store"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Convites</span>
+              <span class="info-box-number">Novos Franqueados</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
 
         <div class="col-md-12 col-sm-12 col-xs-12">
 

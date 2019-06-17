@@ -1,56 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.login')
+@section('content')
+<div class="login-box">
+  
+  <!-- /.login-logo -->
+  <div class="login-box-body">
 
-    <title>Service Unavailable</title>
+    <a href="/">
+        <b style="display:none;">e-Cardume</b>
+        <img src="{{ asset('img/logo/logo-ecardume.png') }}" width="100%">
+    </a>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <hr>
 
-    <!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
+    @include('layouts.error')
 
-        .full-height {
-            height: 100vh;
-        }
+    
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-ban"></i> Erro: 503 </h4>
 
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
+        <h2><i class="fa fa-bug"></i> Todo mundo erra um dia, e hoje parece que foram nossos servidores... :(</h2>
+        
 
-        .position-ref {
-            position: relative;
-        }
+        <br>
+        <small>Service Unavailable</small>
+        <br>
+        <small>Serviço Indisponível</small>
+        <br>
+        <small><p>Ooops, server error occurred.</p> Please check again later.</small>
 
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-    </style>
-</head>
-<body>
-<div class="flex-center position-ref full-height">
-    <div class="content">
-        <div class="title error500">
-            <p>Ooops, server error occurred.</p> Please check again later.
-        </div>
     </div>
+
+    <a class="btn btn-default" href="javascript:history.go(-1)"><span class="fa fa-arrow-left"></span> Voltar</a>
+
+    <a class="btn btn-default" href="{{url('/')}}" style="float: right;"><span class="fa fa-home"></span> Login</a>
+
+       
+
+
+   
+
+  </div>
+  <!-- /.login-box-body -->
 </div>
-</body>
-</html>
+<!-- /.login-box -->
+@endsection

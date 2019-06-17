@@ -464,6 +464,53 @@ class UserController extends Controller
         }
     }
 
+
+    public function convites($id){        
+        if(!(Gate::denies('read_user'))){        
+            //Recupera User
+            $user = $this->user->find($id);
+            
+            //LOG ----------------------------------------------------------------------------------
+            $this->log("user.convite.id=".$id);
+            //--------------------------------------------------------------------------------------
+
+            return view('user.convite', compact('user'));
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
+
+    public function conviteUpdate(Request $request){
+
+        if(!(Gate::denies('update_user'))){            
+                    
+            
+            $qtd_convites = $request->input('qtd_convites');
+            $user_id = $request->input('user_id'); 
+
+            $user  = User::find($user_id);
+
+            //LOG ---------------------------------------------------------------------------------
+            $this->log("user.conviteUpdate.id=".$user_id."Antes=".$user->qtd_convites."Depois=".$qtd_convites);
+            //-------------------------------------------------------------------------------------
+
+            $user->qtd_convites = $qtd_convites;
+          
+            if($user->save()){
+                return redirect()->back()->with('success','Modificação efetuada com sucesso!');
+            }else{
+                return redirect()->back()->with('danger','Houve um problema, tente novamente!');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
        
     
 }
