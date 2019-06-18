@@ -1067,7 +1067,7 @@ class FranqueadoController extends Controller
 public function franquiaCreate($convite_id)
     {
         //
-        if(!(Gate::denies('read_franquia'))){
+        if(!(Gate::denies('read_franqueado'))){
 
             $user = auth()->user();
 
@@ -1103,7 +1103,7 @@ public function franquiaCreate($convite_id)
     public function franquiaStore(Request $request)
     {
     //
-        if(!(Gate::denies('read_franquia'))){
+        if(!(Gate::denies('read_franqueado'))){
             //Validação
             $this->validate($request,[
                     'nome' => 'required|min:3',
