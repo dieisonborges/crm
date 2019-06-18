@@ -1,4 +1,4 @@
-@can('create_franquia')  
+@can('create_franqueado')  
 	@extends('layouts.app')
 	@section('title', 'Novo Franquia')
 	@section('content')
