@@ -225,7 +225,7 @@ class RegisterController extends Controller
             
             'name' => $data['name'],
             'apelido' => $data['apelido'],
-            
+            'status'    => 1,
             'email' => $data['email'],
             'country' => $data['country'],
             'cpf' => $data['cpf'],

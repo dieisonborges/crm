@@ -9,7 +9,7 @@
 		<div class="col-md-6">
 			<ul>
 				<li class="form-control"><strong>ID: </strong> {{$convite->id}}</li>
-				<li class="form-control"><strong>Código: </strong> {{$convite->codigo}}</li>
+				<li class="form-control"><strong>Código: </strong> {{substr($convite->codigo, 0, -4)}}****</li>
 				<li class="form-control"><strong>Gerado em: </strong> {{date('d/m/Y H:i:s', strtotime($convite->created_at))}}</li>				
 				<li class="form-control"><strong>Expira em: </strong> {{date('d/m/Y H:i:s', strtotime('+2 days', strtotime($convite->created_at)))}}</li>
 				<li class="form-control"><strong>Usado: </strong> 

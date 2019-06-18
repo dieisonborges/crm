@@ -6,6 +6,7 @@ use App\Franquia;
 use App\User;
 use App\Produto;
 use App\Convite;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -1172,6 +1173,12 @@ public function franquiaCreate($convite_id)
                             ->first();
 
                     $dono = User::where('email', $convite->email)->first();
+
+                    /* -------------- Adiciona o usuário ao Grupo (Role) franqueado ------- */
+                    $role = Role::where('name', 'franqueado')->first();
+
+                    $status6 = $role->roleUser()->attach($dono->id);
+                    /* -------------- END Adiciona o usuário ao Grupo (Role) franqueado ------- */
 
                     //Vincula ao dono do convite
                     $status3 = $dono->franquia()->attach($franquia->id);

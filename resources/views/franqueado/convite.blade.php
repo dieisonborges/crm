@@ -68,7 +68,7 @@
             <tr>
                 <td>{{$convite->id}}</td>
                 <td><a href="{{URL::to('franqueados/conviteShow')}}/{{$convite->id}}">{{$convite->email}}</a></td>
-                <td><a href="{{URL::to('franqueados/conviteShow')}}/{{$convite->id}}">{{$convite->codigo}}</a></td>
+                <td><a href="{{URL::to('franqueados/conviteShow')}}/{{$convite->id}}">{{substr($convite->codigo, 0, -4)}}****</a></td>
                 <td>
                 <a href="{{URL::to('franqueados/conviteShow')}}/{{$convite->id}}">
                     {{date('d/m/Y H:i:s', strtotime($convite->created_at))}}
