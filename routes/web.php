@@ -237,6 +237,9 @@ Route::post('franqueados/convites/busca', 'FranqueadoController@conviteBusca');
 Route::get('franqueados/convite/create', 'FranqueadoController@conviteCreate');
 Route::post('franqueados/convite/conviteStore', 'FranqueadoController@conviteStore');
 
+Route::get('franqueados/franquiaCreate/{id}', 'FranqueadoController@franquiaCreate');
+Route::post('franqueados/franquiaStore', 'FranqueadoController@franquiaStore');
+
 //--Config Franquias
 Route::post('franqueados/{id}/configuracoesUpdate', 'FranqueadoController@configuracoesUpdate');
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');

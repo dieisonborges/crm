@@ -60,6 +60,7 @@
                 <th>Código</th> 
                 <th>Gerado em:</th>
                 <th>Expira em:</th>
+                <th>Afiliado</th>
                 <th>Reenviar:</th>   
                 <th>Usado:</th>
             </tr>
@@ -76,6 +77,19 @@
                     {{date('d/m/Y H:i:s', strtotime('+2 days', strtotime($convite->created_at)))}}
                     </a>
                 </td>
+                <td>
+                    @if($convite->status)
+                        <span class="btn btn-warning btn-xs">Sem Cadastro</span>
+                    @else
+
+                        @if($convite->franquia_id)
+                            <span class="btn btn-success btn-xs">O Convite já gerou uma franquia</span>
+                        @else
+                            <a class='btn btn-primary btn-xs' href="{{URL::to('franqueados/franquiaCreate/'.$convite->id)}}"><i class="fa fa-store"></i> Gerar Franquia</a>
+                        @endif                        
+                        
+                    @endif
+                </td> 
                 <td>
                     @if($convite->status)
                         <a class='btn btn-primary btn-xs' href="{{URL::to('convites/reenviar/'.$convite->id)}}"><i class="fa fa-paper-plane"></i> Reenviar</a>

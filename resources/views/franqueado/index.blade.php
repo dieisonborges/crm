@@ -4,6 +4,11 @@
     @section('content')
         <h1><i class="fa fa-building"></i> Franquias</h1>
 
+        <a style="float: right;" href="{{url('franqueados/convites')}}" class="btn btn-xs btn-primary">
+            <i class="fa fa-paper-plane"></i>
+            Convites
+        </a>
+
         @if (session('status'))
             <div class="alert alert-success" franquia="alert">
                 {{ session('status') }}
@@ -107,16 +112,16 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>
-                    <th>Ver</th>
+                    <!--<th>Ver</th>-->
                 </tr>
                 @forelse ($afiliados as $afiliado)
                 <tr>
                     <td>{{$afiliado->id}}</td>
-                    <td><a href="{{URL::to('franqueados')}}/{{$afiliado->id}}/dashboard">{{$afiliado->codigo_franquia}}</a></td>
-                    <td><a href="{{URL::to('franqueados')}}/{{$afiliado->id}}/dashboard">{{$afiliado->nome}}</a></td>
-                    <td><a href="{{URL::to('franqueados')}}/{{$afiliado->id}}/dashboard">{{ str_limit(strip_tags($afiliado->descricao), $limit = 40, $end = '...') }}</a></td>
+                    <td><a href="#">{{$afiliado->codigo_franquia}}</a></td>
+                    <td><a href="#">{{$afiliado->nome}}</a></td>
+                    <td><a href="#">{{ str_limit(strip_tags($afiliado->descricao), $limit = 40, $end = '...') }}</a></td>
                     <td>
-                        <a href="{{URL::to('franqueados')}}/{{$afiliado->id}}/dashboard">
+                        <a href="#">
                         @if($afiliado->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
@@ -124,6 +129,8 @@
                         @endif
                         </a>
                     </td>
+
+                    <!--
 
                     <td>
                         <a href="{{URL::to('franqueados')}}/{{$afiliado->id}}/dashboard">
@@ -133,7 +140,9 @@
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
-                    </td>                  
+                    </td>       
+
+                    -->           
                     
                 </tr>                
                 @empty

@@ -4,6 +4,11 @@
     <?php $__env->startSection('content'); ?>
         <h1><i class="fa fa-building"></i> Franquias</h1>
 
+        <a style="float: right;" href="<?php echo e(url('franqueados/convites')); ?>" class="btn btn-xs btn-primary">
+            <i class="fa fa-paper-plane"></i>
+            Convites
+        </a>
+
         <?php if(session('status')): ?>
             <div class="alert alert-success" franquia="alert">
                 <?php echo e(session('status')); ?>
@@ -108,16 +113,16 @@
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>
-                    <th>Ver</th>
+                    <!--<th>Ver</th>-->
                 </tr>
                 <?php $__empty_1 = true; $__currentLoopData = $afiliados; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $afiliado): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr>
                     <td><?php echo e($afiliado->id); ?></td>
-                    <td><a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($afiliado->id); ?>/dashboard"><?php echo e($afiliado->codigo_franquia); ?></a></td>
-                    <td><a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($afiliado->id); ?>/dashboard"><?php echo e($afiliado->nome); ?></a></td>
-                    <td><a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($afiliado->id); ?>/dashboard"><?php echo e(str_limit(strip_tags($afiliado->descricao), $limit = 40, $end = '...')); ?></a></td>
+                    <td><a href="#"><?php echo e($afiliado->codigo_franquia); ?></a></td>
+                    <td><a href="#"><?php echo e($afiliado->nome); ?></a></td>
+                    <td><a href="#"><?php echo e(str_limit(strip_tags($afiliado->descricao), $limit = 40, $end = '...')); ?></a></td>
                     <td>
-                        <a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($afiliado->id); ?>/dashboard">
+                        <a href="#">
                         <?php if($afiliado->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
@@ -125,6 +130,8 @@
                         <?php endif; ?>
                         </a>
                     </td>
+
+                    <!--
 
                     <td>
                         <a href="<?php echo e(URL::to('franqueados')); ?>/<?php echo e($afiliado->id); ?>/dashboard">
@@ -134,7 +141,9 @@
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
                         </a>
-                    </td>                  
+                    </td>       
+
+                    -->           
                     
                 </tr>                
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

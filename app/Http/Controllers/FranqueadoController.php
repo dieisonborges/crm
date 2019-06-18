@@ -65,6 +65,19 @@ class FranqueadoController extends Controller
                 <option value="TO">Tocantins - TO</option>';
     }
 
+    private function codFranquiaGen()
+    {
+        
+        $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
+
+        $protocolo = $chars[rand (0 , 24)];
+        $protocolo .= $chars[rand (0 , 24)];
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+
+        return "FA".date("y").$protocolo;
+    }
+
     private $franquia;
 
     public function __construct(Franquia $franquia){
@@ -1045,6 +1058,149 @@ class FranqueadoController extends Controller
 
 /*=====================================================================================*/
 /* --------------------------- END Convite GERADO pelo Franquado VIP ----------------- */
+/*=====================================================================================*/
+
+/*=====================================================================================*/
+/* --------------------------- Franqueado gera a loja do afiliado -------------------- */
+/*=====================================================================================*/
+
+public function franquiaCreate($convite_id)
+    {
+        //
+        if(!(Gate::denies('read_franquia'))){
+
+            $user = auth()->user();
+
+            //Verifica se tem convites
+            $convite = Convite::where('user_id', $user->id)->where('id', $convite_id)->first();
+
+            if(($convite)and(!($convite->franquia_id))){ 
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franqueado.franquia.create");
+                //--------------------------------------------------------------------------------------
+            
+                $select_estados_brasil = $this->selectEstadosBrasil();
+
+                return view('franqueado.franquia_create', compact('convite', 'select_estados_brasil'));
+
+            }else{
+                return view('errors.403');
+            }
+            
+        }
+        else{
+            return view('errors.403');
+        } 
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function franquiaStore(Request $request)
+    {
+    //
+        if(!(Gate::denies('read_franquia'))){
+            //Validação
+            $this->validate($request,[
+                    'nome' => 'required|min:3',
+                    'slogan' => 'required|min:3',      
+                    'descricao' => 'required|min:10',
+                    'loja_url'  =>  'required|min:3|unique:franquias',
+                    'loja_url_alternativa'  =>  'required|min:3|unique:franquias',
+                    //'cnpj' => 'cnpj',
+                    'email' => 'email'
+
+            ]);
+
+            $convite_id = $request->input('convite_id');
+
+            $user = auth()->user();
+
+            //Verifica se tem convites
+            $convite = Convite::where('user_id', $user->id)->where('id', $convite_id)->first();
+
+            //Verifica se o convite já gerou uma franquia
+
+
+            if(($convite)and(!($convite->franquia_id))){     
+                    
+                $franquia = new Franquia();
+                $franquia->codigo_franquia = $this->codFranquiaGen();
+                $franquia->nome = $request->input('nome');
+                $franquia->slogan = $request->input('slogan');
+                $franquia->descricao = $request->input('descricao');
+                $franquia->url_site = $request->input('url_site');
+                $franquia->url_blog = $request->input('url_blog');
+
+                //Dados Comerciais
+                $franquia->cnpj = $request->input('cnpj');
+                $franquia->telefone = $request->input('telefone');
+                $franquia->email = $request->input('email');
+                $franquia->endereco = $request->input('endereco');
+                $franquia->endereco_numero = $request->input('endereco_numero');
+                $franquia->endereco_bairro = $request->input('endereco_bairro');
+                $franquia->endereco_cep = $request->input('endereco_cep');
+                $franquia->endereco_cidade = $request->input('endereco_cidade');
+                $franquia->endereco_estado = $request->input('endereco_estado');
+
+
+
+                $franquia->status = "1"; //Franquia Ativa
+
+                //URL da Loja
+                $franquia->loja_url = $request->input('loja_url');
+                $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
+                
+                //Insere afiliado
+                $franquia->user_id_afiliado = $user->id;
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franqueado.franquia.store=".$request);
+                //--------------------------------------------------------------------------------------
+
+                if($franquia->save()){
+
+                    /* ----------------- INSERE DONO --------------------------*/
+                    //$franquia_last_id = DB::getPdo()->lastInsertId();
+
+                    $franquia = Franquia::where('loja_url', $request->input('loja_url'))
+                            ->where('loja_url_alternativa', $request->input('loja_url_alternativa'))
+                            ->first();
+
+                    $dono = User::where('email', $convite->email)->first();
+
+                    //Vincula ao dono do convite
+                    $status3 = $dono->franquia()->attach($franquia->id);
+                    
+                    /* ----------------- END INSERE DONO --------------------------*/
+
+                    /* ----------------- Insere ID da Franquia no COnvite ---------*/
+
+                    $convite->franquia_id = $franquia->id;
+                    $status4 = $convite->save();
+
+                    /* ----------------- END Insere ID da Franquia no COnvite ---------*/
+
+                    return redirect('franqueados')->with('success', 'Franquia cadastrada com sucesso!');
+                }else{
+                    return redirect('franqueados/franquiaCreate/'.$id)->with('danger', 'Houve um problema, tente novamente.');
+                }
+            }
+            else{
+                return view('errors.403');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+/*=====================================================================================*/
+/* ----------------------- End Franqueado gera a loja do afiliado -------------------- */
 /*=====================================================================================*/
 
     
