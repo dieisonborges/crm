@@ -821,11 +821,71 @@ class SincronizarController extends Controller
                 }
             }
 
+            //Sincroniza os Produtos e suas categorias
+            $this->categoriasProdutoUpdate();
+
 
 
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("categoria.sync");
+            //--------------------------------------------------------------------------------------
+
+            return redirect('categorias/')->with('success', 'Sincronizado com sucesso!');
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function categoriasProdutoUpdate()
+    {
+        //
+        if(!(Gate::denies('update_sincronizar'))){
+
+            //Lista todas as categorias
+            $categorias_produto = $produtos = DB::table('categoria_produto')
+                                    ->get();
+
+            foreach ($categorias_produto as $categoria_produto) {
+                $categoria_remota = DB::connection('mysql_loja')
+                                        ->table('categoria_produto')
+                                        ->where('id', $categoria_produto->id)
+                                        ->first();
+                //Se existir atualiza
+                if($categoria_remota){
+                    $status =       DB::connection('mysql_loja')
+                                        ->table('categoria_produto')
+                                        ->where('id', $categoria_produto->id)
+                                        ->update(array(
+                                            'categoria_id' => $categoria_produto->categoria_id,
+                                            'produto_id' => $categoria_produto->produto_id,
+                                        ));
+                    if($status){
+                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+                //Caso não exista cria o registro
+                }else{
+                    $status =    DB::connection('mysql_loja')
+                                        ->table('categoria_produto')
+                                        ->insert(array(
+                                            'id' => $categoria_produto->id,
+                                            'categoria_id' => $categoria_produto->categoria_id,
+                                            'produto_id' => $categoria_produto->produto_id,
+                                        ));
+                    if(!$status){
+                       //return redirect('categoriasIntegrada/')->with('danger', 'Houve um problema!'); 
+                    }
+
+                }
+            }
+
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("categoria.produto.sync");
             //--------------------------------------------------------------------------------------
 
             return redirect('categorias/')->with('success', 'Sincronizado com sucesso!');
