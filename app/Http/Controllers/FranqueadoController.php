@@ -413,7 +413,11 @@ class FranqueadoController extends Controller
 
             $produto = Produto::find($id_produto)->where('status', 1)->first();
 
-            $imagens = $produto->imagens()->get();
+
+
+            $imagem_principal = $produto->imagemPrincipal()->first();
+
+            //dd($produto, $imagens, $id_produto);
 
             $produto_franquia = DB::table('produto_franquia')
                                     ->where('produto_id', $id_produto)
@@ -424,7 +428,7 @@ class FranqueadoController extends Controller
             $this->log("franqueado.lucro.produto=".$franquia."Produto=".$produto);
             //--------------------------------------------------------------------------------------
 
-            return view('franqueado.produto_lucro', compact('produto_franquia', 'franquia', 'produto', 'imagens'));
+            return view('franqueado.produto_lucro', compact('produto_franquia', 'franquia', 'produto', 'imagem_principal'));
 
             }else{
             return view('errors.403');

@@ -8,7 +8,7 @@ class Produto extends Model
 {
     //
     public function imagens(){        
-        return $this->belongsToMany('App\Upload','galeria_produto');
+        return $this->belongsToMany('App\Upload','galeria_produto', 'produto_id', 'upload_id');
     }
 
     public function categorias(){        
