@@ -3,7 +3,7 @@
 	<?php $__env->startSection('title', $orcamento->name); ?>
 	<?php $__env->startSection('content'); ?>
 		<h1>
-	        Orcamento 
+	        Orçamento 
 
 	        <?php if($orcamento->status==0): ?>
                 <span class="btn btn-primary btn-xs">Em edição</span> 
@@ -29,6 +29,9 @@
 	        		<?php if(($orcamento->status)==0): ?>
 		        		<a href="<?php echo e($orcamento->id); ?>/item" class="btn btn-primary">
 		        			<i class="fa fa-plus"></i> Adicionar Item
+		        		</a>
+		        		<a href="<?php echo e($orcamento->id); ?>/itemLote" class="btn btn-primary">
+		        			<i class="fa fa-plus"></i> Adicionar Item em Lotes
 		        		</a>
 		        	    <a href="<?php echo e($orcamento->id); ?>/edit" class="btn btn-warning">
 		        	    	<i class="fa fa-edit"></i> Editar
@@ -94,10 +97,8 @@
 
 			                        <form method="POST" action="<?php echo e(action('OrcamentoController@itemDestroy', $item->item_id)); ?>" id="formDelete<?php echo e($item->item_id); ?>">
 			                            <?php echo csrf_field(); ?>
-			                            <input type="hidden" name="_method" value="DELETE">
-			                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
-			                            <!--<input type="submit" name="Excluir">-->
-
+			                            <input type="hidden" name="item_id" value="<?php echo e($item->item_id); ?>">
+			                            <input type="hidden" name="orcamento_id" value="<?php echo e($orcamento->id); ?>">
 			                            <a href="javascript:confirmDelete<?php echo e($item->item_id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
 			                        </form> 
 
@@ -137,13 +138,13 @@
 
 		<hr class="hr">
 		<?php if(($orcamento->status)==0): ?>	
-			<a href="<?php echo e($orcamento->id); ?>/edit" class="btn btn-warning">Editar</a>
+			<a href="<?php echo e($orcamento->id); ?>/edit" class="btn btn-warning"><i class="fa fa-edit"></i>  Editar</a>
 		<?php endif; ?>		
 		
-			<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+			<a href="javascript:history.go(-1)" class="btn btn-success"><i class="fas fa-arrow-left"></i> Voltar</a>
 
 		<?php if(($orcamento->status)!=2): ?>	
-			<a href="<?php echo e($orcamento->id); ?>/cancelar" class="btn btn-danger" style="float: right;">Cancelar Orçamento</a>
+			<a href="<?php echo e($orcamento->id); ?>/cancelar" class="btn btn-danger" style="float: right;"><i class="fa fa-times-circle"></i> Cancelar Orçamento</a>
 		<?php endif; ?>
 	<?php $__env->stopSection(); ?>
 <?php endif; ?>

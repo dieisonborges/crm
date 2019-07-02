@@ -48,7 +48,9 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Franquia::class);
     }
 
-
+    public function fornecedor(){        
+        return $this->belongsToMany(\App\Fornecedor::class);
+    }
 
     public function franqueadoVip(){        
         return $this->hasMany(\App\FranqueadoVip::class);

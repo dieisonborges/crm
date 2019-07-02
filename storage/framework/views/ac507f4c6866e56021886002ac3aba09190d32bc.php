@@ -216,7 +216,7 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>              
+              <i class="fa fa-box"></i> <span>Produtos</span>              
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -225,7 +225,7 @@
               <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_produto')): ?>
                 <li>
                   <a href="<?php echo e(url('produtos')); ?>">  
-                    <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
+                    <i class="fa fa-box"></i> <span>Produtos</span>
                   </a>
                 </li>
               <?php endif; ?>
@@ -316,7 +316,28 @@
                 <?php endif; ?> 
 
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-          <?php endif; ?>
+          <?php endif; ?>          
+
+          <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_fornecedor_area')): ?>     
+
+          <li class="header">Área do Fonecedor</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fas fa-boxes"></i> <span>Fornecedor</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="<?php echo e(url('fornecedorArea/dashboard')); ?>"><i class="fas fa-circle-notch text-orange"></i> Painel de COntrole</a></li>
+                <li><a href="<?php echo e(url('fornecedorArea/orcamentos')); ?>"><i class="fas fa-circle-notch text-blue"></i> Orçamentos</a></li>
+                <li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
+                
+            </ul>
+          </li>
+
+          <?php endif; ?> 
 
           <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('read_franqueado')): ?>     
 

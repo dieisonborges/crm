@@ -39,6 +39,7 @@
                     <th>Telefone</th>                    
                     <th>País</th>
                     <th>Status</th>
+                    <th>Usuários</th>
                     <th>Ver</th>
                     <th>Editar</th>
                     <th>Excluir</th>
@@ -60,6 +61,11 @@
                         @else
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('fornecedor')}}/{{$fornecedor->id}}/usuarios">
+                            <span class="fa fa-user"></span>                        
                         </a>
                     </td>
                     <td>

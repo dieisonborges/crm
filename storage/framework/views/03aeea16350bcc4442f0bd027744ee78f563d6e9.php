@@ -40,6 +40,7 @@
                     <th>Telefone</th>                    
                     <th>País</th>
                     <th>Status</th>
+                    <th>Usuários</th>
                     <th>Ver</th>
                     <th>Editar</th>
                     <th>Excluir</th>
@@ -59,8 +60,13 @@
                         <?php if($fornecedor->status): ?>
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         <?php else: ?>
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-close"></i> Desativado</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         <?php endif; ?>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="<?php echo e(URL::to('fornecedor')); ?>/<?php echo e($fornecedor->id); ?>/usuarios">
+                            <span class="fa fa-user"></span>                        
                         </a>
                     </td>
                     <td>
@@ -79,7 +85,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete<?php echo e($fornecedor->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                            <a href="javascript:confirmDelete<?php echo e($fornecedor->id); ?>();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
                         </form> 
 
                         <script>

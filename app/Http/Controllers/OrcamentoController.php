@@ -467,6 +467,83 @@ class OrcamentoController extends Controller
         }
     }
 
+    public function itemLote($id)
+    {
+        //
+        if(!(Gate::denies('read_orcamento'))){
+
+            $orcamento = Orcamento::find($id);
+
+            $produtos = Produto::all();
+
+            $unidades_medidas = $this->unidadesMedidas();
+
+            $moedas = $this->moedas();
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("orcamento.create.item.id=".$orcamento);
+            //--------------------------------------------------------------------------------------------
+
+            return view('orcamento.item_lote', compact('orcamento', 'produtos', 'unidades_medidas', 'moedas'));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function itemLoteStore(Request $request)
+    {
+        //
+        //
+        if(!(Gate::denies('create_orcamento'))){
+            //Validação
+            $this->validate($request,[
+                    'quantidade' => 'required',
+                    'unidade_medida' => 'required',
+                    'orcamento_id' => 'required',
+                    'produto_id' => 'required',    
+            ]); 
+
+            $produtos_id = $request->input('produto_id');
+
+            foreach ($produtos_id as $produto_id) {
+                
+                $item_orcamento = new ItemOrcamento();
+
+                $item_orcamento->orcamento_id = $request->input('orcamento_id');
+                //redirect
+                $orcamento_id = $item_orcamento->orcamento_id;
+
+                $item_orcamento->produto_id = $produto_id;
+
+                $item_orcamento->quantidade = $request->input('quantidade');
+                $item_orcamento->unidade_medida = $request->input('unidade_medida');
+
+
+                $item_orcamento->preco = $request->input('preco');
+                $item_orcamento->frete_preco = $request->input('frete_preco');
+                $item_orcamento->frete_tipo = $request->input('frete_tipo');
+                $item_orcamento->moeda = $request->input('moeda');
+
+                //LOG --------------------------------------------------------------
+                $this->log("item_orcamento.store=".$item_orcamento);
+                //------------------------------------------------------------------
+
+                $status = $item_orcamento->save();
+
+            }
+
+            if($status){
+                return redirect('orcamento/'.$orcamento_id)->with('success', 'Item adicionado ao orcamento com sucesso!');
+            }else{
+                return redirect('orcamento/create')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
     public function itemEdit($id)
     {
         //

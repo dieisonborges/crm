@@ -216,7 +216,7 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-shopping-cart"></i> <span>Produtos</span>              
+              <i class="fa fa-box"></i> <span>Produtos</span>              
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -225,7 +225,7 @@
               @can('read_produto')
                 <li>
                   <a href="{{ url('produtos') }}">  
-                    <i class="fa fa-shopping-cart"></i> <span>Produtos</span>
+                    <i class="fa fa-box"></i> <span>Produtos</span>
                   </a>
                 </li>
               @endcan
@@ -316,7 +316,28 @@
                 @endcan 
 
               @endforeach 
-          @endif
+          @endif          
+
+          @can('read_fornecedor_area')     
+
+          <li class="header">Área do Fonecedor</li> 
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fas fa-boxes"></i> <span>Fornecedor</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('fornecedorArea/dashboard') }}"><i class="fas fa-circle-notch text-orange"></i> Painel de COntrole</a></li>
+                <li><a href="{{ url('fornecedorArea/orcamentos') }}"><i class="fas fa-circle-notch text-blue"></i> Orçamentos</a></li>
+                <li><a href="{{ url('franqueados/produtos') }}"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
+                
+            </ul>
+          </li>
+
+          @endcan 
 
           @can('read_franqueado')     
 

@@ -3,7 +3,7 @@
 	@section('title', $orcamento->name)
 	@section('content')
 		<h1>
-	        Orcamento 
+	        Orçamento 
 
 	        @if($orcamento->status==0)
                 <span class="btn btn-primary btn-xs">Em edição</span> 
@@ -29,6 +29,9 @@
 	        		@if(($orcamento->status)==0)
 		        		<a href="{{$orcamento->id}}/item" class="btn btn-primary">
 		        			<i class="fa fa-plus"></i> Adicionar Item
+		        		</a>
+		        		<a href="{{$orcamento->id}}/itemLote" class="btn btn-primary">
+		        			<i class="fa fa-plus"></i> Adicionar Item em Lotes
 		        		</a>
 		        	    <a href="{{$orcamento->id}}/edit" class="btn btn-warning">
 		        	    	<i class="fa fa-edit"></i> Editar

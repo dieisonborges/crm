@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Fornecedor;
+use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Gate;
 
@@ -291,6 +293,101 @@ class FornecedorController extends Controller
         }
         else{
             return view('errors.403');
+        }
+    }
+
+    public function usuarios($id){
+
+        if(!(Gate::denies('read_fornecedor'))){
+
+            $fornecedor = Fornecedor::find($id);
+
+            //recuperar permissões
+            $usuarios = $fornecedor->users()->get();
+
+            //todas permissoes
+            $all_users = User::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("fornecedor.usuario=".$fornecedor);
+            //--------------------------------------------------------------------------------------
+
+            return view('fornecedor.usuario', compact('fornecedor', 'usuarios', 'all_users'));
+        }
+        else{
+            return redirect('erro')->with('usuario_error', '403');
+        }
+
+
+    }
+
+    public function usuarioUpdate(Request $request){
+
+        if(!(Gate::denies('update_fornecedor'))){
+
+            $fornecedor_id = $request->input('fornecedor_id');
+            $usuario_id_array = $request->input('usuario_id');
+
+            //$fornecedor  = Fornecedor::find($fornecedor_id);
+
+            //Busca a permissao de acesso a area do fornecedor
+            $role = Role::where('name', 'fornecedor_area')->first();
+
+            foreach ($usuario_id_array as $usuario_id) {
+
+                    $status = User::find($usuario_id)->fornecedor()->attach($fornecedor_id);
+                    //Dá a permissao de acesso a area do fornecedor
+                    $status2 = User::find($usuario_id)->roles()->attach($role->id);
+
+            }           
+
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("fornecedor.usuarioUpdate.id=".$fornecedor_id."Dono=".$usuario_id);
+            //--------------------------------------------------------------------------------------
+            
+            if(!$status){
+                return redirect('fornecedor/'.$fornecedor_id.'/usuarios')->with('success', 'Franquia (Regra) atualizada com sucesso!');
+            }else{
+                return redirect('fornecedor/'.$fornecedor_id.'/usuarios')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('usuario_error', '403');
+        }
+
+    }
+
+    public function usuarioDestroy(Request $request){
+        if(!(Gate::denies('delete_fornecedor'))){
+
+            /* -------------------- */
+
+            $fornecedor_id = $request->input('fornecedor_id');
+            $usuario_id = $request->input('usuario_id'); 
+
+            $usuario  = User::find($usuario_id);
+
+            $status = $usuario->fornecedor()->detach($fornecedor_id);
+
+            //Busca a permissao de acesso a area do fornecedor
+            $role = Role::where('name', 'fornecedor_area')->first();
+            //Dá a permissao de acesso a area do fornecedor
+            $status2 = User::find($usuario_id)->roles()->detach($role->id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("fornecedor.usuario.destroy.id=".$fornecedor_id."Permission".$usuario_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if($status){
+                return redirect('fornecedor/'.$fornecedor_id.'/usuarios')->with('success', 'Franquia (Regra) excluída com sucesso!');
+            }else{
+                return redirect('fornecedor/'.$fornecedor_id.'/usuarios')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('usuario_error', '403');
         }
     }
 }

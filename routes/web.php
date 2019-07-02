@@ -197,13 +197,21 @@ Route::resource('franqueadoVip', 'FranqueadoVipController');
 Route::post('franqueadoVip/busca', 'FranqueadoVipController@busca');
 
 //Fornecedor
+Route::get('fornecedor/{id}/usuarios', 'FornecedorController@usuarios');
+Route::post('fornecedor/usuarioUpdate', 'FornecedorController@usuarioUpdate');
+Route::post('fornecedor/usuarioDestroy', 'FornecedorController@usuarioDestroy');
 Route::resource('fornecedor', 'FornecedorController');
 Route::post('fornecedor/busca', 'FornecedorController@busca');
 
 //Orçamento
 Route::post('orcamento/busca', 'OrcamentoController@busca');
+
 Route::get('orcamento/{id}/item', 'OrcamentoController@item');
 Route::post('orcamento/itemStore', 'OrcamentoController@itemStore');
+
+Route::get('orcamento/{id}/itemLote', 'OrcamentoController@itemLote');
+Route::post('orcamento/itemLoteStore', 'OrcamentoController@itemLoteStore');
+
 Route::get('orcamento/{id}/itemEdit', 'OrcamentoController@itemEdit');
 Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
 Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');
@@ -213,10 +221,18 @@ Route::get('orcamento/{id}/cancelar', 'OrcamentoController@cancelar');
 Route::resource('orcamento', 'OrcamentoController');
 
 
-/* -------------- SEGURANCA VIA TOKEN --------------------- */
+/* -------------------------Área Interna do Fornecedor ----------------------------------- */
+Route::get('fornecedorArea/dashboard', 'FornecedorAreaController@dashboard');
+Route::get('fornecedorArea/orcamentos', 'FornecedorAreaController@orcamentos');
+/* -------------------------END Área Interna do Fornecedor ----------------------------------- */
+
+
+/* --------------------------------- Orçamento Fonecedor - SEGURANCA VIA TOKEN --------------------- */
 Route::get('orcamento/fornecedor/{token}', 'OrcamentoController@fornecedor');
 Route::post('orcamento/fornecedorUpdate', 'OrcamentoController@fornecedorUpdate');
 Route::get('orcamento/fornecedorFinalizar/{token}', 'OrcamentoController@fornecedorFinalizar');
+/* --------------------------------- END Orçamento Fonecedor - SEGURANCA VIA TOKEN --------------------- */
+
 
 // UploadController
 Route::resource('uploads', 'UploadController');
