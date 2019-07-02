@@ -318,7 +318,8 @@ class SincronizarController extends Controller
                                             'ext' => $upload->ext,
                                             'tipo' => $upload->tipo,
                                             'nome' => $upload->nome,
-                                            'tam' => $upload->tam
+                                            'tam' => $upload->tam,
+                                            'valor' => $upload->valor
 
                                         ));
                     if($status){
@@ -339,7 +340,8 @@ class SincronizarController extends Controller
                                             'ext' => $upload->ext,
                                             'tipo' => $upload->tipo,
                                             'nome' => $upload->nome,
-                                            'tam' => $upload->tam
+                                            'tam' => $upload->tam,
+                                            'valor' => $upload->valor
                                         ));
                     if(!$status){
                        //return redirect('franquiasIntegrada/')->with('danger', 'Houve um problema!'); 
