@@ -103,7 +103,7 @@
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <div class="box-header with-border">
-              <h3 class="box-title">Meus Afiliados</h3>
+              <h3 class="box-title">Meus Franqueados</h3>
             </div>
             <table class="table table-hover">
                 <tr>
