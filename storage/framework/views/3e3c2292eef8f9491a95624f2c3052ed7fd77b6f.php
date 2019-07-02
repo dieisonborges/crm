@@ -21,6 +21,7 @@
 		        
 		        	<?php $__empty_1 = true; $__currentLoopData = $imagens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $imagem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 		        	<div class="col-md-2">
+		        		<a class="btn btn-primary" href="<?php echo e(url('produtos/'.$produto->id.'/imagemValor/'.$imagem->id)); ?>"><?php echo e($imagem->valor); ?></a>
 			            <a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" data-toggle="lightbox" data-gallery="example-gallery">
 			                <img src="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" class="img-fluid" width="100%">
 			            </a>
@@ -87,16 +88,16 @@
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
-		                <textarea class="textarea" disabled="disabled" placeholder="Detalhes do produto"="required" name="descricao" 
+		                <textarea class="textarea" disabled="disabled" placeholder="Detalhes do produto" name="descricao" 
 		                          style="width: 100%; height: 600px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?php echo e($produto->descricao); ?></textarea>
 		              </form>
 		            </div>
 			 	</div>	
 		</div>
 		
-		<a href="<?php echo e($produto->id); ?>/edit" class="btn btn-warning">Editar</a>
+		<a href="<?php echo e($produto->id); ?>/edit" class="btn btn-warning"><i class="fa fa-edit"></i> Editar</a>
 		
-		<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+		<a href="javascript:history.go(-1)" class="btn btn-success"><i class="fa fa-arrow-left"></i> Voltar</a>
 	<?php $__env->stopSection(); ?>
 <?php endif; ?>
 <?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

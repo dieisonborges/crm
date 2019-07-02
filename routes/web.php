@@ -154,6 +154,10 @@ Route::resource('produtos', 'ProdutoController');
 Route::post('produtos/busca', 'ProdutoController@busca');
 
 // Imagem Produtos
+Route::get('produtos/{id_produto}/imagemValor/{id_imagem}', 'ProdutoController@imagemValor');
+Route::post('produtos/imagemValorUpdate', 'ProdutoController@imagemValorUpdate');
+
+
 Route::get('produtos/{id}/imagem', 'ProdutoController@imagem');
 Route::post('produtos/imagemUpdate', 'ProdutoController@imagemUpdate');
 Route::post('produtos/imagemDestroy/{id}', 'ProdutoController@imagemDestroy');

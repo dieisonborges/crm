@@ -113,7 +113,7 @@ class ProdutoController extends Controller
             $this->log("produto.show=".$produto);
             //--------------------------------------------------------------------------------------------
 
-            $imagens = $produto->imagens()->get();
+            $imagens = $produto->imagens()->orderBy('valor', 'DESC')->get();
 
             return view('produto.show', compact('produto', 'imagens'));
         }
@@ -303,7 +303,7 @@ class ProdutoController extends Controller
 
             $produto = Produto::find($id);
 
-            $imagens = $produto->imagens()->get();
+            $imagens = $produto->imagens()->orderBy('valor', 'DESC')->get();
 
             $imagem_principal = Upload::where('id', $produto->upload_id)->first();
 
@@ -468,6 +468,60 @@ class ProdutoController extends Controller
                 return redirect('produtos/'.$produto_id.'/imagem')->with('success', 'Imagem atualizada com sucesso!');
             }else{
                 return redirect('produtos/'.$produto_id.'/imagem')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+
+    }
+
+    public function imagemValor($produto_id, $imagem_id)
+    {
+        //
+        if(!(Gate::denies('update_produto'))){            
+
+            $imagem = Upload::find($imagem_id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("upload.valor.imagem.produto");
+            //--------------------------------------------------------------------------------------------
+
+            return view('produto.imagem_valor', compact('imagem', 'produto_id'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function imagemValorUpdate(Request $request)
+        {
+
+        if(!(Gate::denies('update_produto'))){
+
+            //Validação
+            $this->validate($request,[
+                    'valor' => 'required',
+            ]);
+
+            $produto_id = $request->input('produto_id');
+
+            $imagem_id = $request->input('imagem_id');
+
+            $imagem = Upload::find($imagem_id);
+
+
+            
+            $imagem->valor = $request->input('valor');      
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("produto.image.valor.=".$imagem_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if($imagem->save()){
+                return redirect('produtos/'.$produto_id.'/imagem')->with('success', 'Valor Alterado com Sucesso!');
+            }else{
+                return redirect('produtos/'.$imagem_id.'/imagemValor')->with('danger', 'Houve um problema, tente novamente.');
             }
         }
         else{

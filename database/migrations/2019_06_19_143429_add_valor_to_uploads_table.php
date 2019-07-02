@@ -14,7 +14,8 @@ class AddValorToUploadsTable extends Migration
     public function up()
     {
         Schema::table('uploads', function (Blueprint $table) {
-            //
+            //Esse valor é para selecionar as imagens/arquivos mais importantes
+            $table->integer('valor')->default(0);
         });
     }
 
@@ -27,6 +28,7 @@ class AddValorToUploadsTable extends Migration
     {
         Schema::table('uploads', function (Blueprint $table) {
             //
+            $table->dropColumn('valor');
         });
     }
 }

@@ -21,6 +21,7 @@
 		        
 		        	@forelse ($imagens as $imagem)
 		        	<div class="col-md-2">
+		        		<a class="btn btn-primary" href="{{ url('produtos/'.$produto->id.'/imagemValor/'.$imagem->id) }}">{{$imagem->valor}}</a>
 			            <a href="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" data-toggle="lightbox" data-gallery="example-gallery">
 			                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" class="img-fluid" width="100%">
 			            </a>
@@ -87,15 +88,15 @@
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
-		                <textarea class="textarea" disabled="disabled" placeholder="Detalhes do produto"="required" name="descricao" 
+		                <textarea class="textarea" disabled="disabled" placeholder="Detalhes do produto" name="descricao" 
 		                          style="width: 100%; height: 600px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$produto->descricao}}</textarea>
 		              </form>
 		            </div>
 			 	</div>	
 		</div>
 		
-		<a href="{{$produto->id}}/edit" class="btn btn-warning">Editar</a>
+		<a href="{{$produto->id}}/edit" class="btn btn-warning"><i class="fa fa-edit"></i> Editar</a>
 		
-		<a href="javascript:history.go(-1)" class="btn btn-success">Voltar</a>
+		<a href="javascript:history.go(-1)" class="btn btn-success"><i class="fa fa-arrow-left"></i> Voltar</a>
 	@endsection
 @endcan

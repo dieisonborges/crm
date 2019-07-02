@@ -63,6 +63,7 @@
                             <th>Nome</th>
                             <th>Tamanho</th>
                             <th>Tipo</th>
+                            <th>Valor</th>
                             <th>Ver</th>
                         </tr>
                         <?php if($imagem_principal): ?>
@@ -76,6 +77,7 @@
                             <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->nome); ?></a></td>
                             <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e(number_format(($imagem_principal->tam/1000), 2, ',', '')); ?> kbytes</a></td>
                             <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank"><?php echo e($imagem_principal->tipo); ?></a></td>
+                            <td><a href="<?php echo e(url('produtos/'.$produto->id.'/imagemValor/'.$imagem_principal->id)); ?>" class="btn btn-info"><i class="fa fa-edit"></i> <?php echo e($imagem_principal->valor); ?></a></td> 
                             <td><a href="<?php echo e(url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link)); ?>" target="_blank" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</a></td>                        
                         </tr>                
                         <?php else: ?>
@@ -116,9 +118,9 @@
                     	<th>Imagem</th>
                         <th>Link</th>
                         <th>Titulo</th>
-                        <th>Nome</th>
                         <th>Tamanho</th>
                         <th>Tipo</th>
+                        <th>Valor</th>
                         <th>Principal</th>
                         <th>Ver</th>
                         <th>Excluir</th>
@@ -129,10 +131,11 @@
                     		<img src="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" width="150px">
                     	</td>
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->link); ?></a> </td>
-                        <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->titulo); ?></a></td>
-                        <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->nome); ?></a></td>
+                        <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->titulo); ?></a></td>                        
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e(number_format(($imagem->tam/1000), 2, ',', '')); ?> kbytes</a></td>
                         <td><a href="<?php echo e(url('storage/'.$imagem->dir.'/'.$imagem->link)); ?>" target="_blank"><?php echo e($imagem->tipo); ?></a></td>
+
+                        <td><a href="<?php echo e(url('produtos/'.$produto->id.'/imagemValor/'.$imagem->id)); ?>" class="btn btn-info"><i class="fa fa-edit"></i> <?php echo e($imagem->valor); ?></a></td> 
 
                         <td><a href="<?php echo e(url('produtos/imagemPrincipal/'.$imagem->id.'/'.$produto->id)); ?>" class="btn btn-primary"><i class="fa fa-star"></i></a></td> 
 
