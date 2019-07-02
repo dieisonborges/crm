@@ -411,13 +411,9 @@ class FranqueadoController extends Controller
             //Verifica se tem permissão na franquia
             if($franquia){
 
-            $produto = Produto::find($id_produto)->where('status', 1)->first();
+            $produto = Produto::where('id',$id_produto)->where('status', 1)->first();
 
-
-
-            $imagem_principal = $produto->imagemPrincipal()->first();
-
-            //dd($produto, $imagens, $id_produto);
+            $imagens = $produto->imagens()->get();
 
             $produto_franquia = DB::table('produto_franquia')
                                     ->where('produto_id', $id_produto)
@@ -428,7 +424,7 @@ class FranqueadoController extends Controller
             $this->log("franqueado.lucro.produto=".$franquia."Produto=".$produto);
             //--------------------------------------------------------------------------------------
 
-            return view('franqueado.produto_lucro', compact('produto_franquia', 'franquia', 'produto', 'imagem_principal'));
+            return view('franqueado.produto_lucro', compact('produto_franquia', 'franquia', 'produto', 'imagens'));
 
             }else{
             return view('errors.403');

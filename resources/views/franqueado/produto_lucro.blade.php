@@ -10,20 +10,20 @@
 		    <div class="row justify-content-center form-group">
 			    <div class="col-md-12">
 			        
-			        	@if($imagem_principal)
+			        	@forelse ($imagens as $imagem)
 			        	<div class="col-md-2">
-				            <a href="{{ url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link) }}" data-toggle="lightbox" data-gallery="example-gallery">
-				                <img src="{{ url('storage/'.$imagem_principal->dir.'/'.$imagem_principal->link) }}" class="img-fluid" width="100%">
+				            <a href="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" data-toggle="lightbox" data-gallery="example-gallery">
+				                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" class="img-fluid" width="100%">
 				            </a>
 				        </div>
-				        @else
+				        @empty
 				        <div class="col-md-2">
 				        	<span class="btn btn-primary">
 		                        <i class="fa fa-image"></i>
 		                         Nenhuma imagem.
 		                    </span>
 		                </div>
-				        @endif	        
+				        @endforelse	        
 			        
 			    </div>
 			</div>
