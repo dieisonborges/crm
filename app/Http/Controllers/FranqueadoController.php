@@ -458,21 +458,31 @@ class FranqueadoController extends Controller
                 $produto_franquia = $request->input('produto_franquia');
                 $lucro = $request->input('lucro');
 
-                $status = DB::table('produto_franquia')
+                if($lucro<1){
+
+                    return redirect()->back()->with('danger','A margem de lucro deve ser maior que 1%');
+
+                }else{
+
+                    $status = DB::table('produto_franquia')
                                 ->where('id', $produto_franquia)
                                 ->where('franquia_id', $franquia->id)
                                 ->update(['lucro' => $lucro]);              
                 
-                
-                //LOG --------------------------------------------------------------------------------
-                $this->log("franqueado.lucro.update=".$franquia."Lucro".$lucro."ProdutoFranquia".$produto_franquia);
-                //------------------------------------------------------------------------------------    
+                    
+                    //LOG --------------------------------------------------------------------------------
+                    $this->log("franqueado.lucro.update=".$franquia."Lucro".$lucro."ProdutoFranquia".$produto_franquia);
+                    //------------------------------------------------------------------------------ 
 
-                if($franquia->save()){
-                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Franquia atualizada com sucesso!');
-                }else{
-                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
+                    if($franquia->save()){
+                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Franquia atualizada com sucesso!');
+                    }else{
+                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
+                    }
+
                 }
+
+                
 
             
             }
@@ -659,17 +669,29 @@ class FranqueadoController extends Controller
                     $franquia->endereco_cep = $request->input('endereco_cep');
                     $franquia->endereco_cidade = $request->input('endereco_cidade');
                     $franquia->endereco_estado = $request->input('endereco_estado');
-                    
-                    
-                    //LOG --------------------------------------------------------------------------------
-                    $this->log("franqueado.update=".$franquia);
-                    //------------------------------------------------------------------------------------    
 
-                    if($franquia->save()){
-                        return redirect('franqueados/'.$id.'/configuracoes')->with('success', 'Franquia atualizada com sucesso!');
+
+                    //Margem de lucro negativa
+                    if(($request->input('lucro'))<1){
+
+                        return redirect()->back()->with('warning','A margem de lucro deve ser maior que 1%');
+
                     }else{
-                        return redirect('franqueados/'.$id.'/configuracoesEdit')->with('danger', 'Houve um problema, tente novamente.');
+
+                        //LOG --------------------------------------------------------------------------------
+                        $this->log("franqueado.update=".$franquia);
+                        //------------------------------------------------------------------------------------    
+
+                        if($franquia->save()){
+                            return redirect('franqueados/'.$id.'/configuracoes')->with('success', 'Franquia atualizada com sucesso!');
+                        }else{
+                            return redirect('franqueados/'.$id.'/configuracoesEdit')->with('danger', 'Houve um problema, tente novamente.');
+                        }
+
+
                     }
+                    
+                    
             }else{
                 return view('errors.403');
             }
