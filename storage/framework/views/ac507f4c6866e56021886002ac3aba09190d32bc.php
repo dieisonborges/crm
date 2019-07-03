@@ -324,15 +324,15 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-boxes"></i> <span>Fornecedor</span>
+              <i class="fas fa-boxes"></i> <span>Fornecedor / Provider</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?php echo e(url('fornecedorArea/dashboard')); ?>"><i class="fas fa-circle-notch text-orange"></i> Painel de COntrole</a></li>
-                <li><a href="<?php echo e(url('fornecedorArea/orcamentos')); ?>"><i class="fas fa-circle-notch text-blue"></i> Orçamentos</a></li>
-                <li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
+              <li><a href="<?php echo e(url('fornecedorArea/dashboard')); ?>"><i class="fas fa-circle-notch text-orange"></i> Painel de Controle <br> Dashboard</a></li>
+                <li><a href="<?php echo e(url('fornecedorArea/orcamentos')); ?>"><i class="fas fa-circle-notch text-blue"></i> Orçamentos  <br> Budgeting</a></li>
+                <!--<li><a href="<?php echo e(url('franqueados/produtos')); ?>"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>-->
                 
             </ul>
           </li>

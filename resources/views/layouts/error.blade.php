@@ -1,7 +1,7 @@
                @if($message = Session::get('danger'))
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-window-close"></i> Alerta!</h4>
+                        <h4><i class="icon fa fa-window-close"></i> Alerta / Alert!</h4>
                         {{$message}}
                     </div>
                 @endif 
@@ -9,7 +9,7 @@
                 @if($message = Session::get('info'))
                     <div class="alert alert-info alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-info"></i> Informação!</h4>
+                        <h4><i class="icon fa fa-info"></i> Informação / Information!</h4>
                         {{$message}}
                     </div>
                 @endif 
@@ -17,7 +17,7 @@
                 @if($message = Session::get('warning'))
                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-exclamation-circle"></i> Atenção!</h4>
+                        <h4><i class="icon fa fa-exclamation-circle"></i> Atenção / Warning!</h4>
                         {{$message}}
                     </div>
                 @endif 
@@ -25,7 +25,7 @@
                 @if($message = Session::get('success'))
                     <div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h4><i class="icon fa fa-check-circle"></i> Sucesso!</h4>
+                        <h4><i class="icon fa fa-check-circle"></i> Sucesso / Success!</h4>
                         {{$message}}
                     </div>
                 @endif                               

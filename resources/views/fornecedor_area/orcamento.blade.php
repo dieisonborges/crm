@@ -1,8 +1,8 @@
-@can('read_orcamento')  
+@can('read_fornecedor_area')  
     @extends('layouts.app')
     @section('title', 'Orcamentos')
     @section('content')
-    <h1>Orçamentos  <a href="{{url('orcamento/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Criar Novo</a></h1>
+    <h1>Orçamentos  / Budgeting <a href="{{url('fornecedorArea/orcamentoCreate')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Criar Novo / Create New</a></h1>
 
         @if (session('status'))
             <div class="alert alert-success" orcamento="alert">
@@ -11,12 +11,13 @@
         @endif
         <div class="col-md-12">	
 
-            <form method="POST" enctype="multipart/form-data" action="{{url('orcamento/busca')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{url('fornecedorArea/orcamentoBusca')}}">
                 @csrf
                 <div class="input-group input-group-lg">			
-                    <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
+                    <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar / Search for
+ ..." value="{{$buscar}}">
                         <span class="input-group-btn">
-                          <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                          <button type="submit" class="btn btn-info btn-flat">Buscar / Search</button>
                         </span>
 
                 </div>
@@ -30,63 +31,36 @@
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
                 <tr>
-                    <th>ID</th>
-                    <th>Código</th>
-                    <th>Validade do Token</th>
-                    <th>Criado em</th>
-                    <th>Fornecedor</th>
-                    <th>País</th>
-                    <th>Enviar</th>
+                    <th>Código <br> Code</th>
+                    <th>Criado em <br> Created at</th>                    
                     <th>Status</th>
-                    <th>Visualizar</th>
-                    <th>Editar</th>
-                    <th>Excluir</th>
+                    <th>Visualizar <br> To View</th>
+                    <th>Excluir <br> Delete</th>
                 </tr>
                 @forelse ($orcamentos as $orcamento)
                 <tr>
-                    <td>{{$orcamento->id}}</td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->codigo}}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y', strtotime($orcamento->token_validade)) }}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{ date('d/m/Y H:i:s', strtotime($orcamento->created_at)) }}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->nome_fantasia}}</a></td>
-                    <td><a href="{{URL::to('orcamento')}}/{{$orcamento->id}}">{{$orcamento->endereco_pais}}</a></td>
-
-                    <td>
-                        @if(($orcamento->status==0)or($orcamento->status==1))
-
-                            <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}/enviar">
-                            <span class="fa fa-paper-plane"> Enviar</span>                        
-                            </a>
-                        @else
-                            <span class="btn btn-warning btn-xs">Bloqueado</span>
-                        @endif
-                    </td>
+                    <td><a href="{{URL::to('fornecedorArea/orcamentoShow')}}/{{$orcamento->id}}">{{$orcamento->codigo}}</a></td>
+                    <td><a href="{{URL::to('fornecedorArea/orcamentoShow')}}/{{$orcamento->id}}">{{ date('d/m/Y H:i:s', strtotime($orcamento->created_at)) }}</a></td>
+                    
                     <td>
                         @if($orcamento->status==0)
-                            <span class="btn btn-primary btn-xs">Em edição</span> 
+                            <span class="btn btn-primary btn-xs">Em edição / In editing</span> 
                         @elseif($orcamento->status==1)
-                            <span class="btn btn-warning btn-xs">Bloqueado: Em cotação</span> 
+                            <span class="btn btn-warning btn-xs">Em cotação / In quotation</span> 
                         @elseif($orcamento->status==2)
-                            <span class="btn btn-danger btn-xs">Cancelado</span> 
+                            <span class="btn btn-danger btn-xs">Cancelado / Canceled</span> 
                         @else($orcamento->status==3)
-                            <span class="btn btn-success btn-xs">Cotação Finalizada</span> 
+                            <span class="btn btn-success btn-xs">Cotação Finalizada / Quotation Completed</span> 
                         @endif
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('orcamento')}}/{{$orcamento->id}}">
-                            <span class="fa fa-eye"> Ver</span>                        
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('fornecedorArea/orcamentoShow')}}/{{$orcamento->id}}">
+                            <span class="fa fa-eye"> Ver / To see</span>                        
                         </a>
-                    </td>
-                    <td>
-                        @if(($orcamento->status)==0)
-                            <a class="btn btn-warning btn-xs" href="{{URL::to('orcamento/'.$orcamento->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
-                        @else
-                            <span class="btn btn-warning btn-xs">Bloqueado</span>
-                        @endif
-                    </td>
+                    </td>                    
                     <td>
 
-                        @if((($orcamento->status)==0)or(($orcamento->status)==2))
+                        @if(($orcamento->status)==0)
 
                         <form method="POST" action="{{action('OrcamentoController@destroy', $orcamento->id)}}" id="formDelete{{$orcamento->id}}">
                             @csrf
@@ -94,7 +68,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
+                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir / Delete</a>
                         </form> 
 
                         <script>
@@ -111,7 +85,6 @@
                         </script>
 
                         @else
-                            <span class="btn btn-warning btn-xs">Bloqueado</span>
                         @endif
 
                     </td>

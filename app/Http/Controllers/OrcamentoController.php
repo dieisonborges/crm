@@ -740,6 +740,7 @@ class OrcamentoController extends Controller
 
     }
 
+
     /*-------------------------------- SEGURANCA VIA TOKEN --------------------------------*/
 
     public function fornecedor($token)
@@ -881,5 +882,7 @@ class OrcamentoController extends Controller
         }
 
     }
+
+    
 
 }

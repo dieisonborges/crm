@@ -224,6 +224,18 @@ Route::resource('orcamento', 'OrcamentoController');
 /* -------------------------Área Interna do Fornecedor ----------------------------------- */
 Route::get('fornecedorArea/dashboard', 'FornecedorAreaController@dashboard');
 Route::get('fornecedorArea/orcamentos', 'FornecedorAreaController@orcamentos');
+Route::get('fornecedorArea/orcamentoCreate', 'FornecedorAreaController@orcamentoCreate');
+Route::post('fornecedorArea/orcamentoStore', 'FornecedorAreaController@orcamentoStore');
+Route::get('fornecedorArea/orcamentoShow/{id}', 'FornecedorAreaController@orcamentoShow');
+Route::get('fornecedorArea/orcamentoEdit/{id}', 'FornecedorAreaController@orcamentoEdit');
+Route::post('fornecedorArea/orcamentoUpdate', 'FornecedorAreaController@orcamentoUpdate');
+Route::get('fornecedorArea/orcamentoFinalizar/{id}', 'FornecedorAreaController@orcamentoFinalizar');
+
+Route::get('fornecedorArea/orcamentoItemLote/{id}', 'FornecedorAreaController@orcamentoItemLote');
+Route::post('fornecedorArea/orcamentoItemLoteStore', 'FornecedorAreaController@orcamentoItemLoteStore');
+
+Route::post('fornecedorArea/orcamentoItemDestroy', 'FornecedorAreaController@orcamentoItemDestroy');
+
 /* -------------------------END Área Interna do Fornecedor ----------------------------------- */
 
 

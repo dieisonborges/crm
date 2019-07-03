@@ -1,4 +1,4 @@
-@can('read_franqueado')    
+@can('read_fornecedor_area')    
     @extends('layouts.appdashboard')
     @section('title', 'Dashboard')
     @section('content')    
@@ -32,7 +32,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <a href="{{url('fornecedorArea/orcamentos')}}" target="_blank">
+            <a href="{{url('fornecedorArea/orcamentos')}}">
               <span class="info-box-icon bg-aqua"><i class="fa fa-list"></i></span>
             </a>
             <div class="info-box-content">
