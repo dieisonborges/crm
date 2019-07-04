@@ -108,7 +108,7 @@ class SincronizarController extends Controller
             $this->listaProspectosUpdate();
 
             if($this->ipLocal()){
-                return "ok";
+                return date("d-m-Y h:M:s")." Sync Efetuado - ".$_SERVER['REMOTE_ADDR']." \n\n";
             }else{
                 return redirect()->back()->with('success','Sincronização TOTAL efetuada com sucesso!');
             }
