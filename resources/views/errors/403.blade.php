@@ -17,7 +17,7 @@
     
     <div class="alert alert-warning alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Erro: 403</h4>
+        <h4><i class="icon fa fa-lock"></i> Erro: 403</h4>
         <h5>Unauthorized</h5>
         Desculpe, mas você não tem autorização para acessar essa página.
         <br><br>

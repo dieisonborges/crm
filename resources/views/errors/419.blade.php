@@ -17,7 +17,7 @@
     
     <div class="alert alert-warning alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Erro: 419</h4>
+        <h4><i class="icon fa fa-hourglass-end"></i> Erro: 419</h4>
 
         <h5>A página expirou devido a inatividade.<br>
         Por favor, atualize e tente novamente.</h5>

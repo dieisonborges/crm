@@ -19,7 +19,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <h4><i class="icon fa fa-ban"></i> Erro: 503 </h4>
 
-        <h2><i class="fa fa-bug"></i> Todo mundo erra um dia, e hoje parece que foram nossos servidores... :(</h2>
+        <h2><i class="fa fa-wrench"></i> Estamos efetuando uma manutenção crítica em nossos servidores, voltamos em breve... :)</h2>
         
 
         <br>
@@ -27,7 +27,6 @@
         <br>
         <small>Serviço Indisponível</small>
         <br>
-        <small><p>Ooops, server error occurred.</p> Please check again later.</small>
 
     </div>
 
