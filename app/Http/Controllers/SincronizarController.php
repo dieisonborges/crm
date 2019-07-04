@@ -43,11 +43,33 @@ class SincronizarController extends Controller
     }
     */
 
+    private function ipLocal(){
+        
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        if($ip=='127.0.0.1'){
+            return true;
+        }elseif($ip=='::1'){
+            return true;
+        }elseif($ip=='localhost'){
+            return true;
+        }else{
+            return false;
+        }
+
+
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+
     public function all()
     {
+        
+        
+
         //Sincroniza tudo
-        if(!(Gate::denies('read_sincronizar'))){
-            
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
+           
             //Sincroniza os Dados das Franquias
             $this->franquiasUpdate('all');
 
@@ -72,7 +94,13 @@ class SincronizarController extends Controller
             //Sincroniza lista de Prospectos
             $this->listaProspectosUpdate();
 
-            return redirect()->back()->with('success','Sincronização TOTAL efetuada com sucesso!');
+            if($this->ipLocal()){
+                return "ok";
+            }else{
+                return redirect()->back()->with('success','Sincronização TOTAL efetuada com sucesso!');
+            }
+
+            
 
 
         }
@@ -93,7 +121,7 @@ class SincronizarController extends Controller
     public function franquias()
     {
         //
-        if(!(Gate::denies('read_sincronizar'))){
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
             $franquias = Franquia::orderBy('id')
                                         ->get();  
 
@@ -125,7 +153,7 @@ class SincronizarController extends Controller
     public function franquiasUpdate($id)
     {
         //
-        if((!(Gate::denies('update_sincronizar')))or(!(Gate::denies('update_franqueado')))){
+        if((!(Gate::denies('update_sincronizar')))or(!(Gate::denies('update_franqueado')))or($this->ipLocal())){
 
             if($id=='all'){
                 $franquias = Franquia::get();
@@ -238,7 +266,7 @@ class SincronizarController extends Controller
     public function uploads(Request $request)
     {
         //
-        if(!(Gate::denies('read_sincronizar'))){
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
 
             if($request){
                 $buscaInput=$request->input('busca');
@@ -290,7 +318,7 @@ class SincronizarController extends Controller
     public function uploadsUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){             
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){             
 
             /* --------------------------- Sincroniza Uploads ------------------ */
             $uploads = Upload::all();
@@ -379,7 +407,7 @@ class SincronizarController extends Controller
     public function produtos(Request $request)
     {
         //
-        if(!(Gate::denies('read_sincronizar'))){
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
 
             if($request){
                 $buscaInput=$request->input('busca');
@@ -429,7 +457,7 @@ class SincronizarController extends Controller
     public function produtosUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){  
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){  
 
             //Sincroniza Uploads
             $this->uploadsUpdate();           
@@ -540,7 +568,7 @@ class SincronizarController extends Controller
     public function produtosGaleriaUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){             
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){             
 
             /* --------------------------- Sincroniza Galeria Produtos ------------------ */
             $galeria_produtos = DB::table('galeria_produto')->get();
@@ -616,7 +644,7 @@ class SincronizarController extends Controller
     public function produtoPrecos(Request $request)
     {
         //
-        if(!(Gate::denies('read_sincronizar'))){
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
 
             if($request){
                 $buscaInput=$request->input('busca');
@@ -681,7 +709,7 @@ class SincronizarController extends Controller
     public function produtoPrecosUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){
 
             //Sincroniza Uploads
             $this->uploadsUpdate();
@@ -781,7 +809,7 @@ class SincronizarController extends Controller
     public function categoriasUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){
 
             //Lista todas as categorias
             $categorias = Categoria::get();
@@ -844,7 +872,7 @@ class SincronizarController extends Controller
     public function categoriasProdutoUpdate()
     {
         //
-        if(!(Gate::denies('update_sincronizar'))){
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){
 
             //Lista todas as categorias
             $categorias_produto = $produtos = DB::table('categoria_produto')
@@ -910,7 +938,7 @@ class SincronizarController extends Controller
     public function produtosFranqueadoUpdate($id)
     {
         //
-        if((!(Gate::denies('update_sincronizar')))or(!(Gate::denies('update_franqueado')))){
+        if((!(Gate::denies('update_sincronizar')))or(!(Gate::denies('update_franqueado')))or($this->ipLocal())){
 
 
             if($id=='all'){
@@ -1032,7 +1060,7 @@ class SincronizarController extends Controller
     public function listaProspectos()
     {
         //
-        if(!(Gate::denies('read_sincronizar'))){
+        if((!(Gate::denies('read_sincronizar')))or($this->ipLocal())){
             $lista_prospectos = ListaProspecto::orderBy('id')
                                         ->get();  
 
@@ -1065,7 +1093,7 @@ class SincronizarController extends Controller
     {
         // Sincroniza da Loja para o CRM 7p
         //
-        if(!(Gate::denies('update_sincronizar'))){
+        if(!(Gate::denies('update_sincronizar'))or($this->ipLocal())){
 
             //Lista todos os prospectos remotos
             $lista_prospecto_remotos = DB::connection('mysql_loja')
