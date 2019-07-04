@@ -16,7 +16,7 @@
     
     <div class="alert alert-warning alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Erro: 404</h4>
+        <h4><i class="icon fa fa-door-closed"></i> Erro: 404</h4>
         Ops... Ficamos perdidos e não encontramos a página procurada;
     </div>
 

@@ -12,6 +12,10 @@ use Gate;
 use DB;
 use Mail; 
 
+use Excel; 
+use App\Exports\OrcamentosExport;
+use App\Exports\OrcamentosExportView;
+
 
 class FornecedorAreaController extends Controller
 {
@@ -288,6 +292,43 @@ class FornecedorAreaController extends Controller
             //--------------------------------------------------------------------------------------------
 
             return view('fornecedor_area.orcamento_show', compact('orcamento', 'fornecedor', 'itens'));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function orcamentoShowExcel($orcamento)
+    {
+        //
+        if(!(Gate::denies('read_fornecedor_area'))){
+
+           
+           return Excel::download(new OrcamentosExport($orcamento), 'orcamento.xlsx');
+
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function orcamentoShowPdf($orcamento)
+    {
+        //
+        if(!(Gate::denies('read_fornecedor_area'))){
+
+           
+            //$orcamento = Orcamento::find($orcamento)->first();
+
+            //dd($orcamento);
+
+            //return (new OrcamentosExportView)->download('invoices.pdf', \Maatwebsite\Excel\Excel::MPDF);
+
+            return Excel::download(new OrcamentosExport($orcamento), 'invoices.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+
+
+            //return Excel::download(new OrcamentosExport($orcamento), 'orcamento.xlsx');
+
         }
         else{
             return view('errors.403');

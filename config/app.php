@@ -272,7 +272,10 @@ return [
         LaravelLegends\PtBrValidator\ValidatorProvider::class,
 
         /* -------- GEO IP -------*/
-        \Torann\GeoIP\GeoIPServiceProvider::class
+        \Torann\GeoIP\GeoIPServiceProvider::class,
+
+        //Gerador de Excel e PDF
+        Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -324,7 +327,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         /* ------------ GEOIP ---------- */
-        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        //Excel + PDF
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
 
 
 

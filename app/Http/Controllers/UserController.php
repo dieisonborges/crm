@@ -11,6 +11,7 @@ use App\Setor;
 use Gate;
 use DB;
 
+
 //Log
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -37,6 +38,7 @@ class UserController extends Controller
     public function __construct(User $user){
         $this->user = $user;
     }
+
 
     public function index(){
         if(!(Gate::denies('read_user'))){

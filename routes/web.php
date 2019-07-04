@@ -236,6 +236,11 @@ Route::post('fornecedorArea/orcamentoItemLoteStore', 'FornecedorAreaController@o
 
 Route::post('fornecedorArea/orcamentoItemDestroy', 'FornecedorAreaController@orcamentoItemDestroy');
 
+//Excel
+Route::get('fornecedorArea/orcamentoShowExcel/{id}', 'FornecedorAreaController@orcamentoShowExcel');
+//PDF
+Route::get('fornecedorArea/orcamentoShowPdf/{id}', 'FornecedorAreaController@orcamentoShowPdf');
+
 /* -------------------------END Área Interna do Fornecedor ----------------------------------- */
 
 

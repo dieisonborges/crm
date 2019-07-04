@@ -35,6 +35,8 @@
                     <th>Criado em <br> Created at</th>                    
                     <th>Status</th>
                     <th>Visualizar <br> To View</th>
+                    <th>Excel</th>
+                    <th>Pdf</th>
                     <th>Excluir <br> Delete</th>
                 </tr>
                 @forelse ($orcamentos as $orcamento)
@@ -55,7 +57,17 @@
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('fornecedorArea/orcamentoShow')}}/{{$orcamento->id}}">
-                            <span class="fa fa-eye"> Ver / To see</span>                        
+                            <span class="fa fa-eye"></span>                        
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn" href="{{URL::to('fornecedorArea/orcamentoShowExcel')}}/{{$orcamento->id}}">
+                            <span class="fa fa-file-excel text-green"></span>                        
+                        </a>
+                    </td> 
+                    <td>
+                        <a class="btn btn-default btn" href="{{URL::to('fornecedorArea/orcamentoShowPdf')}}/{{$orcamento->id}}">
+                            <span class="fa fa-file-pdf text-red"></span>                        
                         </a>
                     </td>                    
                     <td>
@@ -68,7 +80,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir / Delete</a>
+                            <a href="javascript:confirmDelete{{$orcamento->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i></a>
                         </form> 
 
                         <script>
