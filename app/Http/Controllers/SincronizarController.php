@@ -44,6 +44,8 @@ class SincronizarController extends Controller
     */
 
     private function ipLocal(){
+
+        /*
         
         $ip = $_SERVER['REMOTE_ADDR'];
 
@@ -60,10 +62,16 @@ class SincronizarController extends Controller
             return true;
         }
 
-        
+
 
 
         return $_SERVER['REMOTE_ADDR'];
+
+
+        */
+
+        return true;
+
     }
 
 
