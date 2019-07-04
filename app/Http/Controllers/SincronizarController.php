@@ -53,7 +53,10 @@ class SincronizarController extends Controller
             return true;
         }elseif($ip=='localhost'){
             return true;
-        }else{
+        }elseif($ip=='45.79.23.52'){
+            return true;
+        }
+        else{
             return false;
         }
 
