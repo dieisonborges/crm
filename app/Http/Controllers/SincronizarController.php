@@ -60,6 +60,8 @@ class SincronizarController extends Controller
             return true;
         }
 
+        
+
 
         return $_SERVER['REMOTE_ADDR'];
     }
