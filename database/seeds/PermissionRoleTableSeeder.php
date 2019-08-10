@@ -128,11 +128,38 @@ class PermissionRoleTableSeeder extends Seeder
     
         }
 
-        //
+        //Sincronizar Lojas
         $total_permissions = 88;
         for ($i = 85; $i <= $total_permissions; $i++) {
             Permission::find($i)->permissionRole()->attach('17');
     
+        }
+
+        //Gerência de Lista de Prospectos
+        $total_permissions = 92;
+        for ($i = 89; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('18');
+    
+        }
+
+        //Área do Fornecedor
+        $total_permissions = 96;
+        for ($i = 93; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('19');
+    
+        }
+
+        //Gerência de Marketing
+        $total_permissions = 100;
+        for ($i = 97; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('20');
+    
+        }
+
+        //Fatura
+        $total_permissions = 104;
+        for ($i = 101; $i <= $total_permissions; $i++) {
+            Permission::find($i)->permissionRole()->attach('21');    
         }
 
         /* ---------------- Exemplo ---------------- */

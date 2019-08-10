@@ -32,5 +32,12 @@ class SetorsTableSeeder extends Seeder
             'name'      => 'suporte_tecnico',
             'label'      => 'Suporte Técnico - Atendimento ao Cliente',
         ]);
+
+        //Gerência de Marketing
+        Setor::create([
+            'id'=>'4',
+            'name'      => 'marketing',
+            'label'      => 'Gerência de Marketing',
+        ]);
     }
 }

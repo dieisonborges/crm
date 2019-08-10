@@ -287,7 +287,7 @@ class PermissionController extends Controller
                 $controle = $controle+1;
             }
 
-            //delete  -----------------------------------------------------                  
+            //Create Role-----------------------------------------------------                  
             $role = new Role();
             $role->name = $request->input('name');
             $role->label = $request->input('label');
@@ -295,8 +295,24 @@ class PermissionController extends Controller
                 $controle = $controle+1;
             }
 
+            //Vincula automaticamente --------------------------------------------------------------
+            $role  = Role::where('name', $request->input('name'))->first();
+            //Create
+            $status = Permission::where('name', "create_".$request->input('name'))->first()
+                                ->permissionRole()->attach($role->id);
+            //Read
+            $status = Permission::where('name', "read_".$request->input('name'))->first()
+                                ->permissionRole()->attach($role->id);
+            //Update
+            $status = Permission::where('name', "update_".$request->input('name'))->first()
+                                ->permissionRole()->attach($role->id);
+            //Delete
+            $status = Permission::where('name', "delete_".$request->input('name'))->first()
+                                ->permissionRole()->attach($role->id);
+            // ------------------------------------------------------------------------------------
+
             //LOG ----------------------------------------------------------------------------------------
-            $this->log("permission.auto.store");
+            $this->log("permission.auto.store=".$request->input('name'));
             //---------------------------------------------------------------------------------------
 
             if($controle>=5){

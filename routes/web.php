@@ -365,3 +365,10 @@ Route::get('prospectosSincronizarUpdate', 'SincronizarController@listaProspectos
 
 //Lista de Prospectos
 Route::resource('listaProspectos', 'ListaProspectoController');
+
+// FaturaController
+Route::resource('fatura', 'FaturaController');
+
+//Loja do Franqueado
+Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
+

@@ -641,7 +641,85 @@ class PermissionsTableSeeder extends Seeder
             'id'=>'92',
             'name'=>'delete_lista_prospecto',
             'label'=>'Delete - Gerência de Lista de Prospectos',
-        ]);         
+        ]);   
+
+        //Área - Área do Fornecedor
+        //Create        
+        Permission::create([
+            'id'=>'93',
+            'name'=>'create_fornecedor_area',
+            'label'=>'Create - Área do Fornecedor',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'94',
+            'name'=>'read_fornecedor_area',
+            'label'=>'Read - Área do Fornecedor',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'95',
+            'name'=>'update_fornecedor_area',
+            'label'=>'Update - Área do Fornecedor',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'96',
+            'name'=>'delete_fornecedor_area',
+            'label'=>'Delete - Área do Fornecedor',
+        ]);
+
+        //Área - Gerência de Marketing
+        //Create        
+        Permission::create([
+            'id'=>'97',
+            'name'=>'create_marketing',
+            'label'=>'Create - Gerência de Marketing',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'98',
+            'name'=>'read_marketing',
+            'label'=>'Read - Gerência de Marketing',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'99',
+            'name'=>'update_marketing',
+            'label'=>'Update - Gerência de Marketing',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'100',
+            'name'=>'delete_marketing',
+            'label'=>'Delete - Gerência de Marketing',
+        ]);   
+
+        //Área - Fatura
+        //Create
+        Permission::create([
+            'id'=>'101',
+            'name'=>'create_fatura',
+            'label'=>'Create - Fatura',
+        ]);
+        //Read
+        Permission::create([
+            'id'=>'102',
+            'name'=>'read_fatura',
+            'label'=>'Read - Fatura',
+        ]);
+        //Update
+        Permission::create([
+            'id'=>'103',
+            'name'=>'update_fatura',
+            'label'=>'Update - Fatura',
+        ]);
+        //Delete
+        Permission::create([
+            'id'=>'104',
+            'name'=>'delete_fatura',
+            'label'=>'Delete - Fatura',
+        ]);   
         
 
         //Área - 

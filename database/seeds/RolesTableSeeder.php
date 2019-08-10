@@ -140,6 +140,27 @@ class RolesTableSeeder extends Seeder
             'label'=>'Gerência de Lista de Prospectos',
         ]);
 
+        //Área do Fornecedor
+        Role::create([
+            'id'=>'19',
+            'name'=>'fornecedor_area',
+            'label'=>'Área do Fornecedor',
+        ]);
+
+        //Gerência de Marketing
+        Role::create([
+            'id'=>'20',
+            'name'=>'marketing',
+            'label'=>'Gerência de Marketing',
+        ]);
+
+        //Gerência de Marketing
+        Role::create([
+            'id'=>'21',
+            'name'=>'fatura',
+            'label'=>'Gerência de Fatura',
+        ]);
+
 
         /* -------------------- Exemplo ---------------- */
         /*

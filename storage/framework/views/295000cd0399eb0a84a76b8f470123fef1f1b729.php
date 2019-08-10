@@ -28,21 +28,20 @@
       <!-- Small boxes (Stat box) -->
       <div class="row"> 
 
-        <div class="col-md-6 col-sm-4 col-xs-12">
-          <div class="info-box bg-aqua">
-            <a href="https://<?php echo e($franquia->loja_url); ?>" target="_blank">
-              <span class="info-box-icon"><i class="fa fa-store text-white"></i></span>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box bg-blue">
+            <a href="<?php echo e(url('lojaFranqueado')); ?>" target="_blank">
+              <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
             </a>
             <div class="info-box-content">
-              <span class="info-box-text">Laboratório e-Cardume</span>
-              <span class="info-box-number"><?php echo e($franquia->nome); ?></span>
+              <span class="info-box-text">Compra Interna</span>
+              <span class="info-box-number">Loja do Franqueado</span>
 
               <div class="progress">
-                <div class="progress-bar" style="width: <?php echo e(number_format($porcentagem, '2')); ?>%"></div>
+                <div class="progress-bar" style="width: 100%"></div>
               </div>
               <span class="progress-description">
-
-                    Loja <?php echo e(number_format($porcentagem, '2')); ?>% Concluída, previsão 01 de Ago de 2019.
+                    Produtos para compra interna
               </span>
             </div>
             <!-- /.info-box-content -->
