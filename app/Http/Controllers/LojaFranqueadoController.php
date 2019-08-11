@@ -34,15 +34,18 @@ class LojaFranqueadoController extends Controller
         //
         if(!(Gate::denies('read_franqueado'))){
 
-            $user = Auth::user();
 
-            $franquias = $user->franquia()->get(); 
+        return redirect('https://ecardu.me/tglebeaw3dhtc4e/');
+
+
+
+            //$user = Auth::user();
+
+            //$franquias = $user->franquia()->get(); 
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("loja_franqueado.index");
             //--------------------------------------------------------------------------------------
-
-                    return Redirect::to("https://ecardu.me/tglebeaw3dhtc4e/");
 
                     /*
 
@@ -78,6 +81,8 @@ class LojaFranqueadoController extends Controller
                     
 
                     //return view('loja_franqueado.index');
+
+
         }
         else{
             return view('errors.403');

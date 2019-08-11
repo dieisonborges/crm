@@ -372,3 +372,4 @@ Route::resource('fatura', 'FaturaController');
 //Loja do Franqueado
 Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 
+
