@@ -30,6 +30,8 @@ class CreateUploadsTable extends Migration
             //Tamanho do arquivo
             $table->string('tam');
 
+            $table->integer('valor')->default(0);
+
             $table->timestamps();
         });
 
