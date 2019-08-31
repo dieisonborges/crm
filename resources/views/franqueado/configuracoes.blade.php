@@ -7,12 +7,6 @@
 	        <small>{{ $franquia->nome }}</small>
 	    </h1>
 
-	    <a class="btn btn-primary" href="{{url('franquiasSincronizarUpdate/'.$franquia->id)}}">
-              <i class="fa fa-sync-alt"></i> Atualizar e Sincronizar Configurações
-        </a>
-
-        <br><br>
-
 	    <div class="row">
 	        <div class="col-md-12">
 	          <!-- Custom Tabs -->
