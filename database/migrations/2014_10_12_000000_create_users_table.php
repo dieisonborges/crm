@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
 
             //Quantidade de Convites do usuário
             //Para Criação de franquias
-            $table->integer('qtd_convites')->unsigned()->default(0);
+            $table->integer('qtd_convites')->unsigned()->nullable()->default(0);
 
             $table->timestamps();
         });

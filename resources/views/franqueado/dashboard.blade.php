@@ -29,7 +29,7 @@
       <div class="row"> 
 
         <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="info-box bg-blue">
+          <div class="info-box bg-yellow">
             <a href="{{url('lojaFranqueado')}}" target="_blank">
               <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
             </a>
@@ -41,7 +41,7 @@
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
               <span class="progress-description">
-                    Produtos para compra interna
+                    Produtos para compra coletiva interna
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -49,6 +49,7 @@
           </div>
         </div>
 
+        <!--
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <a href="https://{{$franquia->loja_url}}" target="_blank">
@@ -59,12 +60,11 @@
               <span class="info-box-number">Link.</span>
               <small>{{$franquia->loja_url}}</small>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
+        -->
         <!-- /.col -->
-
+        <!--
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
             <a href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br" target="_blank">
@@ -75,10 +75,9 @@
               <span class="info-box-number">Link.</span>
               <small>{{$franquia->loja_url_alternativa}}.venderaqui.com.br</small>
             </div>
-            <!-- /.info-box-content -->
           </div>
-          <!-- /.info-box -->
         </div>
+        -->
         <!-- /.col -->
         
         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -96,35 +95,6 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/produtosFranqueado')}}">
-              <span class="info-box-icon bg-blue"><i class="fa fa-shopping-bag"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Produtos</span>
-              <span class="info-box-number">Produtos de sua franquia.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/prospectos')}}">
-              <span class="info-box-icon bg-orange"><i class="fa fa-user-plus"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Prospectos</span>
-              <span class="info-box-number">Clientes Interessados.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">

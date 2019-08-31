@@ -145,8 +145,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>
-                <li><a href="{{ url('franqueados/produtos') }}"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>
+                <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>               
                 <li><a href="{{ url('franqueados/convites') }}"><i class="fas fa-paper-plane"></i> Convites</a></li>
             </ul>
           </li>
