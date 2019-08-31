@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 use Gate;
 use App\Ticket;
 use App\User;
-use App\Fornecedor;
 use App\Franquia;
 use App\FranqueadoVip;
 use App\Categoria;
@@ -1034,11 +1033,7 @@ class AtendimentoController extends Controller
             /* .................... QTD Users ................... */
             $qtd_franqueados_vip = FranqueadoVip::all()->count();
             /* .................... END QTD Users ................... */
-
-            /* .................... QTD Users ................... */
-            $qtd_fornecedores = Fornecedor::all()->count();
-            /* .................... END QTD Users ................... */
-
+            
             /* .................... Listagem de Tickets Abertos ................... */
             $tickets = $setor->tickets()                                
                                 ->where('status', 1)
@@ -1102,7 +1097,6 @@ class AtendimentoController extends Controller
                             'qtd_users',
                             'qtd_franquias',
                             'qtd_franqueados_vip',
-                            'qtd_fornecedores',
                             'setor',
                             'equipe',
                             'equipe_qtd',

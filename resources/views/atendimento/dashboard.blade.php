@@ -73,20 +73,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-silver"><i class="fa fa-truck"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Fornecedores</span>
-              <span class="info-box-number">{{$qtd_fornecedores}}</span>
-              <a class="btn btn-default" style="float: right;" href="{{url('fornecedor')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        
       </div>
 
 

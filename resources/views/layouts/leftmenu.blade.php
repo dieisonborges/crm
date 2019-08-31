@@ -46,13 +46,7 @@
                 </a>             
               </li>
               @endcan
-              @can('read_fornecedor')
-              <li>
-                <a href="{{ url('fornecedor/') }}">
-                  <i class="fa fa-truck text-blue"></i><span>Fornecedores</span>              
-                </a>           
-              </li> 
-              @endcan 
+              
               @can('read_score') 
               <li>
                 <a href="{{ url('scores/') }}">
@@ -115,139 +109,18 @@
 
           <!-- ----------------------------------- END Configurações ----------------------- -->
 
-          @can('read_sincronizar')
-          <li class="header">Sincronização</li> 
-
-          <li class="treeview">
-            <a href="#">  
-              <i class="fa fa-sync"></i> <span>Sincronizar Lojas</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-                <!--
-                <li>
-                  <a href="{{ url('produtoPrecos') }}">
-                    <i class="fas fa-circle-notch"></i> Tudo
-                  </a>
-                </li>
-                -->
-                <li>
-                  <a href="{{ url('uploadsSincronizar') }}">
-                    <i class="fas fa-circle-notch"></i> Uploads
-                  </a>
-                </li>              
-                <li>
-                  <a href="{{ url('produtosSincronizar') }}">
-                    <i class="fas fa-circle-notch"></i> Produtos
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('categorias') }}">
-                    <i class="fas fa-circle-notch"></i> Categorias
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('produtoPrecosSincronizar') }}">
-                    <i class="fas fa-circle-notch"></i> Preços de Produtos
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('franquiasSincronizar') }}">
-                    <i class="fas fa-circle-notch"></i> Franquias
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('prospectosSincronizar') }}">
-                    <i class="fas fa-circle-notch"></i> Prospectos
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('sincronizarTudo') }}">
-                    <i class="fas fa-sync text-red"></i> Sincronizar Tudo
-                  </a>
-                </li>
-
-                                
-            </ul>
-          </li> 
-          @endcan   
+           
 
           @can('read_convite')
           
-          <li class="header">Prospecção</li> 
+          <li class="header">Convites</li> 
 
-          <li class="treeview">
-            <a href="#">  
-              <i class="fa fa-paper-plane"></i> <span>Prospecção</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-                
-                <li>
-                  <a href="{{ url('convites/') }}">
-                    <i class="fa fa-paper-plane"></i> <span>Convites</span>              
-                  </a>            
-                </li>
-
-                <li>
-                  <a href="{{ url('listaProspectos') }}">
-                    <i class="fas fa-list-alt"></i> <span>Lista Prospectos</span>
-                  </a>
-                </li>
-
-                                
-            </ul>
-          </li> 
-          @endcan 
-  
- 
-
-          @canany([
-              'read_produto', 
-              'read_orcamento',
-              'read_produto_preco',
-              ])     
-
-          <li class="header">Produtos e Estoque</li> 
-
-          <li class="treeview">
-            <a href="#">  
-              <i class="fa fa-box"></i> <span>Produtos</span>              
-              <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              @can('read_produto')
-                <li>
-                  <a href="{{ url('produtos') }}">  
-                    <i class="fa fa-box"></i> <span>Produtos</span>
-                  </a>
-                </li>
-              @endcan
-              @can('read_orcamento')
-              <li>
-                <a href="{{ url('orcamento') }}">  
-                  <i class="fa fa-list-ol"></i> <span>Orçamentos</span>              
-                </a>            
-              </li>
-              @endcan
-              @can('read_produto_preco') 
-              <li>
-                <a href="{{ url('produtoPrecos') }}">  
-                  <i class="fas fa-money-bill-alt"></i> <span>Precificação</span>              
-                </a>           
-              </li> 
-              @endcan 
-            </ul>            
+          <li>
+            <a href="{{ url('convites/') }}">
+              <i class="fa fa-paper-plane"></i> <span>Convites</span>              
+            </a>            
           </li>
-          @endcanany         
-
-          
+          @endcan           
 
           @can('read_franquia')
           <li>
@@ -258,86 +131,7 @@
 
           @endcan 
 
-          <!-- Arrumar isso algum dia -->           
-          @if(session()->get('setors'))
-
-              @php
-
-                $color_p=0;
-
-              @endphp
-
-              @foreach((session()->get('setors')) as $sess_setors)
-
-                @can('read_'.$sess_setors->name)   
-
-                          
-
-                  <!--<li class="header">{{ucfirst($sess_setors->label)}}</li>-->
-
-                  @php
-
-                  //RRGGBB
-
-                  $color_p += 1;
-
-                  $color = array('','text-green','text-aqua','text-purple', 'text-light-blue', 'text-yellow');            
-
-                  @endphp
-                  <!--
-                    <li class="treeview">
-                        <a href="#">  
-                          <i class="fa fa-tachometer-alt {{$color[$color_p]}}"></i> <span>{{$sess_setors->label}}</span>
-                          <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                          </span>
-                        </a>
-                        <ul class="treeview-menu">
-                          <li>
-                            <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}">  
-                              <i class="fa fa-tachometer-alt"></i> <span>Dashboard</span>                    
-                            </a>
-                            
-                          </li>
-
-                          <li>
-                            <a href="{{ url('atendimentos/'.$sess_setors->name.'/tickets/') }}">
-                              <i class="fa fa-ticket-alt"></i> Tickets
-                            </a>
-                          </li>                                          
-                          
-                        </ul>
-                  </li> 
-                -->
-
-                  
-
-
-                @endcan 
-
-              @endforeach 
-          @endif          
-
-          @can('read_fornecedor_area')     
-
-          <li class="header">Área do Fonecedor</li> 
-
-          <li class="treeview">
-            <a href="#">  
-              <i class="fas fa-boxes"></i> <span>Fornecedor / Provider</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ url('fornecedorArea/dashboard') }}"><i class="fas fa-circle-notch text-orange"></i> Painel de Controle <br> Dashboard</a></li>
-                <li><a href="{{ url('fornecedorArea/orcamentos') }}"><i class="fas fa-circle-notch text-blue"></i> Orçamentos  <br> Budgeting</a></li>
-                <!--<li><a href="{{ url('franqueados/produtos') }}"><i class="fas fa-circle-notch"></i> Catálogo de Produtos</a></li>-->
-                
-            </ul>
-          </li>
-
-          @endcan 
+          
 
           @can('read_franqueado')     
 

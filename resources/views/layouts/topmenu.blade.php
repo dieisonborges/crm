@@ -35,45 +35,73 @@
                 </a>                
               </li>
 
+
+
+
+
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-headset"></i>
+              <span class="label label-warning">?</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Setores de Atendimento</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+
+                  @php
+
+                  $color_p=0;
+              
+                    //RRGGBB
+
+                    $pst = 1;
+
+                    $color = array('', 'bg-maroon', 'bg-lime', 'bg-orange', 'bg-yellow', 'bg-aqua');           
+
+                  @endphp
+                  
+
+                  @if(session()->get('setors'))
+                      @foreach((session()->get('setors')) as $sess_setors)
+
+                      @can('read_'.$sess_setors->name)                   
+
+                          <li class="dropdown messages-menu">
+                            <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}" class="dropdown-toggle" alt="Novo Ticket">
+                              <i class="fa fa-headset"></i>
+                              <span class="label label-default {{$color[$pst++]}}">
+                                {{ucfirst($sess_setors->label)}}
+                              </span>
+                              
+                            </a>                        
+                          </li>
+                      @endcan 
+
+                    @endforeach 
+                  @endif  
+
+
+                </ul>
+              </li>
+            </ul>
+          </li>
+
               
 
 
 
 
 
-              @php
-
-                $color_p=0;
-
-            
-                  //RRGGBB
-
-                  $pst = 1;
-
-                  $color = array('', 'bg-maroon', 'bg-lime', 'bg-orange', 'bg-yellow', 'bg-aqua');           
-
-              @endphp
+              
 
 
 
 
 
 
-              @if(session()->get('setors'))
-                  @foreach((session()->get('setors')) as $sess_setors)
-
-                  @can('read_'.$sess_setors->name)                   
-
-                      <li class="dropdown messages-menu">
-                        <a href="{{ url('atendimentos/'.$sess_setors->name.'/dashboard/') }}" class="dropdown-toggle" alt="Novo Ticket">
-                          <i class="fa fa-headset"></i>
-                          <span class="label label-default {{$color[$pst++]}}">{{strtoupper(substr($sess_setors->name, 0, 1))}}</span>
-                        </a>                        
-                      </li>
-                  @endcan 
-
-                @endforeach 
-              @endif               
+                           
 
               @canany([
               'read_user', 
@@ -87,112 +115,7 @@
               'read_ticket',
               ])
               <!-- -------------------------- MENU ADM ----------------------------- -->
-              <!--
-              <li class="dropdown notifications-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-cog"></i>                  
-                  <span class="label label-info">!</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header"></li>
-                  <li>
-                    <ul class="menu">
-                      
-                      @can('read_user')
-                      <li>
-                        <a href="{{ url('users/') }}">
-                          <i class="fas fa-user text-aqua"></i> Usuários
-                        </a>
-                      </li>
-                      @endcan
-
-                      @can('read_franquia')
-                      <li>
-                        <a href="{{ url('franqueadoVip/') }}">
-                            <i class="fas fa-store text-aqua"></i> Franqueados VIP
-                        </a> 
-                      </li>
-                      @endcan                      
-
-                      @can('read_fornecedor')          
-                      <li>
-                        <a href="{{ url('fornecedor/') }}">
-                          <i class="fa fa-truck text-blue"></i> 
-                          <span>Fornecedores</span>              
-                        </a>                        
-                      </li>
-                      @endcan
-
-                      @can('read_score')          
-                      <li>
-                        <a href="{{ url('scores/') }}">
-                          <i class="fa fa-star"></i> <span>Scores</span>              
-                        </a>                        
-                      </li>
-                      @endcan
-
-                      @can('read_conquista')          
-                      <li>
-                        <a href="{{ url('conquistas/') }}">
-                          <i class="fa fa-certificate"></i> <span>Conquistas</span>              
-                        </a>                        
-                      </li>
-                      @endcan
-
-                      @can('read_categoria')
-                      <li>
-                        <a href="{{ url('categorias/') }}">
-                          <i class="fa fa-list-alt"></i> <span>Categorias</span>              
-                        </a>            
-                      </li>
-                      @endcan
-
-                      @can('read_log')
-                      <li>
-                        <a href="{{ url('logs/') }}">
-                          <i class="fa fa-history"></i> <span>Logs </span>
-                        </a>
-                      </li>
-                      @endcan
-
-                      @can('read_role')
-                      <li>
-                        <a href="{{ url('roles/') }}">
-                          <i class="fas fa-user-shield"></i> <span>Roles (grupo)</span>              
-                        </a>            
-                      </li>
-                      @endcan
-
-                      @can('read_permission')
-                      <li class="treeview">
-                        <a href="{{ url('permissions/') }}">
-                          <i class="fas fa-shield-alt"></i> <span>Permissions</span>              
-                        </a>            
-                      </li>
-                      @endcan
-                      
-                      @can('read_setor')
-                      <li class="treeview">
-                        <a href="{{ url('setors/') }}">
-                          <i class="fas fa-building"></i> <span>Setores Internos</span>              
-                        </a>            
-                      </li>
-                      @endcan
-
-                      @can('read_ticket')
-                      <li>
-                        <a href="{{ url('tickets/1/status') }}">  
-                          <i class="fas fa-ticket-alt"></i> <span>Tickets</span>                          
-                        </a>                        
-                      </li>
-                      @endcan  
-
-
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-  -->
+              
               <!-- -------------------------- END MENU ADM ------------------------- -->
 
               @endcanany

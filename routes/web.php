@@ -149,26 +149,6 @@ Route::post('convites/busca', 'ConviteController@busca');
 Route::get('convites/{id}/updateStatus/{status}', 'ConviteController@updateStatus');
 Route::get('convites/reenviar/{id}', 'ConviteController@reenviar');
 
-//Produtos
-Route::resource('produtos', 'ProdutoController');
-Route::post('produtos/busca', 'ProdutoController@busca');
-
-// Imagem Produtos
-Route::get('produtos/{id_produto}/imagemValor/{id_imagem}', 'ProdutoController@imagemValor');
-Route::post('produtos/imagemValorUpdate', 'ProdutoController@imagemValorUpdate');
-
-
-Route::get('produtos/{id}/imagem', 'ProdutoController@imagem');
-Route::post('produtos/imagemUpdate', 'ProdutoController@imagemUpdate');
-Route::post('produtos/imagemDestroy/{id}', 'ProdutoController@imagemDestroy');
-Route::get('produtos/imagemPrincipal/{imagem_id}/{produto_id}', 'ProdutoController@imagemPrincipal');
-
-
-Route::get('produtos/{id}/categorias', 'ProdutoController@categoria');
-Route::post('produtos/categoriaUpdate', 'ProdutoController@categoriaUpdate');
-Route::post('produtos/categoriaDestroy', 'ProdutoController@categoriaDestroy');
-
-
 //Franquias
 Route::resource('franquias', 'FranquiaController');
 Route::post('franquias/busca', 'FranquiaController@busca');
@@ -195,61 +175,6 @@ Route::post('conquistas/userDestroy', 'ConquistaController@userDestroy');
 //FranqueadoVip
 Route::resource('franqueadoVip', 'FranqueadoVipController');
 Route::post('franqueadoVip/busca', 'FranqueadoVipController@busca');
-
-//Fornecedor
-Route::get('fornecedor/{id}/usuarios', 'FornecedorController@usuarios');
-Route::post('fornecedor/usuarioUpdate', 'FornecedorController@usuarioUpdate');
-Route::post('fornecedor/usuarioDestroy', 'FornecedorController@usuarioDestroy');
-Route::resource('fornecedor', 'FornecedorController');
-Route::post('fornecedor/busca', 'FornecedorController@busca');
-
-//Orçamento
-Route::post('orcamento/busca', 'OrcamentoController@busca');
-
-Route::get('orcamento/{id}/item', 'OrcamentoController@item');
-Route::post('orcamento/itemStore', 'OrcamentoController@itemStore');
-
-Route::get('orcamento/{id}/itemLote', 'OrcamentoController@itemLote');
-Route::post('orcamento/itemLoteStore', 'OrcamentoController@itemLoteStore');
-
-Route::get('orcamento/{id}/itemEdit', 'OrcamentoController@itemEdit');
-Route::post('orcamento/itemUpdate', 'OrcamentoController@itemUpdate');
-Route::post('orcamento/itemDestroy', 'OrcamentoController@itemDestroy');
-Route::get('orcamento/{id}/enviar', 'OrcamentoController@enviar');
-Route::get('orcamento/{id}/cancelar', 'OrcamentoController@cancelar');
-
-Route::resource('orcamento', 'OrcamentoController');
-
-
-/* -------------------------Área Interna do Fornecedor ----------------------------------- */
-Route::get('fornecedorArea/dashboard', 'FornecedorAreaController@dashboard');
-Route::get('fornecedorArea/orcamentos', 'FornecedorAreaController@orcamentos');
-Route::get('fornecedorArea/orcamentoCreate', 'FornecedorAreaController@orcamentoCreate');
-Route::post('fornecedorArea/orcamentoStore', 'FornecedorAreaController@orcamentoStore');
-Route::get('fornecedorArea/orcamentoShow/{id}', 'FornecedorAreaController@orcamentoShow');
-Route::get('fornecedorArea/orcamentoEdit/{id}', 'FornecedorAreaController@orcamentoEdit');
-Route::post('fornecedorArea/orcamentoUpdate', 'FornecedorAreaController@orcamentoUpdate');
-Route::get('fornecedorArea/orcamentoFinalizar/{id}', 'FornecedorAreaController@orcamentoFinalizar');
-
-Route::get('fornecedorArea/orcamentoItemLote/{id}', 'FornecedorAreaController@orcamentoItemLote');
-Route::post('fornecedorArea/orcamentoItemLoteStore', 'FornecedorAreaController@orcamentoItemLoteStore');
-
-Route::post('fornecedorArea/orcamentoItemDestroy', 'FornecedorAreaController@orcamentoItemDestroy');
-
-//Excel
-Route::get('fornecedorArea/orcamentoShowExcel/{id}', 'FornecedorAreaController@orcamentoShowExcel');
-//PDF
-Route::get('fornecedorArea/orcamentoShowPdf/{id}', 'FornecedorAreaController@orcamentoShowPdf');
-
-/* -------------------------END Área Interna do Fornecedor ----------------------------------- */
-
-
-/* --------------------------------- Orçamento Fonecedor - SEGURANCA VIA TOKEN --------------------- */
-Route::get('orcamento/fornecedor/{token}', 'OrcamentoController@fornecedor');
-Route::post('orcamento/fornecedorUpdate', 'OrcamentoController@fornecedorUpdate');
-Route::get('orcamento/fornecedorFinalizar/{token}', 'OrcamentoController@fornecedorFinalizar');
-/* --------------------------------- END Orçamento Fonecedor - SEGURANCA VIA TOKEN --------------------- */
-
 
 // UploadController
 Route::resource('uploads', 'UploadController');
@@ -282,94 +207,15 @@ Route::post('franqueados/{id}/configuracoesUpdate', 'FranqueadoController@config
 Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
 Route::get('franqueados/{id}/configuracoes', 'FranqueadoController@configuracoes');
 Route::get('franqueados/{id}/configuracoesEdit', 'FranqueadoController@configuracoesEdit');
-Route::get('franqueados/{id}/produtosFranqueado', 'FranqueadoController@produtosFranqueado');
-Route::get('franqueados/{id}/produtosRemover/{id_produto}', 'FranqueadoController@produtosRemover');
-Route::get('franqueados/{id}/produtosAdicionar/{id_produto}', 'FranqueadoController@produtosAdicionar');
-Route::get('franqueados/{id}/produtosLucro/{id_produto}', 'FranqueadoController@produtosLucro');
-Route::post('franqueados/{id}/produtosLucroUpdate', 'FranqueadoController@produtosLucroUpdate');
 
-Route::post('franqueados/{id}/produtosFranqueadoBusca', 'FranqueadoController@produtosFranqueadoBusca');
 
-Route::get('franqueados/produtos', 'FranqueadoController@produtos');
-Route::post('franqueados/produtos/busca', 'FranqueadoController@produtosBusca');
-Route::get('franqueados/produtos/{id}', 'FranqueadoController@produtosShow');
 Route::resource('franqueados', 'FranqueadoController');
-
-//Prospectos
-Route::get('franqueados/{id}/prospectos', 'FranqueadoController@prospectos');
-Route::post('franqueados/{id}/prospectosBusca', 'FranqueadoController@prospectosBusca');
-Route::get('franqueados/{id}/prospectos/{prospecto_id}', 'FranqueadoController@prospectoShow');
-
-
-
-
-
-//Produto Preços
-
-Route::get('produtoPrecos/enable/{id}', 'ProdutoPrecoController@enable');
-Route::get('produtoPrecos/disable/{id}', 'ProdutoPrecoController@disable');
-
-Route::get('produtoPrecos/{id}/orcamento', 'ProdutoPrecoController@orcamento');
-Route::post('produtoPrecos/orcamentoCreate', 'ProdutoPrecoController@orcamentoCreate');
-
-Route::resource('produtoPrecos', 'ProdutoPrecoController');
-Route::post('produtoPrecos/busca', 'ProdutoPrecoController@busca');
-
-
-
 
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
 
 
-/* -------------- ***** SINCRONIZAR LOJAS ***** ----------------------------- */
-
-//Categorias
-Route::get('sincronizarTudo', 'SincronizarController@all');
-
-//Categorias
-Route::get('categoriasSincronizarUpdate', 'SincronizarController@categoriasUpdate');
-
-//Preço de Produto
-//Route::get('produtoPrecosSincronizar', 'ProdutoPrecoController@sync');
-//Route::get('produtoPrecosSincronizarUpdate', 'ProdutoPrecoController@syncUpdate');
-
-//Uploads
-Route::get('uploadsSincronizar', 'SincronizarController@uploads');
-Route::get('uploadsSincronizarUpdate', 'SincronizarController@uploadsUpdate');
-
-//Produtos
-Route::get('produtosSincronizar', 'SincronizarController@produtos');
-Route::get('produtosSincronizarUpdate', 'SincronizarController@produtosUpdate');
-
-//Preço de Produto
-Route::get('produtoPrecosSincronizar', 'SincronizarController@produtoPrecos');
-Route::get('produtoPrecosSincronizarUpdate', 'SincronizarController@produtoPrecosUpdate');
-
-//Produto do Franqueado
-Route::get('produtosFranqueadoUpdate/{id}', 'SincronizarController@produtosFranqueadoUpdate');
-
-//Franquias
-Route::get('franquiasSincronizar', 'SincronizarController@franquias');
-Route::get('franquiasSincronizarUpdate/{id}', 'SincronizarController@franquiasUpdate');
-
-//Prospectos
-Route::get('prospectosSincronizar', 'SincronizarController@listaProspectos');
-Route::get('prospectosSincronizarUpdate', 'SincronizarController@listaProspectosUpdate');
-
-
-
-//Franquia Integrada
-//Route::post('franquiasIntegrada/busca', 'FranquiaIntegradaController@busca');
-//Route::get('franquiasIntegrada/sync/{id}', 'FranquiaIntegradaController@sync');
-//Route::resource('franquiasIntegrada', 'FranquiaIntegradaController');
-
-//Lista de Prospectos
-Route::resource('listaProspectos', 'ListaProspectoController');
-
-// FaturaController
-Route::resource('fatura', 'FaturaController');
-
 //Loja do Franqueado
+//WooCommerce de Test
 Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 
 
