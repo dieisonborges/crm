@@ -7,6 +7,8 @@
 	        <small>{{ $franquia->nome }}</small>
 	    </h1>
 
+	    
+
 	    <div class="row">
 	        <div class="col-md-12">
 	          <!-- Custom Tabs -->
