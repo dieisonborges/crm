@@ -27,8 +27,7 @@
                     <th>Código da Franquia</th>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Status</th>
-                    <th>Abrir loja</th>
+                    <th>Status</th>                    
                     <th>Gerenciar</th>
 
                 </tr>
@@ -47,28 +46,7 @@
                             <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
                         @endif
                         </a>
-                    </td>
-
-                    <td> 
-                        
-                        @if($franquia->status)
-                            <a href="https://{{$franquia->loja_url}}" target="_blank">
-                                <span class="btn btn-primary btn-xs"><i class="fa fa-link"></i> Principal</span>
-                            </a>
-                        @else
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
-                        @endif
-                       
-                                            
-                        @if($franquia->status)
-                            <a href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br" target="_blank">
-                                <span class="btn btn-warning btn-xs"><i class="fa fa-link"></i> Alternativo</span>
-                            </a>
-                        @else
-                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Desativado</span>
-                        @endif
-                       
-                    </td>
+                    </td>                    
 
                     <td>
                         
