@@ -13,165 +13,33 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
   
+        $roles[] = array("name"=>"adm", "label"=>"Administrador");
+        $roles[] = array("name"=>"diretoria", "label"=>"Diretoria e-Cardume");
+        $roles[] = array("name"=>"atendimento", "label"=>"Atendimento Geral ao Cliente");
+        $roles[] = array("name"=>"convite", "label"=>"Convidados a plataforma");
+        $roles[] = array("name"=>"financeiro", "label"=>"Financeiro - Atendimento ao Cliente");
+        $roles[] = array("name"=>"suporte_tecnico", "label"=>"Suporte Técnico - Atendimento ao Cliente");
+        $roles[] = array("name"=>"franquia", "label"=>"Gerência de Franquias");
+        $roles[] = array("name"=>"franqueado", "label"=>"Franqueado e-Cardume");
+        $roles[] = array("name"=>"score", "label"=>"Gerência de Score (Pontuação)");
+        $roles[] = array("name"=>"conquista", "label"=>"Gerência de Conquistas do Usuário");
+        $roles[] = array("name"=>"franqueado_vip", "label"=>"Gerência dos Franqueados VIP e VIP Líder");
+        $roles[] = array("name"=>"upload", "label"=>"Upload de Arquivos");
+        $roles[] = array("name"=>"marketing", "label"=>"Gerência de Marketing");
 
-        //Administrador
-        Role::create([
-            'id'=>'1',
-            'name'=>'adm',
-            'label'=>'Administrador',
-        ]);
+        //$roles[] = array("name"=>"", "label"=>""); //Modelo
+      
+        //inicializa contagem de permissions
+        $cont_roles = 1;
+        foreach($roles as $role){
+            Role::create([
+                'id'=>$cont_roles,
+                'name'=>$role['name'],
+                'label'=>$role['label']
+            ]);
+            $cont_roles++;
+        }
 
-        //Atendimento Geral ao Cliente
-        Role::create([
-            'id'=>'2',
-            'name'=>'atendimento',
-            'label'=>'Atendimento Geral ao Cliente',
-        ]);
-
-        //Convidados a plataforma
-        Role::create([
-            'id'=>'3',
-            'name'=>'convite',
-            'label'=>'Convidados a plataforma',
-        ]);
-
-        //Diretoria e-Cardume
-        Role::create([
-            'id'=>'4',
-            'name'=>'diretoria',
-            'label'=>'Diretoria e-Cardume',
-        ]);
-
-        //Financeiro - Atendimento ao Cliente
-        Role::create([
-            'id'=>'5',
-            'name'=>'financeiro',
-            'label'=>'Financeiro - Atendimento ao Cliente',
-        ]);
-
-        //Suporte Técnico - Atendimento ao Cliente
-        Role::create([
-            'id'=>'6',
-            'name'=>'suporte_tecnico',
-            'label'=>'Suporte Técnico - Atendimento ao Cliente',
-        ]);
-
-        //Gerência Geral de Produtos
-        Role::create([
-            'id'=>'7',
-            'name'=>'produto',
-            'label'=>'Gerência Geral de Produtos',
-        ]);
-
-        //Gerência de Franquias
-        Role::create([
-            'id'=>'8',
-            'name'=>'franquia',
-            'label'=>'Gerência de Franquias',
-        ]);
-
-        //Franqueado e-Cardume
-        Role::create([
-            'id'=>'9',
-            'name'=>'franqueado',
-            'label'=>'Franqueado e-Cardume',
-        ]);
-
-        //Gerência de Score (Pontuação)
-        Role::create([
-            'id'=>'10',
-            'name'=>'score',
-            'label'=>'Gerência de Score (Pontuação)',
-        ]);
-
-        //Gerência de Conquistas do Usuário
-        Role::create([
-            'id'=>'11',
-            'name'=>'conquista',
-            'label'=>'Gerência de Conquistas do Usuário',
-        ]);
-
-        //Gerência dos Franqueados VIP e VIP Líder
-        Role::create([
-            'id'=>'12',
-            'name'=>'franqueado_vip',
-            'label'=>'Gerência dos Franqueados VIP e VIP Líder',
-        ]);
-
-        //Gerência de Fornecedores
-        Role::create([
-            'id'=>'13',
-            'name'=>'fornecedor',
-            'label'=>'Gerência de Fornecedores',
-        ]);
-
-        //Gerência de Orçamentos
-        Role::create([
-            'id'=>'14',
-            'name'=>'orcamento',
-            'label'=>'Gerência de Orçamentos',
-        ]);
-
-        //Upload de Arquivo     
-        Role::create([
-            'id'=>'15',
-            'name'=>'upload',
-            'label'=>'Upload de Arquivos',
-        ]);
-
-        //Gerência de Preços de Produtos     
-        Role::create([
-            'id'=>'16',
-            'name'=>'produto_preco',
-            'label'=>'Gerência de Preços de Produtos',
-        ]);
-
-        //Sincronizar Lojas    
-        Role::create([
-            'id'=>'17',
-            'name'=>'sincronizar',
-            'label'=>'Sincronizar Lojas',
-        ]);
-
-        //Gerência de Lista de Prospectos
-        Role::create([
-            'id'=>'18',
-            'name'=>'lista_prospecto',
-            'label'=>'Gerência de Lista de Prospectos',
-        ]);
-
-        //Área do Fornecedor
-        Role::create([
-            'id'=>'19',
-            'name'=>'fornecedor_area',
-            'label'=>'Área do Fornecedor',
-        ]);
-
-        //Gerência de Marketing
-        Role::create([
-            'id'=>'20',
-            'name'=>'marketing',
-            'label'=>'Gerência de Marketing',
-        ]);
-
-        //Gerência de Marketing
-        Role::create([
-            'id'=>'21',
-            'name'=>'fatura',
-            'label'=>'Gerência de Fatura',
-        ]);
-
-
-        /* -------------------- Exemplo ---------------- */
-        /*
-        //        
-        Role::create([
-            'id'=>'',
-            'name'=>'',
-            'label'=>'',
-        ]);
-        */
-
-        
     }
+    
 }

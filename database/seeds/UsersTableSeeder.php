@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Usuário Administrador        
         User::create([
             'id'            =>  '1',
             'status'        =>  '1',
@@ -23,5 +23,6 @@ class UsersTableSeeder extends Seeder
             'email'         => 'administrador@ecardume.com.br',
             'password'      => bcrypt('admcardume@123'),
         ]);
+
     }
 }

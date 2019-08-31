@@ -29,6 +29,8 @@ class CreateLogsTable extends Migration
                     ->on('users')
                     ->onDelete('cascade');
 
+            $table->string('geoip')->nullable();
+
             $table->timestamps();
 
 

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Permission;
+use App\Role;
 
 class PermissionRoleTableSeeder extends Seeder
 {
@@ -14,163 +15,106 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         
-        $total_geral = 88;
-
-        //Administrador (Todas as Permissões)
-        $total_permissions = $total_geral;
-        for ($i = 1; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('1');
-    
-		}
-
-        //Diretoria e-Cardume
-        $total_permissions = $total_geral;
-        for ($i = 1; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('4');
-    
+        
+        /* --------------------------------------------------------------------*/
+        //"name"=>"adm", "label"=>"Administrador" | Todas as permissoes
+        $role = Role::where('name','adm')->first();
+        $permissions = Permission::all();        
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Atendimento Geral ao Cliente
-        $total_permissions = 32;
-        for ($i = 29; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('2');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"diretoria", "label"=>"Diretoria e-Cardume" | Todas as permissoes
+        $role = Role::where('name','diretoria')->first();
+        $permissions = Permission::all();        
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Convidados a plataforma
-        $total_permissions = 36;
-        for ($i = 33; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('3');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"atendimento", "label"=>"Atendimento Geral ao Cliente"
+        $role = Role::where('name','atendimento')->first();
+        //atendimento
+        $permissions = Permission::where('name', 'like','%'.'atendimento');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
+        }
+        //upload
+        $permissions = Permission::where('name', 'like','%'.'upload');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Financeiro - Atendimento ao Cliente
-        $total_permissions = 40;
-        for ($i = 37; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('5');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"convite", "label"=>"Convidados a plataforma"
+        $role = Role::where('name','convite')->first();
+        //convite
+        $permissions = Permission::where('name', 'like','%'.'convite');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Suporte Técnico - Atendimento ao Cliente
-        $total_permissions = 44;
-        for ($i = 41; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('6');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"financeiro", "label"=>"Financeiro - Atendimento ao Cliente"
+        $role = Role::where('name','financeiro')->first();
+        //financeiro
+        $permissions = Permission::where('name', 'like','%'.'financeiro');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
+        }
+        //upload
+        $permissions = Permission::where('name', 'like','%'.'upload');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Gerência Geral de Produtos
-        $total_permissions = 48;
-        for ($i = 45; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('7');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"suporte_tecnico", "label"=>"Suporte Técnico - Atendimento ao Cliente"
+        $role = Role::where('name','suporte_tecnico')->first();
+        //suporte_tecnico
+        $permissions = Permission::where('name', 'like','%'.'suporte_tecnico');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
+        }
+        //upload
+        $permissions = Permission::where('name', 'like','%'.'upload');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Gerência de Franquias
-        $total_permissions = 52;
-        for ($i = 49; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('8');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"franquia", "label"=>"Gerência de Franquias"
+        $role = Role::where('name','franquia')->first();
+        //franquia
+        $permissions = Permission::where('name', 'like','%'.'franquia');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Franqueado e-Cardume
-        $total_permissions = 56;
-        for ($i = 53; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('9');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"franqueado", "label"=>"Franqueado e-Cardume"
+        $role = Role::where('name','franqueado')->first();
+        //franqueado
+        $permissions = Permission::where('name', 'like','%'.'franqueado');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
+        }
+        //upload
+        $permissions = Permission::where('name', 'like','%'.'upload');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Gerência de Score (Pontuação)
-        $total_permissions = 60;
-        for ($i = 57; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('10');
-    
+        /* --------------------------------------------------------------------*/
+        //"name"=>"score", "label"=>"Gerência de Score (Pontuação)"
+        $role = Role::where('name','score')->first();
+        //score
+        $permissions = Permission::where('name', 'like','%'.'score');       
+        foreach ($permissions as $permission) {
+            $permission->permissionRole()->attach($role->id);
         }
 
-        //Gerência de Conquistas do Usuário
-        $total_permissions = 64;
-        for ($i = 61; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('11');
-    
-        }
-
-        //Gerência dos Franqueados VIP e VIP Líder
-        $total_permissions = 68;
-        for ($i = 65; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('12');
-    
-        }
-
-        //Gerência de Fornecedores
-        $total_permissions = 72;
-        for ($i = 69; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('13');
-    
-        }
-
-        //Gerência de Orçamentos
-        $total_permissions = 76;
-        for ($i = 73; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('14');
-    
-        } 
-
-        //Upload de Arquivos
-        $total_permissions = 80;
-        for ($i = 77; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('15');
-    
-        }
-
-        //Gerência de Preços de Produtos
-        $total_permissions = 84;
-        for ($i = 81; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('16');
-    
-        }
-
-        //Sincronizar Lojas
-        $total_permissions = 88;
-        for ($i = 85; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('17');
-    
-        }
-
-        //Gerência de Lista de Prospectos
-        $total_permissions = 92;
-        for ($i = 89; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('18');
-    
-        }
-
-        //Área do Fornecedor
-        $total_permissions = 96;
-        for ($i = 93; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('19');
-    
-        }
-
-        //Gerência de Marketing
-        $total_permissions = 100;
-        for ($i = 97; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('20');
-    
-        }
-
-        //Fatura
-        $total_permissions = 104;
-        for ($i = 101; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('21');    
-        }
-
-        /* ---------------- Exemplo ---------------- */
-        /*
-        //
-        $total_permissions = ;
-        for ($i = ; $i <= $total_permissions; $i++) {
-            Permission::find($i)->permissionRole()->attach('');
-    
-        }
-        */   
 
         
     }

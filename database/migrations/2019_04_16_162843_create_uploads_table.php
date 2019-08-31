@@ -53,23 +53,7 @@ class CreateUploadsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('galeria_produto', function (Blueprint $table) {
-            $table->increments('id');            
-
-            $table->integer('upload_id')->unsigned();
-            $table->foreign('upload_id')
-                    ->references('id')
-                    ->on('uploads')
-                    ->onDelete('cascade');
-            
-            $table->integer('produto_id')->unsigned();
-            $table->foreign('produto_id')
-                    ->references('id')
-                    ->on('produtos')
-                    ->onDelete('cascade');     
-
-            $table->timestamps();
-        });
+        
 
         Schema::create('imagem_user', function (Blueprint $table) {
             $table->increments('id');            
@@ -98,7 +82,6 @@ class CreateUploadsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('imagem_user');
-        Schema::dropIfExists('galeria_produto');
         Schema::dropIfExists('upload_ticket');
         Schema::dropIfExists('uploads');
     }

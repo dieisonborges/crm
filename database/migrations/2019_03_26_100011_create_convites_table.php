@@ -21,7 +21,25 @@ class CreateConvitesTable extends Migration
             $table->integer('status')->unsigned()->default(1);
             $table->string('email')->unique();
             $table->timestamps();
+
+            //Franquia que foi criada pelo convite
+            $table->integer('franquia_id')->unsigned()->nullable();
+            $table->foreign('franquia_id')
+                    ->references('id')
+                    ->on('franquias')
+                    ->onDelete('cascade');
+
+
+            //Quem criou o convite
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+
         });
+
+
     }
 
     /**

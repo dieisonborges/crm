@@ -33,15 +33,9 @@ class CreateFranquiasTable extends Migration
             //Link URL  LOJA
             $table->mediumText('loja_url')->nullable(); 
 
-            //Foi removido nas proximas migracoes *********************************************
-            //Banco de Dados - OpenCart
-            $table->string('loja_database_url')->nullable();
-            $table->string('loja_database_name')->nullable();
-            $table->string('loja_database_user')->nullable();
-            //base64_encode(database_password_salt + database_password + APP_HASH_ENCODE)
-            $table->mediumText('loja_database_password')->nullable();
-            $table->mediumText('loja_database_password_salt')->nullable();
-            // END foi removido ***************************************************************
+            //URL ALternativa (Sub dominio .venderaqui)
+            $table->string('loja_url_alternativa')->unique();
+            
 
             // Quem indicou a franquia Unilevel
             // Líder
@@ -51,6 +45,18 @@ class CreateFranquiasTable extends Migration
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');
+
+            $table->string('cnpj')->nullable();
+            $table->string('telefone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('endereco')->nullable();
+            $table->integer('endereco_numero')->nullable();
+            $table->string('endereco_bairro')->nullable();
+            $table->string('endereco_cidade')->nullable();
+            $table->string('endereco_estado')->nullable();
+            $table->string('endereco_cep')->nullable();
+
+            $table->double('lucro', 8, 2)->dafault(10.00);
 
             $table->timestamps();
         });
