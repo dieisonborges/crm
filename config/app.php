@@ -251,25 +251,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        /*
-        Classe para validacao PT-BR
+        //Validate Docs Brazil
+        //Doc: https://github.com/geekcom/validator-docs
+        geekcom\ValidatorDocs\ValidatorProvider::class,
 
-        https://github.com/LaravelLegends/pt-br-validator
-
-        celular - Valida se o campo está no formato (99999-9999 ou 9999-9999)
-        celular_com_ddd - Valida se o campo está no formato ((99)99999-9999 ou (99)9999-9999 ou (99) 99999-9999 ou (99) 9999-9999)
-        cnpj - Valida se o campo é um CNPJ válido. 
-        cpf - Valida se o campo é um CPF válido.
-        data - Valida se o campo é uma data no formato DD/MM/YYYY*. Por exemplo: 31/12/1969.
-        formato_cnpj - Valida se o campo tem uma máscara de CNPJ correta (99.999.999/9999-99).
-        formato_cpf - Valida se o campo tem uma máscara de CPF correta (999.999.999-99).
-        formato_cep - Valida se o campo tem uma máscara de correta (99999-999 ou 99.999-999).
-        telefone - Valida se o campo tem umas máscara de telefone (9999-9999).
-        telefone_com_ddd - Valida se o campo tem umas máscara de telefone com DDD ((99)9999-9999 ou (99) 9999-9999).
-        formato_placa_de_veiculo - Valida se o campo tem o formato válido de uma placa de veículo.
-        */
-
-        LaravelLegends\PtBrValidator\ValidatorProvider::class,
+        //Validate Phone Number
+        Propaganistas\LaravelPhone\PhoneServiceProvider::class,
 
         /* -------- GEO IP -------*/
         \Torann\GeoIP\GeoIPServiceProvider::class,

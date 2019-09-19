@@ -178,7 +178,7 @@ class RegisterController extends Controller
 
                 'phone_number_country' => 'required|string|min:2|max:5',
 
-                'phone_number' => 'required|string|celular_com_ddd',
+                'phone_number' => 'required|string|phone:BR',
 
                 'password' =>   [
                                     'required',
@@ -192,6 +192,7 @@ class RegisterController extends Controller
             [
                 'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
                 'required' => 'O campo :attribute é obrigatório. Verifique se o valor inserido é válido, sem uso e dentro da validade.',
+                'phone' =>  'No campo :attribute é obrigatório um telefone válido.'
             ]
         
         );

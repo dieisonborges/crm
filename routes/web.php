@@ -17,6 +17,12 @@ Route::get('/', function () {
     return redirect('https://site.ecardume.com');
 });
 */
+
+Route::get('/', function () {
+    $newSlug = str_slug('I am from ItSolutionStuff.com');
+    
+    dd($newSlug);
+});
  
 // Login
 Route::get('/', function () {
