@@ -74,6 +74,16 @@ class FranquiaController extends Controller
         return config('app.app_hash_encode');
     }
 
+    private function encrypt($text) 
+    { 
+        return trim(base64_encode(@mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->appHashEncode(), $text, MCRYPT_MODE_ECB, @mcrypt_create_iv(@mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)))); 
+    } 
+
+    private function decrypt($text) 
+    { 
+        return trim(@mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->appHashEncode(), base64_decode($text), MCRYPT_MODE_ECB, @mcrypt_create_iv(@mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))); 
+    } 
+
     private function selectEstadosBrasil(){
         return '
                 <option value="AC">Acre - AC</option>
@@ -240,28 +250,30 @@ class FranquiaController extends Controller
             $franquia->endereco_estado = $request->input('endereco_estado');
 
 
-
             $franquia->status = "1"; //Franquia Ativa
 
             //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
             $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
-            //Database OpenCart
-            //$franquia->loja_database_url = $request->input('loja_database_url');
-            //$franquia->loja_database_name = $request->input('loja_database_name');
-            //$franquia->loja_database_user = $request->input('loja_database_user');
-            //Password Database OpenCart
-            //Salt
-            /*
-            $salt = $this->saltGen();
-            $franquia->loja_database_password_salt = $salt;
-            $franquia->loja_database_password = 
-                            base64_encode( 
-                                $salt.
-                                $request->input('loja_database_password').
-                                $this->appHashEncode()
-                            );
-            */
+
+            //Dados WooCommerce
+            $franquia->WP_HOME = $request->input('WP_HOME');
+            $franquia->WP_SITEURL = $request->input('WP_SITEURL');
+            $franquia->DB_NAME = $request->input('DB_NAME');
+            $franquia->DB_USER = $request->input('DB_USER');            
+            $franquia->DB_HOST = $request->input('DB_HOST');
+            $franquia->DB_CHARSET = $request->input('DB_CHARSET');
+            $franquia->DB_COLLATE = $request->input('DB_COLLATE');
+
+            //Encrypt Password
+            $DB_PASSWORD_ENC = $request->input('DB_PASSWORD');
+
+            dd($this->encrypt($DB_PASSWORD_ENC));
+
+
+            $franquia->DB_PASSWORD = $this->encrypt($DB_PASSWORD_ENC);
+
+            
             //Se tem líder/afiliado vincula
             if($request->input('user_id_afiliado')){
                     $franquia->user_id_afiliado = $request->input('user_id_afiliado');
@@ -355,24 +367,22 @@ class FranquiaController extends Controller
             //URL da Loja
             $franquia->loja_url = $request->input('loja_url');
             $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
-            //Database OpenCart
-            //$franquia->loja_database_url = $request->input('loja_database_url');
-            //$franquia->loja_database_name = $request->input('loja_database_name');
-            //$franquia->loja_database_user = $request->input('loja_database_user');
-            //Só modifica a Senha se não estiver vazio
-            /*
-            if($request->input('loja_database_password')){                    
-                    $salt = $this->saltGen();
-                    $franquia->loja_database_password_salt = $salt;
-                    $franquia->loja_database_password = 
-                                    base64_encode( 
-                                        $salt.
-                                        $request->input('loja_database_password').
-                                        $this->appHashEncode()
-                                    );
+            
+            //Dados WooCommerce
+            $franquia->WP_HOME = $request->input('WP_HOME');
+            $franquia->WP_SITEURL = $request->input('WP_SITEURL');
+            $franquia->DB_NAME = $request->input('DB_NAME');
+            $franquia->DB_USER = $request->input('DB_USER');            
+            $franquia->DB_HOST = $request->input('DB_HOST');
+            $franquia->DB_CHARSET = $request->input('DB_CHARSET');
+            $franquia->DB_COLLATE = $request->input('DB_COLLATE');
 
+            //Encrypt Password            
+            $DB_PASSWORD_ENC = $request->input('DB_PASSWORD');
+            if($DB_PASSWORD_ENC){
+                $franquia->DB_PASSWORD = $this->encrypt($DB_PASSWORD_ENC);
             }
-            */
+            
 
             //Dados Comerciais
             $franquia->cnpj = $request->input('cnpj');

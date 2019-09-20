@@ -55,6 +55,7 @@ return [
             'engine' => null,
         ],
 
+        /*
         'mysql_loja' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_LOJA', '127.0.0.1'),
@@ -70,6 +71,7 @@ return [
             'strict' => env('DB_STRICT_LOJA', ''),
             'engine' => null,
         ],
+        */
 
         'pgsql' => [
             'driver' => 'pgsql',

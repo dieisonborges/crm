@@ -34,20 +34,35 @@
               <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
             </a>
             <div class="info-box-content">
-              <span class="info-box-text">Compra Interna</span>
+              <span class="info-box-text">Catálogo Referência</span>
               <span class="info-box-number">Loja do Franqueado</span>
 
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
               <span class="progress-description">
-                    Produtos para compra coletiva interna
+                    Produtos de referência
               </span>
             </div>
             <!-- /.info-box-content -->
             
           </div>
         </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/'.$franquia->id.'/produtos')}}">
+              <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Produtos</span>
+              <span class="info-box-number">Listagem de produtos.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
 
         <!--
         <div class="col-md-3 col-sm-6 col-xs-12">
