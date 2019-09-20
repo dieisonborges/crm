@@ -262,7 +262,10 @@ return [
         \Torann\GeoIP\GeoIPServiceProvider::class,
 
         //Gerador de Excel e PDF
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        //Wordpress - Laravel
+        Corcel\Laravel\CorcelServiceProvider::class
 
     ],
 

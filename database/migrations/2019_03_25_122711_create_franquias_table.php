@@ -33,10 +33,6 @@ class CreateFranquiasTable extends Migration
             //Link URL  LOJA
             $table->mediumText('loja_url')->nullable(); 
 
-            //URL ALternativa (Sub dominio .venderaqui)
-            $table->string('loja_url_alternativa')->unique();
-            
-
             // Quem indicou a franquia Unilevel
             // Líder
             // Não é o ID do Dono da loja
@@ -45,6 +41,8 @@ class CreateFranquiasTable extends Migration
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');
+
+            $table->timestamps();            
 
             $table->string('cnpj')->nullable();
             $table->string('telefone')->nullable();
@@ -58,7 +56,10 @@ class CreateFranquiasTable extends Migration
 
             $table->double('lucro', 8, 2)->dafault(10.00);
 
-            $table->timestamps();
+            //URL ALternativa (Sub dominio .venderaqui)
+            $table->string('loja_url_alternativa')->unique();
+
+            
         });
 
         //Usuário de Gerência/Dono da franquia

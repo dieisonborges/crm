@@ -25,14 +25,15 @@ class CreateUsersTable extends Migration
             $table->integer('status')->unsigned()->default(0);
             //Status Ativo ou Desativado 0 ou 1
             $table->boolean('login')->unsigned()->default(0);
-            $table->string('apelido');
+            
             $table->rememberToken();
 
+            $table->timestamps();
+            
+            $table->string('apelido');
             //Quantidade de Convites do usuário
             //Para Criação de franquias
             $table->integer('qtd_convites')->unsigned()->nullable()->default(0);
-
-            $table->timestamps();
         });
     }
 

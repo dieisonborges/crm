@@ -16,7 +16,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('protocolo')->unique();
-            $table->string('titulo');
+            
 
             $table->integer('status');
             // 1 - Aberto/Ativo
@@ -30,6 +30,8 @@ class CreateTicketsTable extends Migration
 
             $table->longText('descricao');
 
+            $table->timestamps();
+
             //
             // Rotulos de Criticidade
             // Nenhum           - 4 - Nenhum
@@ -41,7 +43,8 @@ class CreateTicketsTable extends Migration
             $table->integer('rotulo')->unsigned()->default(0);
 
 
-            $table->timestamps();
+            
+            $table->string('titulo');
         });
 
         Schema::create('prontuario_tickets', function (Blueprint $table) {
