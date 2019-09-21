@@ -28,28 +28,12 @@
       <!-- Small boxes (Stat box) -->
       <div class="row"> 
 
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="info-box bg-yellow">
-            <a href="{{url('lojaFranqueado')}}" target="_blank">
-              <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Catálogo Referência</span>
-              <span class="info-box-number">Loja do Franqueado</span>
+        
 
-              <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
-              </div>
-              <span class="progress-description">
-                    Produtos de referência
-              </span>
-            </div>
-            <!-- /.info-box-content -->
-            
-          </div>
-        </div>
+        
+        @can('read_woocommerce')
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <a href="{{url('franqueados/'.$franquia->id.'/produtos')}}">
               <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
@@ -63,6 +47,38 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}">
+              <span class="info-box-icon bg-info"><i class="fa fa-shopping-cart"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Pedidos</span>
+              <span class="info-box-number">Listagem de pedidos.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}">
+              <span class="info-box-icon bg-info"><i class="fa fa-user"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Clientes</span>
+              <span class="info-box-number">Listagem de clientes.</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        @endcan
 
         <!--
         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -94,6 +110,27 @@
         </div>
         -->
         <!-- /.col -->
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-box bg-yellow">
+            <a href="{{url('lojaFranqueado')}}" target="_blank">
+              <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Catálogo Referência</span>
+              <span class="info-box-number">Loja do Franqueado</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+              <span class="progress-description">
+                    Produtos de referência
+              </span>
+            </div>
+            <!-- /.info-box-content -->
+            
+          </div>
+        </div>
         
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">

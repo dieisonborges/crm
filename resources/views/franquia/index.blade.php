@@ -32,11 +32,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Código da Franquia</th>
-                    <th>Nome</th>
-                    <th>Slogan</th>
+                    <th>Nome</th>                    
                     <th>Url</th>
                     <th>Url Alt.</th>
-                    <th>Descrição</th>
                     <th>Status</th>
                     <th>Dono(s)</th>
                     <th>Ativar<br>Desativar</th>
@@ -46,9 +44,9 @@
                 @forelse ($franquias as $franquia)
                 <tr>
                     <td>{{$franquia->id}}</td>
-                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->codigo_franquia}}</a></td>
-                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{$franquia->nome}}</a></td>
-                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->slogan), $limit = 40, $end = '...') }}</a></td>
+                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}/edit">{{$franquia->codigo_franquia}}</a></td>
+                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}/edit">{{$franquia->nome}}</a></td>
+                    
                     <td>
                         <a class="btn btn-primary btn-xs"  target="_blank" href="https://{{$franquia->loja_url}}">
                             <i class="fa fa-link"></i> {{$franquia->loja_url}}
@@ -58,10 +56,9 @@
                         <a class="btn btn-primary btn-xs" target="_blank" href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br">
                             <i class="fa fa-link"></i> {{$franquia->loja_url_alternativa}}
                         </a>
-                    </td>
-                    <td><a href="{{URL::to('franquias')}}/{{$franquia->id}}">{{ str_limit(strip_tags($franquia->descricao), $limit = 40, $end = '...') }}</a></td>
+                    </td>                    
                     <td>
-                        <a href="{{URL::to('franquias')}}/{{$franquia->id}}">
+                        <a href="{{URL::to('franquias')}}/{{$franquia->id}}/edit">
                         @if($franquia->status)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Ativo</span>
                         @else
@@ -76,18 +73,18 @@
                             @endphp
 
                             @if($dono)
-                                <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
+                                <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/edit/donos">
                                     <span class="fa fa-users"> {{$dono->apelido}}</span>
                                 </a>
                             @else
-                                <a class="btn btn-danger btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
+                                <a class="btn btn-danger btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/edit/donos">
                                     <span class="fa fa-users"> Nenhum</span>
                                 </a>
                             @endif                    
                         </a>
                     </td>
                     <td>
-                        <a href="{{URL::to('franquias')}}/{{$franquia->id}}">
+                        <a href="{{URL::to('franquias')}}/{{$franquia->id}}/edit">
                         @if($franquia->status)
                             <a href="{{URL::to('franquias/disable/'.$franquia->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-times-circle"></i> Desativar</a>
                         @else

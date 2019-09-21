@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Franquia;
 use App\User;
-use App\Produto;
 use App\Convite;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\Config;
 use Gate; 
 use DB;
 use Mail;
+
+
+//REST API Woocommerce
+use Automattic\WooCommerce\Client;
 
 
 //Log
@@ -102,6 +106,17 @@ class FranqueadoController extends Controller
         return "CF".date("Ymd").$protocolo;
     }
 
+    private function appHashEncode(){
+        // APP_HASH_ENCODE
+        // .env
+        return config('app.app_hash_encode');
+    }
+
+    private function decrypt($text) 
+    { 
+        return trim(@mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->appHashEncode(), base64_decode($text), MCRYPT_MODE_ECB, @mcrypt_create_iv(@mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))); 
+    } 
+
 
     /**
      * Display a listing of the resource.
@@ -185,376 +200,7 @@ class FranqueadoController extends Controller
         }
     }
 
-    /* ------------------------------ Produtos da Franquia --------------------------*/
-    public function produtosFranqueado($id)
-    {
-        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){
-
-                 $produtos = $franquia
-                            ->franquiaProdutos()
-                            ->select('produtos.*', 'produto_franquia.lucro')
-                            ->where('produtos.status', 1)->get();
-
-                 $todos_produtos = Produto::where('status', 1)->get();
-
-
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("franqueado.produtosFranqueado=".$franquia);
-            //--------------------------------------------------------------------------------------
-
-
-
-            return view('franqueado.produto_franqueado', compact('franquia', 'produtos', 'todos_produtos'));
-
-            }else{
-                return view('errors.403');
-            }
-            //---------------------------------------------------------------------------------------------------
-
-
-            
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-
-    public function produtosFranqueadoBusca(Request $request, $id)
-    {
-        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){
-
-                $buscaInput = $request->input('busca');    
-
-                /*
-                $produtos = $franquia::franquiaProdutos()
-                                    ->select('produtos.*', 'produto_franquia.lucro')
-                                    ->where('titulo', 'LIKE', '%'.$buscaInput.'%')
-                                    ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
-                                    ->orwhere('sku', 'LIKE', '%'.$buscaInput.'%')
-                                    ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
-                                    ->where('produtos.status', 1)
-                                    ->get();
-                */
-
-                $produtos = $franquia->franquiaProdutos()
-                            ->select('produtos.*', 'produto_franquia.lucro')
-                            ->where(function ($query) use ($buscaInput) {
-                                return $query
-                                        ->where('titulo', 'LIKE', '%'.$buscaInput.'%')
-                                        ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
-                                        ->orwhere('sku', 'LIKE', '%'.$buscaInput.'%')
-                                        ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%');
-                            })
-                            ->where('produtos.status', 1)
-                            ->get();
-
-
-
-                $todos_produtos = Produto::where('status', 1)
-                                        ->where(function ($query) use ($buscaInput) {
-                                            return $query
-                                                    ->where('titulo', 'LIKE', '%'.$buscaInput.'%')
-                                                    ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
-                                                    ->orwhere('sku', 'LIKE', '%'.$buscaInput.'%')
-                                                    ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%');
-                                        })                                        
-                                        ->get();
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("franqueado.produtosFranqueado=".$franquia."Busca".$buscaInput);
-            //--------------------------------------------------------------------------------------
-
-
-
-            return view('franqueado.produto_franqueado', array(
-                                                            'franquia' => $franquia, 
-                                                            'produtos' => $produtos,
-                                                            'todos_produtos' => $todos_produtos,
-                                                            'buscar' => $buscaInput,
-                                                        ));
-
-            }else{
-                return view('errors.403');
-            }
-            //---------------------------------------------------------------------------------------------------
-
-
-            
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    public function produtosRemover($id, $id_produto)
-    {
-        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia
-            if($franquia){
-
-                $status = $franquia->franquiaProdutos()->detach($id_produto);
-
-
-                //LOG ----------------------------------------------------------------------------------------
-                $this->log("franqueado.produtos.remover=".$franquia);
-                //--------------------------------------------------------------------------------------
-
-                if($status){
-                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto removido com sucesso!');
-                }else{
-                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
-                }
-            }
-            
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-
-    public function produtosAdicionar($id, $id_produto)
-    {
-        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia
-            if($franquia){
-
-
-                if($franquia->franquiaProdutos()->where('produto_id', $id_produto)->first()){
-
-                    return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto já está cadastrado para sua franquia!');
-
-                }else{
-                    //$status = $franquia->franquiaProdutos()->attach($id_produto);
-
-                    $status = DB::table('produto_franquia')->insert([
-                                                    'franquia_id' => $franquia->id, 
-                                                    'produto_id' => $id_produto,
-                                                    'lucro' => $franquia->lucro
-                                                ]);
-
-
-                    //LOG ----------------------------------------------------------------------------------------
-                    $this->log("franqueado.produtos.remover=".$franquia);
-                    //--------------------------------------------------------------------------------------
-
-                    if($status){
-                            return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Produto adicionado com sucesso!');
-                    }else{
-                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
-                    }
-
-                }
-
-                
-            }
-            
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    public function produtosLucro($id, $id_produto)
-    {        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia
-            if($franquia){
-
-            $produto = Produto::where('id',$id_produto)->where('status', 1)->first();
-
-            $imagens = $produto->imagens()->get();
-
-            $produto_franquia = DB::table('produto_franquia')
-                                    ->where('produto_id', $id_produto)
-                                    ->where('franquia_id', $franquia->id)
-                                    ->first();
-
-            //LOG ----------------------------------------------------------------------------------
-            $this->log("franqueado.lucro.produto=".$franquia."Produto=".$produto);
-            //--------------------------------------------------------------------------------------
-
-            return view('franqueado.produto_lucro', compact('produto_franquia', 'franquia', 'produto', 'imagens'));
-
-            }else{
-            return view('errors.403');
-        }
-
-
-            
-        }
-        else{
-            return view('errors.403');
-        }
-            
-    }
-
-    public function produtosLucroUpdate(Request $request, $id)
-    {
-        
-        //Margem de Lucro do Produto
-        if(!(Gate::denies('read_franqueado'))){
-
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia
-            if($franquia){
-
-                
-                $produto_franquia = $request->input('produto_franquia');
-                $lucro = $request->input('lucro');
-
-                if($lucro<1){
-
-                    return redirect()->back()->with('danger','A margem de lucro deve ser maior que 1%');
-
-                }else{
-
-                    $status = DB::table('produto_franquia')
-                                ->where('id', $produto_franquia)
-                                ->where('franquia_id', $franquia->id)
-                                ->update(['lucro' => $lucro]);              
-                
-                    
-                    //LOG --------------------------------------------------------------------------------
-                    $this->log("franqueado.lucro.update=".$franquia."Lucro".$lucro."ProdutoFranquia".$produto_franquia);
-                    //------------------------------------------------------------------------------ 
-
-                    if($franquia->save()){
-                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('success', 'Franquia atualizada com sucesso!');
-                    }else{
-                        return redirect('franqueados/'.$id.'/produtosFranqueado')->with('danger', 'Houve um problema, tente novamente.');
-                    }
-
-                }
-
-                
-
-            
-            }
-            else{
-                return view('errors.403');
-            }
-        }
-    }
-
-    //Catálogo de Produtos -------------------------------------------------------------------------------------------------------
-    public function produtos()
-    {
-
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            $produtos = Produto::paginate(40);            
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("franqueado.catalogo.produtos.index");
-            //--------------------------------------------------------------------------------------
-
-            return view('franqueado.produto', array('produtos' => $produtos, 'buscar' => null));
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    public function produtosBusca (Request $request){
-        if(!(Gate::denies('read_franqueado'))){
-            $buscaInput = $request->input('busca');
-            $produtos = Produto::where('titulo', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('sku', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);  
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("produto.busca=".$buscaInput);
-            //--------------------------------------------------------------------------------------------
-
-            return view('franqueado.produto', array('produtos' => $produtos, 'buscar' => $buscaInput ));
-
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    public function produtosShow($id)
-    {
-
-        //
-        if(!(Gate::denies('read_franqueado'))){
-
-            $produto = Produto::find($id);
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("produto.show=".$produto);
-            //--------------------------------------------------------------------------------------------
-
-            $imagens = $produto->imagens()->get();
-
-            return view('franqueado.produtoshow', compact('produto', 'imagens'));
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    // FIM Catálogo de Produtos --------------------------------------------------------------------------------------------------------
+   
 
     public function configuracoes($id)
     {
@@ -702,147 +348,7 @@ class FranqueadoController extends Controller
         }
     }
 
-    public function prospectos($id)
-    {
-        //
-        if(!(Gate::denies('read_franqueado'))){
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){  
-
-                $lista_prospectos = $franquia->listaProspecto()->paginate(40);
-
-                //$busca = $request->input('busca');
-                /*$busca = "";
-                $lista_prospectos = ListaProspecto::where('name', 'LIKE', '%'.$busca.'%')
-                                    ->orwhere('email', 'LIKE', '%'.$busca.'%')
-                                    ->orwhere('phone_number', 'LIKE', '%'.$busca.'%')
-                                    ->paginate(40);*/
-
-                //LOG ---------------------------------------------------------------------------
-                $this->log("lista_prospecto.franquia=".$franquia);
-                //-------------------------------------------------------------------------------
-
-                return view('franqueado.prospectos', array(
-                                                    //'buscar' => $busca,
-                                                    'franquia' => $franquia, 
-                                                    'lista_prospectos' => $lista_prospectos
-                                                ));
-            }else{
-                return view('errors.403');
-            }
-
-        }
-        else{
-            return view('errors.403');
-        }
-        
-    }
-
-    public function prospectosBusca($id, Request $request)
-    {
-        //
-        if(!(Gate::denies('read_franqueado'))){
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){  
-
-                //$lista_prospectos = $franquia->listaProspecto()->paginate(40);
-
-                $busca = $request->input('busca');
-                $lista_prospectos = $franquia->listaProspecto()
-                                    ->where('name', 'LIKE', '%'.$busca.'%')
-                                    ->orwhere('email', 'LIKE', '%'.$busca.'%')
-                                    ->orwhere('phone_number', 'LIKE', '%'.$busca.'%')
-                                    ->paginate(40);
-
-                //LOG ---------------------------------------------------------------------------
-                $this->log("lista_prospecto.franquia=".$franquia);
-                //-------------------------------------------------------------------------------
-
-                return view('franqueado.prospectos', array(
-                                                    //'buscar' => $busca,
-                                                    'franquia' => $franquia, 
-                                                    'lista_prospectos' => $lista_prospectos
-                                                ));
-            }else{
-                return view('errors.403');
-            }
-
-        }
-        else{
-            return view('errors.403');
-        }
-        
-    }
-
-
-
-    public function prospectoShow($id, $prospecto_id)
-    {
-        
-        //
-        if(!(Gate::denies('read_franqueado'))){
-            //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
-
-            //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){  
-
-                $prospecto = $franquia->listaProspecto()->where('lista_prospectos.id',$prospecto_id)->first();
-
-
-                //Verifica se o usuário pode acessar o propecto
-                if($prospecto){
-
-                    //Produtos
-                    $franquias = $prospecto->listaProspectoFranquia()->get();
-
-                    $produtos = $prospecto->listaProspectoProduto()->get();
-
-                    $categorias = $prospecto->listaProspectoCategoria()->get();
-
-                    
-
-                    //LOG -------------------------------------------------------------------
-                    $this->log("franqueado.prospecto.show=".$prospecto);
-                    //------------------------------------------------------------------------
-
-                    return view('franqueado.prospecto_show', compact(
-                                                    'prospecto',
-                                                    'produtos',
-                                                    'categorias'
-                                                ));
-
-                }else{
-                    return view('errors.403');
-                }
-
-
-                
-            }else{
-                return view('errors.403');
-            }
-
-        }
-        else{
-            return view('errors.403');
-        }
-        
-    }
+    
 
 
 /*=====================================================================================*/
@@ -1233,6 +739,194 @@ public function franquiaCreate($convite_id)
 /*=====================================================================================*/
 
     
+    /* ------------------------------ Produtos da Franquia --------------------------*/
+    
+
+    public function produtos($id)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);
+                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+             
+
+                $produtos = $woocommerce->get('products');               
+                
+
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.produtosFranqueado=".$franquia);
+                //----------------------------------------------------------
+
+                return view('franqueado.produto', 
+                       array(
+                            'franquia' => $franquia, 
+                            'produtos' => $produtos,
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    
+
+    /* ---------------------------- FIM Produtos da Franquia ------------------------*/
+
+
+    /* ------------------------------ Pedidos da Franquia --------------------------*/
+    
+
+    public function pedidos($id)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);
+                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+             
+
+                $pedidos = $woocommerce->get('orders');               
+                
+
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.pedidosFranqueado=".$franquia);
+                //----------------------------------------------------------
+
+                return view('franqueado.pedido', 
+                       array(
+                            'franquia' => $franquia, 
+                            'pedidos' => $pedidos,
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    
+
+    /* ---------------------------- FIM Pedidos da Franquia ------------------------*/
+
+
+    /* ------------------------------ Clientes da Franquia --------------------------*/
+    
+
+    public function clientes($id)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);
+                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+             
+
+                $clientes = $woocommerce->get('customers');               
+                
+
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.clientesFranqueado=".$franquia);
+                //----------------------------------------------------------
+
+                return view('franqueado.cliente', 
+                       array(
+                            'franquia' => $franquia, 
+                            'clientes' => $clientes,
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    
+
+    /* ---------------------------- FIM Clientes da Franquia ------------------------*/
+
 
 
 

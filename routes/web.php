@@ -220,8 +220,17 @@ Route::resource('franqueados', 'FranqueadoController');
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
 
 
-//Loja do Franqueado
+//Catálogo de produtos do Franqueado
 //WooCommerce de Test
 Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
+
+//Produtos Loja Woocommerce
+Route::get('franqueados/{id}/produtos', 'FranqueadoController@produtos');
+
+//Pedidos Loja Woocommerce
+Route::get('franqueados/{id}/pedidos', 'FranqueadoController@pedidos');
+
+//Clientes Loja Woocommerce
+Route::get('franqueados/{id}/clientes', 'FranqueadoController@clientes');
 
 

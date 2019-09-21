@@ -132,7 +132,7 @@
 
 				<div class="box box-danger col-md-12">
 				  <div class="box-header with-border">
-				    <h3 class="box-title">Dados Woocommerce</h3>
+				    <h3 class="box-title">Loja Integrada</h3>
 				    <div class="box-tools pull-right">
 				      <!-- Buttons, labels, and many other things can be placed here! -->
 				      <!-- Here is a label for example -->
@@ -152,6 +152,11 @@
 			    		<input type="text" class="form-control" id="loja_url_alternativa" name="loja_url_alternativa" value="{{ $franquia->loja_url_alternativa }}" placeholder="loja">
 			    		<span style="color: red; font-size: 12px;">*a url alternativa ficará assim: https://loja.venderaqui.com.br</span>
 			    	</div>
+
+			    	<div class="box-header with-border col-md-12">
+					    <h3 class="box-title"><small>Wordpress</small></h3>
+					    <!-- /.box-tools -->
+					 </div>
 
 			    	<div class="form-group col-md-6">
 			    		<label for="WP_HOME" class="text-aqua">WP_HOME:</label>
@@ -190,8 +195,29 @@
 
 			    	<div class="form-group col-md-6">
 			    		<label for="DB_PASSWORD" class="text-aqua">DB_PASSWORD:</label>
-			    		<input type="password" class="form-control" id="DB_PASSWORD" name="DB_PASSWORD" value="">
+			    		<input type="password" class="form-control" id="DB_PASSWORD" name="DB_PASSWORD" value="" placeholder="************">
 			    		<small>*Deixe em branco para não alterar a senha</small>
+			    	</div>
+
+			    	<div class="box-header with-border col-md-12">
+					    <h3 class="box-title"><small>API Woocommerce</small></h3>
+					    <!-- /.box-tools -->
+					 </div>
+
+			    	<div class="form-group col-md-12">
+			    		<label for="store_url" class="text-aqua">Store Url:</label>
+			    		<input type="text" class="form-control" id="store_url" name="store_url" value="{{ $franquia->store_url }}" placeholder="">
+			    	</div>
+
+			    	<div class="form-group col-md-12">
+			    		<label for="consumer_key" class="text-aqua">Consumer Key:</label>
+			    		<input type="text" class="form-control" id="consumer_key" name="consumer_key" value="{{ $franquia->consumer_key }}" placeholder="">
+			    	</div>
+
+			    	<div class="form-group col-md-12">
+			    		<label for="consumer_secret" class="text-aqua">Consumer Secret:</label>
+			    		<input type="password" class="form-control" id="consumer_secret" name="consumer_secret" value="" placeholder="******************************">
+			    		<small>*Deixe em branco para não alterar a consumer_secret</small>
 			    	</div>
 
 				  </div>

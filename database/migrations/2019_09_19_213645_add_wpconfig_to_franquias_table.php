@@ -23,6 +23,11 @@ class AddWpconfigToFranquiasTable extends Migration
             $table->string('DB_HOST')->nullable();
             $table->string('DB_CHARSET')->nullable();
             $table->string('DB_COLLATE')->nullable();
+
+            //Integração via API Woocommerce
+            $table->string('store_url')->nullable();
+            $table->string('consumer_key')->nullable();
+            $table->string('consumer_secret')->nullable();
         });
     }
 
@@ -43,6 +48,11 @@ class AddWpconfigToFranquiasTable extends Migration
             $table->dropColumn('DB_HOST');
             $table->dropColumn('DB_CHARSET');
             $table->dropColumn('DB_COLLATE');
+
+            //Integração via API Woocommerce
+            $table->dropColumn('store_url')->nullable();
+            $table->dropColumn('consumer_key')->nullable();
+            $table->dropColumn('consumer_secret')->nullable();
             
         });
     }

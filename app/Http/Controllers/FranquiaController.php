@@ -368,7 +368,7 @@ class FranquiaController extends Controller
             $franquia->loja_url = $request->input('loja_url');
             $franquia->loja_url_alternativa = $request->input('loja_url_alternativa');
             
-            //Dados WooCommerce
+            //Wordpress Integração
             $franquia->WP_HOME = $request->input('WP_HOME');
             $franquia->WP_SITEURL = $request->input('WP_SITEURL');
             $franquia->DB_NAME = $request->input('DB_NAME');
@@ -381,6 +381,16 @@ class FranquiaController extends Controller
             $DB_PASSWORD_ENC = $request->input('DB_PASSWORD');
             if($DB_PASSWORD_ENC){
                 $franquia->DB_PASSWORD = $this->encrypt($DB_PASSWORD_ENC);
+            }
+
+            /* ---------------- API Woocommerce -------------- */
+            $franquia->store_url = $request->input('store_url');
+            $franquia->consumer_key = $request->input('consumer_key');
+
+            //Encrypt Password            
+            $consumer_secret_enc = $request->input('consumer_secret');
+            if($consumer_secret_enc){
+                $franquia->consumer_secret = $this->encrypt($consumer_secret_enc);
             }
             
 
