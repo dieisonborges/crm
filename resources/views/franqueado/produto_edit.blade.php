@@ -65,18 +65,24 @@
 
                 <br>
 				
-				<form method="POST" action="{{action('FranqueadoController@produtoSimpleUpdate',$franquia->id)}}" id="formSubmit">
+				<form method="POST" action="{{action('FranqueadoController@produtoSimpleUpdate')}}" id="formSubmit">
 					@csrf
 					<input type="hidden" name="_method" value="POST">	
 
+					<input type="hidden" name="franquia_id" value="{{ $franquia->id }}">
+
+					<input type="hidden" name="produto_id" value="{{ $produto->id }}">	
+
 					<div class="form-group col-md-12">
 					    <label for="sale_price">Preço Mínimo:</label>
-					    <span class="btn btn-default">10.00</span>
+					    <span class="btn btn-default">{{ $produto_ref->sale_price }}</span>
 				 	</div>
 
+				 	
+
 				 	<div class="form-group col-md-12">
-					    <label for="sale_price">Lucro:</label>
-					    <span class="btn btn-default btn-lg">{{ ($produto->sale_price)-10 }}</span>
+					    <label for="sale_price">Lucro/Prejuízo:</label>
+					    <span class="btn btn-default btn-lg">{{ ($produto->sale_price)-($produto_ref->sale_price) }}</span>
 				 	</div>	
 
 					
@@ -99,6 +105,12 @@
 					    <label for="sale_price">Exibição:</label>
 					    <span class="btn btn-default btn-lg">{!!html_entity_decode($produto->price_html)!!}</span>
 				 	</div>
+
+				 	<div class="form-group col-md-12">
+				 		<input type="submit" name="Salvar" value="Salvar Dados" class="btn btn-success btn-lg">
+				 	</div>
+
+
 				 	
 				</form>
     			

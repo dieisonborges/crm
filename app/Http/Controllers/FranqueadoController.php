@@ -828,6 +828,17 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-------------------------------------------------------------
             if($franquia){  
 
+                /* ----------------- Loja de Referência ---------------------- */
+                $woocommerce_ref = new Client(
+                    config('app.wc_reference_store_url'), 
+                    config('app.wc_reference_consumer_key'), 
+                    config('app.wc_reference_secret'),
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
                 /* ----------------- Inicia Conexão WC ----------------------- */
                 $consumer_secret = $this->decrypt($franquia->consumer_secret);                
 
@@ -843,15 +854,33 @@ public function franquiaCreate($convite_id)
 
                 /* ----------------- FIM Inicia Conexão WC ----------------------- */
 
-                $produto = $woocommerce->get('products/'.$produto); 
+                $produto_id = $produto;
+
+                //LOja Atual
+                $produto = $woocommerce->get('products/'.$produto_id); 
+
+                //Loja de referencia
+                $params_ref = [
+                    'sku' => $produto->sku,
+                    'slug' => $produto->slug,
+                ];
+   
+                $produto_refs = $woocommerce_ref->get('products', $params_ref);   
+
+                //First row
+                foreach ($produto_refs as $produto_ref_tmp) {
+                                 $produto_ref = $produto_ref_tmp;
+                                 break;
+                             }             
                 
+
                 //LOG ----------------------------------------------------------------------------------------
                 $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
                 //--------------------------------------------------------------------------------------
 
 
 
-                return view('franqueado.produto_edit', compact('franquia', 'produto'));
+                return view('franqueado.produto_edit', compact('franquia', 'produto', 'produto_ref'));
             }else{
                 return view('errors.403');
             }
@@ -861,10 +890,19 @@ public function franquiaCreate($convite_id)
         }
     }
 
-    public function produtoSimpleUpdate($id, $produto)
+    public function produtoSimpleUpdate(Request $request)
     {
         //
         if(!(Gate::denies('update_franqueado'))){
+
+            //Validação
+            $this->validate($request,[
+                    'price' => 'required',
+                    'regular_price' => 'required',      
+                    'sale_price' => 'required'
+            ]);
+
+            $id = $request->input('franquia_id');
 
             //Selecionar franquia com segurança
             $franquia = Auth::user()
@@ -875,6 +913,21 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-------------------------------------------------------------
             if($franquia){  
 
+                //Request Produto
+                $produto_id = $request->input('produto_id');
+
+                /* ----------------- Loja de Referência ---------------------- */
+                $woocommerce_ref = new Client(
+                    config('app.wc_reference_store_url'), 
+                    config('app.wc_reference_consumer_key'), 
+                    config('app.wc_reference_secret'),
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+                /* ----------------- FIM Loja de Referência ---------------------- */
+
                 /* ----------------- Inicia Conexão WC ----------------------- */
                 $consumer_secret = $this->decrypt($franquia->consumer_secret);                
 
@@ -887,18 +940,51 @@ public function franquiaCreate($convite_id)
                         'version' => 'wc/v3',
                     ]
                 );
-
                 /* ----------------- FIM Inicia Conexão WC ----------------------- */
 
-                $produto = $woocommerce->get('products/'.$produto); 
-                
-                //LOG ----------------------------------------------------------------------------------------
-                $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
+                // Busca Produto
+                // Loja Atual
+                $produto = $woocommerce->get('products/'.$produto_id); 
+
+                /* ----------------- Produto de Referência ----------------------- */
+                //Loja de referencia
+                $params_ref = [
+                    'sku' => $produto->sku,
+                    'slug' => $produto->slug,
+                ];
+   
+                $produto_refs = $woocommerce_ref->get('products', $params_ref);
+                //First row
+                foreach ($produto_refs as $produto_ref_tmp) {
+                                 $produto_ref = $produto_ref_tmp;
+                                 break;
+                             }  
+                /* ----------------- FIM Produto de Referência ----------------------- */
+
+                //LOG ----------------------------------------------------------------------------------
+                $this->log("franquia.simple.update.produto.id=".$franquia."Produto=".$produto->slug);
                 //--------------------------------------------------------------------------------------
 
+                // Alterando o produto
+                // Preço do Produto não pode ser inferior ao de referencia                
 
+                if(($produto_ref->sale_price)<($request->input('sale_price'))){
 
-                return view('franqueado.produto_edit', compact('franquia', 'produto'));
+                    $data = [
+                        'price'         => $request->input('price'),
+                        'regular_price' => $request->input('regular_price'),
+                        'sale_price'    => $request->input('sale_price'),
+                    ];
+
+                    $produto = $woocommerce->put('products/'.$produto->id, $data);
+
+                    return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('success', 'Produto atualizado com sucesso!');
+
+                }else{
+                    return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('danger', 'O valor do produto está abaixo da referência!');
+                }
+
+                
             }else{
                 return view('errors.403');
             }

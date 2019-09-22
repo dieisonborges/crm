@@ -99,6 +99,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Woocommerce Reference Store
+    |--------------------------------------------------------------------------
+    |
+    | API integration Woocommerce for reference Store
+    |
+    */
+
+    'wc_reference_store_url'    => env('WC_REFERENCE_STORE_URL', ''),
+    'wc_reference_consumer_key' => env('WC_REFERENCE_CONSUMER_KEY', ''),
+    'wc_reference_secret'       => env('WC_REFERENCE_SECRET', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |
