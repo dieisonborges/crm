@@ -225,7 +225,7 @@ Route::resource('franqueados', 'FranqueadoController');
 Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 
 //Produtos Loja Woocommerce
-Route::get('franqueados/{id}/produtos', 'FranqueadoController@produtos');
+Route::get('franqueados/{id}/produtos/{page}/', 'FranqueadoController@produtos');
 
 //Pedidos Loja Woocommerce
 Route::get('franqueados/{id}/pedidos', 'FranqueadoController@pedidos');

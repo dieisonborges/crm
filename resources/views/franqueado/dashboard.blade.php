@@ -33,9 +33,27 @@
         
         @can('read_woocommerce')
 
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="https://{{$franquia->store_url}}" target="_blank">
+              <span class="info-box-icon bg-aqua"><i class="fa fa-external-link-alt"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Link da franquia</span>
+              <span class="info-box-number">{{$franquia->nome}}</span>
+              <small>
+                <a href="{{$franquia->store_url}}" class="btn btn-default" target="_blank">
+                    {{$franquia->store_url}}
+                    <i class="fa fa-link"></i>
+                </a>
+              </small>
+            </div>
+          </div>
+        </div>
+
         <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/produtos')}}">
+            <a href="{{url('franqueados/'.$franquia->id.'/produtos/1')}}">
               <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
             </a>
             <div class="info-box-content">
@@ -78,22 +96,9 @@
         </div>
         <!-- /.col -->
 
-        @endcan
-
-        <!--
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="https://{{$franquia->loja_url}}" target="_blank">
-              <span class="info-box-icon bg-aqua"><i class="fa fa-link"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Principal</span>
-              <span class="info-box-number">Link.</span>
-              <small>{{$franquia->loja_url}}</small>
-            </div>
-          </div>
-        </div>
-        -->
+        @endcan        
+        
+        
         <!-- /.col -->
         <!--
         <div class="col-md-3 col-sm-6 col-xs-12">

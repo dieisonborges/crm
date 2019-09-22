@@ -17,6 +17,7 @@ use Mail;
 
 //REST API Woocommerce
 use Automattic\WooCommerce\Client;
+use Automattic\WooCommerce\HttpClient\HttpClientException;
 
 
 //Log
@@ -742,7 +743,7 @@ public function franquiaCreate($convite_id)
     /* ------------------------------ Produtos da Franquia --------------------------*/
     
 
-    public function produtos($id)
+    public function produtos($id, $page)
     {
         
         //
@@ -769,10 +770,21 @@ public function franquiaCreate($convite_id)
                         'version' => 'wc/v3',
                     ]
                 );
+
+                if(!isset($page)){
+                    $page = 1;
+                }
+
+
              
 
-                $produtos = $woocommerce->get('products');               
-                
+                //$produtos = $woocommerce->get('products');        
+                $produtos = $woocommerce->get('products', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
+
 
                 //LOG ------------------------------------------------------
                 $this->log("franqueado.produtosFranqueado=".$franquia);
@@ -780,8 +792,11 @@ public function franquiaCreate($convite_id)
 
                 return view('franqueado.produto', 
                        array(
-                            'franquia' => $franquia, 
-                            'produtos' => $produtos,
+                            'franquia'      => $franquia, 
+                            'produtos'      => $produtos,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/produtos/',
                         ));
 
             }else{
