@@ -8,15 +8,10 @@
     <div class="box box-success">
     	<h1>
             Produtos
-            <small>{{$franquia->nome}}</small>
         </h1>
 
-        <div class="col-md-12">
-    	
-            <div class="box-header">
-                <h3 class="box-title">Produtos Cadastrados</h3>
-                
-            </div>
+        <div class="col-md-12">   	
+            
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
@@ -67,7 +62,7 @@
                                 <span class="btn btn-sm btn-info">{{$produto->status}}</span>
                             @endif
                         </td>
-                        <td><a href="" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></span></a></td>
+                        <td><a href="{{url('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></span></a></td>
                         
                     </tr>                
                     @empty

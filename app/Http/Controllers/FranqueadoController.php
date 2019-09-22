@@ -758,8 +758,8 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-----------------------------
             if($franquia){
 
-                $consumer_secret = $this->decrypt($franquia->consumer_secret);
-                
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
 
                 $woocommerce = new Client(
                     $franquia->store_url, 
@@ -770,6 +770,8 @@ public function franquiaCreate($convite_id)
                         'version' => 'wc/v3',
                     ]
                 );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
 
                 if(!isset($page)){
                     $page = 1;
@@ -806,6 +808,158 @@ public function franquiaCreate($convite_id)
 
 
             
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtoEdit($id, $produto)
+    {
+        //
+        if(!(Gate::denies('update_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                $produto = $woocommerce->get('products/'.$produto); 
+                
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
+                //--------------------------------------------------------------------------------------
+
+
+
+                return view('franqueado.produto_edit', compact('franquia', 'produto'));
+            }else{
+                return view('errors.403');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function produtoSimpleUpdate($id, $produto)
+    {
+        //
+        if(!(Gate::denies('update_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                $produto = $woocommerce->get('products/'.$produto); 
+                
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
+                //--------------------------------------------------------------------------------------
+
+
+
+                return view('franqueado.produto_edit', compact('franquia', 'produto'));
+            }else{
+                return view('errors.403');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function produtoPublic($id, $produto, $status)
+    {
+        //
+        if(!(Gate::denies('update_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if($status=='publish'){
+                    $data = [
+                        'status' => 'publish'
+                    ];
+                }else{                    
+                    $data = [
+                        'status' => 'draft'
+                    ];
+                }
+                
+
+                $produto = $woocommerce->put('products/'.$produto, $data);
+                
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
+                //--------------------------------------------------------------------------------------
+
+
+                return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('success', 'Produto atualizado com sucesso!');
+            }else{
+                return view('errors.403');
+            }
         }
         else{
             return view('errors.403');
