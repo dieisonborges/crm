@@ -33,68 +33,122 @@
         
         @can('read_woocommerce')
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="https://{{$franquia->store_url}}" target="_blank">
-              <span class="info-box-icon bg-aqua"><i class="fa fa-external-link-alt"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Link da franquia</span>
-              <span class="info-box-number">{{$franquia->nome}}</span>
-              <small>
-                <a href="{{$franquia->store_url}}" class="btn btn-default" target="_blank">
-                    {{$franquia->store_url}}
-                    <i class="fa fa-link"></i>
-                </a>
-              </small>
+        @if($woo_status)
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="https://{{$franquia->store_url}}" target="_blank">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-external-link-alt"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Link da Loja</span>
+                <span class="info-box-number">{{$franquia->nome}}</span>
+                <small>
+                  <a href="{{$franquia->store_url}}" class="btn btn-default" target="_blank">
+                      {{$franquia->store_url}}
+                      <i class="fa fa-link"></i>
+                  </a>
+                </small>
+              </div>
             </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br" target="_blank">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-external-link-alt"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Link Alternativo da Loja</span>
+                <span class="info-box-number">{{$franquia->nome}}</span>
+                <small>
+                  <a href="https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br" class="btn btn-default" target="_blank">
+                      https://{{$franquia->loja_url_alternativa}}.venderaqui.com.br
+                      <i class="fa fa-link"></i>
+                  </a>
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <hr class="hr col-md-12">
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="{{url('franqueados/'.$franquia->id.'/produtos/1')}}">
+                <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Produtos</span>
+                <span class="info-box-number">Listagem de produtos.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}">
+                <span class="info-box-icon bg-info"><i class="fa fa-shopping-cart"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Pedidos</span>
+                <span class="info-box-number">Listagem de pedidos.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}">
+                <span class="info-box-icon bg-info"><i class="fa fa-user"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Clientes</span>
+                <span class="info-box-number">Listagem de clientes.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="{{url('franqueados/'.$franquia->id.'/cupons')}}">
+                <span class="info-box-icon bg-info"><i class="fa fa-ticket-alt"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Ofertas</span>
+                <span class="info-box-number">Cupons de Descontos.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/cupons')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+        @else
+        <div class="col-md-12">
+          <div class="alert alert-warning alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-unlink"></i> Atenção!</h4>
+              Sua loja virtual não está configurada.
           </div>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/produtos/1')}}">
-              <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Produtos</span>
-              <span class="info-box-number">Listagem de produtos.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        @endif
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}">
-              <span class="info-box-icon bg-info"><i class="fa fa-shopping-cart"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Pedidos</span>
-              <span class="info-box-number">Listagem de pedidos.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}">
-              <span class="info-box-icon bg-info"><i class="fa fa-user"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Clientes</span>
-              <span class="info-box-number">Listagem de clientes.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        <hr class="hr col-md-12">
 
         @endcan        
         
@@ -114,10 +168,46 @@
           </div>
         </div>
         -->
+        <!-- /.col -->       
+        
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}">
+              <span class="info-box-icon bg-olive"><i class="fa fa-tools"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Dados importantes de sua Franquia.</span>
+              <span class="info-box-number">Configurações</span>
+
+              <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
         <!-- /.col -->
 
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="info-box bg-yellow">
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <a href="{{url('franqueados/convites')}}">
+              <span class="info-box-icon bg-aqua"><i class="fa fa-store"></i></span>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Convites</span>
+              <span class="info-box-number">Novos Franqueados</span>
+              <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="info-box bg-aqua">
             <a href="{{url('lojaFranqueado')}}" target="_blank">
               <span class="info-box-icon"><i class="fa fa-shopping-bag text-white"></i></span>
             </a>
@@ -136,62 +226,6 @@
             
           </div>
         </div>
-        
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}">
-              <span class="info-box-icon bg-olive"><i class="fa fa-tools"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Configurações</span>
-              <span class="info-box-number">Dados importantes de sua Franquia.</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <a href="{{url('franqueados/convites')}}">
-              <span class="info-box-icon bg-aqua"><i class="fa fa-store"></i></span>
-            </a>
-            <div class="info-box-content">
-              <span class="info-box-text">Convites</span>
-              <span class="info-box-number">Novos Franqueados</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-
-        <div class="col-md-12 col-sm-12 col-xs-12">
-
-          <div class="alert alert-primary alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <h4><i class="icon fa fa-store"></i><i class="icon fa fa-fish"></i> Parabéns</h4>
-
-              <h5>Sua franquia está em desenvolvimento</h5>
-
-              
-          </div>
-          
-        </div>
-
-        
-
-        
-
-        
-
-
-  
-
-
     
         
       </div>

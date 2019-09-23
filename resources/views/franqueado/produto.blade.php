@@ -23,6 +23,8 @@
                         <th>Nome</th>
                         <th>SKU</th>
                         <th>Tipo</th>
+                        <th>Estoque</th>
+                        <th>Peso</th>
                         <th>Preço</th>
                         <th>Preço Regular</th> 
                         <th>Preço de Venda</th>
@@ -48,6 +50,8 @@
                                 <span class="btn btn-sm btn-default">{{$produto->type}}</span>
                             @endif
                         </td>
+                        <td>{{$produto->stock_quantity}}</td>
+                        <td>{{$produto->weight}}</td>
                         <td>{{$produto->price}}</td>
                         <td>{{$produto->regular_price}}</td>
                         <td>{{$produto->sale_price}}</td>

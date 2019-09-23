@@ -19,7 +19,6 @@ use Mail;
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 
-
 //Log
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -161,36 +160,29 @@ class FranqueadoController extends Controller
                             ->first(); 
 
             //Verifica se tem permissão na franquia
-            if($franquia){            
+            if($franquia){    
 
-            
+                /* ------------------ Verifica Conexão Woocommerce --------------------*/
 
-                //LOG --------------------------------------------------------------------------
+                $woo_status = false;
+
+                if(($franquia->store_url)and($franquia->consumer_key)and($franquia->consumer_secret)){
+                    $woo_status = true;
+                        
+                }else{
+                    $woo_status = false;
+                }
+                /* ------------------ Verifica Conexão Woocommerce --------------------*/  
+
+                //LOG -----------------------------------------------------------------
                 $this->log("franqueado.dashboard=".$franquia);
-                //------------------------------------------------------------------------------
-
-                /* ------------------------ Contagem REGRESSIVA DASHBOARD ---------*/
-                $inicio_contagem = '2018-11-01';
-                $data_inicial = date('Y-m-d');                
-                $data_final = '2019-08-01';
+                //---------------------------------------------------------------------
                 
-
-                // Dias que faltam
-                $diferenca = strtotime($data_final) - strtotime($data_inicial);
-                $faltam = floor($diferenca / (60 * 60 * 24));
-
-                // Total de dias
-                $total_contagem = strtotime($data_final) - strtotime($inicio_contagem);
-                $total = floor($total_contagem / (60 * 60 * 24));
-
-
-                $porcentagem = (($total-$faltam) * 100 )/$total;
-                /* ------------------------ Contagem REGRESSIVA DASHBOARD ---------*/
                 
-            return view('franqueado.dashboard', compact('franquia', 'faltam', 'total', 'porcentagem'));
+            return view('franqueado.dashboard', compact('franquia', 'woo_status'));
 
             }else{
-            return view('errors.403');
+                return view('errors.403');
         }
 
 
@@ -216,14 +208,11 @@ class FranqueadoController extends Controller
                             ->first(); 
 
             //Verifica se tem permissão na franquia-------------------------------------------------------------
-            if($franquia){               
+            if($franquia){ 
 
-
-
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG ----------------------------------------------------------------------
             $this->log("franqueado.produtosFranqueado=".$franquia);
-            //--------------------------------------------------------------------------------------
-
+            //--------------------------------------------------------------------------
 
 
             return view('franqueado.configuracoes', compact('franquia'));
@@ -231,7 +220,7 @@ class FranqueadoController extends Controller
             }else{
                 return view('errors.403');
             }
-            //---------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------
 
 
             
@@ -828,16 +817,7 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-------------------------------------------------------------
             if($franquia){  
 
-                /* ----------------- Loja de Referência ---------------------- */
-                $woocommerce_ref = new Client(
-                    config('app.wc_reference_store_url'), 
-                    config('app.wc_reference_consumer_key'), 
-                    config('app.wc_reference_secret'),
-                    [
-                        'wp_api'  => true,
-                        'version' => 'wc/v3',
-                    ]
-                );
+                $produto_id = $produto;
 
                 /* ----------------- Inicia Conexão WC ----------------------- */
                 $consumer_secret = $this->decrypt($franquia->consumer_secret);                
@@ -852,35 +832,50 @@ public function franquiaCreate($convite_id)
                     ]
                 );
 
-                /* ----------------- FIM Inicia Conexão WC ----------------------- */
-
-                $produto_id = $produto;
-
                 //LOja Atual
                 $produto = $woocommerce->get('products/'.$produto_id); 
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                /* ----------------- Loja de Referência ---------------------- */
+                $woocommerce_ref = new Client(
+                    config('app.wc_reference_store_url'), 
+                    config('app.wc_reference_consumer_key'), 
+                    config('app.wc_reference_secret'),
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );                
 
                 //Loja de referencia
                 $params_ref = [
                     'sku' => $produto->sku,
-                    'slug' => $produto->slug,
                 ];
    
-                $produto_refs = $woocommerce_ref->get('products', $params_ref);   
+                $produto_refs = $woocommerce_ref->get('products', $params_ref); 
 
                 //First row
-                foreach ($produto_refs as $produto_ref_tmp) {
-                                 $produto_ref = $produto_ref_tmp;
-                                 break;
-                             }             
-                
+                foreach ($produto_refs as $produto_ref);
 
-                //LOG ----------------------------------------------------------------------------------------
+                //LOG ------------------------------------------------------------------
                 $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
-                //--------------------------------------------------------------------------------------
+                //------------------------------------------------------------------------
+
+                if($produto->type=='variable'){
 
 
 
-                return view('franqueado.produto_edit', compact('franquia', 'produto', 'produto_ref'));
+                    $variations = $woocommerce->get('products/'.$produto->id.'/variations');
+
+                    $variations_ref = $woocommerce_ref->get('products/'.$produto->id.'/variations');
+
+                    return view('franqueado.produto_variable_edit', compact('franquia', 'produto', 'variations', 'produto_ref', 'variations_ref'));
+                }elseif($produto->type=='simple'){
+                    return view('franqueado.produto_simple_edit', compact('franquia', 'produto', 'produto_ref'));
+                }
+
+                
             }else{
                 return view('errors.403');
             }
