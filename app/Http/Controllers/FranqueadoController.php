@@ -862,17 +862,27 @@ public function franquiaCreate($convite_id)
                 $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
                 //------------------------------------------------------------------------
 
-                if($produto->type=='variable'){
+                if(!isset($produto_ref)){
+
+                    return redirect('franqueados/'.$franquia->id.'/produtos/1')->with('danger', 'Produto Bloqueado (Sem preço de referência)!');
+
+                }else{
+
+
+                    if($produto->type=='variable'){
 
 
 
-                    $variations = $woocommerce->get('products/'.$produto->id.'/variations');
+                        $variations = $woocommerce->get('products/'.$produto->id.'/variations');
 
-                    $variations_ref = $woocommerce_ref->get('products/'.$produto->id.'/variations');
+                        $variations_ref = $woocommerce_ref->get('products/'.$produto->id.'/variations');
 
-                    return view('franqueado.produto_variable_edit', compact('franquia', 'produto', 'variations', 'produto_ref', 'variations_ref'));
-                }elseif($produto->type=='simple'){
-                    return view('franqueado.produto_simple_edit', compact('franquia', 'produto', 'produto_ref'));
+                        return view('franqueado.produto_variable_edit', compact('franquia', 'produto', 'variations', 'produto_ref', 'variations_ref'));
+                        
+                    }elseif($produto->type=='simple'){
+
+                        return view('franqueado.produto_simple_edit', compact('franquia', 'produto', 'produto_ref'));
+                    }
                 }
 
                 
