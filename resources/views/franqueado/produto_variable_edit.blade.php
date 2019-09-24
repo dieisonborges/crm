@@ -68,77 +68,118 @@
 
                 <hr class="col-md-12 hr">
 
-                <h2>Variações:</h2>                
+                   
+
+                <div class="col-md-6">   
+
+                <h2>Variações:</h2>          
 
                 @foreach($variations as $variation)
 
-                <hr class="hr col-md-12">
+		                <hr class="hr col-md-12">
 
-                <form method="POST" action="{{action('FranqueadoController@produtoSimpleUpdate')}}" id="formSubmit">
-					@csrf
-					<input type="hidden" name="_method" value="POST">	
+		                <form method="POST" action="{{action('FranqueadoController@produtoVariableUpdate')}}" id="formSubmit">
+							@csrf
+							<input type="hidden" name="_method" value="POST">	
 
-					<input type="hidden" name="franquia_id" value="{{ $franquia->id }}">
+							<input type="hidden" name="franquia_id" value="{{ $franquia->id }}">
 
-					<input type="hidden" name="produto_id" value="{{ $produto->id }}">	
+							<input type="hidden" name="produto_id" value="{{ $produto->id }}">	
 
-					<div class="form-group col-md-4">
-					    <label for="sku">SKU:</label>
-					    <span class="btn btn-default btn-lg">{{ $variation->sku }}</span>
-				 	</div>
+							@foreach($variation->attributes as $attribute)
+							 	<div class="form-group col-md-12">
+								    <label for="sku">{{$attribute->name}}:</label>
+								    <span class="btn btn-default btn-lg">{{$attribute->option}}</span>
+							 	</div>
+						 	@endforeach
 
-				 	<div class="form-group col-md-4">
-					    <label for="sku">Estoque:</label>
-					    <span class="btn btn-default btn-lg">{{ $variation->stock_quantity }}</span>
-				 	</div>
+							<div class="form-group col-md-6">
+							    <label for="sku">SKU:</label>
+							    <span class="btn btn-default btn-lg">{{ $variation->sku }}</span>
+						 	</div>
 
-				 	@foreach($variation->attributes as $attribute)
-					 	<div class="form-group col-md-2">
-						    <label for="sku">{{$attribute->name}}:</label>
-						    <span class="btn btn-default btn-lg">{{$attribute->option}}</span>
-					 	</div>
-				 	@endforeach
+						 	<div class="form-group col-md-6">
+							    <label for="sku">Estoque:</label>
+							    <span class="btn btn-default btn-lg">{{ $variation->stock_quantity }}</span>
+						 	</div>
+						 	
+							
+						 	<div class="form-group col-md-12">
+							    <label for="price">Preço:</label>
+							    <input type="text" class="form-control" id="price" name="price" value="{{ $variation->price }}" required>
+						 	</div>
 
-					<div class="form-group col-md-12">
-					    <label for="sale_price">Preço Mínimo:</label>
-					    <span class="btn btn-default"></span>
-				 	</div>
+						 	<div class="form-group col-md-12">
+							    <label for="regular_price">Preço Regular:</label>
+							    <input type="text" class="form-control" id="regular_price" name="regular_price" value="{{ $variation->regular_price }}" required>
+						 	</div>
 
-				 	
+						 	<div class="form-group col-md-12">
+							    <label for="sale_price">Preço de Venda:</label>
+							    <input type="text" class="form-control" id="sale_price" name="sale_price" value="{{ $variation->sale_price }}" required>
+						 	</div>				 	
 
-				 	<div class="form-group col-md-12">
-					    <label for="sale_price">Lucro/Prejuízo:</label>
-					    <span class="btn btn-default btn-lg"></span>
-				 	</div>	
-
-					
-				 	<div class="form-group col-md-12">
-					    <label for="price">Preço:</label>
-					    <input type="text" class="form-control" id="price" name="price" value="{{ $variation->price }}" required>
-				 	</div>
-
-				 	<div class="form-group col-md-12">
-					    <label for="regular_price">Preço Regular:</label>
-					    <input type="text" class="form-control" id="regular_price" name="regular_price" value="{{ $variation->regular_price }}" required>
-				 	</div>
-
-				 	<div class="form-group col-md-12">
-					    <label for="sale_price">Preço de Venda:</label>
-					    <input type="text" class="form-control" id="sale_price" name="sale_price" value="{{ $variation->sale_price }}" required>
-				 	</div>				 	
-
-				 	<div class="form-group col-md-12">
-				 		<input type="submit" name="Salvar" value="Salvar Dados" class="btn btn-success btn-lg">
-				 	</div>
+						 	<div class="form-group col-md-12">
+						 		<input type="submit" name="Salvar" value="Salvar Dados" class="btn btn-success btn-lg">
+						 	</div>
 
 
-				 	
-				</form>
-
-				
-
+						 	
+						</form>
+						
 				@endforeach
 
+				</div>
+
+				<div class="col-md-6">
+
+					<h2>Variações (Referência):</h2> 
+					
+					@foreach($variations_ref as $variation_ref)
+
+			                <hr class="hr col-md-12">	
+
+			                	@foreach($variation_ref->attributes as $attribute)
+								 	<div class="form-group col-md-12">
+									    <label for="sku">{{$attribute->name}}:</label>
+									    <span class="btn btn-default btn-lg">{{$attribute->option}}</span>
+								 	</div>
+							 	@endforeach							
+
+								<div class="form-group col-md-6">
+								    <label for="sku">SKU:</label>
+								    <span class="btn btn-default btn-lg">{{ $variation_ref->sku }}</span>
+							 	</div>
+
+							 	<div class="form-group col-md-6">
+								    <label for="sku">Estoque:</label>
+								    <span class="btn btn-default btn-lg">{{ $variation_ref->stock_quantity }}</span>
+							 	</div>
+
+							 	
+								
+							 	<div class="form-group col-md-12">
+								    <label for="price">Preço Mínimo:</label>
+								    <span class="form-control"> {{ $variation_ref->price }}</span>
+							 	</div>
+
+							 	<div class="form-group col-md-12">
+								    <label for="regular_price">Preço Mínimo Regular:</label>
+								    <span class="form-control"> {{ $variation_ref->regular_price }}</span>
+							 	</div>
+
+							 	<div class="form-group col-md-12">
+								    <label for="sale_price">Preço Mínimo de Venda:</label>
+								    <span class="form-control"> {{ $variation_ref->sale_price }}</span>
+							 	</div>				 	
+
+							 	<div class="form-group col-md-12">
+							 		<span style="float: left; margin-top: 46px;"></span>
+							 	</div>
+
+							
+					@endforeach
+				</div>
 
     			
     		</div>

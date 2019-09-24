@@ -2,6 +2,10 @@
 	@extends('layouts.app')
 	@section('title', $franquia->name)
 	@section('content')
+
+		@include('layouts/topnavfranqueado')
+
+
 		<h1>
 	        Franquia 
 	        <small>{{ $franquia->nome }}</small>

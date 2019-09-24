@@ -81,7 +81,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Produtos</span>
                 <span class="info-box-number">Listagem de produtos.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <a href="{{url('franqueados/'.$franquia->id.'/produtos/1')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -97,7 +97,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Pedidos</span>
                 <span class="info-box-number">Listagem de pedidos.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -113,7 +113,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Clientes</span>
                 <span class="info-box-number">Listagem de clientes.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
               </div>
               <!-- /.info-box-content -->
             </div>

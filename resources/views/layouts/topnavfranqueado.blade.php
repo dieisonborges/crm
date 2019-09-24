@@ -22,6 +22,11 @@
                     Clientes
                   </a>
 
+                  <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default" style="float: right;">
+                    <i class="fa fa-cog"></i>
+                    Clientes
+                  </a>
+
                   
 
 

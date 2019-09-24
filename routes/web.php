@@ -228,6 +228,7 @@ Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 Route::get('franqueados/{id}/produtos/{page}/', 'FranqueadoController@produtos');
 Route::get('franqueados/{id}/produtoEdit/{produto}/', 'FranqueadoController@produtoEdit');
 Route::post('franqueados/produtoSimpleUpdate/', 'FranqueadoController@produtoSimpleUpdate');
+Route::post('franqueados/produtoVariableUpdate/', 'FranqueadoController@produtoVariableUpdate');
 
 Route::get('franqueados/{id}/produtoPublic/{produto}/{status}', 'FranqueadoController@produtoPublic');
 

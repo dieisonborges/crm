@@ -34,9 +34,8 @@ class LojaFranqueadoController extends Controller
         //
         if(!(Gate::denies('read_franqueado'))){
 
-
-        return redirect('https://ecardu.me/tglebeaw3dhtc4e/');
-
+        return redirect(config('app.wc_reference_store_url'));
+ 
 
 
             //$user = Auth::user();
