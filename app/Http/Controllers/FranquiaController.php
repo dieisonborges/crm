@@ -268,7 +268,7 @@ class FranquiaController extends Controller
             //Encrypt Password
             $DB_PASSWORD_ENC = $request->input('DB_PASSWORD');
 
-            dd($this->encrypt($DB_PASSWORD_ENC));
+            //dd($this->encrypt($DB_PASSWORD_ENC));
 
 
             $franquia->DB_PASSWORD = $this->encrypt($DB_PASSWORD_ENC);
