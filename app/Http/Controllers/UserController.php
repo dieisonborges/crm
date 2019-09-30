@@ -74,6 +74,7 @@ class UserController extends Controller
             /* ------------ Conquistas do Usuário ----------- */      
 
             $conquistas = $user->conquista()->get();   
+            
 
             /* ------------ FOTO PERFIL -------------------- */
 

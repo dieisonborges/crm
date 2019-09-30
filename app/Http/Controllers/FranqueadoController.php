@@ -211,7 +211,7 @@ class FranqueadoController extends Controller
             if($franquia){ 
 
             //LOG ----------------------------------------------------------------------
-            $this->log("franqueado.produtosFranqueado=".$franquia);
+            $this->log("franqueado.categoriasFranqueado=".$franquia);
             //--------------------------------------------------------------------------
 
 
@@ -282,8 +282,7 @@ class FranqueadoController extends Controller
                             'nome' => 'required|min:3',
                             'slogan' => 'required|min:3',      
                             'descricao' => 'required|min:10',                    
-                            'email' => 'email',
-                            'lucro' => 'required' 
+                            'email' => 'email'
                     ]);            
                             
                     $franquia->nome = $request->input('nome');
@@ -293,7 +292,7 @@ class FranqueadoController extends Controller
                     $franquia->url_blog = $request->input('url_blog');   
 
                     //Margem de Lucro Automática
-                    $franquia->lucro = $request->input('lucro');                  
+                    //$franquia->lucro = $request->input('lucro');                  
 
                     //Dados Comerciais
                     $franquia->cnpj = $request->input('cnpj');
@@ -307,25 +306,17 @@ class FranqueadoController extends Controller
                     $franquia->endereco_estado = $request->input('endereco_estado');
 
 
-                    //Margem de lucro negativa
-                    if(($request->input('lucro'))<1){
+                    //Margem de lucro negativa                    
 
-                        return redirect()->back()->with('warning','A margem de lucro deve ser maior que 1%');
+                    //LOG --------------------------------------------------------------------------------
+                    $this->log("franqueado.update=".$franquia);
+                    //------------------------------------------------------------------------------------    
 
+                    if($franquia->save()){
+                        return redirect('franqueados/'.$id.'/configuracoes')->with('success', 'Franquia atualizada com sucesso!');
                     }else{
-
-                        //LOG --------------------------------------------------------------------------------
-                        $this->log("franqueado.update=".$franquia);
-                        //------------------------------------------------------------------------------------    
-
-                        if($franquia->save()){
-                            return redirect('franqueados/'.$id.'/configuracoes')->with('success', 'Franquia atualizada com sucesso!');
-                        }else{
-                            return redirect('franqueados/'.$id.'/configuracoesEdit')->with('danger', 'Houve um problema, tente novamente.');
-                        }
-
-
-                    }
+                        return redirect('franqueados/'.$id.'/configuracoesEdit')->with('danger', 'Houve um problema, tente novamente.');
+                    }                   
                     
                     
             }else{
@@ -1162,11 +1153,9 @@ public function franquiaCreate($convite_id)
 
     /* ---------------------------- FIM Produtos da Franquia ------------------------*/
 
+    /* ---------------------------- Pedidos da Franquia ------------------------*/
 
-    /* ------------------------------ Pedidos da Franquia --------------------------*/
-    
-
-    public function pedidos($id)
+    public function pedidos($id, $page)
     {
         
         //
@@ -1181,8 +1170,8 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-----------------------------
             if($franquia){
 
-                $consumer_secret = $this->decrypt($franquia->consumer_secret);
-                
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
 
                 $woocommerce = new Client(
                     $franquia->store_url, 
@@ -1193,10 +1182,20 @@ public function franquiaCreate($convite_id)
                         'version' => 'wc/v3',
                     ]
                 );
-             
 
-                $pedidos = $woocommerce->get('orders');               
-                
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if(!isset($page)){
+                    $page = 1;
+                }             
+
+                //$pedidos = $woocommerce->get('products');        
+                $pedidos = $woocommerce->get('orders', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
+
 
                 //LOG ------------------------------------------------------
                 $this->log("franqueado.pedidosFranqueado=".$franquia);
@@ -1204,16 +1203,17 @@ public function franquiaCreate($convite_id)
 
                 return view('franqueado.pedido', 
                        array(
-                            'franquia' => $franquia, 
-                            'pedidos' => $pedidos,
+                            'franquia'      => $franquia, 
+                            'pedidos'      => $pedidos,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/pedidos/',
                         ));
 
             }else{
                 return view('errors.403');
             }
             //---------------------------------------------------------------------------------------------------
-
-
             
         }
         else{
@@ -1221,15 +1221,7 @@ public function franquiaCreate($convite_id)
         }
     }
 
-    
-
-    /* ---------------------------- FIM Pedidos da Franquia ------------------------*/
-
-
-    /* ------------------------------ Clientes da Franquia --------------------------*/
-    
-
-    public function clientes($id)
+    public function pedidoShow($id, $pedido)
     {
         
         //
@@ -1244,8 +1236,8 @@ public function franquiaCreate($convite_id)
             //Verifica se tem permissão na franquia-----------------------------
             if($franquia){
 
-                $consumer_secret = $this->decrypt($franquia->consumer_secret);
-                
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
 
                 $woocommerce = new Client(
                     $franquia->store_url, 
@@ -1256,10 +1248,90 @@ public function franquiaCreate($convite_id)
                         'version' => 'wc/v3',
                     ]
                 );
-             
 
-                $clientes = $woocommerce->get('customers');               
-                
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if(!isset($page)){
+                    $page = 1;
+                }             
+
+                //$pedidos = $woocommerce->get('products');        
+                $pedidos = $woocommerce->get('orders', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
+
+
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.pedidosFranqueado=".$franquia);
+                //----------------------------------------------------------
+
+                return view('franqueado.pedido', 
+                       array(
+                            'franquia'      => $franquia, 
+                            'pedidos'      => $pedidos,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/pedidos/',
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    /* ---------------------------- FIM Pedidos da Franquia ------------------------*/
+
+    /* ---------------------------- Clientes da Franquia ------------------------*/
+
+    public function clientes($id, $page)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if(!isset($page)){
+                    $page = 1;
+                }             
+
+                //$clientes = $woocommerce->get('products');        
+                $clientes = $woocommerce->get('customers', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
+
 
                 //LOG ------------------------------------------------------
                 $this->log("franqueado.clientesFranqueado=".$franquia);
@@ -1267,8 +1339,11 @@ public function franquiaCreate($convite_id)
 
                 return view('franqueado.cliente', 
                        array(
-                            'franquia' => $franquia, 
-                            'clientes' => $clientes,
+                            'franquia'      => $franquia, 
+                            'clientes'      => $clientes,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/clientes/',
                         ));
 
             }else{
@@ -1284,11 +1359,149 @@ public function franquiaCreate($convite_id)
         }
     }
 
+    /* ---------------------------- FIM Pedidos da Franquia ------------------------*/
+
+    /* ---------------------------- Cupons da Franquia ------------------------*/
+
+    public function cupons($id, $page)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if(!isset($page)){
+                    $page = 1;
+                }             
+
+                $cupons = $woocommerce->get('coupons', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
+
+
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.cuponsFranqueado=".$franquia);
+                //----------------------------------------------------------
+
+                return view('franqueado.cupom', 
+                       array(
+                            'franquia'      => $franquia, 
+                            'cupons'      => $cupons,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/cupons/',
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    /* ---------------------------- FIM Pedidos da Franquia ------------------------*/
+
+    /* --------------------- Categorias da Franquia ----------------------*/
     
 
-    /* ---------------------------- FIM Clientes da Franquia ------------------------*/
+    public function categorias($id, $page)
+    {
+        
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                if(!isset($page)){
+                    $page = 1;
+                }             
+      
+                $categorias = $woocommerce->get('products/categories', array('per_page'=>50, 'page'=>$page));  
+
+                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
+
+                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
 
 
+                //LOG ------------------------------------------------------
+                $this->log("franqueado.categoriasFranqueado=".$franquia);
+                //----------------------------------------------------------
 
+                return view('franqueado.categoria', 
+                       array(
+                            'franquia'      => $franquia, 
+                            'categorias'      => $categorias,
+                            'page'          => $page,
+                            'totalPages'    => $totalPages,
+                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/categorias/',
+                        ));
+
+            }else{
+                return view('errors.403');
+            }
+            //---------------------------------------------------------------------------------------------------
+
+
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    /* ----------------------- END Produtos -------------------------- */
 
 }

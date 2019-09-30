@@ -73,7 +73,7 @@
 
           <hr class="hr col-md-12">
 
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
               <a href="{{url('franqueados/'.$franquia->id.'/produtos/1')}}">
                 <span class="info-box-icon bg-info"><i class="fa fa-gifts"></i></span>
@@ -89,15 +89,15 @@
           </div>
           <!-- /.col -->
 
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
-              <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}">
+              <a href="{{url('franqueados/'.$franquia->id.'/pedidos/1')}}">
                 <span class="info-box-icon bg-info"><i class="fa fa-shopping-cart"></i></span>
               </a>
               <div class="info-box-content">
                 <span class="info-box-text">Pedidos</span>
                 <span class="info-box-number">Listagem de pedidos.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <a href="{{url('franqueados/'.$franquia->id.'/pedidos/1')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -105,15 +105,15 @@
           </div>
           <!-- /.col -->
 
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
-              <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}">
+              <a href="{{url('franqueados/'.$franquia->id.'/clientes/1')}}">
                 <span class="info-box-icon bg-info"><i class="fa fa-user"></i></span>
               </a>
               <div class="info-box-content">
                 <span class="info-box-text">Clientes</span>
                 <span class="info-box-number">Listagem de clientes.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <a href="{{url('franqueados/'.$franquia->id.'/clientes/1')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -121,15 +121,35 @@
           </div>
           <!-- /.col -->
 
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="info-box">
-              <a href="{{url('franqueados/'.$franquia->id.'/cupons')}}">
+              <a href="{{url('franqueados/'.$franquia->id.'/cupons/1')}}">
                 <span class="info-box-icon bg-info"><i class="fa fa-ticket-alt"></i></span>
               </a>
               <div class="info-box-content">
-                <span class="info-box-text">Ofertas</span>
-                <span class="info-box-number">Cupons de Descontos.</span>
-                <a href="{{url('franqueados/'.$franquia->id.'/cupons')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                <span class="info-box-text">Cupons</span>
+                <span class="info-box-number">Cupons de Desconto.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/cupons/1')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                
+                
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="{{url('franqueados/'.$franquia->id.'/categorias/1')}}">
+                <span class="info-box-icon bg-info"><i class="fa fa-list-alt"></i></span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Categorias</span>
+                <span class="info-box-number">Categorias de produtos.</span>
+                <a href="{{url('franqueados/'.$franquia->id.'/categorias/1')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
+                
+                
               </div>
               <!-- /.info-box-content -->
             </div>

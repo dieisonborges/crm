@@ -27,7 +27,7 @@
                     <th>Código da Franquia</th>
                     <th>Nome</th>
                     <th>Descrição</th>
-                    <th>Status</th>                    
+                    <th colspan="2">Status</th>                    
                     <th>Gerenciar</th>
 
                 </tr>
@@ -37,6 +37,16 @@
                     <td><a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">{{$franquia->codigo_franquia}}</a></td>
                     <td><a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">{{$franquia->nome}}</a></td>
                     <td><a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">{{ str_limit(strip_tags($franquia->descricao), $limit = 40, $end = '...') }}</a></td>
+
+                    <td>
+                        <a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">
+                        @if(($franquia->store_url)and($franquia->consumer_key)and($franquia->consumer_secret))
+                            <span class="btn btn-info btn-xs"><i class="fa fa-cog"></i> Configurada</span>
+                        @else
+                            <span class="btn btn-default btn-xs"><i class="fa fa-cog"></i> Não Configurada</span>
+                        @endif
+                        </a>
+                    </td> 
                     
                     <td>
                         <a href="{{URL::to('franqueados')}}/{{$franquia->id}}/dashboard">

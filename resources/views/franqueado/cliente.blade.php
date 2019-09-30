@@ -19,6 +19,11 @@
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
+
+                    <tr>
+                        <td colspan="4">@include('layouts/paginatewc')</td>                  
+                    </tr> 
+
                     <tr>
                         <th>Id</th>             
                         <th>Nome</th>
@@ -41,7 +46,11 @@
                         <td><b>Nenhum Resultado.</b></td>
                     </tr>
                         
-                    @endforelse                      
+                    @endforelse     
+
+                    <tr>
+                        <td colspan="4">@include('layouts/paginatewc')</td>                  
+                    </tr>                  
                     
                 </table>
             </div>

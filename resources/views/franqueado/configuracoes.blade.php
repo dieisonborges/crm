@@ -10,7 +10,7 @@
 	        Franquia 
 	        <small>{{ $franquia->nome }}</small>
 	    </h1>
-
+ 
 	    
 
 	    <div class="row">
@@ -98,7 +98,7 @@
 			    		<br>
 
 			    		<label for="loja_url" class="text-aqua">Margem de Lucro automática:</label>
-			    		<span  class="form-control">{{ $franquia->lucro }}%</span>            	
+			    		<span class="form-control">~20%</span>            	
 
 	              </div>
 	              <!-- /.tab-pane -->

@@ -12,19 +12,33 @@
                     Produtos
                   </a>
 
-                  <a href="{{url('franqueados/'.$franquia->id.'/pedidos')}}" class="btn btn-default">
+                  <a href="{{url('franqueados/'.$franquia->id.'/pedidos/1')}}" class="btn btn-default">
                     <i class="fa fa-shopping-cart"></i>
                     Pedidos
                   </a>
 
-                  <a href="{{url('franqueados/'.$franquia->id.'/clientes')}}" class="btn btn-default">
+                  <a href="{{url('franqueados/'.$franquia->id.'/clientes/1')}}" class="btn btn-default">
                     <i class="fa fa-user"></i>
                     Clientes
                   </a>
 
+                  <a href="{{url('franqueados/'.$franquia->id.'/cupons/1')}}" class="btn btn-default">
+                    <i class="fa fa-ticket-alt"></i>
+                    Cupons
+                  </a>
+
+                  <a href="{{url('franqueados/'.$franquia->id.'/categorias/1')}}" class="btn btn-default">
+                    <i class="fa fa-list-alt"></i>
+                    Categorias
+                  </a>
+
+                  
+
+                  
+
                   <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default" style="float: right;">
                     <i class="fa fa-cog"></i>
-                    Clientes
+                    Configurações
                   </a>
 
                   

@@ -93,7 +93,7 @@
 
 				 	<div class="form-group col-md-12">
 					    <label for="regular_price">Preço Regular:</label>
-					    <input type="text" class="form-control" id="regular_price" name="regular_price" value="{{ $produto->regular_price }}" required>
+					    <span type="text" class="form-control">{{ $produto->regular_price }}"</span>
 				 	</div>
 
 				 	<div class="form-group col-md-12">

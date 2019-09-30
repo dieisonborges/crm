@@ -20,6 +20,11 @@
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
+
+                    <tr>
+                        <td colspan="7">@include('layouts/paginatewc')</td>                  
+                    </tr> 
+
                     <tr>
                         <th>Id</th>             
                         <th>Pedido</th>
@@ -28,6 +33,7 @@
                         <th>Frete</th> 
                         <th>Moeda</th>
                         <th>Status</th>
+                        <th>Visualizar</th>
                     </tr>
                     @forelse ($pedidos as $pedido)
                     <tr>
@@ -38,6 +44,7 @@
                         <td>{{$pedido->shipping_total}}</td>
                         <td>{{$pedido->currency}}</td>
                         <td>{{$pedido->status}}</td>
+                        <td><a href="{{url('franqueados/'.$franquia->id.'/pedidoShow/'.$pedido->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></span></a></td>
                         
                     </tr>                
                     @empty
@@ -46,7 +53,11 @@
                         <td><b>Nenhum Resultado.</b></td>
                     </tr>
                         
-                    @endforelse     
+                    @endforelse  
+
+                    <tr>
+                        <td colspan="7">@include('layouts/paginatewc')</td>                  
+                    </tr>    
 
                       
                     

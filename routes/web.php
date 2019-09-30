@@ -18,11 +18,13 @@ Route::get('/', function () {
 });
 */
 
+/*
 Route::get('/', function () {
     $newSlug = str_slug('I am from ItSolutionStuff.com');
     
     dd($newSlug);
 });
+*/
  
 // Login
 Route::get('/', function () {
@@ -224,18 +226,26 @@ Route::resource('franqueados', 'FranqueadoController');
 //WooCommerce de Test
 Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 
-//Produtos Loja Woocommerce
+//Produtos ------------------- Loja Woocommerce -----
 Route::get('franqueados/{id}/produtos/{page}/', 'FranqueadoController@produtos');
 Route::get('franqueados/{id}/produtoEdit/{produto}/', 'FranqueadoController@produtoEdit');
 Route::post('franqueados/produtoSimpleUpdate/', 'FranqueadoController@produtoSimpleUpdate');
 Route::post('franqueados/produtoVariableUpdate/', 'FranqueadoController@produtoVariableUpdate');
 
 Route::get('franqueados/{id}/produtoPublic/{produto}/{status}', 'FranqueadoController@produtoPublic');
-
-//Pedidos Loja Woocommerce
-Route::get('franqueados/{id}/pedidos', 'FranqueadoController@pedidos');
-
-//Clientes Loja Woocommerce
-Route::get('franqueados/{id}/clientes', 'FranqueadoController@clientes');
+// ----------------------------------------------------
+//Pedidos ------------------- Loja Woocommerce --------
+Route::get('franqueados/{id}/pedidos/{page}/', 'FranqueadoController@pedidos');
+Route::get('franqueados/{id}/pedidoShow/{pedido}/', 'FranqueadoController@pedidoShow');
+// ----------------------------------------------------
+//Clientes ------------------- Loja Woocommerce -------
+Route::get('franqueados/{id}/clientes/{page}/', 'FranqueadoController@clientes');
+// ----------------------------------------------------
+//Cupons ------------------- Loja Woocommerce -------
+Route::get('franqueados/{id}/cupons/{page}/', 'FranqueadoController@cupons');
+// ----------------------------------------------------
+//Categorias ------------------- Loja Woocommerce -----
+Route::get('franqueados/{id}/categorias/{page}/', 'FranqueadoController@categorias');
+// ----------------------------------------------------
 
 
