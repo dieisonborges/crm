@@ -13,44 +13,21 @@
 
         <div class="col-md-12">
     	
-            <div class="box-header">
-                <h3 class="box-title">pedidos Cadastrados</h3>
-                
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+              
+                <div class="col-md-6">
+                    <ul>
+                        <li class="form-control"><strong>Franquia: </strong> {{$franquia->nome}}</li>
+                        <li class="form-control"><strong>Código da Franquia: </strong> {{$franquia->codigo_franquia}}</li>
+                        <li class="form-control"><strong>ID: </strong> {{$pedido->id}}</li>
+                        <li class="form-control"><strong>Número: </strong> #{{$pedido->number}}</li>
+                        <li class="form-control"><strong>Status: </strong> {{$pedido->status}}</li>             
+                        <li class="form-control"><strong>Data: </strong> {{date('d/m/Y H:i:s', strtotime($pedido->date_created))}}</li>
+                       
+                        <br>
+                    </ul>   
+                </div> 
 
-                    
-
-                    <tr>
-                        <th>Id</th>             
-                        <th>Pedido</th>
-                        <th>Data</th>
-                        <th>Total</th>
-                        <th>Frete</th> 
-                        <th>Moeda</th>
-                        <th>Status</th>
-                        <th>Visualizar</th>
-                    </tr>
-                    <tr>
-                        <td>{{$pedido->id}}</td>
-                        <td>#{{$pedido->number}}</td>
-                        <td>{{$pedido->date_created}}</td>
-                        <td>{{$pedido->total}}</td>
-                        <td>{{$pedido->shipping_total}}</td>
-                        <td>{{$pedido->currency}}</td>
-                        <td>{{$pedido->status}}</td>
-                        
-                        
-                    </tr>                
-                    
-
-                      
-                    
-                </table>
-            </div>
-            <!-- /.box-body -->
+           
 
         	
         	

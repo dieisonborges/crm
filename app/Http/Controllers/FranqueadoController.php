@@ -1255,25 +1255,17 @@ public function franquiaCreate($convite_id)
                     $page = 1;
                 }             
 
-                //$pedidos = $woocommerce->get('products');        
-                $pedidos = $woocommerce->get('orders', array('per_page'=>50, 'page'=>$page));  
+                $pedido = $woocommerce->get('orders/'.$pedido);  
 
-                $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
-
-                $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
-
-
+                
                 //LOG ------------------------------------------------------
-                $this->log("franqueado.pedidosFranqueado=".$franquia);
+                $this->log("franqueado.pedidoShowFranqueado=".$franquia."Pedido=".$pedido->id);
                 //----------------------------------------------------------
 
-                return view('franqueado.pedido', 
+                return view('franqueado.pedido_show', 
                        array(
                             'franquia'      => $franquia, 
-                            'pedidos'      => $pedidos,
-                            'page'          => $page,
-                            'totalPages'    => $totalPages,
-                            'linkPaginate'  => 'franqueados/'.$franquia->id.'/pedidos/',
+                            'pedido'      => $pedido,
                         ));
 
             }else{
