@@ -1079,6 +1079,8 @@ public function franquiaCreate($convite_id)
 
                     return redirect('franqueados/'.$franquia->id.'/produtos/1')->with('danger', 'Produto Bloqueado (Sem preço de referência para variação via SKU)!');
 
+                }elseif(($request->input('regular_price'))<($request->input('sale_price'))){
+                    return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('danger', 'Preço Regular tem que ser maior do que o Preço de Venda');
                 }else{                   
 
                     // Alterando o produto
