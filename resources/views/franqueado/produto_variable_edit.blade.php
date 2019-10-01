@@ -35,7 +35,7 @@
                     @endif
 			    </h4>			    
 
-			    <h4><small>{{$produto->short_description}}</small></h4>
+			    <h4><small>{!!$produto->short_description!!}</small></h4>
 
 			    <div class="form-group col-md-12">
 				    <label for="sale_price">Exibição Preço:</label>
@@ -46,7 +46,7 @@
 
 			    <hr class="col-md-12 hr">
 
-			    <a href="{{$franquia->store_url.'/produto/'.$produto->slug}}" class="btn btn-sm btn-info" target="_blank">
+			    <a href="{{$franquia->store_url.'produto/'.$produto->slug}}" class="btn btn-sm btn-info" target="_blank">
                     <span class="fa fa-eye"></span>
                     Ver Produto
                 </a>
@@ -72,7 +72,8 @@
 
                 <div class="col-md-6">   
 
-                <h2>Variações:</h2>          
+                <h2>Variações:</h2>      
+  
 
                 @foreach($variations as $variation)
 
@@ -84,7 +85,9 @@
 
 							<input type="hidden" name="franquia_id" value="{{ $franquia->id }}">
 
-							<input type="hidden" name="produto_id" value="{{ $produto->id }}">	
+							<input type="hidden" name="produto_id" value="{{ $produto->id }}">
+
+							<input type="hidden" name="variation_id" value="{{ $variation->id }}">		
 
 							@foreach($variation->attributes as $attribute)
 							 	<div class="form-group col-md-12">
@@ -106,16 +109,16 @@
 							
 						 	<div class="form-group col-md-12">
 							    <label for="price">Preço:</label>
-							    <input type="text" class="form-control" id="price" name="price" value="{{ $variation->price }}" required>
+							    <span class="form-control">{{ $variation->price }}</span>
 						 	</div>
 
 						 	<div class="form-group col-md-12">
-							    <label for="regular_price">Preço Regular:</label>
+							    <label for="regular_price" class="text-blue">Preço Regular:</label>
 							    <input type="text" class="form-control" id="regular_price" name="regular_price" value="{{ $variation->regular_price }}" required>
 						 	</div>
 
 						 	<div class="form-group col-md-12">
-							    <label for="sale_price">Preço de Venda:</label>
+							    <label for="sale_price" class="text-blue">Preço de Venda:</label>
 							    <input type="text" class="form-control" id="sale_price" name="sale_price" value="{{ $variation->sale_price }}" required>
 						 	</div>				 	
 

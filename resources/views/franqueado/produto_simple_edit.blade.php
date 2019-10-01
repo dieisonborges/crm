@@ -6,7 +6,7 @@
 		@include('layouts/topnavfranqueado')
  
     	<div class="box box-success">
-    		<div class="col-md-12">
+    		<div class="col-md-12"> 
 
     			<h1>
 			        <i class="fa fa-store"></i> {{$produto->name}}
@@ -35,7 +35,7 @@
                     @endif
 			    </h4>			    
 
-			    <h4><small>{{$produto->short_description}}</small></h4>
+			    <h4><small>{!!$produto->short_description!!}</small></h4>
 
 			    <br>
 

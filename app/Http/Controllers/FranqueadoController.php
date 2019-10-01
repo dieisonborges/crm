@@ -948,10 +948,7 @@ public function franquiaCreate($convite_id)
    
                 $produto_refs = $woocommerce_ref->get('products', $params_ref);
                 //First row
-                foreach ($produto_refs as $produto_ref_tmp) {
-                                 $produto_ref = $produto_ref_tmp;
-                                 break;
-                             }  
+                foreach ($produto_refs as $produto_ref);
                 /* ----------------- FIM Produto de Referência ----------------------- */
 
                 //LOG ----------------------------------------------------------------------------------
@@ -994,7 +991,6 @@ public function franquiaCreate($convite_id)
 
             //Validação
             $this->validate($request,[
-                    'price' => 'required',
                     'regular_price' => 'required',      
                     'sale_price' => 'required'
             ]);
@@ -1012,6 +1008,7 @@ public function franquiaCreate($convite_id)
 
                 //Request Produto
                 $produto_id = $request->input('produto_id');
+                $variation_id = $request->input('variation_id');
 
                 /* ----------------- Loja de Referência ---------------------- */
                 $woocommerce_ref = new Client(
@@ -1043,42 +1040,69 @@ public function franquiaCreate($convite_id)
                 // Loja Atual
                 $produto = $woocommerce->get('products/'.$produto_id); 
 
+
+
+                //Busca a variação do Produto
+                $produto_variation = $woocommerce->get('products/'.$produto_id.'/variations/'.$variation_id); 
+
                 /* ----------------- Produto de Referência ----------------------- */
                 //Loja de referencia
                 $params_ref = [
-                    'sku' => $produto->sku,
                     'slug' => $produto->slug,
                 ];
-   
+                //Consulta pelos parametros acima
                 $produto_refs = $woocommerce_ref->get('products', $params_ref);
+
                 //First row
-                foreach ($produto_refs as $produto_ref_tmp) {
-                                 $produto_ref = $produto_ref_tmp;
-                                 break;
-                             }  
+                foreach ($produto_refs as $produto_ref);
+
+                //Consulta pelo id e sku
+
+                $params_ref = [
+                    'sku' => $produto_variation->sku,
+                ];
+
+
+                $produto_variation_refs = $woocommerce_ref->get('products/'.$produto_ref->id.'/variations/', $params_ref);                
+                
+                //First row
+                foreach ($produto_variation_refs as $produto_variation_ref);         
+                
                 /* ----------------- FIM Produto de Referência ----------------------- */
 
                 //LOG ----------------------------------------------------------------------------------
-                $this->log("franquia.simple.update.produto.id=".$franquia."Produto=".$produto->slug);
+                $this->log("franquia.variable.update.produto.id=".$franquia."Produto=".$produto->slug);
                 //--------------------------------------------------------------------------------------
 
-                // Alterando o produto
-                // Preço do Produto não pode ser inferior ao de referencia                
+                
 
-                if(($produto_ref->sale_price)<($request->input('sale_price'))){
+                //Verifica se tem referencia adequada
+                if(!isset($produto_variation_ref)){
 
-                    $data = [
-                        'price'         => $request->input('price'),
-                        'regular_price' => $request->input('regular_price'),
-                        'sale_price'    => $request->input('sale_price'),
-                    ];
-
-                    $produto = $woocommerce->put('products/'.$produto->id, $data);
-
-                    return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('success', 'Produto atualizado com sucesso!');
+                    return redirect('franqueados/'.$franquia->id.'/produtos/1')->with('danger', 'Produto Bloqueado (Sem preço de referência para variação via SKU)!');
 
                 }else{
-                    return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('danger', 'O valor do produto está abaixo da referência!');
+
+                    
+
+                    // Alterando o produto
+                    // Preço do Produto não pode ser inferior ao de referencia 
+
+                    if(($produto_variation_ref->sale_price)<($request->input('sale_price'))){
+
+                        $data = [
+                            'price'         => $request->input('sale_price'), //price
+                            'regular_price' => $request->input('regular_price'),
+                            'sale_price'    => $request->input('sale_price'),
+                        ];
+
+                        $produto = $woocommerce->put('products/'.$produto->id.'/variations/'.$produto_variation->id, $data);
+
+                        return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('success', 'Produto atualizado com sucesso!');
+
+                    }else{
+                        return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('danger', 'O valor do produto está abaixo da referência!');
+                    }
                 }
 
                 
