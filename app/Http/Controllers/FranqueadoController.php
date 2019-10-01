@@ -1072,32 +1072,35 @@ public function franquiaCreate($convite_id)
 
                 //LOG ----------------------------------------------------------------------------------
                 $this->log("franquia.variable.update.produto.id=".$franquia."Produto=".$produto->slug);
-                //--------------------------------------------------------------------------------------
-
-                
+                //--------------------------------------------------------------------------------------                
 
                 //Verifica se tem referencia adequada
                 if(!isset($produto_variation_ref)){
 
                     return redirect('franqueados/'.$franquia->id.'/produtos/1')->with('danger', 'Produto Bloqueado (Sem preço de referência para variação via SKU)!');
 
-                }else{
-
-                    
+                }else{                   
 
                     // Alterando o produto
                     // Preço do Produto não pode ser inferior ao de referencia 
 
                     if(($produto_variation_ref->sale_price)<($request->input('sale_price'))){
 
-                        $data = [
-                            'price'         => $request->input('sale_price'), //price
+                        /*$data = [
+                            'price'         => $request->input('sale_price'),
                             'regular_price' => $request->input('regular_price'),
-                            'sale_price'    => $request->input('sale_price'),
+                            'sale_price'    => $request->input('sale_price')
+                        ];*/
+
+                        $data = [
+                            'price'         => $request->input('sale_price'),
+                            'regular_price' => $request->input('regular_price'),
+                            'sale_price'    => $request->input('sale_price')
                         ];
 
-                        $produto = $woocommerce->put('products/'.$produto->id.'/variations/'.$produto_variation->id, $data);
+                        $produto_variation = $woocommerce->put('products/'.$produto->id.'/variations/'.$produto_variation->id."/", $data);
 
+                        
                         return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('success', 'Produto atualizado com sucesso!');
 
                     }else{
