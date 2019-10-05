@@ -331,8 +331,11 @@ class FranquiaController extends Controller
 
             $select_estados_brasil = $this->selectEstadosBrasil();
 
+            //Logomarca
+            $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
 
-            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil'));
+
+            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil', 'imagem'));
         }
         else{
             return view('errors.403');

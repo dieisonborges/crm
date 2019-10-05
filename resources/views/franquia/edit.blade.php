@@ -15,7 +15,8 @@
 	              	<li class="active"><a href="#tab_1" data-toggle="tab">Informações da Franquia</a></li>
 	              	<li><a href="#tab_2" data-toggle="tab">Dados Comerciais</a></li>
 	              	<li><a href="#tab_3" data-toggle="tab">Gestão de Afiliados</a></li>
-	              	<li><a href="#tab_4" data-toggle="tab">Wordpress Woocommerce</a></li>
+	              	<li><a href="#tab_4" data-toggle="tab">Wordpress Woocommerce</a></li>	              	
+              		<li><a href="#tab_5" data-toggle="tab"><i class="fa fa-image"></i> Logomarca</a></li>
 	            </ul>
 		
 				<form method="POST" action="{{action('FranquiaController@update',$franquia->id)}}" id="formSubmit">
@@ -236,6 +237,22 @@
 
 						</div>
 						<!-- /.tab_4 -->
+
+						<div class="tab-pane" id="tab_5">
+
+		              		<h3>Logomarca Atual:</h3>
+
+
+					            @if($imagem)  
+					                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" width="10%">
+					            @else
+					                <img src="{{ asset('img/default-image-store.png') }}" width="10%">
+					            @endif				    		
+
+				    		<br><br><br>       	
+
+		              	</div>
+		              	<!-- /.tab_5 -->
 
 				 	</div>
 				 	<!-- /.tab-content -->
