@@ -18,6 +18,10 @@ class Franquia extends Model
     public function listaProspecto(){        
         return $this->belongsToMany(\App\ListaProspecto::class, 'lista_prospecto_franquia');
     }
+
+    public function uploads(){        
+        return $this->belongsToMany('App\Upload','imagem_franquia');
+    }
     
 }
  

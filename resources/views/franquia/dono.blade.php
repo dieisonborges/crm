@@ -112,6 +112,12 @@
         </table>
     </div>
     <!-- /.box-body -->
+
+    <br>
+
+    <hr class="col-md-12 hr"> 
+
+    <a href="javascript:history.go(-1)" class="btn btn-info btn-lg"><i class="fa fa-arrow-left"></i> Voltar</a>
    
 
 @endsection

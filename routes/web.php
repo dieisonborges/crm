@@ -167,6 +167,8 @@ Route::post('franquias/donoDestroy', 'FranquiaController@donoDestroy');
 Route::get('franquias/enable/{id}', 'FranquiaController@enable');
 Route::get('franquias/disable/{id}', 'FranquiaController@disable');
 
+Route::get('franquias/{id}/wpSettings', 'FranquiaController@wpSettings');
+
 
 //Score
 Route::resource('scores', 'ScoreController');
@@ -216,8 +218,11 @@ Route::get('franqueados/{id}/dashboard', 'FranqueadoController@dashboard');
 Route::get('franqueados/{id}/configuracoes', 'FranqueadoController@configuracoes');
 Route::get('franqueados/{id}/configuracoesEdit', 'FranqueadoController@configuracoesEdit');
 
-
 Route::resource('franqueados', 'FranqueadoController');
+
+// Imagem Perfil
+Route::get('franqueados/{id}/imagem', 'FranqueadoController@imagem');
+Route::post('franqueados/imagemUpdate', 'FranqueadoController@imagemUpdate');
 
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
 
@@ -228,7 +233,7 @@ Route::get('lojaFranqueado', 'LojaFranqueadoController@index');
 
 //Produtos ------------------- Loja Woocommerce -----
 Route::get('franqueados/{id}/produtos/{page}/', 'FranqueadoController@produtos');
-Route::get('franqueados/{id}/produtoEdit/{produto}/', 'FranqueadoController@produtoEdit');
+Route::get('franqueados/{id}/produtoEdit/{produto}/', 'FranqueadoController@produtoEditTest');
 Route::post('franqueados/produtoSimpleUpdate/', 'FranqueadoController@produtoSimpleUpdate');
 Route::post('franqueados/produtoVariableUpdate/', 'FranqueadoController@produtoVariableUpdate');
 

@@ -26,10 +26,29 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row"> 
+      <div class="row">         
 
-        
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+              <a href="https://{{$franquia->store_url}}" target="_blank">
+                <span class="info-box-icon">
 
+                  @if($imagem)  
+                      <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" width="80%">
+                  @else
+                      <img src="{{ asset('img/default-image-store.png') }}" width="80%">
+                  @endif
+
+                </span>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Loja Virtual: <b>{{$franquia->codigo_franquia}}</b></span>
+                <span class="info-box-number">{{$franquia->nome}}</span>                
+                Franqueado Desde: <b>{{date('m/Y', strtotime($franquia->created_at))}}</b>
+                
+              </div>
+            </div>
+        </div>
         
         @can('read_woocommerce')
 

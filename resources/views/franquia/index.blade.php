@@ -73,11 +73,11 @@
                             @endphp
 
                             @if($dono)
-                                <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/edit/donos">
+                                <a class="btn btn-primary btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
                                     <span class="fa fa-users"> {{$dono->apelido}}</span>
                                 </a>
                             @else
-                                <a class="btn btn-danger btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/edit/donos">
+                                <a class="btn btn-danger btn-xs" href="{{URL::to('franquias')}}/{{$franquia->id}}/donos">
                                     <span class="fa fa-users"> Nenhum</span>
                                 </a>
                             @endif                    

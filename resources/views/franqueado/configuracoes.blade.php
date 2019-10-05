@@ -18,9 +18,10 @@
 	          <!-- Custom Tabs -->
 	          <div class="nav-tabs-custom">
 	            <ul class="nav nav-tabs">
-	              <li class="active"><a href="#tab_1" data-toggle="tab">Informações da Franquia</a></li>
-	              <li><a href="#tab_2" data-toggle="tab">Dados Comerciais</a></li>
-	              <li><a href="#tab_3" data-toggle="tab">Configurações da Loja Integrada</a></li>
+	              	<li class="active"><a href="#tab_1" data-toggle="tab">Informações da Franquia</a></li>
+	              	<li><a href="#tab_2" data-toggle="tab">Dados Comerciais</a></li>
+	              	<li><a href="#tab_3" data-toggle="tab">Configurações da Loja Integrada</a></li>
+              		<li><a href="#tab_4" data-toggle="tab"><i class="fa fa-image"></i> Logomarca</a></li>
 	            </ul>
 	            <div class="tab-content">
 	              <div class="tab-pane active" id="tab_1">
@@ -102,6 +103,26 @@
 
 	              </div>
 	              <!-- /.tab-pane -->
+
+	              <div class="tab-pane" id="tab_4">
+
+	              		<h3>Logomarca Atual:</h3>
+
+
+				            @if($imagem)  
+				                <img src="{{ url('storage/'.$imagem->dir.'/'.$imagem->link) }}" width="10%">
+				            @else
+				                <img src="{{ asset('img/default-image-store.png') }}" width="10%">
+				            @endif
+
+			            
+			    			<a href="{{url('franqueados/'.$franquia->id.'/imagem')}}" class="btn btn-info btn-lg"><i class="fa fa-image"></i> Alterar Logo</a>  
+			    		
+
+			    		<br><br><br>       	
+
+	              	</div>
+	              	<!-- /.tab-pane -->
 	            </div>
 	            <!-- /.tab-content -->
 	          </div>

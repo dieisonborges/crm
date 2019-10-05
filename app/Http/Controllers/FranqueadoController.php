@@ -14,6 +14,8 @@ use Gate;
 use DB;
 use Mail;
 
+use App\Upload; 
+
 
 //REST API Woocommerce
 use Automattic\WooCommerce\Client;
@@ -177,9 +179,12 @@ class FranqueadoController extends Controller
                 //LOG -----------------------------------------------------------------
                 $this->log("franqueado.dashboard=".$franquia);
                 //---------------------------------------------------------------------
+
+                //Logomarca
+                $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
                 
                 
-            return view('franqueado.dashboard', compact('franquia', 'woo_status'));
+                return view('franqueado.dashboard', compact('franquia', 'woo_status', 'imagem'));
 
             }else{
                 return view('errors.403');
@@ -214,8 +219,11 @@ class FranqueadoController extends Controller
             $this->log("franqueado.categoriasFranqueado=".$franquia);
             //--------------------------------------------------------------------------
 
+            //Logomarca
+            $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
 
-            return view('franqueado.configuracoes', compact('franquia'));
+
+            return view('franqueado.configuracoes', compact('franquia', 'imagem'));
 
             }else{
                 return view('errors.403');
@@ -244,7 +252,11 @@ class FranqueadoController extends Controller
             //Verifica se tem permissão na franquia-------------------------------------------------------------
             if($franquia){  
 
+                //Listagem de possíveis Líder de franquia
                 $users = User::all();
+
+                //Logomarca
+                $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
                 
                 //LOG ----------------------------------------------------------------------------------------
                 $this->log("franquia.edit.id=".$franquia);
@@ -253,7 +265,7 @@ class FranqueadoController extends Controller
                 $select_estados_brasil = $this->selectEstadosBrasil();
 
 
-                return view('franqueado.configuracoes_edit', compact('franquia', 'users', 'select_estados_brasil'));
+                return view('franqueado.configuracoes_edit', compact('franquia', 'users', 'select_estados_brasil', 'imagem'));
             }else{
                 return view('errors.403');
             }
@@ -883,6 +895,106 @@ public function franquiaCreate($convite_id)
         }
     }
 
+    public function produtoEditTest($id, $produto)
+    {
+        //
+        if(!(Gate::denies('update_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            //Verifica se tem permissão na franquia-------------------------------------------------------------
+            if($franquia){  
+
+                $produto_id = $produto;
+
+                /* ----------------- Inicia Conexão WC ----------------------- */
+                $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+                $woocommerce = new Client(
+                    $franquia->store_url, 
+                    $franquia->consumer_key, 
+                    $consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+
+                //LOja Atual
+                $produto = $woocommerce->get('products/'.$produto_id); 
+
+                
+
+                /* ----------------- FIM Inicia Conexão WC ----------------------- */
+
+                /* ----------------- Loja de Referência ---------------------- */
+                $woocommerce_ref = new Client(
+                    config('app.wc_reference_store_url'), 
+                    config('app.wc_reference_consumer_key'), 
+                    config('app.wc_reference_secret'),
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );                
+
+                //Loja de referencia
+                $params_ref = [
+                    'slug' => $produto->slug,
+                ];                
+                    
+                
+                //$settings = $woocommerce->get('settings/general/woocommerce_currency');
+
+                //$settings_ref = $woocommerce_ref->get('settings/general/woocommerce_currency');
+
+
+                $produto_refs = $woocommerce_ref->get('products', $params_ref); 
+
+                //First row
+                foreach ($produto_refs as $produto_ref);
+
+                dd($produto, $produto_ref);
+
+
+                //LOG ------------------------------------------------------------------
+                $this->log("franquia.edit.produto.id=".$franquia."Produto=".$produto->slug);
+                //------------------------------------------------------------------------
+
+                if(!isset($produto_ref)){
+
+                    return redirect('franqueados/'.$franquia->id.'/produtos/1')->with('danger', 'Produto Bloqueado (Sem preço de referência)!');
+
+                }else{
+
+                    if($produto->type=='variable'){
+
+                        $variations = $woocommerce->get('products/'.$produto->id.'/variations');
+
+                        $variations_ref = $woocommerce_ref->get('products/'.$produto_ref->id.'/variations');
+
+                        return view('franqueado.produto_variable_edit', compact('franquia', 'produto', 'variations', 'produto_ref', 'variations_ref'));
+                        
+                    }elseif($produto->type=='simple'){
+
+                        return view('franqueado.produto_simple_edit', compact('franquia', 'produto', 'produto_ref'));
+                    }
+                }
+
+                
+            }else{
+                return view('errors.403');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
     public function produtoSimpleUpdate(Request $request)
     {
         //
@@ -1081,6 +1193,7 @@ public function franquiaCreate($convite_id)
 
                 }elseif(($request->input('regular_price'))<($request->input('sale_price'))){
                     return redirect('franqueados/'.$franquia->id.'/produtoEdit/'.$produto->id)->with('danger', 'Preço Regular tem que ser maior do que o Preço de Venda');
+                    
                 }else{                   
 
                     // Alterando o produto
@@ -1524,5 +1637,137 @@ public function franquiaCreate($convite_id)
     }
 
     /* ----------------------- END Produtos -------------------------- */
+
+    public function imagem($id)
+    {
+        //
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first();  
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){
+
+                    //LOG ----------------------------------------------------------------------------------------
+                    $this->log("upload.imagem.franqueado=".$id);
+                    //--------------------------------------------------------------------------------------------
+
+                    return view('franqueado.imagem', compact('franquia'));
+
+            }else{
+                return view('errors.403');
+            }
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function imagemUpdate(Request $request)
+    {
+        if(!(Gate::denies('read_franqueado'))){
+
+            //Validação
+            $this->validate($request,[                
+                    'file' => 'required|mimes:jpeg,png,jpg,pdf',
+            ]);
+
+            $id = $request->input('id');
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first();  
+            //Verifica se tem permissão na franquia-----------------------------
+            if($franquia){                
+
+                $dir = "files/"."franquia".'/'.$franquia->id;
+
+                $id = $franquia->id;
+
+                $area = "franquia";
+
+                /* -------------------------------- UPLOAD --------------------*/
+
+                $file = $request->file('file');
+
+                // Se informou o arquivo, retorna um boolean
+                //$file = $request->hasFile('file');
+                 
+                // Se é válido, retorna um boolean
+                //$file = $request->file('file')->isValid();
+
+                // Retorna mime type do arquivo (Exemplo image/png)
+                $tipo = $request->file('file')->getMimeType();
+                 
+                // Retorna o nome original do arquivo
+                $nome = $request->file('file')->getClientOriginalName();
+                 
+                // Extensão do arquivo
+                //$request->file('file')->getClientOriginalExtension();
+                $ext = $request->file('file')->extension();
+                 
+                // Tamanho do arquivo
+                $tam = $request->file('file')->getClientSize();
+
+                // Define um aleatório para o arquivo baseado no timestamps atual
+                $link = uniqid(date('HisYmd'));
+
+                // Define finalmente o nome
+                $link = "{$link}.{$ext}";
+
+                // Faz o upload:
+                $upload = $request->file->storeAs($dir, $link);
+                // Armazenado em storage/app/public/
+
+
+                /* -------------------------------- END UPLOAD --------------------*/
+
+                        
+                $upload = new Upload();
+                $upload->titulo = "Logomarca ".$franquia->nome." ".$franquia->codigo_franquia;
+                $upload->dir = $dir;
+                $upload->link = $link;
+                $upload->tipo = $tipo;
+                $upload->nome = $nome;
+                $upload->ext = $ext;
+                $upload->tam = $tam;
+
+                
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("franqueado.logomarca.store=".$request);
+                //--------------------------------------------------------------------------------------------
+
+                if($upload->save()){
+
+                    /* ------------Vinculo do Arquivo------------- */
+
+                    $upload_id = DB::getPdo()->lastInsertId();
+
+                    
+                    $status = $franquia->uploads()->attach($upload_id);
+                                   
+
+                    /* ------------END Vinculo do Arquivo------------- */
+
+                    return redirect('franqueados/'.$franquia->id.'/configuracoesEdit')->with('success', 'Logomarca Alterada com Sucesso!.');
+                }else{
+                    return redirect('uploads/'.$id.'/create/'.$area)->with('danger', 'Houve um problema, tente novamente.');
+                }
+
+            }else{
+                return view('errors.403');
+            }
+
+        }
+        else{
+            return view('errors.403');
+        }
+    }
 
 }

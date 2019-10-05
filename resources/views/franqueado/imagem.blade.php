@@ -7,8 +7,10 @@
 	    </h1>
 		
 
-		<form action="{{url('clients')}}/imagemUpdate" method="POST" enctype="multipart/form-data">
+		<form action="{{url('franqueados')}}/imagemUpdate" method="POST" enctype="multipart/form-data">
 			@csrf	
+
+			<input type="hidden" name="id" value="{{$franquia->id}}">
 
 		 	<div class="form-group mb-12">
 			    <label for="file" >Nova Imagem: </label>

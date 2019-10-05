@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Gate; 
-use DB;
+use DB; 
+
+//REST API Woocommerce
+use Automattic\WooCommerce\Client;
+use Automattic\WooCommerce\HttpClient\HttpClientException;
 
 
 //Log
@@ -577,6 +581,50 @@ class FranquiaController extends Controller
                 return redirect('franquias/')->with('danger', 'Houve um problema, tente novamente.');
             }
 
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function wpSettings($id)
+    {
+        
+        //
+        if(!(Gate::denies('update_franquia'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            /* ----------------- Inicia Conexão WC ----------------------- */
+            $consumer_secret = $this->decrypt($franquia->consumer_secret);                
+
+            $woocommerce = new Client(
+                $franquia->store_url, 
+                $franquia->consumer_key, 
+                $consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+            );
+
+            /* ----------------- FIM Inicia Conexão WC ----------------------- */                      
+  
+            $settings = $woocommerce->get('settings/general');
+
+            //LOG ------------------------------------------------------
+            $this->log("franquia.settings.Franquia=".$franquia);
+            //----------------------------------------------------------
+
+            return view('franquia.wp_settings', 
+                   array(
+                        'franquia'      => $franquia, 
+                        'settings'      => $settings,                        
+                    ));            
         }
         else{
             return view('errors.403');
