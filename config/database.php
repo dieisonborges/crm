@@ -55,6 +55,22 @@ return [
             'engine' => null,
         ],
 
+        'con_instalador_lojas' => [
+            'driver' => 'mysql',
+            'host' => env('DB_IL_HOST', '127.0.0.1'),
+            'port' => env('DB_IL_PORT', '3306'),
+            'database' => env('DB_IL_DATABASE', 'forge'),
+            'username' => env('DB_IL_USERNAME', 'forge'),
+            'password' => env('DB_IL_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            //'strict' => true,
+            'strict' => env('DB_IL_STRICT', ''),
+            'engine' => null,
+        ],
+
         /*
         'mysql_loja' => [
             'driver' => 'mysql',

@@ -5,6 +5,20 @@
 	<h1>
         <i class="fa fa-tools"></i> Editar Franquia: <b>{{ $franquia->codigo_franquia }}</b>
         <small>{{$franquia->nome}}</small>
+
+        @if($instalador_loja)
+
+        	<a href="{{url('franquias/'.$franquia->id.'/wpSettings')}}" class="btn btn-info" style="float: right;"><i class="fa fa-cog"></i> Ver </a>
+
+        @else
+
+        	<a href="{{url('franquias/'.$franquia->id.'/gerarLoja')}}" class="btn btn-success" style="float: right;"><i class="fa fa-cog"></i> Gerar Loja </a>
+
+        @endif
+
+
+
+        
     </h1>
 
     <div class="row">
@@ -167,8 +181,7 @@
 
 							<div class="form-group col-md-12">
 								<h4>
-									REST API Woocommerce 
-									<a href="{{url('franquias/'.$franquia->id.'/wpSettings')}}" class="btn btn-info" style="float: right;"><i class="fa fa-users"></i> Ver Integração</a>
+									REST API Woocommerce 									
 								</h4>
 							
 

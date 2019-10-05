@@ -168,6 +168,7 @@ Route::get('franquias/enable/{id}', 'FranquiaController@enable');
 Route::get('franquias/disable/{id}', 'FranquiaController@disable');
 
 Route::get('franquias/{id}/wpSettings', 'FranquiaController@wpSettings');
+Route::get('franquias/{id}/gerarLoja', 'FranquiaController@gerarLoja');
 
 
 //Score

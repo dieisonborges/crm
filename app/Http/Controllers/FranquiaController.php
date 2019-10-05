@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Gate; 
 use DB; 
 
@@ -324,7 +325,19 @@ class FranquiaController extends Controller
         if(!(Gate::denies('read_franquia'))){
 
             $users = User::all();
-            
+
+            $codigo_franquia = $franquia->codigo_franquia;
+
+            //Verifica se a loja foi criada -------------------------------
+            $instalador_lojas = DB::connection('con_instalador_lojas')
+                        ->select( DB::raw('SELECT * FROM instalador_lojas WHERE codigo_franquia="$codigo_franquia" LIMIT 1;') );
+            if($instalador_lojas){
+                foreach ($instalador_lojas as $instalador_loja);
+            }else{
+                $instalador_loja=false;
+            }
+            //-------------------------------------------------------------
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("franquia.edit.id=".$franquia);
             //--------------------------------------------------------------------------------------
@@ -335,7 +348,7 @@ class FranquiaController extends Controller
             $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
 
 
-            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil', 'imagem'));
+            return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil', 'imagem', 'instalador_loja'));
         }
         else{
             return view('errors.403');
@@ -628,6 +641,72 @@ class FranquiaController extends Controller
                         'franquia'      => $franquia, 
                         'settings'      => $settings,                        
                     ));            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function gerarLoja($id)
+    {
+        //
+        if(!(Gate::denies('update_franquia'))){
+
+            //Selecionar franquia com segurança
+            $franquia = Auth::user()
+                            ->franquia()
+                            ->where('franquias.id', $id)
+                            ->first(); 
+
+            /* ----------------------------Dados Franquia-------------------------- */
+            $codigo_franquia=$franquia->codigo_franquia;
+
+            $dominio=str_replace("https://", "", $franquia->WP_SITEURL);
+            $dominio=str_replace("http://", "", $dominio);
+            $dominio=str_replace("/", "", $dominio);
+
+            $banco=$franquia->codigo_franquia;
+
+            $usuario=$franquia->codigo_franquia;
+
+            $senha=Hash::make(str_random(10));
+            /* ------------------------------------------------------------------ */
+    
+
+            //Verifica se a loja foi criada -------------------------------
+            $instalador_lojas = DB::connection('con_instalador_lojas')
+                        ->select( DB::raw('SELECT * FROM instalador_lojas WHERE codigo_franquia="$codigo_franquia" LIMIT 1;') );
+
+
+            if($instalador_lojas){
+                return redirect('franquias/'.$franquia->id.'/edit')->with('danger', 'A franquia já existe!');
+            }else{
+                $instalacao = DB::connection('con_instalador_lojas')
+                        ->select( DB::raw("INSERT INTO  instalador_lojas 
+                                            (codigo_franquia, dominio, banco, usuario, senha) VALUES
+                                            ('".$codigo_franquia."', '".$dominio."', '".$banco."', '".$usuario."', '".$senha."')
+                                        ;") );
+            }
+            //-------------------------------------------------------------
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("franquia.gerarLoja.id=".$franquia);
+            //--------------------------------------------------------------------------------------
+
+            //Atualiza dados da Loja
+            $franquia->DB_NAME=$banco;
+            $franquia->DB_USER=$usuario;
+            $franquia->DB_HOST="localhost";
+
+            if($instalacao){
+                $franquia->save();
+                return redirect('franquias/'.$franquia->id.'/edit')->with('success', 'Iniciada a instalação da Loja, aguarde 30 minutos!');
+            }else{
+                return redirect('franquias/'.$franquia->id.'/edit')->with('danger', 'Houve um problema e o processo não foi iniciado!');
+            }           
+
+            
         }
         else{
             return view('errors.403');
