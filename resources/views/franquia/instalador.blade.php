@@ -29,19 +29,19 @@
                         @if($franquia->iniciado)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Iniciado {{$franquia->iniciado}}</span>
                         @else
-                            <span class="btn btn-waning btn-xs"><i class="fa fa-times-circle"></i> Em instalação {{$franquia->iniciado}}</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Em instalação {{$franquia->iniciado}}</span>
                         @endif
                     </td>
                     <td>
                         @if($franquia->finalizado)
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Finalizado {{$franquia->finalizado}}</span>
                         @else
-                            <span class="btn btn-waning btn-xs"><i class="fa fa-times-circle"></i> Em instalação {{$franquia->finalizado}}</span>
+                            <span class="btn btn-warning btn-xs"><i class="fa fa-times-circle"></i> Em instalação {{$franquia->finalizado}}</span>
                         @endif
                     </td>
 
                     <td>
-                        @if(($franquia->finalizado)==0)and(($franquia->iniciado)==1))
+                        @if((($franquia->finalizado)==0)and(($franquia->iniciado)==1))
                             <span class="btn btn-danger btn-xs"><i class="fa fa-check"></i> Houve um problema na instalação da loja. {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
                         @else
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Instalação Concluída com sucesso! {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
