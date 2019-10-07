@@ -610,10 +610,8 @@ class FranquiaController extends Controller
         if(!(Gate::denies('update_franquia'))){
 
             //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
-                            ->first(); 
+            $franquia = Franquia::where('franquias.id', $id)
+                            ->first();  
 
             /* ----------------- Inicia Conexão WC ----------------------- */
             $consumer_secret = $this->decrypt($franquia->consumer_secret);                
@@ -654,9 +652,7 @@ class FranquiaController extends Controller
         if(!(Gate::denies('update_franquia'))){
 
             //Selecionar franquia com segurança
-            $franquia = Auth::user()
-                            ->franquia()
-                            ->where('franquias.id', $id)
+            $franquia = Franquia::where('franquias.id', $id)
                             ->first(); 
 
             /* ----------------------------Dados Franquia-------------------------- */
@@ -706,6 +702,30 @@ class FranquiaController extends Controller
                 return redirect('franquias/'.$franquia->id.'/edit')->with('danger', 'Houve um problema e o processo não foi iniciado!');
             }           
 
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function instalador()
+    {
+        //
+        if(!(Gate::denies('read_franquia'))){            
+    
+
+            //Verificar lojas criadas --------------------------------------------------------------
+            $franquias = DB::connection('con_instalador_lojas')
+                        ->select( DB::raw('SELECT * FROM instalador_lojas;') );            
+
+            //LOG ----------------------------------------------------------------------------------
+            $this->log("franquia.show.instalador");
+            //--------------------------------------------------------------------------------------
+
+            
+
+            return view('franquia.instalador', compact('franquias'));
             
         }
         else{

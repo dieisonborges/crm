@@ -158,6 +158,7 @@ Route::get('convites/{id}/updateStatus/{status}', 'ConviteController@updateStatu
 Route::get('convites/reenviar/{id}', 'ConviteController@reenviar');
 
 //Franquias
+Route::get('franquias/instalador', 'FranquiaController@instalador');
 Route::resource('franquias', 'FranquiaController');
 Route::post('franquias/busca', 'FranquiaController@busca');
 Route::get('franquias/{id}/donos', 'FranquiaController@donos');
@@ -169,6 +170,7 @@ Route::get('franquias/disable/{id}', 'FranquiaController@disable');
 
 Route::get('franquias/{id}/wpSettings', 'FranquiaController@wpSettings');
 Route::get('franquias/{id}/gerarLoja', 'FranquiaController@gerarLoja');
+
 
 
 //Score

@@ -122,16 +122,24 @@
           </li>
           @endcan           
 
-          @can('read_franquia')
-          <li>
-            <a href="{{ url('franquias/') }}">  
-              <i class="fas fa-store"></i> <span>Franquias</span>              
-            </a>            
-          </li>         
+          @can('read_franquia')         
 
-          @endcan 
+          <li class="header">Franquias</li> 
 
-          
+          <li class="treeview">
+            <a href="#">  
+              <i class="fas fa-store text-blue"></i> <span class="text-blue">Franquias</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{ url('franquias/') }}" class="text-blue"><i class="fas fa-store"></i> Listar</a></li>               
+                <li><a href="{{ url('franquias/instalador') }}"><i class="fa fa-cog"></i> Instalador</a></li>
+            </ul>
+          </li>        
+
+          @endcan           
 
           @can('read_franqueado')     
 
@@ -145,7 +153,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ url('franqueados') }}"><i class="fas fa-circle-notch text-orange"></i> Franquias</a></li>               
+                <li><a href="{{ url('franqueados') }}"><i class="fas fa-store-alt"></i> Lojas</a></li>               
                 <li><a href="{{ url('franqueados/convites') }}"><i class="fas fa-paper-plane"></i> Convites</a></li>
             </ul>
           </li>
@@ -159,7 +167,7 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-ticket-alt text-aqua"></i> <span>Meus Tickets</span>
+              <i class="fas fa-ticket-alt text-aqua"></i> <span class="text-aqua">Meus Tickets</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
