@@ -43,6 +43,10 @@
                     <td>
                         @if((($franquia->finalizado)==0)and(($franquia->iniciado)==1))
                             <span class="btn btn-danger btn-xs"><i class="fa fa-check"></i> Houve um problema na instalação da loja. {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
+                        @elseif((($franquia->finalizado)==1)and(($franquia->iniciado)==0))
+                            <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Houve um problema na instalação da loja. {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
+                        @elseif((($franquia->finalizado)==0)and(($franquia->iniciado)==0))
+                            <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Houve um problema na instalação da loja. {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
                         @else
                             <span class="btn btn-success btn-xs"><i class="fa fa-check"></i> Instalação Concluída com sucesso! {{$franquia->finalizado}} {{$franquia->iniciado}}</span>
                         @endif
