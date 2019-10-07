@@ -695,7 +695,7 @@ class FranquiaController extends Controller
             $franquia->DB_USER=$usuario;
             $franquia->DB_HOST="localhost";
 
-            if($instalacao){
+            if(!($instalacao)){
                 $franquia->save();
                 return redirect('franquias/'.$franquia->id.'/edit')->with('success', 'Iniciada a instalação da Loja, aguarde 30 minutos!');
             }else{
