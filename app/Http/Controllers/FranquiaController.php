@@ -347,7 +347,9 @@ class FranquiaController extends Controller
             //Logomarca
             $imagem = $franquia->uploads()->orderBy('id', 'DESC')->first();
 
+            $codigo_franquia = $franquia->codigo_franquia;
 
+            
             return view('franquia.edit', compact('franquia', 'users', 'select_estados_brasil', 'imagem', 'instalador_loja'));
         }
         else{
