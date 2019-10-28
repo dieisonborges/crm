@@ -36,13 +36,13 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>CPF</th>
-                    <th>Celular</th>
                     <th>Status</th>
+                    <th>Carteira</th>
                     <th>Convites</th>
                     <th>Login<br> (Max 15)</th>
                     <th>Desativar <br>Ativar</th>
                     <th>Roles <br> Grupo</th>
-                    <th>Setor de <br> Trabalho</th>
+                    <th style="font-size: 8px;">Setor<br> Trabalho</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
@@ -52,13 +52,17 @@
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->name}}</a></td>
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->email}}</a></td>
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->cpf}}</a></td>
-                    <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->telefone}}</a></td>
                     <td>
                         @if ($user->status)
                             <span class="label label-success">ATIVO</span>                        
                         @else
                             <span class="label label-danger">INATIVO</span>
                         @endif
+                    </td>
+                    <td>
+                        <a href="{{url('carteira/'.$user->id)}}">
+                            <span class="label label-success">----</span>
+                        </a>
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/convites')}}"> {{$user->qtd_convites}}</a>
@@ -91,13 +95,13 @@
                     </td>
                     
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> </a>
                     </td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-building"></i> Setor</a>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-building"></i></a>
                     </td>
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                        <a class="btn btn-warning btn-xs" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i></a>
                     </td>
                     <td>
 
@@ -107,7 +111,7 @@
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
-                            <a href="javascript:confirmDelete{{$user->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Excluir</a>
+                            <a href="javascript:confirmDelete{{$user->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i></a>
                         </form> 
 
                         <script>

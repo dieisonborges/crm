@@ -48,7 +48,7 @@
             <span class="info-box-icon bg-silver"><i class="fa fa-store"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Franquias</span>
+              <span class="info-box-text">Lojas</span>
               <span class="info-box-number">{{$qtd_franquias}}</span>
               <a class="btn btn-default" style="float: right;" href="{{url('franquias')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
             </div>
@@ -63,7 +63,7 @@
             <span class="info-box-icon bg-silver"><i class="fa fa-star"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Franqueados VIP</span>
+              <span class="info-box-text">Assinantes VIP</span>
               <span class="info-box-number">{{$qtd_franqueados_vip}}</span>
               <a class="btn btn-default" style="float: right;" href="{{url('franqueadoVip')}}"><i class="fa fa-angle-double-right" ></i> Ver</a>
             </div>

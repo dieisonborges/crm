@@ -2,7 +2,7 @@
 @section('title', 'Franqueado')
 @section('content')
 		<h1>
-	        Franqueado VIP
+	        Assinante VIP
 	        <small>Adicionar ou Remover</small>
 	    </h1>
 		

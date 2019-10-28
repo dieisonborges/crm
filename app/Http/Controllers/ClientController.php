@@ -15,6 +15,7 @@ use App\User;
 use App\Upload; 
 use App\FranqueadoVip; 
 use DB;
+use App\Cambio; 
 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -598,6 +599,61 @@ class ClientController extends Controller
             }else{
                 return redirect('uploads/'.$id.'/create/'.$area)->with('danger', 'Houve um problema, tente novamente.');
             }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function carteira()
+    {        
+
+        //
+        if(Auth::id()){
+
+            $user = Auth::id();
+
+            $user = User::find($user);            
+
+            $carteiras = $user->carteira()->paginate(40); 
+
+            $saldo = $user->carteira()->orderBy('id', 'DESC')->first(); 
+
+            if((isset($saldo))){
+                $saldo = $saldo->saldo;
+            }else{
+                $saldo = 0;
+            }
+
+            //Taxa de Cambio
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            if((isset($cambio_atual))){
+                $cambio_atual = $cambio_atual->valor;
+            }else{
+                $cambio_atual = 9999999;
+            }
+
+            //Valor Efetivo Total
+            $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vets))){
+                $vets = $vets->valor;
+            }else{
+                $vets = 9999999;
+            }
+
+
+            //LOG ------------------------------------------------------
+            $this->log("client.carteira.user=".$user->id);
+            //----------------------------------------------------------
+
+            return view('client.carteira', array(
+                            'carteiras' => $carteiras, 
+                            'user' => $user, 
+                            'saldo' => $saldo,
+                            'cambio_atual' => $cambio_atual,
+                            'vets' => $vets,
+                            'buscar' => null
+                            ));
         }
         else{
             return view('errors.403');

@@ -1,9 +1,9 @@
 @can('update_franqueado')  
 	@extends('layouts.app')
-	@section('title', 'Editar Franquia')
+	@section('title', 'Editar Loja')
 	@section('content')
 	<h1>
-        <i class="fa fa-tools"></i> Editar Franquia
+        <i class="fa fa-tools"></i> Editar Loja
         <small>{{$franquia->nome}}</small>
     </h1>
 
@@ -12,7 +12,7 @@
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab">Informações da Franquia</a></li>
+              <li class="active"><a href="#tab_1" data-toggle="tab">Informações da Loja</a></li>
               <li><a href="#tab_2" data-toggle="tab">Dados Comerciais</a></li>
               <li><a href="#tab_3" data-toggle="tab">Configurações da Loja Integrada</a></li>
               <li><a href="#tab_4" data-toggle="tab"><i class="fa fa-image"></i> Logomarca</a></li>
@@ -23,7 +23,7 @@
 	            <div class="tab-content">
 					<div class="tab-pane active" id="tab_1">
 
-						<h3>Informações da Franquia:</h3>
+						<h3>Informações da Loja:</h3>
 
 						<div class="form-group col-md-12">
 						    <label for="nome">Nome:</label>

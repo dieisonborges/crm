@@ -7,10 +7,11 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
 
-          <!-- ----------------------------------- END Configurações ----------------------- -->
+          <!-- --------------------- END Configurações ------------------ -->
 
 
           @canany([
+              'read_cambio',
               'read_user', 
               'read_score',
               'read_conquista',
@@ -32,6 +33,13 @@
               </span>
             </a>
             <ul class="treeview-menu">
+              @can('read_cambio')
+                <li>
+                  <a href="{{ url('cambio/') }}">
+                    <i class="fa fa-dollar-sign text-aqua"></i><span>Câmbio</span>
+                  </a>
+                </li>
+              @endcan
               @can('read_user')
                 <li>
                   <a href="{{ url('users/') }}">
@@ -42,7 +50,7 @@
               @can('read_franquia')
               <li>
                 <a href="{{ url('franqueadoVip/') }}">
-                    <i class="fas fa-store text-aqua"></i> <span>Franqueados VIP</span>
+                    <i class="fas fa-store text-aqua"></i> <span>Assinantes VIP</span>
                 </a>             
               </li>
               @endcan
@@ -107,7 +115,7 @@
           </li>
           @endcanany
 
-          <!-- ----------------------------------- END Configurações ----------------------- -->
+          <!-- --------------------- END Configurações -------------- -->
 
            
 
@@ -124,17 +132,17 @@
 
           @can('read_franquia')         
 
-          <li class="header">Franquias</li> 
+          <li class="header">Lojas</li> 
 
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-store text-blue"></i> <span class="text-blue">Franquias</span>
+              <i class="fas fa-store text-blue"></i> <span class="text-blue">Lojas</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ url('franquias/') }}" class="text-blue"><i class="fas fa-store"></i> Listar</a></li>               
+                <li><a href="{{ url('franquias/') }}" class="text-blue"><i class="fas fa-store"></i> Gerenciar</a></li>               
                 <li><a href="{{ url('franquias/instalador') }}"><i class="fa fa-cog"></i> Instalador</a></li>
             </ul>
           </li>        
@@ -143,11 +151,11 @@
 
           @can('read_franqueado')     
 
-          <li class="header">Franqueado</li> 
+          <li class="header">Assinante</li> 
 
           <li class="treeview">
             <a href="#">  
-              <i class="fas fa-store-alt"></i> <span>Franqueado</span>
+              <i class="fas fa-store-alt"></i> <span>Assinante</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

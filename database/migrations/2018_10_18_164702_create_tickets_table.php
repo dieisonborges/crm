@@ -15,8 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('protocolo')->unique();
-            
+            $table->string('protocolo')->unique();            
 
             $table->integer('status');
             // 1 - Aberto/Ativo

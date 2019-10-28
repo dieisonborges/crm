@@ -3,7 +3,7 @@
 	@section('title', 'Nova Role')
 	@section('content')
 			<h1>
-		        Novo Convite <b>Franqueado</b>
+		        Novo Convite <b>Assinante</b>
 		        <small>Enviar</small>
 		    </h1>
 			

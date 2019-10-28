@@ -75,6 +75,8 @@ Route::post('user/setorDestroy', 'UserController@setorDestroy');
 Route::get('user/{id}/convites', 'UserController@convites');
 Route::post('user/conviteUpdate', 'UserController@conviteUpdate');
 
+//Carteira do Usuário
+Route::resource('/carteira/{user}/', 'CarteiraController');
 
 
 Route::resource('/categorias', 'CategoriaController');
@@ -100,6 +102,8 @@ Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
 Route::resource('setors', 'SetorController');
 Route::post('setors/busca', 'SetorController@busca');
 
+//Carteira
+Route::get('clients/carteira', 'ClientController@carteira');
 // ClientController
 Route::get('clients/perfil', 'ClientController@perfil');
 // Imagem Perfil
@@ -201,6 +205,9 @@ Route::get('/storage/{fileName}', 'UploadController@fileStorageServe')
 //Imagens Publicas
 Route::get('/storagePublic/{fileName}', 'UploadController@filePublicStorageServe')
 ->where(['fileName' => '.*'])->name('storage.gallery.file');
+
+//Câmbio de Moedas
+Route::resource('cambio', 'CambioController');
 
 
 //Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------

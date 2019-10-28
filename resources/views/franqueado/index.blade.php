@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Franquias')
     @section('content')
-        <h1><i class="fa fa-building"></i> Franquias</h1>
+        <h1><i class="fa fa-building"></i> Assinantes</h1>
 
         <a style="float: right;" href="{{url('franqueados/convites')}}" class="btn btn-xs btn-primary">
             <i class="fa fa-paper-plane"></i>
@@ -19,12 +19,12 @@
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <div class="box-header with-border">
-              <h3 class="box-title">Minhas Franquias</h3>
+              <h3 class="box-title">Minhas Lojas</h3>
             </div>
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
-                    <th>Código da Franquia</th>
+                    <th>Código da Loja</th>
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th colspan="2">Status</th>                    
@@ -91,12 +91,12 @@
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <div class="box-header with-border">
-              <h3 class="box-title">Meus Franqueados</h3>
+              <h3 class="box-title">Lojas de Meus Assinantes</h3>
             </div>
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
-                    <th>Código da Franquia</th>
+                    <th>Código da Loja</th>
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Status</th>

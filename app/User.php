@@ -58,7 +58,11 @@ class User extends Authenticatable
 
     public function conquista(){        
         return $this->belongsToMany(\App\Conquista::class);
-    }    
+    }
+
+    public function carteira(){        
+        return $this->hasMany(\App\Carteira::class);
+    }   
 
     public function scores(){
         

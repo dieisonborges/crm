@@ -86,22 +86,7 @@
                 </ul>
               </li>
             </ul>
-          </li>
-
-              
-
-
-
-
-
-              
-
-
-
-
-
-
-                           
+          </li>                           
 
               @canany([
               'read_user', 
@@ -165,16 +150,26 @@
                   <li class="user-body">
                     <div class="row">
                       <div class="col-xs-4 text-center">
-                        <a href="{{ url('clients/perfil') }}">Perfil</a>
+                        <a href="{{ url('clients/perfil') }}" class="btn btn-default btn-sm">
+                        <i class="fa fa-user"></i>
+                        Perfil
+                        </a>
                       </div>
-                      <!--
+                      
                       <div class="col-xs-4 text-center">
-                        <a href="#">Alterar Senha</a>
+                        <a href="{{url('password/reset')}}" class="btn btn-default btn-sm">
+                          <i class="fa fa-lock"></i>
+                          Senha
+                        </a>
                       </div>
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Score</a>
+
+                      <div class="col-xs-4 text-center">                        
+                        <a href="{{url('clients/carteira')}}" class="btn btn-default btn-sm">
+                          <i class="fa fa-wallet"></i>
+                          Carteira
+                        </a>
                       </div>
-                      -->
+                     
                     </div>
                   </li>
                   <!-- Menu Footer-->
@@ -189,6 +184,7 @@
                       <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
+                          <i class="fa fa-door-closed"></i>
                           {{ __('Sair') }}
                       </a>
 

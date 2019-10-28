@@ -7,7 +7,7 @@
 
 
 		<h1>
-	        Franquia 
+	        Loja 
 	        <small>{{ $franquia->nome }}</small>
 	    </h1>
  
@@ -18,7 +18,7 @@
 	          <!-- Custom Tabs -->
 	          <div class="nav-tabs-custom">
 	            <ul class="nav nav-tabs">
-	              	<li class="active"><a href="#tab_1" data-toggle="tab">Informações da Franquia</a></li>
+	              	<li class="active"><a href="#tab_1" data-toggle="tab">Informações da Loja</a></li>
 	              	<li><a href="#tab_2" data-toggle="tab">Dados Comerciais</a></li>
 	              	<li><a href="#tab_3" data-toggle="tab">Configurações da Loja Integrada</a></li>
               		<li><a href="#tab_4" data-toggle="tab"><i class="fa fa-image"></i> Logomarca</a></li>
@@ -26,7 +26,7 @@
 	            <div class="tab-content">
 	              <div class="tab-pane active" id="tab_1">
 
-	              		<h3>Informações da Franquia:</h3>
+	              		<h3>Informações da Loja:</h3>
 
 					    <label for="nome">Nome:</label>
 					    <span  class="form-control">{{ $franquia->nome }}</span>
@@ -135,7 +135,7 @@
 
 		
 		
-		<a href="{{url('franqueados/'.$franquia->id.'/configuracoesEdit')}}" class="btn btn-warning"><i class="fa fa-tools"></i> Modificar Franquia</a>
+		<a href="{{url('franqueados/'.$franquia->id.'/configuracoesEdit')}}" class="btn btn-warning"><i class="fa fa-tools"></i> Modificar Loja</a>
 		
 		<a href="javascript:history.go(-1)" class="btn btn-success"><i class="fa fa-undo"></i> Voltar</a>
 	@endsection

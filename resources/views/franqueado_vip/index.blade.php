@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Franqueados VIP')
+@section('title', 'Assinantes VIP')
 @section('content')
 <h1><i class="fa fa-certificate text-blue"></i>
-    Franqueados VIP    
- <a href="{{url('franqueadoVip/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Adicionar Novo Franquado VIP</a></h1>
+    Assinantes VIP    
+ <a href="{{url('franqueadoVip/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Adicionar Novo Assinante VIP</a></h1>
 
     @if (session('status'))
         <div class="alert alert-success" score="alert">
@@ -29,7 +29,7 @@
 
     
     <div class="box-header">
-        <h3 class="box-title">Franqueados VIP: <b>{{count($franqueado_vips)}}</b></h3>
+        <h3 class="box-title">Assinantes VIP: <b>{{count($franqueado_vips)}}</b></h3>
 
 
         

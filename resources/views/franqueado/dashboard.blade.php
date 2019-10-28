@@ -44,7 +44,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Loja Virtual: <b>{{$franquia->codigo_franquia}}</b></span>
                 <span class="info-box-number">{{$franquia->nome}}</span>                
-                Franqueado Desde: <b>{{date('m/Y', strtotime($franquia->created_at))}}</b>
+                Assinante Desde: <b>{{date('m/Y', strtotime($franquia->created_at))}}</b>
                 
               </div>
             </div>
@@ -215,7 +215,7 @@
               <span class="info-box-icon bg-olive"><i class="fa fa-tools"></i></span>
             </a>
             <div class="info-box-content">
-              <span class="info-box-text">Dados importantes de sua Franquia.</span>
+              <span class="info-box-text">Dados importantes de sua Loja.</span>
               <span class="info-box-number">Configurações</span>
 
               <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
@@ -235,7 +235,7 @@
             </a>
             <div class="info-box-content">
               <span class="info-box-text">Convites</span>
-              <span class="info-box-number">Novos Franqueados</span>
+              <span class="info-box-number">Novos Assinantes</span>
               <a href="{{url('franqueados/'.$franquia->id.'/configuracoes')}}" class="btn btn-default"> <i class="fa fa-edit"></i> Administrar</a>
             </div>
             <!-- /.info-box-content -->
@@ -252,7 +252,7 @@
             </a>
             <div class="info-box-content">
               <span class="info-box-text">Catálogo Referência</span>
-              <span class="info-box-number">Loja do Franqueado</span>
+              <span class="info-box-number">Loja do Assinante</span>
 
               <div class="progress">
                 <div class="progress-bar" style="width: 100%"></div>

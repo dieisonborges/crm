@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Franquias')
     @section('content')
-    <h1>Franquias  Instalador</h1>
+    <h1>Lojas Instalador</h1>
              
         
         <!-- /.box-header -->
@@ -10,13 +10,13 @@
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
-                    <th>Código da Franquia</th>
+                    <th>Código da Loja</th>
                     <th>Domínio</th>                    
                     <th>Banco</th>
                     <th>Usuário</th>
                     <th>Iniciado</th>
                     <th>Finalizado</th>   
-                    <th>Status</th>                  
+                    <th>Status</th>                   
                 </tr>
                 @forelse ($franquias as $franquia)
                 <tr>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Convites')
 @section('content')
-<h1>Convites Cadastrados <small>Franqueado</small>  </h1>
+<h1>Convites Cadastrados <small>Assinante</small>  </h1>
 
 <hr class="hr col-md-12">
 
