@@ -77,9 +77,9 @@ class Kernel extends ConsoleKernel
                 ]);
             }
             
-        //})->hourly();
+        })->hourly();
 
-        })->everyMinute();  
+        //})->everyMinute();  
         //FIM - Atualiza a Cotação do Dolár ----------------------------------------      
         
     }
