@@ -110,6 +110,10 @@ Route::get('clients/perfil', 'ClientController@perfil');
 Route::get('clients/imagem', 'ClientController@imagem');
 Route::post('clients/imagemUpdate', 'ClientController@imagemUpdate');
 
+//Recarga de Créditos
+Route::get('clients/recarregar', 'ClientController@recarregar');
+Route::post('clients/recarregarUpdate', 'ClientController@recarregarStore');
+
 Route::resource('clients', 'ClientController');
 Route::post('clients/busca', 'ClientController@busca');
 Route::get('clients/{id}/encerrar', 'ClientController@encerrar');
@@ -117,6 +121,8 @@ Route::post('clients/storeAcao', 'ClientController@storeAcao');
 Route::post('clients/storeEncerrar', 'ClientController@storeEncerrar');
 Route::get('clients/{status}/status', 'ClientController@status');
 Route::get('clients/{id}/acao', 'ClientController@acao');
+
+
 
 // AtendimentoController
 //Route::resource('atendimentos/', 'AtendimentoController');
@@ -233,6 +239,7 @@ Route::resource('franqueados', 'FranqueadoController');
 // Imagem Perfil
 Route::get('franqueados/{id}/imagem', 'FranqueadoController@imagem');
 Route::post('franqueados/imagemUpdate', 'FranqueadoController@imagemUpdate');
+
 
 //END Franqueados (Área dos Franqueados) -----------------------------------------------------------------------------
 

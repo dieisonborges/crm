@@ -2,7 +2,12 @@
     @extends('layouts.app')
     @section('title', 'Carteira')
     @section('content')    
-    <h1><i class="fa fa-wallet"></i> Carteira: <small>{{$user->name}}</small></h1>
+    <h1><i class="fa fa-wallet"></i> Carteira: <small>{{$user->name}}</small>
+        <a href="{{url('/clients/recarregar')}}" class="btn btn-success" style="float: right;">
+            <i class="fa fa-money-check-alt"></i>
+            Recarregar
+        </a>
+    </h1>
 
         <div class="col-md-12">
             

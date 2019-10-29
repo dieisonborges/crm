@@ -660,4 +660,71 @@ class ClientController extends Controller
         }
     }
 
+
+    public function recarregar(Request $request)
+    {
+        //
+        if(Auth::id()){  
+
+            //LOG -------------------------------------------------
+            $this->log("client.recarregar=".(Auth::id()));
+            //-----------------------------------------------------
+
+            return view('client.recarregar');
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function recarregarStore(Request $request)
+    {
+
+        //
+        if(auth()->user()->id){
+            //Validação
+            $this->validate($request,[
+                    'recarga' => 'required|number|min:10',                    
+            ]);                                 
+
+            $recarga = $request->input('recarga');
+
+            //usuário
+            $user = User::find(auth()->user()->id);
+
+            /* ----------- Armazena e Recupera a Recarga  -------- */
+
+            $carteira = new Carteira();
+            $carteira->valor = $request->input('recarga');
+            $carteira->saldo = $request->input('recarga');
+            $carteira->dolar = $request->input('recarga');
+            $carteira->vet = $request->input('recarga');
+            $carteira->status = $request->input('recarga');
+            $carteira->user_id = $request->input('nome');
+
+
+
+            /* ----------- FIM Armazena e Recupera a Recarga  -------- */
+
+            /* ----------- Gera um ticket da Recarga  -------- */
+
+
+            /* ----------- FIM Gera um ticket da Recarga  -------- */
+            
+
+            //LOG --------------------------------------------------------
+            $this->log("client.recargaUpdate.id=".$user->id."| Recarga=".$recarga);
+            //------------------------------------------------------------
+
+            if((!$status)and($ticket->save())){
+                return redirect('clients/'.$ticket_id)->with('success', ' Ticket Encerrado com sucesso!');
+            }else{
+                return redirect('clients/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
 }
