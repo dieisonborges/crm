@@ -32,6 +32,11 @@ class Ticket extends Model
     public function uploads(){        
         return $this->belongsToMany('App\Upload','upload_ticket');
     }
+
+    public function carteira(){
+        
+        return $this->belongsToMany(\App\Carteira::class);
+    }
  
 
 

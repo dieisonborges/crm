@@ -16,6 +16,7 @@ use App\Upload;
 use App\FranqueadoVip; 
 use DB;
 use App\Cambio; 
+use App\Carteira;
 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -84,6 +85,22 @@ class ClientController extends Controller
 
 
         return date("Y").$protocolo.date("m");
+    }
+
+    private function carteiraCodigo()
+    {
+        
+        $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
+
+        $protocolo = $chars[rand (0 , 24)];
+        $protocolo .= $chars[rand (0 , 24)];
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+        $protocolo .= $chars[rand (0 , 24)];
+        $protocolo .= rand (0 , 9);
+        $protocolo .= rand (0 , 9);
+
+        return "TF".date("Y").$protocolo;
     }
 
     private function calcDatas($data_ini, $data_fim){
@@ -617,7 +634,9 @@ class ClientController extends Controller
 
             $carteiras = $user->carteira()->paginate(40); 
 
-            $saldo = $user->carteira()->orderBy('id', 'DESC')->first(); 
+            /* -------- Saldo da Carteira ---------- */
+            $saldo = $user->carteira()->orderBy('id', 'DESC')
+                            ->where('status','1')->first(); 
 
             if((isset($saldo))){
                 $saldo = $saldo->saldo;
@@ -684,7 +703,7 @@ class ClientController extends Controller
         if(auth()->user()->id){
             //Validação
             $this->validate($request,[
-                    'recarga' => 'required|number|min:10',                    
+                    'recarga' => 'required|numeric|min:10',                    
             ]);                                 
 
             $recarga = $request->input('recarga');
@@ -694,35 +713,110 @@ class ClientController extends Controller
 
             /* ----------- Armazena e Recupera a Recarga  -------- */
 
+            //Taxa de Cambio
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            if((isset($cambio_atual))){
+                $cambio_atual = $cambio_atual->valor;
+            }else{
+                $cambio_atual = 9999999;
+            }
+
+            //VET
+            //Valor Efetivo Total
+            $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vets))){
+                $vet = $vets->valor;
+            }else{
+                $vet = 9999999;
+            }
+
+            /* -------- Saldo da Carteira ---------- */
+            $saldo = $user->carteira()->orderBy('id', 'DESC')
+                            ->where('status','1')->first(); 
+
+            if((isset($saldo))){
+                $saldo = $saldo->saldo;
+            }else{
+                $saldo = 0;
+            }
+
             $carteira = new Carteira();
+            $carteira->codigo = $this->carteiraCodigo();
             $carteira->valor = $request->input('recarga');
-            $carteira->saldo = $request->input('recarga');
-            $carteira->dolar = $request->input('recarga');
-            $carteira->vet = $request->input('recarga');
-            $carteira->status = $request->input('recarga');
-            $carteira->user_id = $request->input('nome');
+            $carteira->saldo = $saldo;
+            $carteira->dolar = $cambio_atual;
+            $carteira->vet = $vet;
+            $carteira->status = 0;
+            $carteira->user_id = $user->id;
 
-
+            $carteiraSave = $carteira->save();
 
             /* ----------- FIM Armazena e Recupera a Recarga  -------- */
 
             /* ----------- Gera um ticket da Recarga  -------- */
 
+            if($carteiraSave){
 
-            /* ----------- FIM Gera um ticket da Recarga  -------- */
-            
+                $ticket = new Ticket();
 
-            //LOG --------------------------------------------------------
-            $this->log("client.recargaUpdate.id=".$user->id."| Recarga=".$recarga);
-            //------------------------------------------------------------
+                // 1 - Aberto/Ativo
+                // 0 - Fechado/Encerrado
+                $ticket->status = 1;
 
-            if((!$status)and($ticket->save())){
-                return redirect('clients/'.$ticket_id)->with('success', ' Ticket Encerrado com sucesso!');
+                // Rotulos de Criticidade
+                //    0   =>  "Crítico - Emergência (resolver imediatamente)",
+                //    1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+                //    2   =>  "Médio - Intermediária (avaliar situação)",
+                //    3   =>  "Baixo - Rotineiro ou Planejado",
+                //    4   =>  "Nenhum",
+                $ticket->rotulo = "3";                
+
+                $ticket->titulo = "Recarga #".$carteira->codigo;
+
+                $ticket->descricao = "
+                        Solicitação de Recarga <br><br>
+                        Código: ".$carteira->codigo." <br>
+                        Valor: ".$request->input('recarga')." <br>
+                        Câmbio: ".$cambio_atual." <br>
+                        VET: ".$vet." <br>
+                ";                
+
+                //usuário
+                $ticket->user_id = auth()->user()->id;
+
+                //protocolo humano
+                $ticket->protocolo = $this->protocolo();
+
+
+                if($ticket->save()){
+                    $ticket_id = DB::getPdo()->lastInsertId();
+
+                    //Vincula Ticket com Setor
+                    $setor = Setor::where('name', 'financeiro')->first();
+                    Ticket::find($ticket_id)->setors()->attach($setor);    
+
+                    //Vincula Ticket com Carteira
+                    $carteira = Carteira::where('codigo', $carteira->codigo)->first();
+                    Ticket::find($ticket_id)->carteira()->attach($carteira);
+
+                }
+
+
+                /* ----------- FIM Gera um ticket da Recarga  -------- */
+                
+
+                //LOG --------------------------------------------------------
+                $this->log("client.recargaStore.id=".$user->id."| Recarga=".$recarga);
+                //------------------------------------------------------------
+
+                
+                return redirect('clients/carteira')->with('success', ' Pedido de recarga efetuado com sucesso!');
+
             }else{
-                return redirect('clients/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+                return redirect('clients/recarregar')->with('danger', 'Houve um problema, tente novamente.');
             }
-        }
-        else{
+        
+        }else{
             return view('errors.403');
         }
     }

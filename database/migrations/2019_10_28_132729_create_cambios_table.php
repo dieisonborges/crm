@@ -14,7 +14,7 @@ class CreateCambiosTable extends Migration
     public function up()
     {
         Schema::create('cambios', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             //Moeda BASE = BRL
             //Código Moeda
             //USD
@@ -27,7 +27,7 @@ class CreateCambiosTable extends Migration
         //Valor Efetivo Total
         //Fator Multiplicador do Câmbio
         Schema::create('vets', function (Blueprint $table) {
-            $table->bigIncrements('id');            
+            $table->increments('id');            
             $table->double('valor', 15, 8);
             $table->string('descricao')->nullable();
             $table->timestamps();

@@ -112,7 +112,7 @@ Route::post('clients/imagemUpdate', 'ClientController@imagemUpdate');
 
 //Recarga de Créditos
 Route::get('clients/recarregar', 'ClientController@recarregar');
-Route::post('clients/recarregarUpdate', 'ClientController@recarregarStore');
+Route::post('clients/recarregarStore', 'ClientController@recarregarStore');
 
 Route::resource('clients', 'ClientController');
 Route::post('clients/busca', 'ClientController@busca');
