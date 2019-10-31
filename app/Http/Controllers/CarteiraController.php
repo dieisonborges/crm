@@ -51,12 +51,15 @@ class CarteiraController extends Controller
 
             $user = User::find($user);            
 
-            $carteiras = $user->carteira()->paginate(40); 
+            $carteiras = $user->carteira()->orderBy('id', 'DESC')->paginate(40); 
 
-            $saldo = $user->carteira()->orderBy('id', 'DESC')->first(); 
+            $saldo = $user->carteira()
+                        ->select( DB::raw('sum( carteiras.valor ) as valor') )
+                        ->where('carteiras.status','3')
+                        ->first(); 
 
             if((isset($saldo))){
-                $saldo = $saldo->saldo;
+                $saldo = $saldo->valor;
             }else{
                 $saldo = 0;
             }
@@ -89,6 +92,38 @@ class CarteiraController extends Controller
                             'vets' => $vets,
                             'buscar' => null
                             ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function status(Request $request)
+    {
+        //
+        if(!(Gate::denies('update_carteira'))){
+
+            //Validação
+            $this->validate($request,[
+                    'id' => 'required',
+                    'user_id' => 'required',
+                    'status' => 'required|numeric'
+            ]);
+
+            //LOG --------------------------------------------------------------------
+            $this->log("carteira.update.status=".$request->input('status'));
+            //------------------------------------------------------------------------
+
+            $carteira = Carteira::find($request->input('id'));
+
+            $carteira->status = $request->input('status');
+
+            if($carteira->save()){
+                return redirect('carteira/'.$request->input('user_id'))->with('success', 'Operação atualizada com sucesso!');
+            }else{
+                return redirect('carteira/'.$request->input('user_id'))->with('danger', 'Houve um problema, tente novamente.');
+            }
+
         }
         else{
             return view('errors.403');

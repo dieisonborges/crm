@@ -125,11 +125,11 @@ class ClientController extends Controller
         	//usuário
             $user_id = auth()->user()->id;
 
-            $tickets = Ticket::where('user_id', $user_id)->paginate(40);
+            $tickets = Ticket::where('user_id', $user_id)->orderBy('id', 'DESC')->paginate(40);
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG -----------------------------------------------------------------
             $this->log("client.index");
-            //--------------------------------------------------------------------------------------
+            //---------------------------------------------------------------------
 
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
@@ -176,9 +176,10 @@ class ClientController extends Controller
         	//usuário
             $user_id = auth()->user()->id;
 
-            $tickets = Ticket::where('user_id', $user_id)
-            				 ->where('status', $status)
-            				 ->paginate(40);
+            $tickets = Ticket::where('user_id', $user_id)                            
+            				->where('status', $status)
+                            ->orderBy('id', 'DESC')
+            				->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index.status=".$status);
@@ -632,14 +633,16 @@ class ClientController extends Controller
 
             $user = User::find($user);            
 
-            $carteiras = $user->carteira()->paginate(40); 
+            $carteiras = $user->carteira()->orderBy('carteiras.id','DESC')->paginate(40); 
 
             /* -------- Saldo da Carteira ---------- */
-            $saldo = $user->carteira()->orderBy('id', 'DESC')
-                            ->where('status','1')->first(); 
+            $saldo = $user->carteira()
+                        ->select( DB::raw('sum( carteiras.valor ) as valor') )
+                        ->where('carteiras.status','3')
+                        ->first(); 
 
             if((isset($saldo))){
-                $saldo = $saldo->saldo;
+                $saldo = $saldo->valor;
             }else{
                 $saldo = 0;
             }
@@ -731,11 +734,13 @@ class ClientController extends Controller
             }
 
             /* -------- Saldo da Carteira ---------- */
-            $saldo = $user->carteira()->orderBy('id', 'DESC')
-                            ->where('status','1')->first(); 
+            $saldo = $user->carteira()
+                        ->select( DB::raw('sum( carteiras.valor ) as valor') )
+                        ->where('carteiras.status','3')
+                        ->first();  
 
             if((isset($saldo))){
-                $saldo = $saldo->saldo;
+                $saldo = $saldo->valor;
             }else{
                 $saldo = 0;
             }
@@ -743,11 +748,12 @@ class ClientController extends Controller
             $carteira = new Carteira();
             $carteira->codigo = $this->carteiraCodigo();
             $carteira->valor = $request->input('recarga');
-            $carteira->saldo = $saldo;
             $carteira->dolar = $cambio_atual;
             $carteira->vet = $vet;
             $carteira->status = 0;
             $carteira->user_id = $user->id;
+
+            $carteira->descricao = "Solicitação de recarga gerada pelo usuário.";
 
             $carteiraSave = $carteira->save();
 
@@ -775,6 +781,7 @@ class ClientController extends Controller
 
                 $ticket->descricao = "
                         Solicitação de Recarga <br><br>
+                        Gerada pelo usuário<br>
                         Código: ".$carteira->codigo." <br>
                         Valor: ".$request->input('recarga')." <br>
                         Câmbio: ".$cambio_atual." <br>

@@ -76,6 +76,7 @@ Route::get('user/{id}/convites', 'UserController@convites');
 Route::post('user/conviteUpdate', 'UserController@conviteUpdate');
 
 //Carteira do Usuário
+Route::post('carteira/status', 'CarteiraController@status');
 Route::resource('/carteira/{user}/', 'CarteiraController');
 
 
@@ -213,6 +214,9 @@ Route::get('/storagePublic/{fileName}', 'UploadController@filePublicStorageServe
 ->where(['fileName' => '.*'])->name('storage.gallery.file');
 
 //Câmbio de Moedas
+Route::get('cambio/vet', 'CambioController@vet');
+Route::get('cambio/vetCreate', 'CambioController@vetCreate');
+Route::post('cambio/vetStore', 'CambioController@vetStore');
 Route::resource('cambio', 'CambioController');
 
 

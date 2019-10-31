@@ -14,7 +14,7 @@
                 <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
                 <h5>Dias abertos: <b>{{ number_format($data_aberto, 0) }}</b></h5>
               </div>
-        </div>	
+            </div>	
 
 			 	<div class="form-group col-md-4">
 				    <label for="status">Status</label>
@@ -34,14 +34,15 @@
 				    
 			 	</div>
 
+                <!--
 			 	<div class="form-group col-md-4">					
 				    <label for="rotulo">Rótulo (Criticidade)</label>
-							<!--
+							
                             0   =>  "Crítico - Emergência (resolver imediatamente)",
                             1   =>  "Alto - Urgência (resolver o mais rápido possível)",
                             2   =>  "Médio - Intermediária (avaliar situação)",
                             3   =>  "Baixo - Rotineiro ou Planejado",
-                            -->
+                            
                             @switch($ticket->rotulo)
                                 @case(0)
                                     <span class="btn btn-flat btn-danger btn-md col-md-12">Crítico - Emergência (resolver imediatamente)</span>
@@ -58,7 +59,7 @@
 
                             @endswitch
 			 	</div>			 	
-
+                -->
 
 			 	<div class="form-group col-md-4">
 				    <label for="categoria_id">Categoria</label>

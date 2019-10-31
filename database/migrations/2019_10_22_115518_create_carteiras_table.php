@@ -21,8 +21,6 @@ class CreateCarteirasTable extends Migration
             $table->mediumText('descricao');
             //Valor da Transação
             $table->double('valor', 15, 8);
-            //Saldo Atualizado
-            $table->double('saldo', 15, 8);
             //Dolar no momento da Transacao
             $table->double('dolar', 15, 8);
             //VET no momento da transacao

@@ -37,7 +37,7 @@
                     <th>Email</th>
                     <th>CPF</th>
                     <th>Status</th>
-                    <th>Carteira</th>
+                    <th style="font-size: 8px;">Carteira</th>
                     <th>Convites</th>
                     <th>Login<br> (Max 15)</th>
                     <th>Desativar <br>Ativar</th>
@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         <a href="{{url('carteira/'.$user->id)}}">
-                            <span class="label label-success">----</span>
+                            <i class="fa fa-wallet text-green"></i>
                         </a>
                     </td>
                     <td>

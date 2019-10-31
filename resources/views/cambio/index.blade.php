@@ -2,7 +2,10 @@
     @extends('layouts.app')
     @section('title', 'Carteira')
     @section('content')    
-    <h1>Câmbio</h1>   
+    <h1>Câmbio
+    <a class="btn btn-primary" style="float: right;" href="{{url('cambio/vet')}}">Ver VETs <i class="fa fa-eye"></i> </a>  
+
+    </h1>  
 
         <div class="col-md-12">           
                  
@@ -14,8 +17,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text" style="padding-bottom: 9px;">Cotação do Dólar:</span>
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">R$ {{$cambio_atual}}</label>
-                        <label class="btn btn-lg btn-default"><b>Arredondado:</b> @moneyBRL($cambio_atual)</label>
+                        <label class="btn btn-lg btn-default">R$ {{$cambio_atual}} (@moneyBRL($cambio_atual))</label>
                         
                         
                     </span>
@@ -24,7 +26,7 @@
               </div>
               <!-- /.info-box -->
             </div>     
-            <!-- /.col -->  
+            <!-- /.col --> 
 
             <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="info-box">
@@ -34,10 +36,13 @@
                     <span class="info-box-text" style="padding-bottom: 9px;">VET (Valor Efetivo Total):</span>
 
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">@moneyBRL($vets)</label>
+                        <span class="btn btn-lg btn-default">@moneyBRL($cambio_atual*$vets) <i class="fa fa-edit"></i>
+                        </span>
                     </span>
+                    
                 </div>
                 <!-- /.info-box-content -->
+
               </div>
               <!-- /.info-box -->
             </div>     

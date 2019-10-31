@@ -16,6 +16,10 @@
                 <h5>Número de Protocolo: <b>{{$ticket->protocolo}}</b></h5>
                 <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
                 <h5>Dias abertos: <b>{{ number_format($data_aberto, 0) }}</b></h5>
+                Carteira do Usuário: 
+                        <a href="{{url('carteira/'.$ticket->users->id)}}">
+                            <i class="fa fa-wallet text-white" style="font-size: 28px;"></i>
+                        </a>
               </div>
         </div>	
 

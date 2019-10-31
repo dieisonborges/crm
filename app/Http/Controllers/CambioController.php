@@ -55,13 +55,12 @@ class CambioController extends Controller
             }
 
             //Valor Efetivo Total
-            $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
-            if((isset($vets))){
-                $vets = $vets->valor;
+            $vet_atual = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vet_atual))){
+                $vet_atual = $vet_atual->valor;
             }else{
-                $vets = 9999999;
+                $vet_atual = 9999999;
             }
-
 
             //LOG --------------------------------------------------------------------
             $this->log("cambio.index");
@@ -70,9 +69,120 @@ class CambioController extends Controller
             return view('cambio.index', array(
                 'cambios' => $cambios,
                 'cambio_atual' => $cambio_atual,
-                'vets' => $vets,
+                'vets' => $vet_atual,
                 'buscar' => null
             ));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function vet()
+    {
+        //
+
+        if(!(Gate::denies('read_cambio'))){
+            
+
+            //Taxa de Cambio
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            if((isset($cambio_atual))){
+                $cambio_atual = $cambio_atual->valor;
+            }else{
+                $cambio_atual = 9999999;
+            }
+
+            //Valor Efetivo Total
+            $vets = DB::table('vets')->orderBy('id', 'DESC')->paginate(40);
+            $vet_atual = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vet_atual))){
+                $vet_atual = $vet_atual->valor;
+            }else{
+                $vet_atual = 9999999;
+            }
+
+            //LOG --------------------------------------------------------------------
+            $this->log("cambio.index");
+            //------------------------------------------------------------------------
+
+            return view('cambio.vet', array(
+                'cambio_atual' => $cambio_atual,
+                'vets' => $vets,
+                'vet_atual' => $vet_atual,
+                'buscar' => null
+            ));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function vetCreate()
+    {
+        //
+
+        if(!(Gate::denies('update_cambio'))){
+            
+
+            //Taxa de Cambio
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            if((isset($cambio_atual))){
+                $cambio_atual = $cambio_atual->valor;
+            }else{
+                $cambio_atual = 9999999;
+            }
+
+            //Valor Efetivo Total
+            $vet_atual = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vet_atual))){
+                $vet_atual = $vet_atual->valor;
+            }else{
+                $vet_atual = 9999999;
+            }
+
+            //LOG --------------------------------------------------------------------
+            $this->log("cambio.vet.create");
+            //------------------------------------------------------------------------
+
+            return view('cambio.vet_create', array(
+                'cambio_atual' => $cambio_atual,
+                'vet_atual' => $vet_atual,
+                'buscar' => null
+            ));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function vetStore(Request $request)
+    {
+        //
+        if(!(Gate::denies('update_cambio'))){            
+
+            //Validação
+            $this->validate($request,[
+                    'vet' => 'required|numeric'
+            ]);
+
+            //LOG --------------------------------------------------------------------
+            $this->log("cambio.vet.store");
+            //------------------------------------------------------------------------
+
+            $storeVets = DB::table('vets')->insert([
+                'valor' => $request->input('vet'), 
+                'descricao' => $request->input('descricao'),
+                'created_at' => date('Y/m/d H:i:s'),
+                'updated_at' => date('Y/m/d H:i:s')
+            ]);
+
+            if($storeVets){
+                return redirect('cambio/vet')->with('success', 'VET cadastrado com sucesso!');
+            }else{
+                return redirect('cambio/vetCreate')->with('danger', 'Houve um problema, tente novamente.');
+            }
+
         }
         else{
             return redirect('erro')->with('permission_error', '403');

@@ -51,7 +51,7 @@
                     <span class="info-box-text" style="padding-bottom: 9px;">VET (Valor Efetivo Total):</span>
 
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">@moneyBRL($vets)</label>
+                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_atual*$vets)</label>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -75,34 +75,51 @@
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
+                    <th>Código</th>
                     <th>Data</th>
                     <th>Tipo</th>
                     <th>Descrição</th>
                     <th>Valor</th>
-                    <th>Saldo</th>
                     <th>Status</th>
                     <th>Ticket</th>
                 </tr>
                 @forelse ($carteiras as $carteira)
                     <tr>
-                        <td>#{{$carteira->id}}</td>
+                        <td>{{$carteira->id}}</td>
+                        <td>#{{$carteira->codigo}}</td>
                         <td>@datetimeBRL($carteira->created_at)</td>
                         <td>
                         @if (($carteira->valor)<0)                       
                             <i class="fa fa-arrow-down" style="color: #ca6048;"></i>
-                             - Saída
+                             Débito
                         @elseif (($carteira->valor)>0)  
                             <i class="fa fa-arrow-up" style="color: #32CD32;"></i>
-                             - Entrada
+                             Crédito
                         @else
                             <i class="fa fa-circle" style="color: #87CEEB;"></i> - Info
                         @endif
                         </td>
                         <td>{{$carteira->descricao}}</td>
                         <td>@moneyBRL($carteira->valor)</td>
-                        <td>{{$carteira->saldo}}</td>
-                        <td>{{$carteira->status}}</td>
-                        <td>--</td>  
+                        <td>                            
+                            @if (($carteira->status)==3)                       
+                                <i class="fa fa-thumbs-up text-green"></i>
+                                Recebido
+                            @else
+                                <i class="fa fa-thumbs-down text-red"></i>
+                                Não Recebido <b>#{{$carteira->status}}</b>
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($carteira->tickets()->first()->id))
+                                <a href="{{url('clients/'.$carteira->tickets()->first()->id)}}"> {{$carteira->tickets()->first()->protocolo}}
+                                </a>
+                            @else
+                                Nenhum Ticket
+                            @endif
+
+
+                        </td>  
                     </tr>
                 
                                

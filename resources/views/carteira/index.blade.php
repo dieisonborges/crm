@@ -66,33 +66,110 @@
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
+                    <th>Código</th>
                     <th>Data</th>
                     <th>Tipo</th>
                     <th>Descrição</th>
                     <th>Valor</th>
-                    <th>Saldo</th>
+                    <!--<th>Saldo</th>-->
                     <th>Status</th>
                     <th>Ticket</th>
+                    <th colspan="2">Operação</th>
                 </tr>
                 @forelse ($carteiras as $carteira)
                     <tr>
-                        <td>#{{$carteira->id}}</td>
+                        <td>{{$carteira->id}}</td>
+                        <td>#{{$carteira->codigo}}</td>
+                        <td>@datetimeBRL($carteira->created_at)</td>
                         <td>
                         @if (($carteira->valor)<0)                       
                             <i class="fa fa-arrow-down" style="color: #ca6048;"></i>
-                             - Saída
+                             Crédito
                         @elseif (($carteira->valor)>0)  
                             <i class="fa fa-arrow-up" style="color: #32CD32;"></i>
-                             - Entrada
+                             Débito
                         @else
                             <i class="fa fa-circle" style="color: #87CEEB;"></i> - Info
                         @endif
                         </td>
                         <td>{{$carteira->descricao}}</td>
                         <td>@moneyBRL($carteira->valor)</td>
-                        <td>{{$carteira->saldo}}</td>
-                        <td>{{$carteira->status}}</td>
-                        <td>--</td>  
+                        <!--<td>@moneyBRL($carteira->saldo)</td>-->
+                        <td>                            
+                            @if (($carteira->status)==3)                       
+                                <i class="fa fa-thumbs-up text-green"></i>
+                                Recebido
+                            @else
+                                <i class="fa fa-thumbs-down text-red"></i>
+                                Não Recebido <b>#{{$carteira->status}}</b>
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($carteira->tickets()->first()->id))
+                                <a href="{{url('atendimentos/financeiro/'.$carteira->tickets()->first()->id.'/show')}}"> {{$carteira->tickets()->first()->protocolo}}
+                                </a>
+                            @else
+                                Nenhum Ticket
+                            @endif
+                        </td> 
+
+                        <td>
+
+                            <form method="POST" action="{{action('CarteiraController@status')}}" id="formRecebido{{$carteira->id}}">
+                                @csrf
+
+                                <input type="hidden" name="id" value="{{$carteira->id}}">
+
+                                <input type="hidden" name="user_id" value="{{$user->id}}">
+
+                                <input type="hidden" name="status" value="3">                            
+
+                                <a href="javascript:confirmRecebido{{$carteira->id}}();" class="btn btn-primary btn-sm"> <i class="fa fa-check"></i></a>
+                            </form> 
+
+                            <script>
+                               function confirmRecebido{{$carteira->id}}() {
+
+                                var result = confirm('Tem certeza que deseja confirmar o recebimento do valor?');
+
+                                if (result) {
+                                        document.getElementById("formRecebido{{$carteira->id}}").submit();
+                                    } else {
+                                        return false;
+                                    }
+                                } 
+                            </script>
+
+                        </td>  
+
+                        <td>
+
+                            <form method="POST" action="{{action('CarteiraController@status')}}" id="formCancelado{{$carteira->id}}">
+                                @csrf
+
+                                <input type="hidden" name="id" value="{{$carteira->id}}">
+
+                                <input type="hidden" name="user_id" value="{{$user->id}}">
+
+                                <input type="hidden" name="status" value="7">                            
+
+                                <a href="javascript:confirmCancelado{{$carteira->id}}();" class="btn btn-danger btn-sm"> <i class="fa fa-times"></i></a>
+                            </form> 
+
+                            <script>
+                               function confirmCancelado{{$carteira->id}}() {
+
+                                var result = confirm('Tem certeza que deseja CANCELAR o recebimento do valor?');
+
+                                if (result) {
+                                        document.getElementById("formCancelado{{$carteira->id}}").submit();
+                                    } else {
+                                        return false;
+                                    }
+                                } 
+                            </script>
+
+                        </td>
                     </tr>
                 
                                
