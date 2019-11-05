@@ -131,9 +131,9 @@ class FranquiaController extends Controller
         if(!(Gate::denies('read_franquia'))){
             $franquias = Franquia::paginate(40);  
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG ----------------------------------------------------------------
             $this->log("franquia.index");
-            //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------
             
 
             return view('franquia.index', array('franquias' => $franquias, 'buscar' => null));

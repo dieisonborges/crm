@@ -274,4 +274,9 @@ Route::get('franqueados/{id}/cupons/{page}/', 'FranqueadoController@cupons');
 Route::get('franqueados/{id}/categorias/{page}/', 'FranqueadoController@categorias');
 // ----------------------------------------------------
 
+//Armazém das Stores
+Route::get('/armazem/{armazem}/status/{status}/', 'ArmazemController@status');
+Route::get('/armazem/{armazem}/produtos/{page}', 'ArmazemController@produtos');
+Route::resource('/armazems', 'ArmazemController');
+
 

@@ -13,6 +13,7 @@
           @canany([
               'read_cambio',
               'read_user', 
+              'read_armazem', 
               'read_score',
               'read_conquista',
               'read_categoria', 
@@ -44,6 +45,13 @@
                 <li>
                   <a href="{{ url('users/') }}">
                     <i class="fas fa-user text-aqua"></i> <span>Usuários</span>
+                  </a>
+                </li>
+              @endcan
+              @can('read_armazem')
+                <li>
+                  <a href="{{ url('armazems/') }}">
+                    <i class="fas fa-warehouse text-aqua"></i> <span>Armazéns</span>
                   </a>
                 </li>
               @endcan

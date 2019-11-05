@@ -1599,9 +1599,7 @@ public function franquiaCreate($convite_id)
 
                 /* ----------------- FIM Inicia Conexão WC ----------------------- */
 
-                if(!isset($page)){
-                    $page = 1;
-                }             
+                if(!isset($page)){$page = 1;}             
       
                 $categorias = $woocommerce->get('products/categories', array('per_page'=>50, 'page'=>$page));  
 
