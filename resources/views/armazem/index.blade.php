@@ -4,26 +4,6 @@
     @section('content')    
     <h1> <i class="fa fa-warehouse"></i> Armazéns <a href="{{url('armazems/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
     
-
-        <br>
-
-        <div class="col-md-12">	
-
-            <form method="POST" enctype="multipart/form-data" action="{{url('armazems/busca')}}">
-                @csrf
-                <div class="input-group input-group-lg">			
-                    <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
-                        <span class="input-group-btn">
-                          <button type="submit" class="btn btn-info btn-flat">Buscar</button>
-                        </span>
-
-                </div>
-            </form>
-     
-        </div> 
-
-        <br><br><br>
-
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding col-md-12">
             <table class="table table-hover">
@@ -32,6 +12,7 @@
                     <th>Status</th>
                     <th>Nome</th>
                     <th>Localização</th>
+                    <th>Tipo</th>
                     <th>Store Url</th>
                     <th>Produtos</th>
                     <th>Editar</th>
@@ -59,6 +40,18 @@
                     
                     <td>
                         <a href="{{URL::to('armazems')}}/{{$armazem->id}}">{{$armazem->localizacao}}</a>
+                    </td>
+
+                    <td>
+                        @if($armazem->tipo==0)
+                        <span class="btn btn-xs btn-info"> Revenda (Estoque de Terceiros)</span>
+                        @elseif($armazem->tipo==1)
+                        <span class="btn btn-xs btn-info">Fulfillment (Estoque Próprio Internacional)</span>
+                        @elseif($armazem->tipo==2)
+                        <span class="btn btn-xs btn-info">Fulfillment (Estoque Próprio Nacional)</span>
+                        @elseif($armazem->tipo==3)
+                        <span class="btn btn-xs btn-info">Armazém Próprio Nacional</span>
+                        @endif
                     </td>
 
                     <td>

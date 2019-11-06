@@ -47,7 +47,8 @@ class CambioController extends Controller
 
             //Taxa de Cambio
             $cambios = Cambio::orderBy('id', 'DESC')->paginate(40);
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            //Dólar
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
             if((isset($cambio_atual))){
                 $cambio_atual = $cambio_atual->valor;
             }else{
@@ -85,8 +86,8 @@ class CambioController extends Controller
         if(!(Gate::denies('read_cambio'))){
             
 
-            //Taxa de Cambio
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            //Taxa de Cambio - Dolar
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
             if((isset($cambio_atual))){
                 $cambio_atual = $cambio_atual->valor;
             }else{
@@ -126,7 +127,8 @@ class CambioController extends Controller
             
 
             //Taxa de Cambio
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            //Dolar
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
             if((isset($cambio_atual))){
                 $cambio_atual = $cambio_atual->valor;
             }else{

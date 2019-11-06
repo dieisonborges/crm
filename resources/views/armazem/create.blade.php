@@ -4,7 +4,7 @@
 	@section('content')
 			<h1>
 				 <i class="fa fa-warehouse"></i> 
-		        Novo Aramazém
+		        Novo Armazém
 		        <small>Integrado via Woocommerce</small>
 		    </h1>
 			
@@ -14,6 +14,16 @@
 				<div class="form-group mb-12">
 				    <label for="nome">Nome:</label>
 				    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do armazém..." value="{{ old('nome') }}" required>
+			 	</div>
+
+			 	<div class="form-group mb-12">
+				    <label for="tipo">Tipo de Estoque:</label>
+				    <select class="form-control" id="tipo" name="tipo" required>
+				    	<option value="0" selected="selected">Revenda (Estoque de Terceiros)</option>
+            			<option value="1">Fulfillment (Estoque Próprio Internacional)</option>
+            			<option value="2">Fulfillment (Estoque Próprio Nacional)</option>
+            			<option value="3">Armazém Próprio Nacional</option>
+				    </select>
 			 	</div>
 
 			 	<div class="form-group mb-12">

@@ -17,7 +17,7 @@
                         <th colspan="20">@include('layouts/paginatewc')</th>                  
                     </tr>  
                     <tr>
-                        <th>Id</th>             
+                        <th>Id/Ver</th>             
                         <th>Nome</th>
                         <th>SKU</th>
                         <th>Tipo</th>
@@ -27,7 +27,7 @@
                         <th>Preço Regular</th> 
                         <th>Preço de Venda</th>
                         <th>Status</th>
-                        <th>Modificar</th>
+                        <th>Frete Estimado</th>
                     </tr>
                     @forelse ($produtos as $produto)
                     <tr>
@@ -49,10 +49,10 @@
                             @endif
                         </td>
                         <td>{{$produto->stock_quantity}}</td>
-                        <td>{{$produto->weight}}</td>
-                        <td>{{$produto->price}}</td>
-                        <td>{{$produto->regular_price}}</td>
-                        <td>{{$produto->sale_price}}</td>
+                        <td>{{$produto->weight}} g</td>
+                        <td>$ {{$produto->price}}</td>
+                        <td>$ {{$produto->regular_price}}</td>
+                        <td>$ {{$produto->sale_price}}</td>
                         <td>
                             @if($produto->status=='publish')
                                 <span class="btn btn-sm btn-success">Publicado</span>
@@ -63,8 +63,12 @@
                             @else
                                 <span class="btn btn-sm btn-info">{{$produto->status}}</span>
                             @endif
-                        </td>
-                        <td><a href="{{url('franqueados/'.$armazem->id.'/produtoEdit/'.$produto->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></span></a></td>
+                        </td>  
+                        <td>
+                            <a href="{{url('armazem/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-sm btn-info">
+                                <span class="fa fa-truck"></span>
+                            </a>
+                        </td>                      
                         
                     </tr>                
                     @empty

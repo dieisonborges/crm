@@ -17,7 +17,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text" style="padding-bottom: 9px;">Cotação do Dólar:</span>
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">R$ @moneyBRL($cambio_atual) ({{$cambio_atual}})</label>
+                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_atual) ({{$cambio_atual}})</label>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -56,21 +56,23 @@
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
                 <tr>
-                    <th>ID</th>
+                    <th>----</th>
                     <th>Data</th>
+                    <th>Moeda</th>  
+                    <th></th>                  
                     <th>Valor Arredondado</th>
                     <th>Valor</th>
-                    <th>Descrição</th>
-                    <th>Moeda</th>
+                    <th>Descrição</th>                    
                 </tr>
                 @forelse ($cambios as $cambio)
                     <tr>
-                        <td>{{$cambio->id}}</td>
+                        <td>#{{$cambio->id}}</td>
                         <td>@datetimeBRL($cambio->created_at)</td>
-                        <td>@moneyBRL($cambio->valor)</td>
+                        <td>1.00 {{$cambio->moeda}}</td>    
+                        <td>=</td>                     
+                        <td>{{number_format($cambio->valor,2)}} BRL</td>
                         <td>R$ {{$cambio->valor}}</td>
-                        <td>{{$cambio->descricao}}</td>
-                        <td>{{$cambio->moeda}}</td>  
+                        <td>{{$cambio->descricao}}</td>                         
                     </tr>
                 
                                

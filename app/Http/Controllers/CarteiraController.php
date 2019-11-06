@@ -65,7 +65,8 @@ class CarteiraController extends Controller
             }
 
             //Taxa de Cambio
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
+            //Dolar
+            $cambio_atual = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
             if((isset($cambio_atual))){
                 $cambio_atual = $cambio_atual->valor;
             }else{

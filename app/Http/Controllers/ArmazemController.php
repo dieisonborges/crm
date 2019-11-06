@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Armazem;
+use App\Cambio;
 use Illuminate\Http\Request;
 use Gate; 
 use DB;
@@ -36,6 +37,7 @@ class ArmazemController extends Controller
      */
     public function index()
     { 
+
         if(!(Gate::denies('read_armazem'))){
             $armazems = Armazem::paginate(40);  
 
@@ -274,4 +276,79 @@ class ArmazemController extends Controller
             return view('errors.403');
         }
     }
+
+
+    public function freteEstimado(Armazem $armazem, $produto)
+    {
+        //
+        if(!(Gate::denies('read_armazem'))){ 
+
+            /* ------ Inicia Conexão WC ----- */
+            $woocommerce = new Client(
+                $armazem->store_url, 
+                $armazem->consumer_key, 
+                $armazem->consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+            );
+            /* ------ Fim Conexão WC ----- */
+
+            $produto = $woocommerce->get('products/'.$produto);  
+            
+
+            //LOG --------------------------------------------------------
+            $this->log("armazem.produtos");
+            //------------------------------------------------------------  
+
+            $peso = ($produto->weight)*1000;
+
+            $pesos = $peso;
+
+            // Peso máximo e-packet
+            // 4kg
+            while($pesos<4000){
+
+            
+                $url = file_get_contents('https://www.chinapostaltracking.com/service/rate/?weight='.$pesos.'&country=BR#result');
+
+                if ( preg_match ( '/<table class="table result-list">(.*?)<\/table>/s', $url, $matches ) )
+                    {
+                        foreach ( $matches as $key => $match )
+                        {
+                            $frete[$key] = $match;
+                        }
+                    }
+
+                $frete = explode("<strong>", $frete[0]);
+                $frete = array_reverse($frete);
+                $frete = explode("</strong>", $frete[0]);
+                $fretes[] = $frete[0];
+
+                $pesos = $pesos + $peso;
+
+            }
+
+            //Taxa de Cambio CNY/RMB
+            // A API do frete está em CNY/RMB
+            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
+            if((isset($cambio_cny))){
+                $cambio_cny = $cambio_cny->valor;
+            }else{
+                $cambio_cny = 9999999;
+            }           
+
+            return view('armazem.frete', array(
+                            'fretes'     =>  $fretes,
+                            'armazem'   =>  $armazem, 
+                            'produto'   =>  $produto, 
+                            'cambio_cny'          =>  $cambio_cny,                       
+                            ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+    
 }

@@ -18,6 +18,25 @@
 			 	</div>
 
 			 	<div class="form-group mb-12">
+				    <label for="tipo">Tipo de Estoque:</label>
+				    <select class="form-control" id="tipo" name="tipo" required>
+				    	@if($armazem->tipo==0)
+				    	<option value="0" selected="selected">Revenda (Estoque de Terceiros)</option>
+				    	@elseif($armazem->tipo==1)
+            			<option value="1" selected="selected">Fulfillment (Estoque Próprio Internacional)</option>
+            			@elseif($armazem->tipo==2)
+            			<option value="2" selected="selected">Fulfillment (Estoque Próprio Nacional)</option>
+            			@elseif($armazem->tipo==3)
+            			<option value="3" selected="selected">Armazém Próprio Nacional</option>
+				    	@endif
+				    	<option value="0">Revenda (Estoque de Terceiros)</option>
+            			<option value="1">Fulfillment (Estoque Próprio Internacional)</option>
+            			<option value="2">Fulfillment (Estoque Próprio Nacional)</option>
+            			<option value="3">Armazém Próprio Nacional</option>
+				    </select>
+			 	</div>
+
+			 	<div class="form-group mb-12">
 				    <label for="localizacao">Localização:</label>
 				    <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="Digite a localização..." value="{{$armazem->localizacao}}" required>
 			 	</div>

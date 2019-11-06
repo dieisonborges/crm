@@ -18,6 +18,7 @@ class AddTipoToArmazemsTable extends Migration
             // 0 - Revenda (Estoque de Terceiros)
             // 1 - Fulfillment (Estoque Próprio Internacional)
             // 2 - Fulfillment (Estoque Próprio Nacional)
+            // 3 - Armazém Próprio Nacional
             $table->integer('tipo')->nullable()->default(0);
         });
     }

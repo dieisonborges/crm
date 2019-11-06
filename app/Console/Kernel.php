@@ -50,48 +50,6 @@ class Kernel extends ConsoleKernel
             // Decode JSON response:
             $exchangeRates = json_decode($json, true);
 
-            // Access the exchange rate values, e.g. GBP:
-            //echo $exchangeRates['rates']['USD'];
-
-            //For USD -----------------------------------------------------------------
-            $usd = (($exchangeRates['rates']['BRL'] - $exchangeRates['rates']['USD'] ) * 1.2059);
-
-            if($usd){
-                DB::table('cambios')->insert([
-                'moeda' => 'USD',
-                'valor' => $usd,
-                'created_at' => date("Y:m:d H:i:s"),
-                'updated_at' => date("Y:m:d H:i:s"),
-                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
-            }
-
-            //For RMB -------------------------------------------------------------
-            $rmb = (($exchangeRates['rates']['BRL'] - $exchangeRates['rates']['RMB'] ) * 1.2059);
-
-            if($rmb){
-                DB::table('cambios')->insert([
-                'moeda' => 'RMB',
-                'valor' => $rmb,
-                'created_at' => date("Y:m:d H:i:s"),
-                'updated_at' => date("Y:m:d H:i:s"),
-                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
-                ]);
-            }
-
-            //For EUR -------------------------------------------------------------
-            $eur = $exchangeRates['rates']['EUR'];
-
-            if($eur){
-                DB::table('cambios')->insert([
-                'moeda' => 'EUR',
-                'valor' => $eur,
-                'created_at' => date("Y:m:d H:i:s"),
-                'updated_at' => date("Y:m:d H:i:s"),
-                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
-                ]);
-            }
-
-
             //Logs ---------------------------------------
             DB::table('logs')->insert([
                 'ip' => '127.0.0.1',
@@ -102,11 +60,69 @@ class Kernel extends ConsoleKernel
                 ]);
             //End Logs -----------------------------------
 
-            
-            
-        })->hourly();
+            // Access the exchange rate values, e.g. GBP:
+            //echo $exchangeRates['rates']['USD'];
 
-        //})->everyMinute();  
+            //For USD -----------------------------------------------------------------
+            $usd = (($exchangeRates['rates']['BRL']) / ($exchangeRates['rates']['USD'] ));
+            
+
+            if($usd){
+                DB::table('cambios')
+                ->insert([
+                'moeda' => 'USD',
+                'valor' => $usd,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao'  => 
+                    "EUR: ".$exchangeRates['rates']['EUR']
+                ." | BRL: ".$exchangeRates['rates']['BRL']
+                ." | USD: ".$exchangeRates['rates']['USD']
+                ." | CNY/RMB: ".$exchangeRates['rates']['CNY'],
+                ]);
+            }
+
+            //For RMB/CNY -------------------------------------------------------------
+            $rmb = (($exchangeRates['rates']['BRL']) / ($exchangeRates['rates']['CNY'] ));
+            
+
+            if($rmb){
+                DB::table('cambios')->insert([
+                'moeda' => 'CNY',
+                'valor' => $rmb,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao'  => 
+                    "EUR: ".$exchangeRates['rates']['EUR']
+                ." | BRL: ".$exchangeRates['rates']['BRL']
+                ." | USD: ".$exchangeRates['rates']['USD']
+                ." | CNY/RMB: ".$exchangeRates['rates']['CNY'],
+                ]);
+            }
+
+            //For EUR -------------------------------------------------------------
+            //Cotação Padrão é em EURO
+            $eur = $exchangeRates['rates']['BRL'];
+
+            if($eur){
+                DB::table('cambios')->insert([
+                'moeda' => 'EUR',
+                'valor' => $eur,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao'  => 
+                    "EUR: ".$exchangeRates['rates']['EUR']
+                ." | BRL: ".$exchangeRates['rates']['BRL']
+                ." | USD: ".$exchangeRates['rates']['USD']
+                ." | CNY/RMB: ".$exchangeRates['rates']['CNY'],
+                ]);
+            }            
+
+            
+            
+        //})->hourly();
+
+        })->everyMinute();  
         //FIM - Atualiza a Cotação do Dolár ----------------------------------------      
         
     }
