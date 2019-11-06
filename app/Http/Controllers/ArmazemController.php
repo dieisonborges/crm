@@ -89,6 +89,7 @@ class ArmazemController extends Controller
             //Validação
             $this->validate($request,[
                     'nome' => 'required',
+                    'tipo' => 'required',
                     'store_url' => 'required',
                     'consumer_key' => 'required',
                     'consumer_secret' => 'required',
@@ -97,6 +98,7 @@ class ArmazemController extends Controller
                     
             $armazem = new Armazem();
             $armazem->nome = $request->input('nome');
+            $armazem->tipo = $request->input('tipo');
             $armazem->localizacao = $request->input('localizacao');
             $armazem->store_url = $request->input('store_url');
             $armazem->consumer_key = $request->input('consumer_key');
@@ -165,6 +167,7 @@ class ArmazemController extends Controller
             //Validação
             $this->validate($request,[
                     'nome' => 'required',
+                    'tipo' => 'required',
                     'store_url' => 'required',
                     'consumer_key' => 'required',
                     'consumer_secret' => 'required',
@@ -172,6 +175,7 @@ class ArmazemController extends Controller
                                 
 
             $armazem->nome = $request->input('nome');
+            $armazem->tipo = $request->input('tipo');
             $armazem->localizacao = $request->input('localizacao');
             $armazem->store_url = $request->input('store_url');
             $armazem->consumer_key = $request->input('consumer_key');

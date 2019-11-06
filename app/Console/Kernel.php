@@ -53,8 +53,43 @@ class Kernel extends ConsoleKernel
             // Access the exchange rate values, e.g. GBP:
             //echo $exchangeRates['rates']['USD'];
 
+            //For USD -----------------------------------------------------------------
             $usd = (($exchangeRates['rates']['BRL'] - $exchangeRates['rates']['USD'] ) * 1.2059);
 
+            if($usd){
+                DB::table('cambios')->insert([
+                'moeda' => 'USD',
+                'valor' => $usd,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
+            }
+
+            //For RMB -------------------------------------------------------------
+            $rmb = (($exchangeRates['rates']['BRL'] - $exchangeRates['rates']['RMB'] ) * 1.2059);
+
+            if($rmb){
+                DB::table('cambios')->insert([
+                'moeda' => 'RMB',
+                'valor' => $rmb,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
+                ]);
+            }
+
+            //For EUR -------------------------------------------------------------
+            $eur = $exchangeRates['rates']['EUR'];
+
+            if($eur){
+                DB::table('cambios')->insert([
+                'moeda' => 'EUR',
+                'valor' => $eur,
+                'created_at' => date("Y:m:d H:i:s"),
+                'updated_at' => date("Y:m:d H:i:s"),
+                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']." | RMB:".$exchangeRates['rates']['RMB']
+                ]);
+            }
 
 
             //Logs ---------------------------------------
@@ -67,15 +102,7 @@ class Kernel extends ConsoleKernel
                 ]);
             //End Logs -----------------------------------
 
-            if($usd){
-                DB::table('cambios')->insert([
-                'moeda' => 'USD',
-                'valor' => $usd,
-                'created_at' => date("Y:m:d H:i:s"),
-                'updated_at' => date("Y:m:d H:i:s"),
-                'descricao' => "EUR: ".$exchangeRates['rates']['EUR']." | BRL: ".$exchangeRates['rates']['BRL']." | USD:".$exchangeRates['rates']['USD']
-                ]);
-            }
+            
             
         })->hourly();
 
