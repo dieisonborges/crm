@@ -17,7 +17,7 @@ class ArmazemController extends Controller
     
     private function log($info){
         //path name
-        $filename="FranquiaController";
+        $filename="ArmazemController";
 
         $log = new LogController;
         $log->store($filename, $info);
@@ -310,8 +310,8 @@ class ArmazemController extends Controller
 
             // Peso máximo e-packet
             // 4kg
-            // Máximo 10 unidades
-            while(($pesos<4000)and($unidades<10)){
+            // Máximo 5 unidades
+            while(($pesos<4000)and($unidades<5)){
 
             
                 $url = file_get_contents('https://www.chinapostaltracking.com/service/rate/?weight='.$pesos.'&country=BR#result');
