@@ -306,9 +306,12 @@ class ArmazemController extends Controller
 
             $pesos = $peso;
 
+            $unidades = 0;
+
             // Peso máximo e-packet
             // 4kg
-            while($pesos<4000){
+            // Máximo 10 unidades
+            while(($pesos<4000)and($unidades<10)){
 
             
                 $url = file_get_contents('https://www.chinapostaltracking.com/service/rate/?weight='.$pesos.'&country=BR#result');
@@ -326,7 +329,11 @@ class ArmazemController extends Controller
                 $frete = explode("</strong>", $frete[0]);
                 $fretes[] = $frete[0];
 
+                //Contador Peso
                 $pesos = $pesos + $peso;
+
+                //Contador de Unidades
+                $$unidades = $unidades++;
 
             }
 
