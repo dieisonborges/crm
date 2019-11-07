@@ -146,14 +146,14 @@ class AssinanteController extends Controller
             return view('errors.403');
         }
     }
-
-
+    
+    /*
     public function freteEstimado(Armazem $armazem, $produto)
     {
         //
         if(!(Gate::denies('read_assinante'))){ 
 
-            /* ------ Inicia Conexão WC ----- */
+            // ------ Inicia Conexão WC ----- 
             $woocommerce = new Client(
                 $armazem->store_url, 
                 $armazem->consumer_key, 
@@ -163,7 +163,7 @@ class AssinanteController extends Controller
                     'version' => 'wc/v3',
                 ]
             );
-            /* ------ Fim Conexão WC ----- */
+            // ------ Fim Conexão WC ----- 
 
             $produto = $woocommerce->get('products/'.$produto);  
             
@@ -221,6 +221,65 @@ class AssinanteController extends Controller
                             'armazem'   =>  $armazem, 
                             'produto'   =>  $produto, 
                             'cambio_cny'          =>  $cambio_cny,                       
+                            ));
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    */
+
+    public function freteEstimado(Armazem $armazem, $produto)
+    {
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+            /* ------ Inicia Conexão WC ----- */
+            $woocommerce = new Client(
+                $armazem->store_url, 
+                $armazem->consumer_key, 
+                $armazem->consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+            );
+            /* ------ Fim Conexão WC ----- */
+
+            $produto = $woocommerce->get('products/'.$produto);  
+            
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.produtos");
+            //------------------------------------------------------------  
+
+            $peso = $produto->weight;
+
+            //Taxa de Cambio CNY/RMB
+            // A API do frete está em CNY/RMB
+            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
+            if((isset($cambio_cny))){
+                $cambio_cny = $cambio_cny->valor;
+            }else{
+                $cambio_cny = 9999999;
+            }  
+
+            //Taxa de Cambio USD
+            // A API do frete está em USD
+            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
+            if((isset($cambio_usd))){
+                $cambio_usd = $cambio_usd->valor;
+            }else{
+                $cambio_usd = 9999999;
+            }          
+
+            return view('assinante.frete', array(
+                            'peso'        =>  $peso,
+                            'armazem'       =>  $armazem, 
+                            'produto'       =>  $produto, 
+                            'cambio_cny'    =>  $cambio_cny,
+                            'cambio_usd'    =>  $cambio_usd,                      
                             ));
         }
         else{

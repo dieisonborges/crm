@@ -24,22 +24,19 @@
                     <table class="table table-hover">
                         <tr>
                             <th>Quantidade</th>
-                            <th>Valor</th>
-                            <th>Moeda</th>
+                            <th>Valor BRL</th>
+                            <th>Valor USD</th>
                                                 
                         </tr>
                         @php $i=1; @endphp
-                        @forelse ($fretes as $frete)
+                        @while($i<=15)
                             <tr>
                                 <td>{{$i}} un</td>
-                                <td>R$ {{number_format(($frete*$cambio_cny),2)}}</td>
-                                <td>BRL</td>                         
-                            </tr>
-                        
-                            @php $i++; @endphp           
-                        @empty
-                            
-                        @endforelse            
+                                <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny),2)}}</td>
+                                </td>                      
+                            </tr>                        
+                            @php $i++; @endphp 
+                        @endwhile           
                         
                     </table>
                 </div>

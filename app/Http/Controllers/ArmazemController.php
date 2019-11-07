@@ -299,43 +299,10 @@ class ArmazemController extends Controller
             
 
             //LOG --------------------------------------------------------
-            $this->log("armazem.produtos");
+            $this->log("armazem.frete.produtos");
             //------------------------------------------------------------  
 
-            $peso = ($produto->weight)*1000;
-
-            $pesos = $peso;
-
-            $unidades = 0;
-
-            // Peso máximo e-packet
-            // 4kg
-            // Máximo 5 unidades
-            while(($pesos<4000)and($unidades<5)){
-
-            
-                $url = file_get_contents('https://www.chinapostaltracking.com/service/rate/?weight='.$pesos.'&country=BR#result');
-
-                if ( preg_match ( '/<table class="table result-list">(.*?)<\/table>/s', $url, $matches ) )
-                    {
-                        foreach ( $matches as $key => $match )
-                        {
-                            $frete[$key] = $match;
-                        }
-                    }
-
-                $frete = explode("<strong>", $frete[0]);
-                $frete = array_reverse($frete);
-                $frete = explode("</strong>", $frete[0]);
-                $fretes[] = $frete[0];
-
-                //Contador Peso
-                $pesos = $pesos + $peso;
-
-                //Contador de Unidades
-                $$unidades = $unidades++;
-
-            }
+            $peso = $produto->weight;
 
             //Taxa de Cambio CNY/RMB
             // A API do frete está em CNY/RMB
@@ -344,13 +311,23 @@ class ArmazemController extends Controller
                 $cambio_cny = $cambio_cny->valor;
             }else{
                 $cambio_cny = 9999999;
-            }           
+            }  
+
+            //Taxa de Cambio USD
+            // A API do frete está em USD
+            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
+            if((isset($cambio_usd))){
+                $cambio_usd = $cambio_usd->valor;
+            }else{
+                $cambio_usd = 9999999;
+            }          
 
             return view('armazem.frete', array(
-                            'fretes'     =>  $fretes,
-                            'armazem'   =>  $armazem, 
-                            'produto'   =>  $produto, 
-                            'cambio_cny'          =>  $cambio_cny,                       
+                            'peso'        =>  $peso,
+                            'armazem'       =>  $armazem, 
+                            'produto'       =>  $produto, 
+                            'cambio_cny'    =>  $cambio_cny,
+                            'cambio_usd'    =>  $cambio_usd,                      
                             ));
         }
         else{
