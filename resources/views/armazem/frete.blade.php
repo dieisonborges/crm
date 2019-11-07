@@ -33,7 +33,7 @@
                             <tr>
                                 <td>{{$i}} un</td>
                                 <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny),2)}}</td>
-                                </td>                      
+                                <td>$ {{number_format(((((80*($peso*$i)+25)*$cambio_cny)/($cambio_usd))),2)}}</td>                       
                             </tr>                        
                             @php $i++; @endphp 
                         @endwhile           
