@@ -34,7 +34,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text" style="padding-bottom: 9px;">Cotação do Dólar:</span>
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_atual)</label>
+                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_usd)</label>
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -51,7 +51,7 @@
                     <span class="info-box-text" style="padding-bottom: 9px;">VET (Valor Efetivo Total):</span>
 
                     <span class="info-box-number">
-                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_atual*$vets)</label>
+                        <label class="btn btn-lg btn-default">@moneyBRL($cambio_usd*$vets)</label>
                     </span>
                 </div>
                 <!-- /.info-box-content -->

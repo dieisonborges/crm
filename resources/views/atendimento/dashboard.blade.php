@@ -239,14 +239,23 @@
                 @endif
               @endforeach
               
-              <!--
-              0   =>  "Crítico - Emergência (resolver imediatamente)",
-              1   =>  "Alto - Urgência (resolver o mais rápido possível)",
-              2   =>  "Médio - Intermediária (avaliar situação)",
-              3   =>  "Baixo - Rotineiro ou Planejado",
-              4   =>  "Nenhum",
-              -->
+              
               <div class="box-tools pull-right">
+
+                @if((floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($ticket->created_at)))) / (60 * 60 * 24)))<2)
+                <span data-toggle="tooltip" title="Crítico" class="badge bg-yellow">
+                <i class="fa fa-star"></i>Novo
+                </span>
+                @endif
+
+                <!--
+                0   =>  "Crítico - Emergência (resolver imediatamente)",
+                1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+                2   =>  "Médio - Intermediária (avaliar situação)",
+                3   =>  "Baixo - Rotineiro ou Planejado",
+                4   =>  "Nenhum",
+                -->
+
                 @switch($ticket->rotulo)
                     @case(0)
                         <span data-toggle="tooltip" title="Crítico" class="badge bg-red">Crítico</span>

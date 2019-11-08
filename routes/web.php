@@ -281,6 +281,8 @@ Route::get('/armazem/{armazem}/produtos/{page}', 'ArmazemController@produtos');
 Route::resource('/armazems', 'ArmazemController');
 
 //Área do Assinante
+Route::get('/assinante/{armazem}/produto/{produto}/encomendaCreate', 'AssinanteController@encomendaCreate');
+Route::post('/assinante/{armazem}/encomendaStore', 'AssinanteController@encomendaStore');
 Route::get('/assinante/{armazem}/produto/{produto}/freteEstimado', 'AssinanteController@freteEstimado');
 Route::get('/assinante/{armazem}/produtos/{page}', 'AssinanteController@produtos');
 Route::get('/assinante/{armazem}/produtosBusca/{page}', 'AssinanteController@produtosBusca');

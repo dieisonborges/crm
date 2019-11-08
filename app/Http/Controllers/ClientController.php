@@ -644,16 +644,18 @@ class ClientController extends Controller
             if((isset($saldo))){
                 $saldo = $saldo->valor;
             }else{
-                $saldo = 0;
+                $saldo = 0; 
             }
 
-            //Taxa de Cambio
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
-            if((isset($cambio_atual))){
-                $cambio_atual = $cambio_atual->valor;
+            
+            //Taxa de Cambio USD
+            // A API do frete está em USD
+            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
+            if((isset($cambio_usd))){
+                $cambio_usd = $cambio_usd->valor;
             }else{
-                $cambio_atual = 9999999;
-            }
+                $cambio_usd = 9999999;
+            } 
 
             //Valor Efetivo Total
             $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
@@ -672,7 +674,7 @@ class ClientController extends Controller
                             'carteiras' => $carteiras, 
                             'user' => $user, 
                             'saldo' => $saldo,
-                            'cambio_atual' => $cambio_atual,
+                            'cambio_usd' => $cambio_usd,
                             'vets' => $vets,
                             'buscar' => null
                             ));
@@ -716,13 +718,14 @@ class ClientController extends Controller
 
             /* ----------- Armazena e Recupera a Recarga  -------- */
 
-            //Taxa de Cambio
-            $cambio_atual = Cambio::orderBy('id', 'DESC')->first();
-            if((isset($cambio_atual))){
-                $cambio_atual = $cambio_atual->valor;
+            //Taxa de Cambio USD
+            // A API do frete está em USD
+            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
+            if((isset($cambio_usd))){
+                $cambio_usd = $cambio_usd->valor;
             }else{
-                $cambio_atual = 9999999;
-            }
+                $cambio_usd = 9999999;
+            } 
 
             //VET
             //Valor Efetivo Total
@@ -733,22 +736,12 @@ class ClientController extends Controller
                 $vet = 9999999;
             }
 
-            /* -------- Saldo da Carteira ---------- */
-            $saldo = $user->carteira()
-                        ->select( DB::raw('sum( carteiras.valor ) as valor') )
-                        ->where('carteiras.status','3')
-                        ->first();  
-
-            if((isset($saldo))){
-                $saldo = $saldo->valor;
-            }else{
-                $saldo = 0;
-            }
+            /* -------- Saldo da Carteira ---------- */            
 
             $carteira = new Carteira();
             $carteira->codigo = $this->carteiraCodigo();
             $carteira->valor = $request->input('recarga');
-            $carteira->dolar = $cambio_atual;
+            $carteira->dolar = $cambio_usd;
             $carteira->vet = $vet;
             $carteira->status = 0;
             $carteira->user_id = $user->id;
@@ -780,12 +773,15 @@ class ClientController extends Controller
                 $ticket->titulo = "Recarga #".$carteira->codigo;
 
                 $ticket->descricao = "
-                        Solicitação de Recarga <br><br>
-                        Gerada pelo usuário<br>
-                        Código: ".$carteira->codigo." <br>
-                        Valor: ".$request->input('recarga')." <br>
-                        Câmbio: ".$cambio_atual." <br>
-                        VET: ".$vet." <br>
+                        <h1>Solicitação de Recarga</h1>
+                        <p><b>Gerado por:</b> ".auth()->user()->name."</p>
+                        <p><b>Código:</b> ".$carteira->codigo."</p>
+                        <p><b>Valor:</b> R$".$request->input('recarga')."</p>
+                        <br><br>
+                        <p>Será debitado automaticamente de sua conta o valor de 3% da plataforma do e-cardume e o valor de R$ 3,90 do boleto</p>
+                        <br>
+                        <p>Solicitação foi gerada com sucesso.</p>
+                        
                 ";                
 
                 //usuário

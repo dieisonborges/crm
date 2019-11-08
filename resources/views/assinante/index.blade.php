@@ -2,6 +2,8 @@
     @extends('layouts.app')
     @section('title', 'Armazens')
     @section('content')    
+
+
     <h1> <i class="fa fa-warehouse"></i> Armazéns </h1>
     
         <!-- /.box-header -->

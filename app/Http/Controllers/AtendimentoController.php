@@ -226,9 +226,9 @@ class AtendimentoController extends Controller
                                 ->orderBy('id', 'DESC')
                                 ->paginate(40);
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG ----------------------------------------------
             $this->log("atendimento.index");
-            //--------------------------------------------------------------------------------------------
+            //--------------------------------------------------
 
             return view('atendimento.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
@@ -1037,6 +1037,7 @@ class AtendimentoController extends Controller
             /* .................... Listagem de Tickets Abertos ................... */
             $tickets = $setor->tickets()                                
                                 ->where('status', 1)
+                                ->orderBy('id', 'DESC')
                                 ->get();
             /* .................... END Tickets Abertos ................... */
 
@@ -1084,9 +1085,9 @@ class AtendimentoController extends Controller
 
             /* ........................ Última Ação do Ticket Aberto .............*/
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG -----------------------------------------------
             $this->log("atendimento.dashboard");
-            //--------------------------------------------------------------------------------------------
+            //---------------------------------------------------
 
 
 

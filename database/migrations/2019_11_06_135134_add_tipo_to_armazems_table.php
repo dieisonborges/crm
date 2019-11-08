@@ -15,10 +15,19 @@ class AddTipoToArmazemsTable extends Migration
     {
         Schema::table('armazems', function (Blueprint $table) {
             //Tipo de Estoque
-            // 0 - Revenda (Estoque de Terceiros)
-            // 1 - Fulfillment (Estoque Próprio Internacional)
-            // 2 - Fulfillment (Estoque Próprio Nacional)
-            // 3 - Armazém Próprio Nacional
+            /*
+            
+            @if($armazem->tipo==0)
+            <option value="0" selected="selected">Revenda (Estoque de Terceiros)</option>
+            @elseif($armazem->tipo==1)
+            <option value="1" selected="selected">Fulfillment (Estoque Próprio Internacional)</option>
+            @elseif($armazem->tipo==2)
+            <option value="2" selected="selected">Fulfillment (Estoque Próprio Nacional)</option>
+            @elseif($armazem->tipo==3)
+            <option value="3" selected="selected">Armazém Próprio Nacional</option>
+            @endif
+            
+            */
             $table->integer('tipo')->nullable()->default(0);
         });
     }

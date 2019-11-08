@@ -64,6 +64,9 @@
 
   <!-- CSS Customizado-->
   <link rel="stylesheet" href="{{ asset('css/customize.css')}}">
+
+  <!-- LightBox Gallery -->
+  <link rel="stylesheet" href="{{ asset('js/lightbox/ekko-lightbox.css')}}">
    
 
 </head>

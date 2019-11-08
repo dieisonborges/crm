@@ -7,7 +7,7 @@
       </span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">
-        <img src="{{ asset('img/logo/logo-ecardume-branca-v2.png') }}" width="125">
+        <img src="{{ asset('img/logo/logo-ecardume-branca-v2-com.png') }}" width="190">        
       </span>    
     </a>
     <!-- Header Navbar: style can be found in header.less -->
@@ -38,7 +38,9 @@
               </li>
 
 
-
+          @canany([
+              'read_atendimento',
+              ])
 
 
           <li class="dropdown notifications-menu">
@@ -89,23 +91,8 @@
               </li>
             </ul>
           </li>                           
-
-              @canany([
-              'read_user', 
-              'read_score',
-              'read_conquista',
-              'read_categoria', 
-              'read_log', 
-              'read_role', 
-              'read_permission', 
-              'read_setor', 
-              'read_ticket',
-              ])
-              <!-- -------------------------- MENU ADM ----------------------------- -->
-              
-              <!-- -------------------------- END MENU ADM ------------------------- -->
-
-              @endcanany
+            
+          @endcanany
 
               <!-- -------------------- END MENU ICON TOP ------------------------- -->
 

@@ -52,6 +52,11 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
 
+<!-- LightBox Gallery -->
+<script src="{{ asset('js/lightbox/ekko-lightbox.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/lightbox/ekko-lightbox.min.js.map')}}" type="text/javascript"></script>
+
+
 <script type="text/javascript">
 
     $(function () {
