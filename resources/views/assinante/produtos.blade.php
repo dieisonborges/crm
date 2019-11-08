@@ -1,28 +1,29 @@
 @can('read_assinante')    
     @extends('layouts.app')
     @section('title', 'Armazens')
-    @section('content')    
-    <div class="col-md-12">
-
-            <h1>
-                <i class="fa fa-warehouse"></i> 
-                <small>Produtos do Armazém:</small>
-                {{str_replace("https://","",$armazem->store_url)}}
-            </h1>   
-
-
-                <form method="GET" enctype="multipart/form-data" action="{{url('/assinante/'.$armazem->id.'/produtosBusca/1')}}">
-                    <div class="input-group input-group-lg">            
-                        <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{ $busca ?? '' }}">
-                            <span class="input-group-btn">
-                              <button type="submit" class="btn btn-info btn-flat">Buscar</button>
-                            </span>
-
-                    </div>
-                </form>
-            <br>
+    @section('content')            
 
             <div class="col-md-12">
+
+                <h1>
+                    <i class="fa fa-warehouse"></i> 
+                    <small>Produtos do Armazém:</small>
+                    {{str_replace("https://","",$armazem->store_url)}}
+                </h1>   
+
+
+                    <form method="GET" enctype="multipart/form-data" action="{{url('/assinante/'.$armazem->id.'/produtosBusca/1')}}">
+                        <div class="input-group input-group-lg">            
+                            <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{ $busca ?? '' }}">
+                                <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-info btn-flat">Buscar</button>
+                                </span>
+
+                        </div>
+                    </form>
+                <br>
+
+                
                 @php $j=1; @endphp
                 @forelse ($produtos as $produto)
 
@@ -176,7 +177,7 @@
             
             
             <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa fa-arrow-left"></i> Voltar</a>
-        </div>
+ 
 
         
 
