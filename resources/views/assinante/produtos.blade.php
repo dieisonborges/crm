@@ -27,6 +27,8 @@
                 @php $j=1; @endphp
                 @forelse ($produtos as $produto)
 
+                
+
                 <div class="col-md-3">
                   <div class="box box-info">
                     <div class="box-header with-border">
@@ -56,7 +58,10 @@
                             Ver na Store
                         </a>                        
 
-                        <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-lg btn-success" target="_blank">
+                        <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success" target="_blank">
+
+                            <i class="fa fa-shopping-cart"></i> Comprar: 
+
                             @if(is_numeric($produto->sale_price))
                                 R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
                             @else 
@@ -65,6 +70,7 @@
                                 echo "R$ ".number_format($price*$cambio_usd, 2);
                                 @endphp
                             @endif
+
                         </a>
 
                         <p><b>SKU:</b>{{$produto->sku}}</p>
@@ -121,12 +127,11 @@
                             <span class="btn btn-xs btn-info">Produto Variável</span>                        
                         @else
                             <span class="btn btn-xs btn-default">{{$produto->type}}</span>
-                        @endif
-
-                        <hr class="col-md-11 hr">                        
+                        @endif               
 
                         
                         @if(($armazem->tipo)==1)
+                            <hr class="col-md-11 hr"> 
                             <p><b>Encomendas:</b>
                             {{$encomenda_quantidade[$produto->id] ?? '0'}}un
                             </p>

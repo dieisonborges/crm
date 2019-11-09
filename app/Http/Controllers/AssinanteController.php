@@ -38,6 +38,26 @@ class AssinanteController extends Controller
         $this->armazem = $armazem;
     }
 
+    private function cambio($moeda)
+    {
+
+        //Moedas Disponíveis
+        //USD
+        //CNY/RMB
+        //EUR
+        //Taxa de Cambio
+        $cambio = Cambio::orderBy('id', 'DESC')->where('moeda',$moeda)->first();
+        if((isset($cambio))){
+            $cambio = $cambio->valor;
+        }else{
+            //Insere valor absurdo caso não exista a moeda
+            $cambio = 9999999;
+        }
+
+        return $cambio;
+        
+    }
+
     private function protocolo()
     {
         
@@ -71,6 +91,45 @@ class AssinanteController extends Controller
         return "TF".date("Y").$protocolo;
     }
 
+    private function vet(){
+        $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vets))){
+                $vets = $vets->valor;
+            }else{
+                $vets = 9999999;
+            }
+        return $vets;
+    }
+
+    private function getEncomendaProdutos($armazem, $produtos){
+        //Verifica as encomendas
+        if(($armazem->tipo)==1){
+            $encomenda_quantidade[] = "";
+            foreach($produtos as $produto){
+
+
+                /* --- Pega Quantidade de Encomendas ----*/
+                $produto_local = Produto::where('store_id',$produto->id)
+                            ->where('armazem_id', $armazem->id)->first();
+
+                if($produto_local){
+
+                    $encomendas = Encomenda::select( DB::raw('sum(quantidade) as quantidade') )
+                    ->where('produto_id', $produto_local->id)
+                    ->first();
+
+                    $encomenda_quantidade[$produto->id] = $encomendas->quantidade;
+                }                   
+
+            }
+        
+        }else{
+            $encomenda_quantidade[] = "";
+        }
+
+        return $encomenda_quantidade;
+    }
+
     
     /**
      * Display a listing of the resource.
@@ -83,21 +142,15 @@ class AssinanteController extends Controller
         if(!(Gate::denies('read_assinante'))){
             $armazems = Armazem::where('status','1')->paginate(40);  
 
-            //LOG --------------------------------------------------------
-            $this->log("assinante.index");
-            //------------------------------------------------------------           
+            $armazem = Armazem::where('status','1')->get()->random();  
 
-            return view('assinante.index', array('armazems' => $armazems));
-        }
-        else{
-            return view('errors.403');
-        }
-    }
+            //Taxa de Cambio CNY/RMB
+            // A API do frete está em CNY/RMB
+            $cambio_cny = $this->cambio('CNY');
 
-    public function produtos(Armazem $armazem, $page)
-    {
-        //
-        if(!(Gate::denies('read_assinante'))){ 
+            //Taxa de Cambio USD
+            // A API do frete está em USD
+            $cambio_usd = $this->cambio('USD');
 
             /* ------ Inicia Conexão WC ----- */
             $woocommerce = new Client(
@@ -109,85 +162,35 @@ class AssinanteController extends Controller
                     'version' => 'wc/v3',
                 ]
             );
-            /* ------ Fim Conexão WC ----- */
+            /* ------ Fim Conexão WC ----- */          
 
-            $produtos = $woocommerce->get('products/', array('per_page'=>50, 'page'=>$page));
+            $data = [
+                'per_page'=>4
+            ];
 
-            //dd($produtos);
+            $produtos = $woocommerce->get('products', $data);
 
-            //Paginacao
-            if(!isset($page)){$page = 1;}  
-            $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
-            $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
-
-            //Taxa de Cambio CNY/RMB
-            // A API do frete está em CNY/RMB
-            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-            if((isset($cambio_cny))){
-                $cambio_cny = $cambio_cny->valor;
-            }else{
-                $cambio_cny = 9999999;
-            }  
-
-            //Taxa de Cambio USD
-            // A API do frete está em USD
-            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
-            if((isset($cambio_usd))){
-                $cambio_usd = $cambio_usd->valor;
-            }else{
-                $cambio_usd = 9999999;
-            }  
-
-
-
-            //Verifica as encomendas
-            if(($armazem->tipo)==1){
-                $encomenda_quantidade[] = "";
-                foreach($produtos as $produto){
-
-
-                    /* --- Pega Quantidade de Encomendas ----*/
-                    $produto_local = Produto::where('store_id',$produto->id)
-                                ->where('armazem_id', $armazem->id)->first();
-
-
-
-                    if($produto_local){
-
-                        $encomendas = Encomenda::select( DB::raw('sum(quantidade) as quantidade') )
-                        ->where('produto_id', $produto_local->id)
-                        ->first();
-
-                        $encomenda_quantidade[$produto->id] = $encomendas->quantidade;
-                    }                   
-
-                }
-            
-            }else{
-                $encomenda_quantidade[] = "";
-            }
-
-
+            $encomenda_quantidade = $this->getEncomendaProdutos($armazem, $produtos);
 
             //LOG --------------------------------------------------------
-            $this->log("assinante.produtos");
+            $this->log("assinante.index");
             //------------------------------------------------------------           
 
-            return view('assinante.produtos', array(
-                            'encomenda_quantidade'=>   $encomenda_quantidade,
-                            'cambio_usd'    => $cambio_usd,
-                            'cambio_cny'    => $cambio_cny,
-                            'armazem'       => $armazem,
-                            'produtos'      => $produtos,
-                            'page'          => $page,
-                            'totalPages'    => $totalPages,
-                            'linkPaginate'  => 'armazem/'.$armazem->id.'/produtos/',
-                            ));
+            return view('assinante.index', array(
+                                        'encomenda_quantidade' => $encomenda_quantidade,
+                                        'armazem_preview'   =>  $armazem,
+                                        'cambio_usd'  => $cambio_usd,
+                                        'cambio_cny'  => $cambio_cny,
+                                        'armazems'  => $armazems,
+                                        'produtos' => $produtos
+                                    ));
         }
         else{
             return view('errors.403');
         }
     }
+
+
 
     public function produtosBusca(Armazem $armazem, $page, Request $request)
     {
@@ -218,21 +221,11 @@ class AssinanteController extends Controller
 
             //Taxa de Cambio CNY/RMB
             // A API do frete está em CNY/RMB
-            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-            if((isset($cambio_cny))){
-                $cambio_cny = $cambio_cny->valor;
-            }else{
-                $cambio_cny = 9999999;
-            }  
+            $cambio_cny = $this->cambio('CNY');
 
             //Taxa de Cambio USD
             // A API do frete está em USD
-            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
-            if((isset($cambio_usd))){
-                $cambio_usd = $cambio_usd->valor;
-            }else{
-                $cambio_usd = 9999999;
-            }  
+            $cambio_usd = $this->cambio('USD');
 
 
             //Paginacao
@@ -240,30 +233,8 @@ class AssinanteController extends Controller
             $woocommerceHeaders = $woocommerce->http->getResponse()->getHeaders();
             $totalPages = $woocommerceHeaders['X-WP-TotalPages']; 
 
-            //Verifica as encomendas
-            if(($armazem->tipo)==1){
-                $encomenda_quantidade[] = "";
-                foreach($produtos as $produto){
-
-
-                    /* --- Pega Quantidade de Encomendas ----*/
-                    $produto_local = Produto::where('store_id',$produto->id)
-                                ->where('armazem_id', $armazem->id)->first();
-
-                    if($produto_local){
-
-                        $encomendas = Encomenda::select( DB::raw('sum(quantidade) as quantidade') )
-                        ->where('produto_id', $produto_local->id)
-                        ->first();
-
-                        $encomenda_quantidade[$produto->id] = $encomendas->quantidade;
-                    }                   
-
-                }
+            $encomenda_quantidade = $this->getEncomendaProdutos($armazem, $produtos);
             
-            }else{
-                $encomenda_quantidade[] = "";
-            }
 
             //LOG --------------------------------------------------------
             $this->log("assinante.produtos");
@@ -287,90 +258,8 @@ class AssinanteController extends Controller
             return view('errors.403');
         }
     }
+
     
-    /*
-    //Frete Via Site
-    public function freteEstimado(Armazem $armazem, $produto)
-    {
-        //
-        if(!(Gate::denies('read_assinante'))){ 
-
-            // ------ Inicia Conexão WC ----- 
-            $woocommerce = new Client(
-                $armazem->store_url, 
-                $armazem->consumer_key, 
-                $armazem->consumer_secret,
-                [
-                    'wp_api'  => true,
-                    'version' => 'wc/v3',
-                ]
-            );
-            // ------ Fim Conexão WC ----- 
-
-            $produto = $woocommerce->get('products/'.$produto);  
-            
-
-            //LOG --------------------------------------------------------
-            $this->log("assinante.produtos");
-            //------------------------------------------------------------  
-
-            $peso = ($produto->weight)*1000;
-
-            $pesos = $peso;
-
-            $unidades = 0;
-
-            // Peso máximo e-packet
-            // 4kg
-            // Máximo 5 unidades
-            while(($pesos<4000)and($unidades<5)){
-
-            
-                $url = file_get_contents('https://www.chinapostaltracking.com/service/rate/?weight='.$pesos.'&country=BR#result');
-
-                if ( preg_match ( '/<table class="table result-list">(.*?)<\/table>/s', $url, $matches ) )
-                    {
-                        foreach ( $matches as $key => $match )
-                        {
-                            $frete[$key] = $match;
-                        }
-                    }
-
-                $frete = explode("<strong>", $frete[0]);
-                $frete = array_reverse($frete);
-                $frete = explode("</strong>", $frete[0]);
-                $fretes[] = $frete[0];
-
-                //Contador Peso
-                $pesos = $pesos + $peso;
-
-                //Contador de Unidades
-                $$unidades = $unidades++;
-
-            }
-
-            //Taxa de Cambio CNY/RMB
-            // A API do frete está em CNY/RMB
-            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-            if((isset($cambio_cny))){
-                $cambio_cny = $cambio_cny->valor;
-            }else{
-                $cambio_cny = 9999999;
-            }           
-
-            return view('assinante.frete', array(
-                            'fretes'     =>  $fretes,
-                            'armazem'   =>  $armazem, 
-                            'produto'   =>  $produto, 
-                            'cambio_cny'          =>  $cambio_cny,                       
-                            ));
-        }
-        else{
-            return view('errors.403');
-        }
-    }
-
-    */
 
     public function freteEstimado(Armazem $armazem, $produto)
     {
@@ -475,21 +364,11 @@ class AssinanteController extends Controller
 
                 //Taxa de Cambio CNY/RMB
                 // A API do frete está em CNY/RMB
-                $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-                if((isset($cambio_cny))){
-                    $cambio_cny = $cambio_cny->valor;
-                }else{
-                    $cambio_cny = 9999999;
-                }  
+                $cambio_cny = $this->cambio('CNY'); 
 
                 //Taxa de Cambio USD
                 // A API do frete está em USD
-                $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
-                if((isset($cambio_usd))){
-                    $cambio_usd = $cambio_usd->valor;
-                }else{
-                    $cambio_usd = 9999999;
-                }          
+                $cambio_usd = $this->cambio('USD');         
 
                 return view('assinante.encomenda_create', array(
                                 'peso'        =>  $peso,
@@ -524,29 +403,14 @@ class AssinanteController extends Controller
 
             //Taxa de Cambio CNY/RMB
             // A API do frete está em CNY/RMB
-            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-            if((isset($cambio_cny))){
-                $cambio_cny = $cambio_cny->valor;
-            }else{
-                $cambio_cny = 9999999;
-            }  
+            $cambio_cny = $this->cambio('CNY');
 
             //Taxa de Cambio USD
             // A API do frete está em USD
-            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
-            if((isset($cambio_usd))){
-                $cambio_usd = $cambio_usd->valor;
-            }else{
-                $cambio_usd = 9999999;
-            }   
+            $cambio_usd = $this->cambio('USD');
 
             //Valor Efetivo Total
-            $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
-            if((isset($vets))){
-                $vets = $vets->valor;
-            }else{
-                $vets = 9999999;
-            }
+            $vets = $this->vet();
 
             $produto = $request->input('produto');
 
@@ -748,6 +612,78 @@ class AssinanteController extends Controller
             } 
 
         }else{
+            return view('errors.403');
+        }
+    }
+
+    public function vendaCreate(Armazem $armazem, $produto)
+    {
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+
+            /* ------- Verifica Saldo da Carteira ----------- */
+            $user = Auth::user();
+
+            $saldo = $user->carteira()
+                        ->select( DB::raw('sum( carteiras.valor ) as valor') )
+                        ->where('carteiras.status','3')
+                        ->first(); 
+
+            if((isset($saldo))){
+                $saldo = $saldo->valor;
+            }else{
+                $saldo = 0;
+            }
+
+            //Verifica se o Saldo está zerado
+            if($saldo>0){
+
+                /* ------ Inicia Conexão WC ----- */
+                $woocommerce = new Client(
+                    $armazem->store_url, 
+                    $armazem->consumer_key, 
+                    $armazem->consumer_secret,
+                    [
+                        'wp_api'  => true,
+                        'version' => 'wc/v3',
+                    ]
+                );
+                /* ------ Fim Conexão WC ----- */
+
+                $produto = $woocommerce->get('products/'.$produto);  
+                $produto_variacoes = $woocommerce->get('products/'.$produto->id.'/variations');
+
+                //dd($produto_variacoes);
+                
+
+                //LOG --------------------------------------------------------
+                $this->log("assinante.encomenda");
+                //------------------------------------------------------------  
+
+                $peso = $produto->weight;
+
+                //Taxa de Cambio CNY/RMB
+                // A API do frete está em CNY/RMB
+                $cambio_cny = $this->cambio('CNY'); 
+
+                //Taxa de Cambio USD
+                // A API do frete está em USD
+                $cambio_usd = $this->cambio('USD');         
+
+                return view('assinante.venda_create', array(
+                                'peso'        =>  $peso,
+                                'armazem'       =>  $armazem, 
+                                'produto'       =>  $produto, 
+                                'produto_variacoes' => $produto_variacoes,
+                                'cambio_cny'    =>  $cambio_cny,
+                                'cambio_usd'    =>  $cambio_usd,                      
+                                ));
+            }else{
+                return redirect('clients/carteira')->with('danger', 'Você não tem saldo suficiente para executar a operação. Faça uma recarga!');
+            }
+        }
+        else{
             return view('errors.403');
         }
     }
