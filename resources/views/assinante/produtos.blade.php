@@ -58,7 +58,7 @@
                             Ver na Store
                         </a>                        
 
-                        <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success" target="_blank">
+                        <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
 
                             <i class="fa fa-shopping-cart"></i> Comprar: 
 
