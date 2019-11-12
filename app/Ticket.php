@@ -16,6 +16,10 @@ class Ticket extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    public function dono(){        
+        return $this->belongsTo('App\User','user_id');
+    }
+
     public function prontuarioTickets(){        
         return $this->belongsToMany('App\Ticket','prontuario_tickets');
     }

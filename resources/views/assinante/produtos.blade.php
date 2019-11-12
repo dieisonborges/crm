@@ -53,26 +53,30 @@
 
                         <hr class="col-md-11 hr">
 
-                        <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-xs btn-info" target="_blank">
-                            <span class="fa fa-eye"></span>
-                            Ver na Store
-                        </a>                        
+                            @if(($armazem->tipo)==0)
+                                <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
+                                    <i class="fa fa-shopping-cart"></i> Comprar: 
 
-                        <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
+                                    @if(is_numeric($produto->sale_price))
+                                        R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
+                                    @else 
+                                        @php
+                                        $price = (double) $produto->price;
+                                        echo "R$ ".number_format($price*$cambio_usd, 2);
+                                        @endphp
+                                    @endif
+                                </a>
+                            @elseif(($armazem->tipo)==1)
 
-                            <i class="fa fa-shopping-cart"></i> Comprar: 
+                                <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">
+                                    <span class="fa fa-industry"></span>
+                                   Eu quero Encomendar
+                                </a>
 
-                            @if(is_numeric($produto->sale_price))
-                                R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
-                            @else 
-                                @php
-                                $price = (double) $produto->price;
-                                echo "R$ ".number_format($price*$cambio_usd, 2);
-                                @endphp
                             @endif
 
-                        </a>
-
+                        
+                        <p><br></p>
                         <p><b>SKU:</b>{{$produto->sku}}</p>
                         <p><b>Estoque:</b>{{$produto->stock_quantity}}</p>
                         <p><b>Peso:</b>{{$produto->weight}}g</p>
@@ -127,7 +131,12 @@
                             <span class="btn btn-xs btn-info">Produto Variável</span>                        
                         @else
                             <span class="btn btn-xs btn-default">{{$produto->type}}</span>
-                        @endif               
+                        @endif   
+
+                        <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-xs btn-info" target="_blank">
+                            <span class="fa fa-eye"></span>
+                            Ver na Store (Loja)
+                        </a>              
 
                         
                         @if(($armazem->tipo)==1)
