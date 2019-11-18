@@ -134,7 +134,7 @@
                     </a>
                 @elseif(($armazem_preview->tipo)==1)
 
-                    <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">
+                    <a href="{{url('assinante/'.$armazem_preview->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">
                         <span class="fa fa-industry"></span>
                        Eu quero Encomendar
                     </a>
@@ -225,7 +225,7 @@
                     @endforeach 
                     (Minimal Order Quantities)
                     </p>
-                    <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-sm btn-primary">
+                    <a href="{{url('assinante/'.$armazem_preview->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-sm btn-primary">
                         <span class="fa fa-industry"></span>
                        Eu quero Encomendar
                     </a>

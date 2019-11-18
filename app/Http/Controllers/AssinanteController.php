@@ -360,21 +360,26 @@ class AssinanteController extends Controller
 
                 $peso = $produto->weight;
 
-                //Taxa de Cambio CNY/RMB
-                // A API do frete está em CNY/RMB
-                $cambio_cny = $this->cambio('CNY'); 
+                if(is_numeric($peso)){
 
-                //Taxa de Cambio USD
-                // A API do frete está em USD
-                $cambio_usd = $this->cambio('USD');         
+                    //Taxa de Cambio CNY/RMB
+                    // A API do frete está em CNY/RMB
+                    $cambio_cny = $this->cambio('CNY'); 
 
-                return view('assinante.encomenda_create', array(
-                                'peso'        =>  $peso,
-                                'armazem'       =>  $armazem, 
-                                'produto'       =>  $produto, 
-                                'cambio_cny'    =>  $cambio_cny,
-                                'cambio_usd'    =>  $cambio_usd,                      
-                                ));
+                    //Taxa de Cambio USD
+                    // A API do frete está em USD
+                    $cambio_usd = $this->cambio('USD');         
+
+                    return view('assinante.encomenda_create', array(
+                                    'peso'        =>  $peso,
+                                    'armazem'       =>  $armazem, 
+                                    'produto'       =>  $produto, 
+                                    'cambio_cny'    =>  $cambio_cny,
+                                    'cambio_usd'    =>  $cambio_usd,                      
+                                    ));
+                }else{
+                    return redirect('assinante')->with('danger', 'O produto não tem informação de peso.');
+                }
             }else{
                 return redirect('clients/carteira')->with('danger', 'Você não tem saldo suficiente para executar a operação. Faça uma recarga!');
             }
