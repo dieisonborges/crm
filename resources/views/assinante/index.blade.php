@@ -117,33 +117,46 @@
                     @php $i++; @endphp
                 @endforeach
 
-                <hr class="col-md-11 hr">
+                <hr class="col-md-11 hr">                
 
-                <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-xs btn-info" target="_blank">
-                    <span class="fa fa-eye"></span>
-                    Ver na Store
-                </a>                        
+                @if(($armazem_preview->tipo)==0)
+                    <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
+                        <i class="fa fa-shopping-cart"></i> Comprar: 
 
-                <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-lg btn-success" target="_blank">
-                    @if(is_numeric($produto->sale_price))
-                        R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
-                    @else 
-                        @php
-                        $price = (double) $produto->price;
-                        echo "R$ ".number_format($price*$cambio_usd, 2);
-                        @endphp
-                    @endif
-                </a>
+                        @if(is_numeric($produto->sale_price))
+                            R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
+                        @else 
+                            @php
+                            $price = (double) $produto->price;
+                            echo "R$ ".number_format($price*$cambio_usd, 2);
+                            @endphp
+                        @endif
+                    </a>
+                @elseif(($armazem_preview->tipo)==1)
+
+                    <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">
+                        <span class="fa fa-industry"></span>
+                       Eu quero Encomendar
+                    </a>
+
+                @endif
 
                 <p><b>SKU:</b>{{$produto->sku}}</p>
                 <p><b>Estoque:</b>{{$produto->stock_quantity}}</p>
-                <p><b>Peso:</b>{{$produto->weight}}g</p>
+                <p>
+                    @if(is_numeric($produto->weight))
+                        <b>Peso:</b>{{$produto->weight}}g
+                    @else
+                        Sem Info de Peso.
+                    @endif
+
+                </p>
                 <p><b>Valor(USD):</b>${{$produto->price}}</p>
                 <p><b>Valor Regular(USD):</b>${{$produto->regular_price}}</p>
                 <p><b>Valor com Desconto(USD):</b>${{$produto->sale_price}}</p>
                 <p>
                     <b>Frete (USD):</b>
-                    @if(isset($produto->weight))
+                    @if(is_numeric($produto->weight))
                     <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                         <span class="fa fa-truck"></span>
                         
@@ -157,7 +170,7 @@
                 </p>
                 <p>
                     <b>Frete (BRL):</b>
-                    @if(isset($produto->weight))
+                    @if(is_numeric($produto->weight))
                     <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                         <span class="fa fa-truck"></span>
                         
@@ -189,7 +202,12 @@
                     <span class="btn btn-xs btn-info">Produto Variável</span>                        
                 @else
                     <span class="btn btn-xs btn-default">{{$produto->type}}</span>
-                @endif                                     
+                @endif     
+
+                <a href="{{$armazem->store_url.'/produto/'.$produto->slug}}" class="btn btn-xs btn-info" target="_blank">
+                    <span class="fa fa-eye"></span>
+                    Ver na Store
+                </a>                                 
 
                 
                 @if(($armazem_preview->tipo)==1)

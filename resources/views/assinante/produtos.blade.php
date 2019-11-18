@@ -79,13 +79,20 @@
                         <p><br></p>
                         <p><b>SKU:</b>{{$produto->sku}}</p>
                         <p><b>Estoque:</b>{{$produto->stock_quantity}}</p>
-                        <p><b>Peso:</b>{{$produto->weight}}g</p>
+                        <p>
+                            @if(is_numeric($produto->weight))
+                                <b>Peso:</b>{{$produto->weight}}g
+                            @else
+                                Sem Info de Peso.
+                            @endif
+
+                        </p>
                         <p><b>Valor(USD):</b>${{$produto->price}}</p>
                         <p><b>Valor Regular(USD):</b>${{$produto->regular_price}}</p>
                         <p><b>Valor com Desconto(USD):</b>${{$produto->sale_price}}</p>
                         <p>
                             <b>Frete (USD):</b>
-                            @if(isset($produto->weight))
+                            @if(is_numeric($produto->weight))
                             <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                                 <span class="fa fa-truck"></span>
                                 
@@ -99,7 +106,7 @@
                         </p>
                         <p>
                             <b>Frete (BRL):</b>
-                            @if(isset($produto->weight))
+                            @if(is_numeric($produto->weight))
                             <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                                 <span class="fa fa-truck"></span>
                                 

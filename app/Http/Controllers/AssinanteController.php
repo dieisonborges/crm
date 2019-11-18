@@ -240,8 +240,6 @@ class AssinanteController extends Controller
             $this->log("assinante.produtos");
             //------------------------------------------------------------  
 
-                   
-
             return view('assinante.produtos', array(
                             'encomenda_quantidade'=>   $encomenda_quantidade,
                             'cambio_usd'    => $cambio_usd,
