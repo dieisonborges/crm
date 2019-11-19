@@ -13,7 +13,7 @@
         <div class="col-md-9"> 
             <div class="col-md-12">  
 
-                <form method="POST" enctype="multipart/form-data" action="{{action('AssinanteController@encomendaStore',$armazem->id)}}">
+                <form method="POST" enctype="multipart/form-data" action="{{action('AssinanteController@vendaStore',$armazem->id)}}">
                     @csrf
 
                     <input type="hidden" name="produto" value="{{$produto->id}}">

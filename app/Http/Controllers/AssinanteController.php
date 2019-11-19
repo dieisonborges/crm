@@ -12,6 +12,7 @@ use App\Ticket;
 use App\Setor;
 use App\Carteira;
 use App\Encomenda;
+use App\Venda;
 
 use Gate;
 use DB;
@@ -92,13 +93,13 @@ class AssinanteController extends Controller
     }
 
     private function vet(){
-        $vets = DB::table('vets')->orderBy('id', 'DESC')->first();
-            if((isset($vets))){
-                $vets = $vets->valor;
+        $vet = DB::table('vets')->orderBy('id', 'DESC')->first();
+            if((isset($vet))){
+                $vet = $vet->valor;
             }else{
-                $vets = 9999999;
+                $vet = 9999999;
             }
-        return $vets;
+        return $vet;
     }
 
     private function getEncomendaProdutos($armazem, $produtos){
@@ -287,28 +288,22 @@ class AssinanteController extends Controller
 
             //Taxa de Cambio CNY/RMB
             // A API do frete está em CNY/RMB
-            $cambio_cny = Cambio::orderBy('id', 'DESC')->where('moeda','CNY')->first();
-            if((isset($cambio_cny))){
-                $cambio_cny = $cambio_cny->valor;
-            }else{
-                $cambio_cny = 9999999;
-            }  
+            $cambio_cny = $this->cambio('CNY'); 
 
             //Taxa de Cambio USD
             // A API do frete está em USD
-            $cambio_usd = Cambio::orderBy('id', 'DESC')->where('moeda','USD')->first();
-            if((isset($cambio_usd))){
-                $cambio_usd = $cambio_usd->valor;
-            }else{
-                $cambio_usd = 9999999;
-            }          
+            $cambio_usd = $this->cambio('USD');    
+
+            //Valor Efetivo Total
+            $vet = $this->vet();      
 
             return view('assinante.frete', array(
-                            'peso'        =>  $peso,
+                            'peso'          =>  $peso,
                             'armazem'       =>  $armazem, 
                             'produto'       =>  $produto, 
                             'cambio_cny'    =>  $cambio_cny,
-                            'cambio_usd'    =>  $cambio_usd,                      
+                            'cambio_usd'    =>  $cambio_usd,  
+                            'vet'           =>  $vet,                    
                             ));
         }
         else{
@@ -413,7 +408,7 @@ class AssinanteController extends Controller
             $cambio_usd = $this->cambio('USD');
 
             //Valor Efetivo Total
-            $vets = $this->vet();
+            $vet = $this->vet();
 
             $produto = $request->input('produto');
 
@@ -454,7 +449,7 @@ class AssinanteController extends Controller
                     $valor_produto = number_format($price*$cambio_usd, 2);                   
                 }
 
-                $valor_total_produto = $valor_produto*$quantidade;
+                $valor_produto_qtd = $valor_produto*$quantidade;
 
                 $peso = $produto->weight;
 
@@ -474,7 +469,7 @@ class AssinanteController extends Controller
                     $saldo = 0;
                 }
 
-                if($saldo>($valor_frete+$valor_total_produto)){
+                if($saldo>($valor_frete+$valor_produto_qtd)){
 
                     //Verifica se o produto já está cadastrado na base de dados local
                     $produto_local = Produto::where('store_id', $produto->id)
@@ -517,14 +512,14 @@ class AssinanteController extends Controller
                             <h1>Encomenda de Produto</h1>
                             <p><b>Gerado por:</b> ".auth()->user()->name."</p>
                             <p><b>Produto:</b> ".$produto->name."</p>
-                            <p><b>Valor Total:</b> R$".($valor_frete+$valor_total_produto)."</p>
+                            <p><b>Valor Total:</b> R$".($valor_frete+$valor_produto_qtd)."</p>
                             <p><b>Valor Unitário do Produto:</b> R$".$valor_produto."</p>
-                            <p><b>Valor Total do Frete:</b> R$".$valor_frete."</p>
+                            <p><b>Valor Total do Frete:</b> R$".number_format($valor_frete,2)."</p>
                             <p><b>Quantidade Total:</b> ".$quantidade."un</p>
                             <p><b>Quantidade a ser enviado para o comprador:</b>".$quantidade_envio."un</p>
                             <p><b>Valor Total:</b> R$".($valor_frete+$valor_produto)."</p>
                             <p><b>Dólar:</b> R$".$cambio_usd."</p>
-                            <p><b>VET (Valor Efetivo Total):</b> R$".($cambio_usd*$vets)."</p>
+                            <p><b>VET (Valor Efetivo Total):</b> R$".($cambio_usd*$vet)."</p>
                             <br><br>
                             <p>link do produto:</p>
                             <a target='_blank' href='".$armazem->store_url."/".$produto->slug."'>".$produto->name."</a>
@@ -555,9 +550,9 @@ class AssinanteController extends Controller
 
                         $carteira = new Carteira();
                         $carteira->codigo = $this->carteiraCodigo();
-                        $carteira->valor = -(($valor_frete+$valor_total_produto)*$vets);
+                        $carteira->valor = -(($valor_frete+$valor_produto_qtd)*$vet);
                         $carteira->dolar = $cambio_usd;
-                        $carteira->vet = $vets;
+                        $carteira->vet = $vet;
                         $carteira->status = 3;
                         $carteira->user_id = $user->id;
                         $carteira->descricao = "Encomenda de Produto:".$produto->name;
@@ -573,8 +568,8 @@ class AssinanteController extends Controller
                             $encomenda = new Encomenda();
                             $encomenda->quantidade = $quantidade;
                             $encomenda->quantidade_envio = $quantidade_envio;
-                            $encomenda->valor = ($valor_frete+$valor_produto)*$vets;
-                            $encomenda->frete = $valor_frete;
+                            $encomenda->valor = ($valor_frete+$valor_produto)*$vet;
+                            $encomenda->frete = number_format($valor_frete,2);
                             $encomenda->tipo_quantidade = "Un";
                             $encomenda->user_id = $user->id;
                             //Produto Cadastrado Localmente (Extraido do Wordpress)
@@ -661,7 +656,7 @@ class AssinanteController extends Controller
                 
 
                 //LOG --------------------------------------------------------
-                $this->log("assinante.encomenda");
+                $this->log("assinante.venda");
                 //------------------------------------------------------------  
 
                 $peso = $produto->weight;
@@ -686,6 +681,415 @@ class AssinanteController extends Controller
                 return redirect('clients/carteira')->with('danger', 'Você não tem saldo suficiente para executar a operação. Faça uma recarga!');
             }
         }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function vendaStore(Request $request, Armazem $armazem)
+    {       
+        //
+        if(!(Gate::denies('read_assinante'))){            
+
+            //Validação
+            $this->validate($request,[
+                'produto' => 'required|integer',
+                'quantidade' => 'required|integer',                   
+            ]);
+            //Dados do Usuário
+            $user = Auth::user();  
+
+            //Endereço do usuário
+            $endereco = $user->enderecos()->first();
+
+            if($endereco){
+
+                //Taxa de Cambio CNY/RMB
+                // A API do frete está em CNY/RMB
+                $cambio_cny = $this->cambio('CNY');
+
+                //Taxa de Cambio USD
+                // A API do frete está em USD
+                $cambio_usd = $this->cambio('USD');
+
+                //Valor Efetivo Total
+                $vet = $this->vet();
+
+                $produto = $request->input('produto');
+
+                //produto_variacao
+                $produto_variacao = $request->input('produto_variacao');
+
+                $produto_variacao_id = $produto_variacao;
+
+                /* ------------- Busca Produto ---------------- */
+                /* ------ Inicia Conexão WC ----- */
+                $woocommerce = new Client(
+                $armazem->store_url, 
+                $armazem->consumer_key, 
+                $armazem->consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+                );
+                /* ------ Fim Conexão WC ----- */
+
+                //$envio = $woocommerce->get('shipping_methods');
+
+                //dd($envio);
+
+                $produto = $woocommerce->get('products/'.$produto);
+
+                if($produto_variacao){
+                    $produto_variacao = $woocommerce->get('products/'.$produto->id.'/variations/'.$produto_variacao);
+
+                    foreach($produto_variacao->attributes as $produto_variacao_attribute);
+                }               
+
+                $quantidade = $request->input('quantidade');                
+
+                //Verifica Frete
+                if(is_numeric($produto->weight)){
+
+                    //Valor Produto no formato correto
+                    if(is_numeric($produto->sale_price)){
+                        $valor_produto = number_format(($produto->sale_price)*($cambio_usd*$vet),2);
+                    }// is_numeric $produto->sale_price
+                    else{                    
+                        $price = (double) $produto->price;
+                        $valor_produto = number_format($price*($cambio_usd*$vet), 2);                   
+                    }
+
+                    $valor_produto_qtd = $valor_produto*$quantidade;
+
+                    $peso = $produto->weight;
+
+                    //Valor Frete
+                    //Fórmula para frete e-packet
+                    //$valor_frete = ((80*($peso*$quantidade)+25)*$cambio_cny);
+
+                    //Valor do frete em USD
+                    $valor_frete = ((((80*($peso*$quantidade)+25)*$cambio_cny)/($cambio_usd)));
+
+                    //Valor do frete em BRL + VET
+                    $valor_frete = $valor_frete*($cambio_usd*$vet);
+
+
+                    //Verifica Saldo do Client
+                    /* ------- Verifica Saldo da Carteira ----------- */
+                    $saldo = $user->carteira()
+                    ->select( DB::raw('sum( carteiras.valor ) as valor') )
+                    ->where('carteiras.status','3')
+                    ->first(); 
+
+                    if((isset($saldo))){
+                        $saldo = $saldo->valor;
+                    }// $saldo
+                    else{
+                        $saldo = 0;
+                    }
+
+                    if(($saldo)>($valor_frete+($valor_produto_qtd))){
+
+                        //Verifica se o produto já está cadastrado na base de dados local
+                        $produto_local = Produto::where('store_id', $produto->id)
+                        ->where('armazem_id', $armazem->id)
+                        ->first();
+
+
+
+                        //Caso não exista, cria o produto
+                        if(!$produto_local){
+                            $produto_local = new Produto;
+                            $produto_local->store_id = $produto->id; //ID no Woocommerce
+                            $produto_local->produto = json_encode($produto);//Json
+                            $produto_local->armazem_id = $armazem->id;
+                            if($produto_local->save()){
+                                $produto_local = Produto::where('store_id', $produto->id)
+                                                ->where('armazem_id', $armazem->id)
+                                                ->first();
+                            } // No Else
+                        } // No Else
+
+                        /* -------------- Abre Ticket Referente à Venda ----------*/
+                        $ticket = new Ticket();
+
+                        // 1 - Aberto/Ativo
+                        // 0 - Fechado/Encerrado
+                        $ticket->status = 1;
+
+                        // Rotulos de Criticidade
+                        //    0   =>  "Crítico - Emergência (resolver imediatamente)",
+                        //    1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+                        //    2   =>  "Médio - Intermediária (avaliar situação)",
+                        //    3   =>  "Baixo - Rotineiro ou Planejado",
+                        //    4   =>  "Nenhum",
+                        $ticket->rotulo = "3";                
+
+                        $ticket->titulo = "Compra de Produto: ".str_limit($produto->name, 50, '...');
+
+                        $ticket->descricao = "
+                        <h1>Compra de Produto</h1>
+                        <p><b>Comprador:</b> ".auth()->user()->name."</p>
+                        <p><b>Produto:</b> ".$produto->name."</p>
+                        <p><b>Valor Total (Com VET):</b> R$".number_format($valor_frete+$valor_produto_qtd,2)."</p>
+                        <p><b>Valor Total:</b> R$".number_format(($valor_frete+$valor_produto_qtd),2)."</p>
+                        <p><b>Valor Unitário do Produto:</b> R$".number_format($valor_produto,2)."</p>
+                        <p><b>Valor Total do Frete:</b> R$".number_format($valor_frete,2)."</p>
+                        <p><b>Quantidade Total:</b> ".$quantidade."un</p>
+                        <p><b>Dólar:</b> R$".number_format($cambio_usd,2)."</p>
+                        <p><b>VET (Valor Efetivo Total):</b> R$".number_format(($cambio_usd*$vet),2)."</p>
+                        <br><br>
+                        <p>link do produto:</p>
+                        <a target='_blank' href='".$armazem->store_url."/".$produto->slug."'>".$produto->name."</a>                            
+                        <br>
+                        <p>Compra solicitada com sucesso.</p>
+
+                        ";      
+
+                        if($produto_variacao){
+                            $ticket->descricao .= '<p>'.$produto_variacao_attribute->name.": ".$produto_variacao_attribute->option.'</p>';
+                        }          
+
+                        //usuário
+                        $ticket->user_id = auth()->user()->id;
+
+                        $protocolo = $this->protocolo();
+
+                        //protocolo humano
+                        $ticket->protocolo = $protocolo;
+
+
+                        if($ticket->save()){
+
+                            $ticket = Ticket::where('protocolo', $protocolo)->first();
+
+                            //Vincula Ticket com Setor Atendimento
+                            $setor = Setor::where('name', 'atendimento')->first();
+                            Ticket::find($ticket->id)->setors()->attach($setor);  
+
+                            /* ----------- Gera movimentação na Carteira ----*/
+
+                            $carteira = new Carteira();
+                            $carteira->codigo = $this->carteiraCodigo();
+                            $carteira->valor = -($valor_frete+$valor_produto_qtd);
+                            $carteira->dolar = $cambio_usd;
+                            $carteira->vet = $vet;
+                            $carteira->status = 3;
+                            $carteira->user_id = $user->id;
+                            $carteira->descricao = "Compra de Produto:".$produto->name;
+
+                            /* ----------- FIM Gera movimentação na Carteira ----*/
+
+                            if($carteira->save()){
+                                //Vincula Ticket com Carteira
+                                $carteira = Carteira::where('codigo', $carteira->codigo)->first();
+                                Ticket::find($ticket->id)->carteira()->attach($carteira);
+
+
+                                /* ---------------- Pedido no Wordpress ---------------- */
+
+                                $user_first_name = explode(" ", auth()->user()->name);
+                                $user_first_name = $user_first_name[0];
+                                $user_last_name = str_replace($user_first_name, "", auth()->user()->name);
+
+                                //Com Variacao
+                                if($produto_variacao_id){
+
+                                    $data_order = [
+                                        'status' => 'processing',
+                                        'payment_method' => 'cod',
+                                        'payment_method_title' => 'Créditos e-Cardume',
+                                        'set_paid' => true,
+                                        'currency' => 'BRL',                                    
+                                        'billing' => [
+                                            'first_name' => $user_first_name,
+                                            'last_name' => $user_last_name,
+                                            'address_1' => $endereco->address_1,
+                                            'address_2' => $endereco->address_2,
+                                            'city' => $endereco->city,
+                                            'state' => $endereco->state,
+                                            'postcode' => $endereco->postcode,
+                                            'country' => $endereco->country,
+                                            'email' => auth()->user()->email,
+                                            'phone' => auth()->user()->phone_number,     
+                                        ],
+                                        
+                                        'shipping' => [
+                                            'first_name' => $user_first_name,
+                                            'last_name' => $user_last_name,
+                                            'address_1' => $endereco->address_1,
+                                            'address_2' => $endereco->address_2,
+                                            'city' => $endereco->city,
+                                            'state' => $endereco->state,
+                                            'postcode' => $endereco->postcode,
+                                            'country' => $endereco->country
+                                        ],
+                                        'line_items' => [
+                                            [
+                                                'product_id' => $produto->id,
+                                                'variation_id' => $produto_variacao_id,
+                                                'quantity' => $quantidade,
+                                                'subtotal' => number_format($valor_produto*$quantidade,2),
+                                                'total' => number_format($valor_produto*$quantidade,2),
+                                            ]
+                                            /*,
+                                            [
+                                                'product_id' => 22,
+                                                'variation_id' => 23,
+                                                'quantity' => 1
+                                            ]*/
+                                        ],
+                                        'shipping_lines' => [
+                                            [
+                                                //'method_id' => 'flat_rate',
+                                                //'method_title' => 'Flat Rate',
+                                                //'total' => '2', //$valor_frete
+                                                'method_id' => 'jem_table_rate',
+                                                'method_title' => 'Table Rate',
+                                                'total' => number_format($valor_frete,2),
+                                            ]
+                                            
+                                        ],
+                                        
+                                        'customer_note' => 'CPF: '.auth()->user()->cpf.' VET (R$ '.number_format(($cambio_usd*$vet),2).')',
+                                    ];
+
+                                }else{
+
+                                    $data_order = [
+                                        'status' => 'processing',
+                                        'payment_method' => 'cod',
+                                        'payment_method_title' => 'Créditos e-Cardume',
+                                        'set_paid' => true,
+                                        'currency' => 'BRL',                                    
+                                        'billing' => [
+                                            'first_name' => $user_first_name,
+                                            'last_name' => $user_last_name,
+                                            'address_1' => $endereco->address_1,
+                                            'address_2' => $endereco->address_2,
+                                            'city' => $endereco->city,
+                                            'state' => $endereco->state,
+                                            'postcode' => $endereco->postcode,
+                                            'country' => $endereco->country,
+                                            'email' => auth()->user()->email,
+                                            'phone' => auth()->user()->phone_number,     
+                                        ],
+                                        
+                                        'shipping' => [
+                                            'first_name' => $user_first_name,
+                                            'last_name' => $user_last_name,
+                                            'address_1' => $endereco->address_1,
+                                            'address_2' => $endereco->address_2,
+                                            'city' => $endereco->city,
+                                            'state' => $endereco->state,
+                                            'postcode' => $endereco->postcode,
+                                            'country' => $endereco->country
+                                        ],
+                                        'line_items' => [
+                                            [
+                                                'product_id' => $produto->id,
+                                                'quantity' => $quantidade,
+                                                'subtotal' => number_format($valor_produto*$quantidade,2),
+                                                'total' => number_format($valor_produto*$quantidade,2),
+                                            ]
+                                            /*,
+                                            [
+                                                'product_id' => 22,
+                                                'variation_id' => 23,
+                                                'quantity' => 1
+                                            ]*/
+                                        ],
+                                        'shipping_lines' => [
+                                            [
+                                                //'method_id' => 'flat_rate',
+                                                //'method_title' => 'Flat Rate',
+                                                //'total' => '2', //$valor_frete
+                                                'method_id' => 'jem_table_rate',
+                                                'method_title' => 'Table Rate',
+                                                'total' => number_format($valor_frete,2),
+                                            ]
+                                            
+                                        ],
+                                        
+                                        'customer_note' => 'CPF: '.auth()->user()->cpf.' VET (R$ '.number_format(($cambio_usd*$vet),2).')',
+                                    ];
+                                }
+
+                                //dd($data_order);
+
+                                $order_wc = $woocommerce->post('orders', $data_order); 
+                                
+
+                                if($order_wc){
+
+                                /* FIM ------------ Pedido no Wordpress ---------------- */
+
+                                //Cria novo pedido de venda
+                                $venda = new Venda();
+                                $venda->quantidade = $quantidade;
+                                $venda->valor = ($valor_frete+$valor_produto)*$vet;
+                                $venda->frete = number_format($valor_frete,2);
+                                $venda->tipo_quantidade = "Un";
+                                $venda->user_id = $user->id;
+                                $venda->armazem_id = $armazem->id;
+                                //Produto Cadastrado Localmente (Extraido do Wordpress)
+                                $venda->produto_id = $produto_local->id;
+                                //Produto
+                                $venda->product_store_id = $produto->id;
+                                //Ticket de Acompanhamento
+                                $venda->ticket_id = $ticket->id;
+                                //Json
+                                $venda->order = json_encode($order_wc);
+                                //Json
+                                $venda->product = json_encode($produto);
+
+                                if($venda->save()){
+
+
+                                    //LOG --------------------------------------------------------
+                                    $this->log("assinante.vendaStore=");
+                                    //------------------------------------------------------------ 
+
+                                    return redirect('assinante')->with('success', 'Compra efetuada com sucesso.');
+                                }else{
+                                return redirect('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')->with('danger', 'Houve Algo errado ao solicitar a encomenda, tente novamente mais tarde!');
+                                }  
+                                }else{
+
+                                return redirect('assinante')->with('danger', 'Houve um problema ao gerar a compra na loja integrada');
+
+                                }
+
+
+                            } // Carteira Save
+                            else{
+                            return redirect('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')->with('danger', 'Houve Algo errado ao inserir a compra na carteira, tente novamente mais tarde!');
+                            }                         
+
+                        } // Ticket Save
+                        else{
+                        return redirect('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')->with('danger', 'Houve Algo errado ao gerar o Ticket, tente novamente mais tarde!');
+                        }                                               
+
+
+                        /* -------------- FIM Abre Ticket Referente à Encomenda ----------*/
+
+                    }// $saldo
+                    else{
+                    return redirect('clients/carteira')->with('danger', 'Você não tem saldo suficiente para executar a operação. Faça uma recarga!');
+                    }  
+                }//is_numeric $produto->weight
+                else{
+                    return redirect('assinante')->with('danger', 'O produto não possui peso.');
+                }              
+
+            } //Endereço
+            else{
+                return redirect('assinante')->with('danger', 'Você não possui nenhum endereço cadastrado.');
+            }
+        } //Gate::denies
         else{
             return view('errors.403');
         }

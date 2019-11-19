@@ -17,6 +17,7 @@ use App\FranqueadoVip;
 use DB;
 use App\Cambio; 
 use App\Carteira;
+use App\Endereco;
 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -506,11 +507,14 @@ class ClientController extends Controller
 
             $franqueadoVip = $user->franqueadoVip()->first();
 
+            // Endereço de Cadastro
+            $enderecos = $user->enderecos()->get();
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("client.index=".$scores);
             //---------------------------------------------------------------------------------------
 
-            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas', 'imagem', 'franqueadoVip'));
+            return view('client.perfil', compact('scores', 'user', 'user_score', 'conquistas', 'imagem', 'franqueadoVip', 'enderecos'));
         }
         else{
             return view('errors.403');
@@ -820,6 +824,109 @@ class ClientController extends Controller
             }
         
         }else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function destroy(Request $request)
+    {
+        //
+        if(auth()->user()->id){    
+
+            $this->validate($request,[
+                        'endereco_id' => 'required|numeric',                    
+                ]);                                 
+
+            $endereco_id = $request->input('endereco_id');    
+
+
+            $endereco = auth()->user()->enderecos('endereco_id', $endereco_id)->first();
+
+            //LOG ------------------------------------------------------------------------
+            $this->log("client.endereco.destroy=".$endereco_id);
+            //----------------------------------------------------------------------------
+
+            if($endereco){
+                
+                if($endereco->delete()){
+                    return redirect('clients/perfil/')->with('success', 'Endereco excluído com sucesso!');
+                }else{
+                    return redirect('clients/perfil/')->with('danger', 'Houve um problema, tente novamente.');
+                }
+            }else{
+                    return redirect('clients/perfil/')->with('danger', 'Você não permissão para executar esta ação.');
+            }
+
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+    public function enderecoCreate(Request $request)
+    {
+        //
+        if(Auth::id()){  
+
+            //LOG -------------------------------------------------
+            $this->log("client.endereco.create");
+            //-----------------------------------------------------
+
+            return view('client.create_endereco');
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+
+    public function enderecoStore(Request $request)
+    {
+        //
+        if(auth()->user()->id){
+            //Validação
+            $this->validate($request,[
+                    'label' => 'required',
+                    'address_1' => 'required|string|max:80',
+                    'city' => 'required|string|max:80',
+                    'state' => 'required|string|max:80',
+                    'postcode' => 'required|string|max:9',
+                    
+            ]);
+
+            $endereco = new Endereco();
+            $endereco->label = $request->input('label');
+            $endereco->address_1 = $request->input('address_1');
+            $endereco->address_2 = $request->input('address_2');
+            $endereco->city = $request->input('city');
+            $endereco->state = $request->input('state');
+            $endereco->postcode = $request->input('postcode');
+            $endereco->country = "Brasil";
+
+            //LOG ----------------------------------------------------
+            $this->log("client.endereco.store");
+            //---------------------------------------------------------
+
+            if($endereco->save()){
+
+                $endereco = Endereco::where('label', $request->input('label'))
+                                    ->where('address_1', $request->input('address_1'))
+                                    ->where('city', $request->input('city'))
+                                    ->where('state', $request->input('state'))
+                                    ->where('postcode', $request->input('postcode'))
+                                    ->first();
+
+                auth()->user()->enderecos()->attach($endereco->id);
+
+                return redirect('clients/perfil')->with('success', 'Novo endereço cadastrado com sucesso!');
+            }else{
+                return redirect('clients/perfil')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
             return view('errors.403');
         }
     }

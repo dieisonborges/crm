@@ -26,6 +26,7 @@
                             <th>Quantidade</th>
                             <th>Valor BRL</th>
                             <th>Valor USD</th>
+                            <th>Valor BRL (VET)</th>
                                                 
                         </tr>
                         @php $i=1; @endphp
@@ -33,7 +34,8 @@
                             <tr>
                                 <td>{{$i}} un</td>
                                 <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny),2)}}</td>
-                                <td>$ {{number_format(((((80*($peso*$i)+25)*$cambio_cny)/($cambio_usd))),2)}}</td>                     
+                                <td>$ {{number_format(((((80*($peso*$i)+25)*$cambio_cny)/($cambio_usd))),2)}}</td> 
+                                <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny)*$vet,2)}}</td>                    
                             </tr>                        
                             @php $i++; @endphp 
                         @endwhile           

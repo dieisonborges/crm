@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Setor::class);
     }
 
+    public function enderecos(){
+        
+        return $this->belongsToMany(\App\Endereco::class);
+    }
+
     public function franquia(){        
         return $this->belongsToMany(\App\Franquia::class);
     }

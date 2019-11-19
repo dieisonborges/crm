@@ -103,6 +103,11 @@ Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
 Route::resource('setors', 'SetorController');
 Route::post('setors/busca', 'SetorController@busca');
 
+//Remove Endereço
+Route::post('clients/destroyEndereco', 'ClientController@destroyEndereco');
+Route::get('clients/enderecoCreate', 'ClientController@enderecoCreate');
+Route::post('clients/enderecoStore', 'ClientController@enderecoStore');
+
 //Carteira
 Route::get('clients/carteira', 'ClientController@carteira');
 // ClientController
@@ -282,6 +287,7 @@ Route::resource('/armazems', 'ArmazemController');
 
 //Área do Assinante
 Route::get('/assinante/{armazem}/produto/{produto}/vendaCreate', 'AssinanteController@vendaCreate');
+Route::post('/assinante/{armazem}/vendaStore', 'AssinanteController@vendaStore');
 Route::get('/assinante/{armazem}/produto/{produto}/encomendaCreate', 'AssinanteController@encomendaCreate');
 Route::post('/assinante/{armazem}/encomendaStore', 'AssinanteController@encomendaStore');
 Route::get('/assinante/{armazem}/produto/{produto}/freteEstimado', 'AssinanteController@freteEstimado');

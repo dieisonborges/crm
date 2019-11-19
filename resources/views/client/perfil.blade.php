@@ -23,6 +23,10 @@
               </div>
         </div>
 
+       
+
+
+
         <div class="box-body col-md-2">              
               
             @if($imagem)  
@@ -55,6 +59,84 @@
 
         </div> 
   
+
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Endereços Cadastrados:</h3>              
+            <!-- /.box-header -->
+              <div class="box-tools">
+                  <div class="input-group input-group-sm hidden-xs">
+                    <a href="{{url('clients/enderecoCreate')}}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Novo Endereço</a>
+                  </div>
+                </div>
+              </div>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th>Título</th>
+                  <th>Endereço</th>
+                  <th>Complemento</th>
+                  <th>Cidade</th>
+                  <th>Estado</th>
+                  <th>CEP</th>
+                  <th>País</th>
+                  <!--<th>Mapa</th>-->
+                  <th>Remover</th>
+                </tr>
+                @forelse($enderecos as $endereco)
+                <tr>
+                  <td>{{$endereco->label}}</td>
+                  <td>{{$endereco->address_1}}</td>
+                  <td>{{$endereco->address_2}}</td>                  
+                  <td>{{$endereco->city}}</td>
+                  <td>{{$endereco->state}}</td> 
+                  <td>{{$endereco->postcode}}</td> 
+                  <td>{{$endereco->country}}</td>
+                  <!--<td><a href="#" target="_blank"><i class="fa fa-globe"></i></a></td>-->
+                  <td>
+
+                        <form method="POST" action="{{action('ClientController@destroyEndereco')}}" id="formDelete{{$endereco->id}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
+                            <!--<input type="submit" name="Excluir">-->
+
+                            <input type="hidden" name="endereco_id" value="{{$endereco->id}}">
+
+                            <a href="javascript:confirmDelete{{$endereco->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-times-circle"></i> Remover</a>
+                        </form> 
+
+                        <script>
+                           function confirmDelete{{$endereco->id}}() {
+
+                            var result = confirm('Tem certeza que deseja excluir?');
+
+                            if (result) {
+                                    document.getElementById("formDelete{{$endereco->id}}").submit();
+                                } else {
+                                    return false;
+                                }
+                            } 
+                        </script>
+
+                    </td>
+                </tr>  
+                @empty
+                <tr>
+                  <td>Nenhum endereço cadastrado.</td>
+                </tr>
+
+                @endforelse              
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+
 
         <div class="col-md-12">              
               
