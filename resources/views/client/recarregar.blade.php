@@ -12,19 +12,19 @@
 
 					<div class="col-md-12">
 
-						<a href="javascript: $('#recarga').val('115.26');" class="col-md-2" id="cedula-100">
+						<a href="javascript: $('#recarga').val('100');" class="col-md-2" id="cedula-100">
 							<img src="{{ asset('img/real-cedulas/cedula-100.jpg') }}" width="100%" id="cedula-100" style="margin-top: 5px;">						
 						</a>
 
-						<a href="javascript: $('#recarga').val('59.64');" class="col-md-2" id="cedula-50">
+						<a href="javascript: $('#recarga').val('50');" class="col-md-2" id="cedula-50">
 							<img src="{{ asset('img/real-cedulas/cedula-50.png') }}" width="100%" style="margin-top: 5px;">						
 						</a>
 
-						<a href="javascript: $('#recarga').val('24.62');" class="col-md-2" id="cedula-20">
+						<a href="javascript: $('#recarga').val('20');" class="col-md-2" id="cedula-20">
 							<img src="{{ asset('img/real-cedulas/cedula-20.jpg') }}" width="100%" style="margin-top: 5px;">						
 						</a>
 
-						<a href="javascript: $('#recarga').val('14.32');" class="col-md-2" id="cedula-10">
+						<a href="javascript: $('#recarga').val('10');" class="col-md-2" id="cedula-10">
 							<img src="{{ asset('img/real-cedulas/cedula-10.jpg') }}" width="100%" style="margin-top: 5px;">						
 						</a>	
 
