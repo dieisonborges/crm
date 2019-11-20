@@ -760,7 +760,7 @@ class ClientController extends Controller
 
             $carteira_comissao = new Carteira();
             $carteira_comissao->codigo = $this->carteiraCodigo();
-            $carteira_comissao->valor = number_format($request->input('recarga')*0.03,2); //Comissão de 3%
+            $carteira_comissao->valor = -(number_format($request->input('recarga')*0.03,2)); //Comissão de 3%
             $carteira_comissao->dolar = $cambio_usd;
             $carteira_comissao->vet = $vet;
             $carteira_comissao->status = 0;
