@@ -120,6 +120,7 @@ class CarteiraController extends Controller
             $carteira->status = $request->input('status');
 
             if($carteira->save()){
+
                 return redirect('carteira/'.$request->input('user_id'))->with('success', 'Operação atualizada com sucesso!');
             }else{
                 return redirect('carteira/'.$request->input('user_id'))->with('danger', 'Houve um problema, tente novamente.');

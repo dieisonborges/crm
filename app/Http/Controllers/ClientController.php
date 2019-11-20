@@ -756,6 +756,22 @@ class ClientController extends Controller
 
             /* ----------- FIM Armazena e Recupera a Recarga  -------- */
 
+            /* -------- Comissão e-Cardume - Carteira ---------- */            
+
+            $carteira_comissao = new Carteira();
+            $carteira_comissao->codigo = $this->carteiraCodigo();
+            $carteira_comissao->valor = number_format($request->input('recarga')*0.03,2); //Comissão de 3%
+            $carteira_comissao->dolar = $cambio_usd;
+            $carteira_comissao->vet = $vet;
+            $carteira_comissao->status = 0;
+            $carteira_comissao->user_id = $user->id;
+
+            $carteira_comissao->descricao = "Comissão de 3% da plataforma e-Cardume.";
+
+            $carteira_comissao->save();
+
+            /* ----------- FIM Comissão e-Cardume - Carteira -------- */
+
             /* ----------- Gera um ticket da Recarga  -------- */
 
             if($carteiraSave){
