@@ -173,6 +173,7 @@
             <ul class="treeview-menu">
 
               @can('read_franqueado')
+                <!--
                 <li>
                   <a href="{{ url('franqueados/') }}">
                     <i class="fas fa-store-alt"></i><span>Lojas</span>
@@ -183,12 +184,13 @@
                     <i class="fas fa-paper-plane"></i><span>Convites</span>
                   </a>
                 </li>
+                -->
               @endcan 
 
               @can('read_assinante')
                 <li>
                   <a href="{{ url('assinante/') }}">
-                    <i class="fa fa-warehouse"></i><span>Estoque</span>
+                    <i class="fa fa-warehouse"></i><span>Produtos</span>
                   </a>
                 </li>                
               @endcan

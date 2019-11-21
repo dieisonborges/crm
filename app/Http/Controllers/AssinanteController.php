@@ -236,12 +236,14 @@ class AssinanteController extends Controller
 
             $encomenda_quantidade = $this->getEncomendaProdutos($armazem, $produtos);
             
+            $armazems = Armazem::where('status','1')->get(); 
 
             //LOG --------------------------------------------------------
             $this->log("assinante.produtos");
             //------------------------------------------------------------  
 
             return view('assinante.produtos', array(
+                            'armazems'      => $armazems,
                             'encomenda_quantidade'=>   $encomenda_quantidade,
                             'cambio_usd'    => $cambio_usd,
                             'cambio_cny'    => $cambio_cny,
