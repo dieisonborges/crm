@@ -1,7 +1,8 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer" id="footer">
   <div class="pull-right">
-    Cotações: <b>USD:</b> R${{number_format(Session::get('cambio_usd'),2)}} | <b>RMB/CNY:</b> R${{number_format(Session::get('cambio_cny'),2)}} | <b>EUR:</b> R${{number_format(Session::get('cambio_eur'),2)}}
+    Valor Efetivo Total <b>(VET)</b>: R${{number_format(Session::get('vet'),2)}} |
+    Cotações: <b>USD:</b> R${{number_format(Session::get('cambio_usd'),2)}} <b>RMB/CNY:</b> R${{number_format(Session::get('cambio_cny'),2)}} <b>EUR:</b> R${{number_format(Session::get('cambio_eur'),2)}}
   </div>
 
   <div>
