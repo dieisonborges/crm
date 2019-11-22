@@ -49,7 +49,7 @@ class AssinanteController extends Controller
         //Taxa de Cambio
         $cambio = Cambio::orderBy('id', 'DESC')->where('moeda',$moeda)->first();
         if((isset($cambio))){
-            $cambio = $cambio->valor;
+            $cambio = number_format($cambio->valor,2);
         }else{
             //Insere valor absurdo caso não exista a moeda
             $cambio = 9999999;
@@ -95,11 +95,16 @@ class AssinanteController extends Controller
     private function vet(){
         $vet = DB::table('vets')->orderBy('id', 'DESC')->first();
             if((isset($vet))){
-                $vet = $vet->valor;
+                $vet = number_format($vet->valor,2);
             }else{
                 $vet = 9999999;
             }
         return $vet;
+    }
+
+    public static function getFrete($peso, $qtd, $cambio_cny){
+        $frete = number_format(((80*($peso*$qtd)+25)*$cambio_cny),2);
+        return $frete;
     }
 
     private function getEncomendaProdutos($armazem, $produtos){
@@ -143,7 +148,6 @@ class AssinanteController extends Controller
         if(!(Gate::denies('read_assinante'))){
             $armazems = Armazem::where('status','1')->paginate(40);  
 
-            $armazem = Armazem::where('status','1')->get()->random();  
 
             //Taxa de Cambio CNY/RMB
             // A API do frete está em CNY/RMB
@@ -152,38 +156,16 @@ class AssinanteController extends Controller
             //Taxa de Cambio USD
             // A API do frete está em USD
             $cambio_usd = $this->cambio('USD');
-
-            /* ------ Inicia Conexão WC ----- */
-            $woocommerce = new Client(
-                $armazem->store_url, 
-                $armazem->consumer_key, 
-                $armazem->consumer_secret,
-                [
-                    'wp_api'  => true,
-                    'version' => 'wc/v3',
-                ]
-            );
-            /* ------ Fim Conexão WC ----- */          
-
-            $data = [
-                'per_page'=>4
-            ];
-
-            $produtos = $woocommerce->get('products', $data);
-
-            $encomenda_quantidade = $this->getEncomendaProdutos($armazem, $produtos);
+           
 
             //LOG --------------------------------------------------------
             $this->log("assinante.index");
             //------------------------------------------------------------           
 
             return view('assinante.index', array(
-                                        'encomenda_quantidade' => $encomenda_quantidade,
-                                        'armazem_preview'   =>  $armazem,
                                         'cambio_usd'  => $cambio_usd,
                                         'cambio_cny'  => $cambio_cny,
                                         'armazems'  => $armazems,
-                                        'produtos' => $produtos
                                     ));
         }
         else{
@@ -264,6 +246,9 @@ class AssinanteController extends Controller
 
     public function freteEstimado(Armazem $armazem, $produto)
     {
+        
+        
+
         //
         if(!(Gate::denies('read_assinante'))){ 
 
@@ -279,11 +264,11 @@ class AssinanteController extends Controller
             );
             /* ------ Fim Conexão WC ----- */
 
-            $produto = $woocommerce->get('products/'.$produto);  
-            
+
+            $produto = $woocommerce->get('products/'.$produto);            
 
             //LOG --------------------------------------------------------
-            $this->log("assinante.produtos");
+            $this->log("assinante.produtos.freteEstimado");
             //------------------------------------------------------------  
 
             $peso = $produto->weight;
@@ -456,7 +441,7 @@ class AssinanteController extends Controller
                 $peso = $produto->weight;
 
                 //Valor Frete
-                $valor_frete = ((80*($peso*$quantidade_envio)+25)*$cambio_cny);
+                $valor_frete = $this->getFrete($peso, $quantidade_envio, $cambio_cny);
 
                 //Verifica Saldo do Client
                 /* ------- Verifica Saldo da Carteira ----------- */
@@ -772,7 +757,7 @@ class AssinanteController extends Controller
                     //$valor_frete = ((80*($peso*$quantidade)+25)*$cambio_cny);
 
                     //Valor do frete em USD
-                    $valor_frete = ((((80*($peso*$quantidade)+25)*$cambio_cny)/($cambio_usd)));
+                    $valor_frete = ($this->getFrete($peso, $quantidade, $cambio_cny))/$cambio_usd;
 
                     //Valor do frete em BRL + VET
                     $valor_frete = $valor_frete*($cambio_usd*$vet);

@@ -5,20 +5,24 @@
 
     <div class="col-md-12">
         
-    @forelse ($armazems as $armazem)
+    @forelse ($armazems as $armazem_top)
 
         <div class="col-md-2">
           <div class="box box-primary box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">{{str_replace("https://","",$armazem->store_url)}}</h3>
+              <h3 class="box-title"><i class="fa fa-warehouse"></i> {{strtoupper(str_replace(".ecardume.com","",(str_replace("https://","",$armazem_top->store_url))))}}</h3>
 
+              @if(($armazem_top->tipo==1)or($armazem_top->tipo==2))
+              <span class="label label-default label-xs" style="float: right;">Encomenda</span>
+              @endif
               
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              {{$armazem->localizacao}}
-              <a href="{{URL::to('assinante/'.$armazem->id.'/produtosBusca/1')}}" class="btn btn-default btn-xs" style="float: right;"><i class="fa fa-box"></i> Produtos</a>
+              {{$armazem_top->localizacao}}
+              <a href="{{URL::to('assinante/'.$armazem_top->id.'/produtosBusca/1')}}" class="btn btn-default btn-xs" style="float: right;"><i class="fa fa-box"></i> Produtos</a>
+              
             </div>
             <!-- /.box-body -->
           </div>
@@ -124,8 +128,8 @@
                     @if(is_numeric($produto->weight))
                     <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                         <span class="fa fa-truck"></span>
-                        
-                        $ {{number_format(((((80*($produto->weight)+25)*$cambio_cny)/($cambio_usd))),2)}}
+
+                        $ {{number_format((App\Http\Controllers\AssinanteController::getFrete($produto->weight, '1', $cambio_cny)/$cambio_usd),2)}} 
                         
                     </a>
                     @else
@@ -139,7 +143,7 @@
                     <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/freteEstimado')}}" class="btn btn-xs btn-info">
                         <span class="fa fa-truck"></span>
                         
-                        R$ {{number_format(((((80*($produto->weight)+25)*$cambio_cny))),2)}}
+                        R$ {{number_format(App\Http\Controllers\AssinanteController::getFrete($produto->weight, '1', $cambio_cny),2)}} 
                         
                     </a>
                     @else

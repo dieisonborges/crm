@@ -33,9 +33,15 @@
                         @while($i<=15)
                             <tr>
                                 <td>{{$i}} un</td>
-                                <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny),2)}}</td>
-                                <td>$ {{number_format(((((80*($peso*$i)+25)*$cambio_cny)/($cambio_usd))),2)}}</td> 
-                                <td>R$ {{number_format(((80*($peso*$i)+25)*$cambio_cny)*$vet,2)}}</td>                    
+                                <td>R$ 
+
+                                    {{App\Http\Controllers\AssinanteController::getFrete($peso, $i, $cambio_cny)}}                                    
+
+                                </td>
+                                <td>$ {{number_format((App\Http\Controllers\AssinanteController::getFrete($peso, $i, $cambio_cny)/$cambio_usd),2)}} 
+
+                                </td> 
+                                <td>R$ {{number_format((App\Http\Controllers\AssinanteController::getFrete($peso, $i, $cambio_cny)*$vet),2)}} </td>                    
                             </tr>                        
                             @php $i++; @endphp 
                         @endwhile           
