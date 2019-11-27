@@ -1189,9 +1189,10 @@ class AssinanteController extends Controller
             $data = [
                 'product_id' => $produto,
                 'review' => $comentario,
-                'reviewer' => $user->name,
-                'reviewer_email' => $user->email,
-                'rating' => $classificacao
+                'reviewer' => $user->apelido,
+                'reviewer_email' => $user->email.' | #'.$user->id,
+                'rating' => $classificacao,
+                'status' => 'approved'
             ];
 
 
