@@ -70,6 +70,18 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
+                <a href="#" class="btn btn-primary">
+                    <i class="fa fa-comments-dollar"></i>
+                    Interesses
+                </a>
+
+                <a href="{{url('/assinante/'.$armazem->id.'/produto/'.$produto->id.'/comentarios')}}" class="btn btn-default">
+                    <i class="fa fa-comment-dots"></i>
+                    Comentários
+                </a>
+                <br><br>
+
               @php $i=0; @endphp
                 @foreach($produto->images as $image)
 
@@ -87,18 +99,25 @@
                 <hr class="col-md-11 hr">
 
                     @if(($armazem->tipo)==0)
-                        <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
-                            <i class="fa fa-shopping-cart"></i> Comprar: 
+                        @if($produto->stock_quantity>1)
+                            <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/vendaCreate')}}" class="btn btn-lg btn-success">
+                                <i class="fa fa-shopping-cart"></i> Comprar: 
 
-                            @if(is_numeric($produto->sale_price))
-                                R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
-                            @else 
-                                @php
-                                $price = (double) $produto->price;
-                                echo "R$ ".number_format($price*$cambio_usd, 2);
-                                @endphp
-                            @endif
-                        </a>
+                                @if(is_numeric($produto->sale_price))
+                                    R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
+                                @else 
+                                    @php
+                                    $price = (double) $produto->price;
+                                    echo "R$ ".number_format($price*$cambio_usd, 2);
+                                    @endphp
+                                @endif
+                            </a>
+                        @else
+                            <span class="btn btn-lg btn-warning">
+                                <i class="fa fa-boxes"></i>
+                                Sem Estoque.
+                            </span>
+                        @endif
                     @elseif(($armazem->tipo)==1)
 
                         <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">

@@ -443,6 +443,7 @@ class AssinanteController extends Controller
                 //Valor Frete
                 $valor_frete = $this->getFrete($peso, $quantidade_envio, $cambio_cny);
 
+
                 //Verifica Saldo do Client
                 /* ------- Verifica Saldo da Carteira ----------- */
                 $saldo = $user->carteira()
@@ -1077,6 +1078,137 @@ class AssinanteController extends Controller
                 return redirect('assinante')->with('danger', 'Você não possui nenhum endereço cadastrado.');
             }
         } //Gate::denies
+        else{
+            return view('errors.403');
+        }
+    }
+
+
+    public function comentarios(Armazem $armazem, $produto)
+    {      
+
+
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+
+            /* ------- Verifica Saldo da Carteira ----------- */
+            $user = Auth::user();            
+
+            /* ------ Inicia Conexão WC ----- */
+            $woocommerce = new Client(
+                $armazem->store_url, 
+                $armazem->consumer_key, 
+                $armazem->consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+            );
+            /* ------ Fim Conexão WC ----- */
+
+            
+
+            $data = [
+                'product'    => $produto,
+                'order_by'      => 'date_created',
+                'order'         => 'desc'
+
+            ];
+
+            $produto_reviews = $woocommerce->get('products/reviews/', $data); 
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.comentarios");
+            //------------------------------------------------------------ 
+
+            $produto = $woocommerce->get('products/'.$produto);
+
+            return view('assinante.comentarios', array(
+                            'produto_reviews'   =>  $produto_reviews,
+                            'produto'           =>  $produto,
+                            'armazem'           =>  $armazem                                                   
+                            ));
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function comentarioCreate(Armazem $armazem, $produto)
+    {
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+
+            $user = Auth::user(); 
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.comentarioCreate");
+            //------------------------------------------------------------  
+
+            return view('assinante.comentario_create', array(
+                                        'armazem'  => $armazem,
+                                        'produto'  => $produto
+                                    ));
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function comentarioStore(Armazem $armazem,  Request $request)
+    {
+
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+            $produto = $request->input('produto');
+
+            $comentario = $request->input('comentario');
+
+            $classificacao = $request->input('classificacao');
+
+            /* ------- Verifica Saldo da Carteira ----------- */
+            $user = Auth::user();            
+
+            /* ------ Inicia Conexão WC ----- */
+            $woocommerce = new Client(
+                $armazem->store_url, 
+                $armazem->consumer_key, 
+                $armazem->consumer_secret,
+                [
+                    'wp_api'  => true,
+                    'version' => 'wc/v3',
+                ]
+            );
+            /* ------ Fim Conexão WC ----- */
+
+            $data = [
+                'product_id' => $produto,
+                'review' => $comentario,
+                'reviewer' => $user->name,
+                'reviewer_email' => $user->email,
+                'rating' => $classificacao
+            ];
+
+
+            $produto_get = $woocommerce->post('products/reviews', $data);  
+            
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.comentarioStore");
+            //------------------------------------------------------------  
+
+            if($produto_get){
+                return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/comentarios')->with('success', 'Comentário criado com sucesso!');
+            }else{
+                return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/comentarioCreate')->with('danger', 'Houve um problema na criação do comentário, teste novamente mais tarde.');
+            }
+            
+        }
         else{
             return view('errors.403');
         }
