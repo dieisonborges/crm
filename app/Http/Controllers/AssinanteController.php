@@ -13,6 +13,7 @@ use App\Setor;
 use App\Carteira;
 use App\Encomenda;
 use App\Venda;
+use App\Interesse;
 
 use Gate;
 use DB;
@@ -1207,6 +1208,59 @@ class AssinanteController extends Controller
                 return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/comentarios')->with('success', 'Comentário criado com sucesso!');
             }else{
                 return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/comentarioCreate')->with('danger', 'Houve um problema na criação do comentário, teste novamente mais tarde.');
+            }
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function interesseCreate(Armazem $armazem, $produto)
+    {
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+
+            $user = Auth::user(); 
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.interesseCreate");
+            //------------------------------------------------------------  
+
+            return view('assinante.interesse_create', array(
+                                        'armazem'  => $armazem,
+                                        'produto'  => $produto
+                                    ));
+            
+        }
+        else{
+            return view('errors.403');
+        }
+    }
+
+    public function interesseStore(Armazem $armazem,  Request $request)
+    {
+
+        //
+        if(!(Gate::denies('read_assinante'))){ 
+
+            $produto = $request->input('produto');
+
+            $comentario = $request->input('comentario');
+
+            $classificacao = $request->input('classificacao');
+
+            $user = Auth::user();                
+
+            //LOG --------------------------------------------------------
+            $this->log("assinante.interesseStore");
+            //------------------------------------------------------------  
+
+            if($produto_get){
+                return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/interesses')->with('success', 'Comentário criado com sucesso!');
+            }else{
+                return redirect('assinante/'.$armazem->id.'/produto/'.$produto.'/interesseCreate')->with('danger', 'Houve um problema na criação do comentário, teste novamente mais tarde.');
             }
             
         }
