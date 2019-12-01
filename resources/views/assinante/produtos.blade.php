@@ -71,12 +71,14 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-                <a href="#" class="btn btn-primary">
+                <!--
+                <a href="#" class="btn btn-default">
                     <i class="fa fa-comments-dollar"></i>
                     Interesses
                 </a>
+                -->
 
-                <a href="{{url('/assinante/'.$armazem->id.'/produto/'.$produto->id.'/comentarios')}}" class="btn btn-default">
+                <a href="{{url('/assinante/'.$armazem->id.'/produto/'.$produto->id.'/comentarios')}}" class="btn btn-primary">
                     <i class="fa fa-comment-dots"></i>
                     Comentários
                 </a>
@@ -122,7 +124,16 @@
 
                         <a href="{{url('assinante/'.$armazem->id.'/produto/'.$produto->id.'/encomendaCreate')}}" class="btn btn-lg btn-primary">
                             <span class="fa fa-industry"></span>
-                           Eu quero Encomendar
+                           Encomendar por
+
+                            @if(is_numeric($produto->sale_price))
+                                R$ {{number_format(($produto->sale_price)*($cambio_usd),2)}}
+                            @else 
+                                @php
+                                $price = (double) $produto->price;
+                                echo "R$ ".number_format($price*$cambio_usd, 2);
+                                @endphp
+                            @endif
                         </a>
 
                     @endif
