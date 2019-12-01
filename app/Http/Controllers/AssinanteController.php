@@ -235,7 +235,7 @@ class AssinanteController extends Controller
                             'produtos'      => $produtos,
                             'page'          => $page,
                             'totalPages'    => $totalPages,
-                            'linkPaginate'  => 'armazem/'.$armazem->id.'/produtos/',
+                            'linkPaginate'  => 'assinante/'.$armazem->id.'/produtosBusca/',
                             ));
         }
         else{
