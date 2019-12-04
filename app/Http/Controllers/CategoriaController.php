@@ -47,19 +47,19 @@ class CategoriaController extends Controller
         if(!(Gate::denies('read_categoria'))){
             $categorias = Categoria::orderBy('id')->get();     
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG --------------------------------------------------------
             $this->log("categoria.index");
-            //--------------------------------------------------------------------------------------------
+            //------------------------------------------------------------
 
             //Conecta nas lojas remotas
-            $categorias_remotas = DB::connection('mysql_loja')
+            /*$categorias_remotas = DB::connection('mysql_loja')
                                         ->table('categorias')
                                         ->orderBy('id_7p')
-                                        ->get();
+                                        ->get();*/
 
             return view('categoria.index', array(
                                                 'categorias' => $categorias, 
-                                                'categorias_remotas' => $categorias_remotas, 
+                                                /*'categorias_remotas' => $categorias_remotas, */
                                                 'buscar' => null
                                             ));
         }
@@ -77,23 +77,23 @@ class CategoriaController extends Controller
                                 ->paginate(40);
 
             //Conecta nas lojas remotas
-            $categorias_remotas = DB::connection('mysql_loja')
+            /*$categorias_remotas = DB::connection('mysql_loja')
                                         ->table('categorias')
                                         ->where('nome', 'LIKE', '%'.$buscaInput.'%')
                                         ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
                                         ->orderBy('id_7p')
-                                        ->get();
+                                        ->get();*/
 
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG -------------------------------------------------
             $this->log("categoria.busca=".$buscaInput);
-            //--------------------------------------------------------------------------------------------
+            //------------------------------------------------------
 
 
 
             return view('categoria.index', array(
                                                 'categorias' => $categorias,
-                                                'categorias_remotas' => $categorias_remotas, 
+                                                /*'categorias_remotas' => $categorias_remotas, */
                                                 'buscar' => $buscaInput
                                             ));
         }
@@ -113,9 +113,9 @@ class CategoriaController extends Controller
         //
          if(!(Gate::denies('read_categoria'))){
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG -------------------------------------------------
             $this->log("categoria.show=".$categoria);
-            //--------------------------------------------------------------------------------------------
+            //-----------------------------------------------------
 
             return view('categoria.show', array('categoria' => $categoria));
         }
@@ -134,9 +134,9 @@ class CategoriaController extends Controller
         //
         if(!(Gate::denies('create_categoria'))){
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG --------------------------------------------
             $this->log("categoria.create");
-            //--------------------------------------------------------------------------------------------
+            //------------------------------------------------
         
             return view('categoria.create');
         }
@@ -169,9 +169,9 @@ class CategoriaController extends Controller
             $categoria->valor = $request->input('valor');
 
             
-            //LOG --------------------------------------------------------------------------------------
+            //LOG ----------------------------------------
             $this->log("categoria.store");
-            //------------------------------------------------------------------------------------
+            //---------------------------------------------
 
             if($categoria->save()){
                 return redirect('categorias/')->with('success', 'Categoria cadastrada com sucesso!');
@@ -197,9 +197,9 @@ class CategoriaController extends Controller
         //
         if(!(Gate::denies('update_categoria'))){            
 
-            //LOG ----------------------------------------------------------------------------------------
+            //LOG -------------------------------------------------
             $this->log("categoria.edit=".$categoria);
-            //--------------------------------------------------------------------------------------------
+            //------------------------------------------------------
 
             return view('categoria.edit', compact('categoria'));
         }
@@ -233,9 +233,9 @@ class CategoriaController extends Controller
             $categoria->valor = $request->input('valor');
 
             
-            //LOG ---------------------------------------------------------------------------------------
+            //LOG ---------------------------------------------
             $this->log("categoria.update=".$categoria);
-            //-------------------------------------------------------------------------------------
+            //--------------------------------------------------
 
 
             if($categoria->save()){

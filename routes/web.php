@@ -296,6 +296,6 @@ Route::post('/assinante/{armazem}/encomendaStore', 'AssinanteController@encomend
 Route::get('/assinante/{armazem}/produto/{produto}/freteEstimado', 'AssinanteController@freteEstimado');
 //Route::get('/assinante/{armazem}/produtos/{page}', 'AssinanteController@produtos');
 Route::get('/assinante/{armazem}/produtosBusca/{page}', 'AssinanteController@produtosBusca');
-Route::resource('assinante', 'AssinanteController');
+Route::resource('assinante', 'AssinanteController'); 
 
 

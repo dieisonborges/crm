@@ -5,9 +5,8 @@
     <h1>Categorias <a href="{{url('categorias/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
 
 
-    <a href="{{url('categoriasSincronizarUpdate')}}" class="btn btn-info btn-lg"><i class="fa fa-sync"> </i> Sincronizar</a> 
+    <!--<a href="{{url('categoriasSincronizarUpdate')}}" class="btn btn-info btn-lg"><i class="fa fa-sync"> </i> Sincronizar</a> -->
 
-        <br><br><br>
 
         <div class="col-md-12">	
 
@@ -27,7 +26,7 @@
         <br><br><br>
 
         <!-- /.box-header -->
-        <div class="box-body table-responsive no-padding col-md-6">
+        <div class="box-body table-responsive no-padding col-md-12">
             <h3>Categorias | Franquias Locais (7p CRM)</h3>
             <table class="table table-hover">
                 <tr>
@@ -83,41 +82,6 @@
                         </script>
 
                     </td>
-                </tr>                
-                @empty
-                    
-                @endforelse            
-                
-            </table>
-        </div>
-        <!-- /.box-body -->
-
-        <!-- /.box-header -->
-        <div class="box-body table-responsive no-padding col-md-6">
-            <h3>Categorias | Franquias Remotas (Lic - Lojas)</h3>
-            <table class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Valor</th>
-                </tr> 
-                @forelse ($categorias_remotas as $categoria)
-                <tr>
-                    <td>{{$categoria->id}}</td>
-
-                    <td>
-                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}">{{$categoria->nome}}</a>
-                    </td>                 
-                    
-                    <td>
-                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}">{{$categoria->descricao}}</a>
-                    </td>
-
-                    <td>
-                        <a href="{{URL::to('categorias')}}/{{$categoria->id}}"><span class="btn btn-primary btn-xs">{{$categoria->valor}}</span></a>
-                    </td> 
-                    
                 </tr>                
                 @empty
                     
