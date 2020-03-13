@@ -381,7 +381,7 @@ class AssinanteController extends Controller
             $this->validate($request,[
                     'produto' => 'required|integer',
                     'quantidade' => 'required|integer',
-                    'quantidade_envio' => 'required|integer',
+                    /*'quantidade_envio' => 'required|integer',*/
                     
             ]);
             //Dados do Usuário
@@ -417,7 +417,8 @@ class AssinanteController extends Controller
 
 
             $quantidade = $request->input('quantidade');
-            $quantidade_envio = $request->input('quantidade_envio');
+            /*$quantidade_envio = $request->input('quantidade_envio');*/
+            $quantidade_envio = 0;
 
             //dd($quantidade_envio,">", ($quantidade/2));
 

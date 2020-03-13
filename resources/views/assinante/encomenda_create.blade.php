@@ -24,12 +24,6 @@
                     <input type="number" class="form-control" id="quantidade" name="quantidade" value="" placeholder="Digite a quantidade..." required>
                 </div>
 
-                <div class="form-group mb-12">
-                    <label for="quantidade_envio">Quantidade Enviado Para o Comprador:</label>
-                    <input type="number" class="form-control" id="quantidade_envio" name="quantidade_envio" value="" placeholder="Digite a ser enviada para o comrpador..." required>
-                    <p style="color: red; font-size: 12px;">*Quantidade de produtos a ser enviado para o comprador. **Máximo 50% da Quantidade, os outros 50% irão compor o estoque coletivo.</p>
-                </div>                
-                
 
                 <div>
                     <hr>
