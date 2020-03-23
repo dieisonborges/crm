@@ -445,6 +445,11 @@ class AssinanteController extends Controller
                 //Valor Frete
                 $valor_frete = $this->getFrete($peso, $quantidade_envio, $cambio_cny);
 
+                //Se quantidade
+                if($quantidade_envio==0){
+                   $valor_frete = 0; 
+                }
+
 
                 //Verifica Saldo do Client
                 /* ------- Verifica Saldo da Carteira ----------- */
@@ -680,7 +685,7 @@ class AssinanteController extends Controller
     {       
         //
         if(!(Gate::denies('read_assinante'))){            
-
+ 
             //Validação
             $this->validate($request,[
                 'produto' => 'required|integer',
